@@ -15,6 +15,6 @@ public class WijnController {
     }
 
     public void cmdAanpassenWijn() {
-        
+
     }
 }

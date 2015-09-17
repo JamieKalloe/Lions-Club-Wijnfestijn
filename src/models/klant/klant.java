@@ -51,6 +51,18 @@ public class Klant {
         this.opmerkingID = opmerkingID;
     }
 
+    public void aanmakenKlant() {
+
+    }
+
+    public void verwijderKlant() {
+
+    }
+
+    public void aanpassenKlant() {
+
+    }
+
     //GETTERS
     public int getKlantID() {
         return this.getKlantID();

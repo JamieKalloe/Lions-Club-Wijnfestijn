@@ -15,6 +15,14 @@ public class Factuur {
         this.factuurDatum = factuurDatum;
     }
 
+    public void makenFactuur() {
+
+    }
+
+    public void makenWijnhandelFactuur() {
+
+    }
+
     //GETTERS
     public int getFactuurNummer() {
         return factuurNummer;

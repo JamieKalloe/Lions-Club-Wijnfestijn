@@ -11,6 +11,18 @@ public class Bestelling {
         this.klantID = klantID;
     }
 
+    public void makenBestelling() {
+
+    }
+
+    public void aanpassenBestelling() {
+
+    }
+
+    public void verwijderenBestelling() {
+
+    }
+
     //GETTERS
     public int getAantalDozen() {
         return this.aantalDozen;

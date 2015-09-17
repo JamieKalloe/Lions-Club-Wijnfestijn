@@ -20,6 +20,18 @@ public class Wijn {
         this.flesPrijs = flesPrijs;
     }
 
+    public void toevoegenWijn() {
+
+    }
+
+    public void verwijderenWijn() {
+
+    }
+
+    public void aanpassenWijn() {
+
+    }
+
     //GETTERS
     public int getWijnID() {
         return wijnID;
