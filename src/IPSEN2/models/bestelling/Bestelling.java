@@ -1,4 +1,4 @@
-package IPSEN2;
+package IPSEN2.models.bestelling;
 
 public class Bestelling {
     private int aantalDozen;

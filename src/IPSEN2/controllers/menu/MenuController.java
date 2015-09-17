@@ -1,4 +1,4 @@
-package IPSEN2;
+package IPSEN2.controllers.menu;
 
 public class MenuController {
 

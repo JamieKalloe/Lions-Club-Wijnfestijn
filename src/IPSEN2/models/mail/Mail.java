@@ -1,4 +1,4 @@
-package IPSEN2;
+package IPSEN2.models.mail;
 
 public class Mail {
     private String emailadres;

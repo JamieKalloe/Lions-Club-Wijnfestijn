@@ -1,4 +1,4 @@
-package IPSEN2;
+package IPSEN2.controllers.bestelling;
 
 public class BestellingController {
 

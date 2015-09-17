@@ -1,4 +1,4 @@
-package IPSEN2;
+package IPSEN2.models.factuur;
 
 public class Factuur {
     private int factuurNummer;

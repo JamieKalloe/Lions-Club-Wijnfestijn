@@ -1,4 +1,4 @@
-package IPSEN2;
+package IPSEN2.controllers.wijn;
 
 public class WijnController {
 

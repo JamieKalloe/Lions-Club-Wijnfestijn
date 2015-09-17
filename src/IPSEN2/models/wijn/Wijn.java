@@ -1,4 +1,4 @@
-package IPSEN2;
+package IPSEN2.models.wijn;
 
 public class Wijn {
     private int wijnID;

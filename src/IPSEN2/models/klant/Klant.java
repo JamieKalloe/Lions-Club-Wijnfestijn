@@ -1,4 +1,4 @@
-package IPSEN2;
+package IPSEN2.models.klant;
 
 public class Klant {
     private int klantID;
