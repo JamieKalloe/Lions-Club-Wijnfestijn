@@ -4,12 +4,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="646.0" prefWidth="935.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IPSEN2.controllers.menu.MenuController">
    <children>
-      <ImageView fitHeight="410.0" fitWidth="606.0" layoutX="-6.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="598.0" fitWidth="968.0" layoutX="-4.0" layoutY="90.0" pickOnBounds="true">
          <image>
             <Image url="@../../images/Achtergrond.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="130.0" fitWidth="965.0" layoutX="-1.0" layoutY="-13.0" onDragDropped="#handleMouseDragged" onMouseDragged="#handleMouseDragged" onMousePressed="#handleMousePressed" pickOnBounds="true">
+         <image>
+            <Image url="@../../images/ActionBar.png" />
          </image>
       </ImageView>
    </children>

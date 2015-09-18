@@ -1,4 +1,4 @@
-package IPSEN2;
+package IPSEN2.views.klant;
 
 public class AanmakenKlantView {
     public AanmakenKlantView() {
