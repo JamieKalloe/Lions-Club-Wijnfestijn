@@ -21,14 +21,19 @@
             <Image url="@../../images/ActionBar.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="888.0" layoutY="11.0" onMouseClicked="#handleCloseButton" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="896.0" layoutY="11.0" onMouseClicked="#handleCloseButton" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/Close_Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="836.0" layoutY="21.0" onMouseClicked="#handleMinimizeButton" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="846.0" layoutY="21.0" onMouseClicked="#handleMinimizeButton" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/Minimize_Button.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="42.0" layoutX="24.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/MenuIcon.png" />
          </image>
       </ImageView>
    </children>
