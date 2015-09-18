@@ -4,16 +4,31 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="646.0" prefWidth="935.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IPSEN2.controllers.menu.MenuController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="688.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IPSEN2.controllers.menu.MenuController">
    <children>
-      <ImageView fitHeight="598.0" fitWidth="968.0" layoutX="-4.0" layoutY="90.0" pickOnBounds="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/Minimize_Button.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="639.0" fitWidth="968.0" layoutX="-4.0" layoutY="49.0" pickOnBounds="true">
          <image>
             <Image url="@../../images/Achtergrond.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="130.0" fitWidth="965.0" layoutX="-1.0" layoutY="-13.0" onDragDropped="#handleMouseDragged" onMouseDragged="#handleMouseDragged" onMousePressed="#handleMousePressed" pickOnBounds="true">
+      <ImageView fitHeight="130.0" fitWidth="965.0" layoutX="-1.0" layoutY="-13.0" onDragDropped="#handleMouseDragged" onMouseDragged="#handleMouseDragged" onMousePressed="#handleMousePressed" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/ActionBar.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="888.0" layoutY="11.0" onMouseClicked="#handleCloseButton" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/Close_Button.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="836.0" layoutY="21.0" onMouseClicked="#handleMinimizeButton" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/Minimize_Button.png" />
          </image>
       </ImageView>
    </children>
