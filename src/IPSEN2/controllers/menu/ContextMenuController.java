@@ -1,13 +1,19 @@
 package IPSEN2.controllers.menu;
 
+import IPSEN2.ContentLoader;
+import javafx.animation.FadeTransition;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -19,9 +25,13 @@ public class ContextMenuController implements Initializable{
     private static double xOffset = 0;
     private static double yOffset = 0;
     private Stage primaryStage;
+    private static final String TITEL = "Home";
 
     @FXML private ImageView menuButton;
     @FXML private AnchorPane navigatieMenu;
+    @FXML private StackPane contentHolder;
+    @FXML private Label titelLabel;
+    @FXML private Pane contentCover;
 
     public void handleMousePressed(MouseEvent event) throws Exception{
         getPrimaryStage(event);
@@ -49,7 +59,6 @@ public class ContextMenuController implements Initializable{
         return primaryStage;
     }
 
-
     private void prepareSlideMenuAnimation() {
 
         TranslateTransition openNavigatieMenu = new TranslateTransition(new Duration(350), navigatieMenu);
@@ -60,15 +69,40 @@ public class ContextMenuController implements Initializable{
         menuButton.setOnMouseClicked((MouseEvent evt) -> {
             if (navigatieMenu.getTranslateX() != 0) {
                 openNavigatieMenu.play();
+                contentCover.setStyle("-fx-background-color:rgba(0,0,0,0.2);");
+                FadeTransition animation = new FadeTransition(Duration.millis(200), contentCover);
+                animation.setFromValue(0);
+                animation.setToValue(1.0);
+                animation.play();
+
+                contentCover.setOnMouseClicked(event -> { sluitNavigatieMenu.setToX(-(navigatieMenu.getWidth()));
+                    sluitNavigatieMenu.play();
+                    contentCover.setStyle(null);
+                });
+
             } else {
+
                 sluitNavigatieMenu.setToX(-(navigatieMenu.getWidth()));
                 sluitNavigatieMenu.play();
+                contentCover.setStyle(null);
+
             }
         });
     }
 
+
+    public void setTitel(String titel){
+        titelLabel.setText(titel);
+    }
+
+    public void setContent(Node node) {
+       contentHolder.getChildren().setAll(node);
+    }
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         prepareSlideMenuAnimation();
+        setTitel(TITEL);
     }
 }
