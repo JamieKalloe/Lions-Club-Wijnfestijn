@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
 <?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="688.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IPSEN2.controllers.menu.MenuController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="688.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IPSEN2.controllers.menu.MenuContextController">
    <children>
       <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/Minimize_Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="639.0" fitWidth="968.0" layoutX="-4.0" layoutY="49.0" pickOnBounds="true">
+      <ImageView fx:id="achtergrond" fitHeight="639.0" fitWidth="968.0" layoutX="-4.0" layoutY="49.0" pickOnBounds="true">
          <image>
             <Image url="@../../images/Achtergrond.jpg" />
          </image>
@@ -31,10 +33,24 @@
             <Image url="@../../images/Minimize_Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="42.0" layoutX="24.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="menuButton" fitHeight="40.0" fitWidth="42.0" layoutX="24.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/MenuIcon.png" />
          </image>
       </ImageView>
+      <Label layoutX="86.0" layoutY="19.0" text="Label" textFill="WHITE">
+         <font>
+            <Font name="Roboto Regular" size="24.0" />
+         </font>
+      </Label>
+      <AnchorPane fx:id="navigatieMenu" layoutY="63.0" prefHeight="625.0" prefWidth="236.0" translateX="-266.0">
+         <children>
+            <ImageView fitHeight="625.0" fitWidth="276.0" layoutX="-11.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/NavigatieMenu.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
