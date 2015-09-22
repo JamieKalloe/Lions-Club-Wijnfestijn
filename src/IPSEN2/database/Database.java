@@ -1,21 +1,39 @@
 package IPSEN2.database;
 
 import java.util.HashMap;
-import com.mysql.jdbc.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Database {
 
-    private static Database ourInstance = new Database();
-    private static String databaseURL = "";
-    private static String databaseUser = "";
-    private static String databasePassword = "";
+    private Connection connection;
+
+    private static Database databaseInstance ;
 
     public static Database getInstance() {
-        return ourInstance;
+        if(databaseInstance == null) {
+            databaseInstance = new Database();
+        }
+        return databaseInstance;
     }
 
     private Database() {
+        /*String url = "jdbc:mysql://localhost:3306/";
+        String user = "lions_club";
+        String password = "root";
+        String dbName = "lions_club";*/
 
+        String url = "";
+        String user = "";
+        String password = "";
+        String dbName = "";
+
+        try {
+            this.connection = DriverManager.getConnection(url+dbName, user, password);
+        } catch(SQLException e) {
+            System.out.println(e);
+        }
     }
 
     public Object select(String from) {

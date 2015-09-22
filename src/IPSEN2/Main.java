@@ -1,6 +1,7 @@
 package IPSEN2;
 
 import IPSEN2.controllers.menu.ContextMenuController;
+import IPSEN2.database.Database;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -44,6 +45,7 @@ public class Main extends Application{
     }
 
     public static void main(String args[]){
+        System.out.print(Database.getInstance());
         launch(args);
     }
 
