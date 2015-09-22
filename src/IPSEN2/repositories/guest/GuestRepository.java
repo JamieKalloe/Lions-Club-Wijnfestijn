@@ -1,8 +1,13 @@
 package IPSEN2.repositories.guest;
 
 import IPSEN2.database.Database;
+import IPSEN2.models.address.Address;
 import IPSEN2.models.guest.Guest;
+import IPSEN2.models.referral.Referral;
 import IPSEN2.repositories.Crudable;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,11 +20,51 @@ public class GuestRepository implements Crudable {
     }
 
     public ArrayList<Guest> all() {
-        return new ArrayList<Guest>();
+        ArrayList<Guest> guestList = new ArrayList<Guest>();
+        ResultSet queryResult = databaseInstance.select("guest");
+        try {
+            while(queryResult.next()) {
+                Guest guest = new Guest();
+                guest.setGuestID(queryResult.getInt("id"));
+                guest.setFirstname(queryResult.getString("first_name"));
+                guest.setPrefix(queryResult.getString("prefix_last_name"));
+                guest.setLastname(queryResult.getString("last_name"));
+                guest.setEmail(queryResult.getString("email"));
+                guest.setNotes(queryResult.getString("notes"));
+                guest.setGender(queryResult.getString("gender"));
+                guest.setAddress(new Address(queryResult.getInt("address_id")));
+                guest.setReferral(new Referral(queryResult.getInt("referral_id")));
+
+                guestList.add(guest);
+            }
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        return guestList;
     }
 
     public Guest find(int id) {
-        return new Guest();
+        ResultSet queryResult = databaseInstance.select("guest", id);
+        try {
+            while(queryResult.next()) {
+                Guest guest = new Guest();
+                guest.setGuestID(queryResult.getInt("id"));
+                guest.setFirstname(queryResult.getString("first_name"));
+                guest.setPrefix(queryResult.getString("prefix_last_name"));
+                guest.setLastname(queryResult.getString("last_name"));
+                guest.setEmail(queryResult.getString("email"));
+                guest.setNotes(queryResult.getString("notes"));
+                guest.setGender(queryResult.getString("gender"));
+                guest.setAddress(new Address(queryResult.getInt("address_id")));
+                guest.setReferral(new Referral(queryResult.getInt("referral_id")));
+
+                return guest;
+            }
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            return null;
+        }
+        return null;
     }
 
     public void create(HashMap data) {

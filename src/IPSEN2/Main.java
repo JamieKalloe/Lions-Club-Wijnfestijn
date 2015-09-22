@@ -1,5 +1,6 @@
 package IPSEN2;
 
+import IPSEN2.controllers.guest.GuestController;
 import IPSEN2.controllers.menu.ContextMenuController;
 import IPSEN2.database.Database;
 import javafx.application.Application;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 
 /**
  * Created by Philip on 18-09-15.
@@ -45,7 +47,7 @@ public class Main extends Application{
     }
 
     public static void main(String args[]){
-        System.out.print(Database.getInstance());
+        new GuestController();
         launch(args);
     }
 

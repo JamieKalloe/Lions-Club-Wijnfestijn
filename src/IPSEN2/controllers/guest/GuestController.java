@@ -8,6 +8,8 @@ public class GuestController {
 
     public GuestController() {
         this.service = new GuestService();
+
+        //System.out.println(service.find(2).getReferral().getName());
     }
 
 }

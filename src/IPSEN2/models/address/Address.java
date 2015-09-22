@@ -4,49 +4,82 @@ package IPSEN2.models.address;
  * Created by mdbaz on 21-09-2015.
  */
 public class Address {
-    private String straat;
-    private String huisnummer; //Huisnummer is een String ivm huisnummers die letters erachter kunnen hebben
-    private String postcode;
-    private String woonplaats;
+    private int addressID;
+    private String street;
+    private String houseNumber; //Huisnummer is een String ivm huisnummers die letters erachter kunnen hebben
+    private String zipCode;
+    private String city;
+    private String country;
 
-    public Address(String street, String houseNumber, String zipCode, String city) {
-        this.straat = street;
-        this.huisnummer = houseNumber;
-        this.postcode = zipCode;
-        this.woonplaats = city;
+    public Address(int addressID) {
+        this.addressID = addressID;
+        this.street = null;
+        this.houseNumber = null;
+        this.zipCode = null;
+        this.city = null;
+        this.country = null;
+    }
+
+    public Address(int addressID, String street, String houseNumber, String zipCode, String city, String country) {
+        this.addressID = addressID;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.country = country;
+    }
+
+    public boolean checkIfOnlyID() {
+        return street == null && houseNumber == null && zipCode == null && city == null && country == null;
     }
 
     //Getters
-    public String getStraat() {
-        return straat;
+    public String getStreet() {
+        return street;
     }
 
-    public String getHuisnummer() {
-        return huisnummer;
+    public String getHouseNumber() {
+        return houseNumber;
     }
 
-    public String getPostcode() {
-        return postcode;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public String getWoonplaats() {
-        return woonplaats;
+    public String getCity() {
+        return city;
+    }
+
+    public int getAddressID() {
+        return addressID;
+    }
+
+    public String getCountry() {
+        return country;
     }
 
     //Setters
-    public void setStraat(String straat) {
-        this.straat = straat;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
-    public void setHuisnummer(String huisnummer) {
-        this.huisnummer = huisnummer;
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
     }
 
-    public void setPostcode(String postcode) {
-        this.postcode = postcode;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
-    public void setWoonplaats(String woonplaats) {
-        this.woonplaats = woonplaats;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setAddressID(int addressID) {
+        this.addressID = addressID;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

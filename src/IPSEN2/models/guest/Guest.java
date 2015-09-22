@@ -1,124 +1,115 @@
 package IPSEN2.models.guest;
 
 import IPSEN2.models.address.Address;
+import IPSEN2.models.referral.Referral;
 
 public class Guest {
-    private int klantID;
+    private int guestID;
 
     private String gender;
-    private String achternaam;
-    private String tussenvoegsel;
-    private String voornaam;
+    private String lastname;
+    private String prefix;
+    private String firstname;
 
-    private Address adddres;
+    private Address address;
 
-    private String emailadres;
+    private String email;
 
-    private String referentie;
-    private int opmerkingID;
+    private Referral referral;
+    private String notes;
 
     public Guest() {
 
     }
 
-    public Guest(String gender, String achternaam, String voornaam) {
+    public Guest(String gender, String lastname, String firstname) {
         this.gender = gender;
-        this.achternaam = achternaam;
-        this.voornaam = voornaam;
+        this.lastname = lastname;
+        this.firstname = firstname;
     }
 
-    public Guest(String gender, String achternaam, String voornaam, String straat, String huisnummer, String postcode, String woonplaats, String emailadres) {
+    public Guest(int guestID, String gender, String lastname, String prefix, String firstname, int addressID ,String email, int referralID, String notes) {
+        this.guestID = guestID;
         this.gender = gender;
-        this.achternaam = achternaam;
-        this.voornaam = voornaam;
-        this.adddres = new Address(straat, huisnummer, postcode, woonplaats);
-        this.emailadres = emailadres;
-    }
-
-    public Guest(String gender, String achternaam, String voornaam, String straat, String huisnummer, String postcode, String woonplaats, String emailadres, String referentie, int opmerkingID) {
-        this.gender = gender;
-        this.achternaam = achternaam;
-        this.voornaam = voornaam;
-        this.adddres = new Address(straat, huisnummer, postcode, woonplaats);
-        this.emailadres = emailadres;
-        this.referentie = referentie;
-        this.opmerkingID = opmerkingID;
-    }
-
-    public void aanmakenKlant() {
-
-    }
-
-    public void verwijderKlant() {
-
-    }
-
-    public void aanpassenKlant() {
-
+        this.lastname = lastname;
+        this.prefix = prefix;
+        this.firstname = firstname;
+        this.address = new Address(addressID);
+        this.email = email;
+        this.referral = new Referral(referralID);
+        this.notes = notes;
     }
 
     //GETTERS
-    public int getKlantID() {
-        return this.getKlantID();
+    public int getGuestID() {
+        return guestID;
     }
 
     public String getGender() {
         return gender;
     }
 
-    public String getAchternaam() {
-        return achternaam;
+    public String getLastname() {
+        return lastname;
     }
 
-    public String getTussenvoegsel() {
-        return tussenvoegsel;
+    public String getPrefix() {
+        return prefix;
     }
 
-    public String getVoornaam() {
-        return voornaam;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public String getEmailadres() {
-        return emailadres;
+    public String getEmail() {
+        return email;
     }
 
-    public String getReferentie() {
-        return referentie;
+    public Referral getReferral() {
+        return referral;
     }
 
-    public int getOpmerkingID() {
-        return opmerkingID;
+    public String getNotes() {
+        return notes;
+    }
+
+    public Address getAddress() {
+        return address;
     }
 
     //SETTERS
-    public void setKlantID(int klantID) {
-        this.klantID = klantID;
+    public void setGuestID(int guestID) {
+        this.guestID = guestID;
     }
 
     public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public void setAchternaam(String achternaam) {
-        this.achternaam = achternaam;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public void setTussenvoegsel(String tussenvoegsel) {
-        this.tussenvoegsel = tussenvoegsel;
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
     }
 
-    public void setVoornaam(String voornaam) {
-        this.voornaam = voornaam;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
-    public void setEmailadres(String emailadres) {
-        this.emailadres = emailadres;
-    }
-
-    public void setReferentie(String referentie) {
-        this.referentie = referentie;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setOpmerkingID(int opmerkingID) {
-        this.opmerkingID = opmerkingID;
+    public void setReferral(Referral referral) {
+        this.referral = referral;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
