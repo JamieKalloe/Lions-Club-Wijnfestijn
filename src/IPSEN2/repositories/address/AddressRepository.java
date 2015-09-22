@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Created by mdbaz on 22-09-2015.
@@ -41,8 +42,15 @@ public class AddressRepository implements Crudable {
         return null;
     }
 
-    public void create(HashMap data) {
+    public int create(HashMap data) {
+        HashMap databaseData = new HashMap();
+        databaseData.put("zipcode",data.get("zipCode").toString());
+        databaseData.put("street", data.get("street").toString());
+        databaseData.put("house_number", data.get("houseNumber").toString());
+        databaseData.put("country", data.get("country").toString());
+        databaseData.put("city", data.get("city").toString());
 
+       return databaseInstance.insertInto("address", databaseData);
     }
 
     public void update(int id, HashMap data) {
@@ -51,5 +59,29 @@ public class AddressRepository implements Crudable {
 
     public void delete(int id) {
 
+    }
+
+    public int exists(HashMap data) {
+        String where = "";
+        where += "zipcode = '"+data.get("zipCode")+"' AND ";
+        where += "street = '"+data.get("street")+"' AND ";
+        where += "house_number = '"+data.get("houseNumber")+"' AND ";
+        where += "country = '"+data.get("country")+"' AND ";
+        where += "city = '"+data.get("city")+"'";
+        ResultSet resultSet = databaseInstance.select("address", where);
+        try{
+            if(resultSet.isBeforeFirst()) {
+                while(resultSet.next()) {
+                    return resultSet.getInt("id");
+                }
+            }
+            else {
+                return 0;
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+        return -1;
     }
 }

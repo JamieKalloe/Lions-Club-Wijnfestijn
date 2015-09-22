@@ -20,15 +20,15 @@ public class Database {
 
     private Database() {
         //Mike's DB settings
-        /*String url = "jdbc:mysql://localhost:3306/";
+        String url = "jdbc:mysql://localhost:3306/";
         String user = "lions_club";
         String password = "root";
-        String dbName = "lions_club";*/
+        String dbName = "lions_club";
 
-        String url = "";
+        /*String url = "";
         String user = "";
         String password = "";
-        String dbName = "";
+        String dbName = "";*/
 
         try {
             this.connection = DriverManager.getConnection(url+dbName, user, password);
@@ -56,12 +56,12 @@ public class Database {
     }
 
     public int insertInto(String table, HashMap data) {
-        String queryTable = "INSERT INTO " + table + "(";
+        String queryTable = "INSERT INTO " + table + " (";
         String queryValues = ") VALUES(";
         Set keySet = data.keySet();
         Object[] keyArray = keySet.toArray();
         for(int index = 0; index < keyArray.length; index++) {
-            queryTable += "'"+keyArray[index].toString()+"'";
+            queryTable += ""+keyArray[index].toString()+"";
             if(data.get(keyArray[index])  instanceof  String ) {
                 queryValues += "'"+data.get(keyArray[index]).toString()+"'";
             }
@@ -73,7 +73,8 @@ public class Database {
                 queryValues += ", ";
             }
         }
-        int result = updateDatabase(queryTable+queryValues+")");
+        int result = updateDatabase(queryTable + queryValues + ")", Statement.RETURN_GENERATED_KEYS);
+
         return result;
     }
 
@@ -102,6 +103,25 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
             return -5;
+        }
+    }
+
+    private int updateDatabase(String updateQuery, int settings) {
+        try {
+            statement = databaseInstance.connection.createStatement();
+            int result = statement.executeUpdate(updateQuery, settings);
+            try {
+                ResultSet resultSet = statement.getGeneratedKeys();
+                while(resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
         }
     }
 }

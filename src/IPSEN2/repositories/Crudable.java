@@ -9,7 +9,7 @@ import java.util.HashMap;
 public interface Crudable {
     Object all();
     Object find(int id);
-    void create(HashMap data);
+    int create(HashMap data);
     void delete(int id);
     void update(int id, HashMap data);
 

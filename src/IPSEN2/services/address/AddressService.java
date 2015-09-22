@@ -2,6 +2,7 @@ package IPSEN2.services.address;
 
 import IPSEN2.models.address.Address;
 import IPSEN2.repositories.address.AddressRepository;
+import IPSEN2.validators.address.AddressValidator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,9 +12,11 @@ import java.util.HashMap;
  */
 public class AddressService {
     private AddressRepository repository;
+    private AddressValidator validator;
 
     public AddressService() {
         repository = new AddressRepository();
+        validator = new AddressValidator();
     }
 
     public ArrayList<Address> all() {
@@ -25,8 +28,18 @@ public class AddressService {
         return address;
     }
 
-    public Object create(HashMap data) {
-        return true;
+    public int create(HashMap data) {
+        boolean isValid = validator.validate(data);
+        if(isValid) {
+            int exists = repository.exists(data);
+            if(exists == 0) {
+                return repository.create(data);
+            }
+            else{
+                return exists;
+            }
+        }
+        return -1;
     }
 
     public Object update(int id, HashMap data) {

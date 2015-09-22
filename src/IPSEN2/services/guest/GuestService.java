@@ -45,12 +45,15 @@ public class GuestService {
         return guest;
     }
 
-    public Object subscribe(HashMap data) {
+    public int subscribe(HashMap data) {
         boolean isValid = validator.validate(data);
         if(isValid) {
-            repository.create(data);
+            data.put("addressID", addressService.create(data));
+            data.put("referralID", referralService.create(data));
+            int i = repository.create(data);
+            return  i;
         }
-        return true;
+        return -1;
     }
 
     public Object edit(int id, HashMap data) {
