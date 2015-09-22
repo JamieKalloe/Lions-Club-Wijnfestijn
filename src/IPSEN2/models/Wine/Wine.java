@@ -1,12 +1,13 @@
 package IPSEN2.models.Wine;
 
 public class Wine {
-    private int wijnID;
+    private int wineID;
     private String type;
     private String name;
     private String country;
     private int year;
     private double price;
+    public WineMerchant merchant;
 
     public Wine() {
 
@@ -20,21 +21,21 @@ public class Wine {
         this.price = price;
     }
 
-    public void toevoegenWijn() {
+    public void addWine() {
 
     }
 
-    public void verwijderenWijn() {
+    public void deleteWine() {
 
     }
 
-    public void aanpassenWijn() {
+    public void editWine() {
 
     }
 
     //GETTERS
-    public int getWijnID() {
-        return wijnID;
+    public int getWineID() {
+        return wineID;
     }
 
     public String getType() {
@@ -57,9 +58,13 @@ public class Wine {
         return price;
     }
 
+    public WineMerchant getMerchant() {
+        return merchant;
+    }
+
     //SETTERS
-    public void setWijnID(int wijnID) {
-        this.wijnID = wijnID;
+    public void setWineID(int wineID) {
+        this.wineID = wineID;
     }
 
     public void setType(String type) {
@@ -80,5 +85,9 @@ public class Wine {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void setMerchant(WineMerchant merchant) {
+        this.merchant = merchant;
     }
 }
