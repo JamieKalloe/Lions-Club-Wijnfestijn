@@ -1,4 +1,4 @@
-package IPSEN2.controllers.bestelling;
+package IPSEN2.controllers.order;
 
 public class BestellingController {
 
