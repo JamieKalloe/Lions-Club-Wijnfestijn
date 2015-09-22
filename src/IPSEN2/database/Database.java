@@ -1,5 +1,7 @@
 package IPSEN2.database;
 
+import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
+
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Set;
@@ -78,6 +80,28 @@ public class Database {
         return result;
     }
 
+    public int update(String table, int id, HashMap data) {
+        String query = "UPDATE " + table + " SET ";
+        Set keySet = data.keySet();
+        Object[] keyArray = keySet.toArray();
+        for(int index = 0; index < keyArray.length; index++) {
+            query += keyArray[index].toString()+"=";
+            if(data.get(keyArray[index]) instanceof String ) {
+                query += "'"+data.get(keyArray[index])+"'";
+            }
+            else {
+                query += data.get(keyArray[index]).toString();
+            }
+            if(index != keyArray.length - 1) {
+                query += ", ";
+            }
+        }
+        query += " WHERE id="+id;
+        System.out.println(query);
+        int result = updateDatabase(query);
+        return result;
+    }
+
     public int delete(String from, int id) {
         String query = "DELETE FROM "+from+" WHERE id="+id;
         int result = updateDatabase(query);
@@ -102,7 +126,7 @@ public class Database {
             return result;
         } catch (SQLException e) {
             e.printStackTrace();
-            return -5;
+            return -1;
         }
     }
 

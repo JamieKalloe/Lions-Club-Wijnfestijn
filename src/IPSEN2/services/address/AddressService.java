@@ -43,10 +43,18 @@ public class AddressService {
     }
 
     public Object update(int id, HashMap data) {
+        Address address = repository.find(id);
+        if(address != null) {
+            boolean isValid = validator.validate(data);
+            if(isValid) {
+                repository.update(id, data);
+            }
+        }
         return true;
     }
 
     public Object delete(int id) {
+        repository.delete(id);
         return true;
     }
 }

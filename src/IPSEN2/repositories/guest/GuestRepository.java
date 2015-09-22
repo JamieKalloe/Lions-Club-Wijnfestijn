@@ -82,10 +82,20 @@ public class GuestRepository implements Crudable {
     }
 
     public void update(int id, HashMap data) {
+        HashMap databaseData = new HashMap();
+        databaseData.put("address_id", Integer.parseInt(data.get("addressID").toString()));
+        databaseData.put("referral_id", Integer.parseInt(data.get("referralID").toString()));
+        databaseData.put("email", data.get("email").toString());
+        databaseData.put("first_name", data.get("firstname").toString());
+        databaseData.put("last_name", data.get("lastname").toString());
+        databaseData.put("prefix_last_name", data.get("prefix").toString());
+        databaseData.put("gender", data.get("gender").toString());
+        databaseData.put("notes", data.get("notes").toString());
 
+        databaseInstance.update("guest", id, databaseData);
     }
 
     public void delete(int id) {
-
+        databaseInstance.delete("guest", id);
     }
 }

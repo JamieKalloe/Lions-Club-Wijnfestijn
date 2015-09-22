@@ -56,13 +56,18 @@ public class GuestService {
         return -1;
     }
 
-    public Object edit(int id, HashMap data) {
+    public boolean edit(int id, HashMap data) {
         Guest guest = repository.find(id);
-        boolean isValid = validator.validate(data);
-        if(isValid) {
-            repository.update(id, data);
+        if(guest != null) {
+            boolean isValid = validator.validate(data);
+            if(isValid) {
+                data.put("addressID", guest.getAddress().getAddressID());
+                data.put("referralID", guest.getReferral().getReferralID());
+                repository.update(id, data);
+            }
+            return true;
         }
-        return true;
+        return false;
     }
 
     public Object remove(int id) {

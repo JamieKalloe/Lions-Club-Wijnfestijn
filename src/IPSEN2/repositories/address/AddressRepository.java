@@ -54,11 +54,18 @@ public class AddressRepository implements Crudable {
     }
 
     public void update(int id, HashMap data) {
+        HashMap databaseData = new HashMap();
+        databaseData.put("zipcode",data.get("zipCode").toString());
+        databaseData.put("street", data.get("street").toString());
+        databaseData.put("house_number", data.get("houseNumber").toString());
+        databaseData.put("country", data.get("country").toString());
+        databaseData.put("city", data.get("city").toString());
 
+        databaseInstance.update("address", id, databaseData);
     }
 
     public void delete(int id) {
-
+        databaseInstance.delete("address", id);
     }
 
     public int exists(HashMap data) {

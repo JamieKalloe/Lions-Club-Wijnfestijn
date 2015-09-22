@@ -37,10 +37,10 @@ public class ReferralService {
     }
 
     public void update(int id, HashMap data) {
-
+        repository.update(id, data);
     }
 
     public void delete(int id) {
-
+        repository.delete(id);
     }
 }

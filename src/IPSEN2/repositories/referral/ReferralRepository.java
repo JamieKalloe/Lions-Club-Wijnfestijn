@@ -45,11 +45,14 @@ public class ReferralRepository implements Crudable{
     }
 
     public void delete(int id) {
-
+        databaseInstance.delete("referral", id);
     }
 
     public void update(int id, HashMap data) {
+        HashMap databaseData = new HashMap();
+        databaseData.put("name", data.get("referralName").toString());
 
+        databaseInstance.update("referral", id, databaseData);
     }
 
     public int exists(HashMap data) {

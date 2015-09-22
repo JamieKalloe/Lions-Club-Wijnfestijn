@@ -12,21 +12,21 @@ public class GuestController {
         this.service = new GuestService();
 
         HashMap data = new HashMap();
-        data.put("email", "d.duck@duckstad.nl");
-        data.put("firstname", "Donaldinho");
-        data.put("lastname", "Dock");
-        data.put("prefix", " ");
-        data.put("gender", "F");
-        data.put("notes", "Vage eend dit zeg");
-        data.put("zipCode", "1066DD");
+        data.put("email", "hallo.vader@hoofddorp.nl");
+        data.put("firstname", "Hallo");
+        data.put("lastname", "Vader");
+        data.put("prefix", "");
+        data.put("gender", "M");
+        data.put("notes", "This is a note");
+        data.put("zipCode", "1066DE");
         data.put("street", "Duckstraat");
         data.put("houseNumber", "666");
-        data.put("country", "Geen idee");
-        data.put("city", "Duckstad");
+        data.put("country", "Nederland");
+        data.put("city", "Hoofddorp");
         data.put("referralName", "Member");
 
-        int id = service.subscribe(data);
-        System.out.println(service.find(id).getFirstname());
+        service.remove(9);
+        System.out.println(service.find(8).getFirstname());
     }
 
 }
