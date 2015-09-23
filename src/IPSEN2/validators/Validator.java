@@ -18,7 +18,8 @@ public class Validator {
     }
 
     public boolean validateGender(String gender) {
-        Pattern pattern = Pattern.compile("^\b(M|V)\b$");
+
+        Pattern pattern = Pattern.compile("^[mfMF]$");
         Matcher matcher = pattern.matcher(gender);
         if(matcher.matches()) {
             return true;

@@ -45,21 +45,29 @@ public class GuestService {
         return guest;
     }
 
-    public Object subscribe(HashMap data) {
+    public int subscribe(HashMap data) {
         boolean isValid = validator.validate(data);
         if(isValid) {
-            repository.create(data);
+            data.put("addressID", addressService.create(data));
+            data.put("referralID", referralService.create(data));
+            int i = repository.create(data);
+            return  i;
         }
-        return true;
+        return -1;
     }
 
-    public Object edit(int id, HashMap data) {
+    public boolean edit(int id, HashMap data) {
         Guest guest = repository.find(id);
-        boolean isValid = validator.validate(data);
-        if(isValid) {
-            repository.update(id, data);
+        if(guest != null) {
+            boolean isValid = validator.validate(data);
+            if(isValid) {
+                data.put("addressID", guest.getAddress().getAddressID());
+                data.put("referralID", guest.getReferral().getReferralID());
+                repository.update(id, data);
+            }
+            return true;
         }
-        return true;
+        return false;
     }
 
     public Object remove(int id) {

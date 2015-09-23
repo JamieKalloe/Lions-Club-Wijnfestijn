@@ -1,6 +1,7 @@
 package IPSEN2.services.referral;
 
 import IPSEN2.models.referral.Referral;
+import IPSEN2.repositories.Crudable;
 import IPSEN2.repositories.referral.ReferralRepository;
 
 import java.util.ArrayList;
@@ -25,15 +26,21 @@ public class ReferralService {
         return referral;
     }
 
-    public void create(HashMap data) {
-
+    public int create(HashMap data) {
+        int exists = repository.exists(data);
+        if(exists == 0) {
+            return repository.create(data);
+        }
+        else{
+            return exists;
+        }
     }
 
     public void update(int id, HashMap data) {
-
+        repository.update(id, data);
     }
 
     public void delete(int id) {
-
+        repository.delete(id);
     }
 }
