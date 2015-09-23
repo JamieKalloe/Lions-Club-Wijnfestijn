@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="965.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IPSEN2.controllers.menu.HoofdMenuController">
+   <children>
+      <Pane fx:id="bestellingenButton" layoutX="709.0" layoutY="111.0" onMouseClicked="#handleButton" styleClass="buttonWithoutHover">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#handleButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/BestellingenShortcut.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="evenementenButton" layoutX="151.0" layoutY="340.0" onMouseClicked="#handleButton" styleClass="buttonWithoutHover">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#handleButton" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/EvenementenShortcut.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="427.0" layoutY="337.0" onMouseClicked="#handleButton" styleClass="buttonWithoutHover">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/HandleidingShortcut.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="gastenButton" layoutX="148.0" layoutY="115.0" onMouseClicked="#handleButton" styleClass="buttonWithoutHover">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="pane">
+               <image>
+                  <Image url="@../../images/GastenShortcut.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="wijnenButton" layoutX="427.0" layoutY="111.0" onMouseClicked="#handleButton" styleClass="buttonWithoutHover">
+         <children>
+         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="pane">
+            <image>
+               <Image url="@../../images/WijnenShortcut.png" />
+            </image>
+         </ImageView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

@@ -45,7 +45,7 @@ public class Main extends Application{
     }
 
     public static void main(String args[]){
-        new GuestController();
+//        new GuestController();
         launch(args);
     }
 
