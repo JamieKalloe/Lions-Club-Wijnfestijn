@@ -1,4 +1,4 @@
-package IPSEN2.controllers.order;
+package IPSEN2.controllers.evenement;
 
 import IPSEN2.ContentLoader;
 import javafx.fxml.Initializable;
@@ -6,9 +6,9 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class BestellingController implements Initializable{
+public class EvenementController implements Initializable{
 
-   public BestellingController() {
+   public EvenementController() {
 
    }
 
@@ -34,6 +34,6 @@ public class BestellingController implements Initializable{
 
    @Override
    public void initialize(URL location, ResourceBundle resources) {
-      ContentLoader.setMainFrameTitle(ContentLoader.BESTELLINGEN_TITLE);
+      ContentLoader.setMainFrameTitle(ContentLoader.EVENEMENTEN_TITLE);
    }
 }

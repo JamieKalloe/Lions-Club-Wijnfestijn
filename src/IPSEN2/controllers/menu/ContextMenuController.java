@@ -2,11 +2,11 @@ package IPSEN2.controllers.menu;
 
 import IPSEN2.ContentLoader;
 import javafx.animation.FadeTransition;
-import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -20,18 +20,22 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ContextMenuController implements Initializable{
+public class ContextMenuController extends ContentLoader implements Initializable{
 
     private static double xOffset = 0;
     private static double yOffset = 0;
     private Stage primaryStage;
-    private static final String TITEL = "Home";
+
+
 
     @FXML private ImageView menuButton;
     @FXML private AnchorPane navigatieMenu;
     @FXML private StackPane contentHolder;
     @FXML private Label titelLabel;
     @FXML private Pane contentCover;
+    @FXML private Pane logoButton, homeNav, gastenNav, wijnenNav,
+    bestellingenNav, evenementenNav, handleidingNav;
+
 
     public void handleMousePressed(MouseEvent event) throws Exception{
         getPrimaryStage(event);
@@ -54,6 +58,26 @@ public class ContextMenuController implements Initializable{
             getPrimaryStage(event).close();
     }
 
+    @FXML
+    public void handleNavButton(MouseEvent event) throws Exception{
+        Object selectedPane = event.getSource();
+           if (selectedPane == homeNav || selectedPane == logoButton ){
+               addContent(HOOFDMENU);
+           } else if (selectedPane == gastenNav){
+              addContent(GASTEN);
+           } else if (selectedPane == wijnenNav) {
+               addContent(WIJNEN);
+           } else if (selectedPane == bestellingenNav) {
+               addContent(BESTELLINGEN);
+           } else if (selectedPane == evenementenNav) {
+               addContent(EVENEMENTEN);
+           } else if (selectedPane == handleidingNav) {
+               addContent(GASTEN);
+           }
+
+        sluitNavMenu();
+    }
+
     public Stage getPrimaryStage(Event event) {
         primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         return primaryStage;
@@ -61,35 +85,38 @@ public class ContextMenuController implements Initializable{
 
     private void prepareSlideMenuAnimation() {
 
-        TranslateTransition openNavigatieMenu = new TranslateTransition(new Duration(350), navigatieMenu);
-        openNavigatieMenu.setToX(0);
-;
-        TranslateTransition sluitNavigatieMenu = new TranslateTransition(new Duration(350), navigatieMenu);
-
-        menuButton.setOnMouseClicked((MouseEvent evt) -> {
+    menuButton.setOnMouseClicked(event -> {
             if (navigatieMenu.getTranslateX() != 0) {
-                openNavigatieMenu.play();
-                contentCover.setStyle("-fx-background-color:rgba(0,0,0,0.2);");
-                FadeTransition animation = new FadeTransition(Duration.millis(200), contentCover);
-                animation.setFromValue(0);
-                animation.setToValue(1.0);
-                animation.play();
-
-                contentCover.setOnMouseClicked(event -> { sluitNavigatieMenu.setToX(-(navigatieMenu.getWidth()));
-                    sluitNavigatieMenu.play();
-                    contentCover.setStyle(null);
-                });
-
+                openNavMenu();
+                contentCover.setOnMouseClicked(e -> sluitNavMenu());
             } else {
-
-                sluitNavigatieMenu.setToX(-(navigatieMenu.getWidth()));
-                sluitNavigatieMenu.play();
-                contentCover.setStyle(null);
-
+                sluitNavMenu();
             }
         });
     }
 
+    private void openNavMenu() {
+        contentCover.setDisable(false);
+        TranslateTransition openNavigatieMenu = new TranslateTransition(new Duration(350), navigatieMenu);
+        openNavigatieMenu.setToX(0);
+
+        openNavigatieMenu.play();
+        contentCover.setStyle("-fx-background-color:rgba(0,0,0,0.2);");
+        FadeTransition animation = new FadeTransition(Duration.millis(200), contentCover);
+        animation.setFromValue(0);
+        animation.setToValue(1.0);
+        animation.play();
+    }
+
+
+    private void sluitNavMenu() {
+        contentCover.setDisable(true);
+        TranslateTransition sluitNavigatieMenu = new TranslateTransition(new Duration(350), navigatieMenu);
+        sluitNavigatieMenu.setToX(-(navigatieMenu.getWidth()));
+        sluitNavigatieMenu.play();
+        contentCover.setStyle(null);
+
+    }
 
     public void setTitel(String titel){
         titelLabel.setText(titel);
@@ -99,10 +126,12 @@ public class ContextMenuController implements Initializable{
        contentHolder.getChildren().setAll(node);
     }
 
+    public void removeContent() { contentCover.getChildren().removeAll();}
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         prepareSlideMenuAnimation();
-        setTitel(TITEL);
+
+
     }
 }
