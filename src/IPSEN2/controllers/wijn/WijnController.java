@@ -1,6 +1,12 @@
 package IPSEN2.controllers.wijn;
 
-public class WijnController {
+import IPSEN2.ContentLoader;
+import javafx.fxml.Initializable;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class WijnController implements Initializable{
 
     public WijnController() {
 
@@ -16,5 +22,10 @@ public class WijnController {
 
     public void cmdAanpassenWijn() {
 
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ContentLoader.setMainFrameTitle(ContentLoader.WIJNEN_TITLE);
     }
 }

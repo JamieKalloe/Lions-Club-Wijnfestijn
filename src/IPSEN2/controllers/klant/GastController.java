@@ -1,6 +1,12 @@
 package IPSEN2.controllers.klant;
 
-public class GastController {
+import IPSEN2.ContentLoader;
+import javafx.fxml.Initializable;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class GastController implements Initializable{
 
     public GastController() {
 
@@ -16,5 +22,10 @@ public class GastController {
 
     public void cmdVerwijderenKlant() {
 
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ContentLoader.setMainFrameTitle(ContentLoader.GASTEN_TITLE);
     }
 }

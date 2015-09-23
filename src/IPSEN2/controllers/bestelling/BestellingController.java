@@ -1,6 +1,12 @@
 package IPSEN2.controllers.bestelling;
 
-public class BestellingController {
+import IPSEN2.ContentLoader;
+import javafx.fxml.Initializable;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class BestellingController implements Initializable{
 
    public BestellingController() {
 
@@ -24,5 +30,10 @@ public class BestellingController {
 
    public void cmdMakenWijnhandelFactuur() {
 
+   }
+
+   @Override
+   public void initialize(URL location, ResourceBundle resources) {
+      ContentLoader.setMainFrameTitle(ContentLoader.BESTELLINGEN_TITLE);
    }
 }
