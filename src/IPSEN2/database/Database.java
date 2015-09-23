@@ -1,7 +1,5 @@
 package IPSEN2.database;
 
-import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
-
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Set;
