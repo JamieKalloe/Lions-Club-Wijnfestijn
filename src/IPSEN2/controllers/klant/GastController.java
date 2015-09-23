@@ -1,8 +1,8 @@
 package IPSEN2.controllers.klant;
 
-public class KlantController {
+public class GastController {
 
-    public KlantController() {
+    public GastController() {
 
     }
 
