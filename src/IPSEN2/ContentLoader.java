@@ -1,10 +1,8 @@
 package IPSEN2;
 
-import IPSEN2.controllers.menu.ContextMenuController;
+import IPSEN2.controllers.menu.MainFrameController;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
@@ -13,14 +11,14 @@ import java.io.IOException;
  */
 public abstract class ContentLoader {
 
-    public static final String CONTEXTMENU = "/IPSEN2/views/menu/ContextMenu.fxml";
+    public static final String MAINFRAME = "/IPSEN2/views/menu/MainFrame.fxml";
     public static final String HOOFDMENU = "/IPSEN2/views/menu/HoofdMenu.fxml";
     public static final String GASTEN = "/IPSEN2/views/klant/Gasten.fxml";
     public static final String WIJNEN = "/IPSEN2/views/wijn/Wijnen.fxml";
     public static final String BESTELLINGEN = "/IPSEN2/views/bestelling/Bestellingen.fxml";
     public static final String EVENEMENTEN = "/IPSEN2/views/evenement/Evenementen.fxml";
     public static final String HANDLEIDING = "/IPSEN2/views/klant/Gasten.fxml";
-    public static final String CONTEXTMENU_OPMAAK = "IPSEN2/styles/Menu.css";
+    public static final String STYLE = "IPSEN2/styles/Menu.css";
 
     public static final String HOME_TITLE = "Home";
     public static final String GASTEN_TITLE = "Gasten";
@@ -28,10 +26,10 @@ public abstract class ContentLoader {
     public static final String BESTELLINGEN_TITLE = "Bestellingen";
     public static final String EVENEMENTEN_TITLE = "Evenementen";
     public static final String HANDLEIDING_TITLE = "Handleiding";
-    private static ContextMenuController mainController;
+    private static MainFrameController mainController;
 
-    public static void setMainController(ContextMenuController contextMenuController) {
-        mainController = contextMenuController;
+    public static void setMainController(MainFrameController mainFrameController) {
+        mainController = mainFrameController;
     }
 
     public static void addContent(String fxml) {
@@ -39,15 +37,28 @@ public abstract class ContentLoader {
         mainController.removeContent();
         try {
             mainController.setContent(
-                    FXMLLoader.load(
-                            ContentLoader.class.getResource(
-                                    fxml
-                            )
-                    )
-            );
+                    configureFXMLLoader(fxml).load());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Pane loadMainFrame() throws IOException {
+
+        FXMLLoader loader = configureFXMLLoader(MAINFRAME);
+        Pane mainFrame =   loader.load();
+        MainFrameController mainController = loader.getController();
+
+        ContentLoader.setMainController(mainController);
+        ContentLoader.addContent(ContentLoader.HOOFDMENU);
+        ContentLoader.setMainFrameTitle(ContentLoader.HOME_TITLE);
+
+        return mainFrame;
+    }
+
+    private static FXMLLoader configureFXMLLoader(String fxml){
+        return new FXMLLoader((ContentLoader.class.getResource(
+                fxml)));
     }
 
     public static void setMainFrameTitle(String title){

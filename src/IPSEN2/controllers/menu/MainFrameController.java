@@ -20,7 +20,7 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ContextMenuController extends ContentLoader implements Initializable{
+public class MainFrameController extends ContentLoader implements Initializable{
 
     private static double xOffset = 0;
     private static double yOffset = 0;

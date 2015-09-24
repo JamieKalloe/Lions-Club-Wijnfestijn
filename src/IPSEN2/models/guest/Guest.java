@@ -4,6 +4,7 @@ import IPSEN2.models.address.Address;
 import IPSEN2.models.referral.Referral;
 
 public class Guest {
+
     private int guestID;
 
     private String gender;
@@ -97,6 +98,7 @@ public class Guest {
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
