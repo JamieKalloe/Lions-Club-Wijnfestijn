@@ -1,8 +1,10 @@
 package IPSEN2;
 
 import IPSEN2.controllers.guest.GuestController;
+import IPSEN2.controllers.mail.MailService;
 import IPSEN2.controllers.menu.ContextMenuController;
 import IPSEN2.database.Database;
+import IPSEN2.models.mail.Mail;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,8 +12,12 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.util.Properties;
 
 /**
  * Created by Philip on 18-09-15.
@@ -46,7 +52,29 @@ public class Main extends Application{
 
     public static void main(String args[]){
         //new GuestController();
+
+        try {
+            MailService mService = new MailService("smtp.live.com",
+                    "ipsen2groep1@hotmail.com",
+                    "hsLeiden",
+                    587);
+
+            mService.sendMail(new Mail(
+                    mService.getSession(),
+                    "ipsen2groep1@hotmail.com",
+                    "ipsen2groep1@hotmail.com",
+                    "test mail",
+                    "this is a test generated message"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         launch(args);
+
+
+
     }
 
 }
+
