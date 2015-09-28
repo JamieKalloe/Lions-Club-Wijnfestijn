@@ -1,14 +1,12 @@
 package IPSEN2.controllers.mail;
 
 import IPSEN2.models.mail.Mail;
+import IPSEN2.models.mail.MailMessage;
 
 import java.util.Properties;
-import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 public class MailService {
 
@@ -22,21 +20,18 @@ public class MailService {
     private final String propertySSL = "mail.smtp.EnableSSL.enable";
     private final String transportType = "smtp";
 
-    private Properties mailProperties;
-    private String smtpHost;
-    private String smtpUsername;
-    private String smtpPassword;
-    private int smtpPort;
+    private final String sender = "ipsen2groep1@hotmail.com";
+    private final String password = "hsLeiden";
 
-    private Session session;
+    private Properties mailProperties;
+    private final String smtpHost = "smtp.live.com";
+    private final String smtpUsername = "ipsen2groep1@hotmail.com";
+    private final String smtpPassword = "hsLeiden";
+    private final int smtpPort = 587;
 
     //Constructor
-    public MailService(String host, String username, String password, int port) {
+    public MailService() {
         this.mailProperties = new Properties();
-        this.smtpHost = host;
-        this.smtpUsername = username;
-        this.smtpPassword = password;
-        this.smtpPort = port;
 
         mailProperties.put(this.propertyHost, this.smtpHost);
         mailProperties.put(this.propertyPort, String.valueOf(this.smtpPort));
@@ -48,25 +43,31 @@ public class MailService {
     }
 
     //Methods
-    public void sendMail(Mail mail) throws Exception {
-        this.session = Session.getInstance(mailProperties,
+    public void send(Mail mail) throws Exception {
+
+        Session session = Session.getInstance(mailProperties,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(smtpUsername, smtpPassword);
                     }
                 });
 
-        this.session.setDebug(true);
+        session.setDebug(true);
+
+        MailMessage message = new MailMessage(
+                session,
+                this.smtpUsername,
+                mail.getRecipient(),
+                mail.getSubject(),
+                mail.getContent(),
+                mail.getAttachment()
+        );
 
         Transport transport = session.getTransport(this.transportType);
         transport.connect(this.smtpHost, this.smtpPort, this.smtpUsername, this.smtpPassword);
-        transport.sendMessage(mail, mail.getAllRecipients());
+        transport.sendMessage(message, message.getAllRecipients());
 
-        System.out.println("Mail was succesfuly sent.");
+        System.out.println("MailMessage was succesfuly sent.");
         transport.close();
-    }
-
-    public Session getSession() {
-        return this.session;
     }
 }

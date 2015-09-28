@@ -1,12 +1,9 @@
 package IPSEN2;
 
-import IPSEN2.controllers.guest.GuestController;
 import IPSEN2.controllers.mail.MailService;
 import IPSEN2.controllers.menu.ContextMenuController;
-import IPSEN2.database.Database;
 import IPSEN2.models.mail.Mail;
-import IPSEN2.models.mail.MailContent;
-import IPSEN2.models.mail.MailType;
+import IPSEN2.models.mail.MailMessage;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,12 +11,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.util.Properties;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Created by Philip on 18-09-15.
@@ -56,19 +50,13 @@ public class Main extends Application{
         //new GuestController();
 
         try {
-            MailService mService = new MailService("smtp.live.com",
-                    "ipsen2groep1@hotmail.com",
-                    "hsLeiden",
-                    587);
+            MailService mailService = new MailService();
 
-            mService.sendMail(new Mail(
-                    mService.getSession(),
-                    "ipsen2groep1@hotmail.com",
-                    "ipsen2groep1@hotmail.com",
-                    new MailContent(MailType.INVOICE).generateTitle(),
-                    new MailContent(MailType.INVOICE).generateContent(),
-                    "D:\\opdracht_wc4_ifit.pdf"
-            ));
+            Mail thankMail = new Mail("ipsen2groep1@hotmail.com", "Thanksmail", "Thankcontent", "D:\\opdracht_wc4_ifit.pdf");
+//            Mail thanksMail = mailGenerator.generate(Mail.ThanksMail, order)
+            //alle guest gegevens worden uiteindelijk uit order gehaald.
+
+            mailService.send(thankMail);
 
         } catch (Exception e) {
             e.printStackTrace();
