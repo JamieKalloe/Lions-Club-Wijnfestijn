@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="672.0" prefWidth="853.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IPSEN2.controllers.guest.EditGuestController">
+   <children>
+      <ImageView fitHeight="1083.0" fitWidth="788.0" layoutX="39.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/GastenAchtergrond.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="97.0" layoutY="60.0" text="Gast toevoegen/aanpassen">
+         <font>
+            <Font name="Roboto Regular" size="24.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="77.0" layoutY="129.0">
+         <children>
+            <Label layoutX="53.0" layoutY="3.0" text="Naam">
+               <font>
+                  <Font name="Roboto Regular" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="firstNameTextField" layoutX="159.0" />
+            <Label layoutX="31.0" layoutY="108.0" text="Telefoon">
+               <font>
+                  <Font name="Roboto Regular" size="18.0" />
+               </font>
+            </Label>
+            <TextField layoutX="158.0" layoutY="259.0" />
+            <Label layoutX="53.0" layoutY="159.0" text="Email">
+               <font>
+                  <Font name="Roboto Regular" size="18.0" />
+               </font>
+            </Label>
+            <TextField layoutX="158.0" layoutY="106.0" />
+            <TextField layoutX="158.0" layoutY="206.0" />
+            <Label layoutX="3.0" layoutY="53.0" text="Achternaam">
+               <font>
+                  <Font name="Roboto Regular" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutY="206.0" text="Woonplaats">
+               <font>
+                  <Font name="Roboto Regular" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="emailTextField" layoutX="158.0" layoutY="156.0" />
+            <Label layoutX="46.0" layoutY="260.0" text="Adres">
+               <font>
+                  <Font name="Roboto Regular" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="lastNameTextField" layoutX="159.0" layoutY="50.0" />
+         </children>
+      </AnchorPane>
+      <Pane layoutX="481.0" layoutY="509.0" onMouseClicked="#handleCancelButton" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">
+         <children>
+            <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/AnnulerenButton.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="631.0" layoutY="509.0" onMouseClicked="#handleEditButton" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">
+         <children>
+            <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/GereedButton.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <AnchorPane layoutX="499.0" layoutY="138.6036605834961">
+         <children>
+            <RadioButton layoutX="19.0" layoutY="54.396339416503906" mnemonicParsing="false" text="De persoon is lid" />
+            <RadioButton layoutX="20.0" layoutY="96.3963394165039" mnemonicParsing="false" text="Via familie/vrienden" />
+            <RadioButton layoutX="21.0" layoutY="137.3963394165039" mnemonicParsing="false" text="Via reclamefolders" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hoe is de persoon hier gekomen? Maak een keuze:" wrappingWidth="261.4874267578125">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

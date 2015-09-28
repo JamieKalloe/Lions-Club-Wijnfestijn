@@ -1,0 +1,62 @@
+
+#menuButton:pressed {
+    -fx-effect: dropshadow(two-pass-box, rgba(0,0,0,0.40), 8, 0.0, 0, 3);
+}
+
+#menuButton:focused {
+    -fx-background-color:
+    rgba(245, 245, 245, 1),
+    rgba(230, 230, 230, 1);
+    -fx-background-insets: 0, 1;
+}
+
+.buttonWithoutHover:hover {
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 30, 0, 0, 0);
+}
+.pane:hover {
+     -fx-background-color: rgba(0,0,0,0.2);
+    -fx-cursor: hand;
+}
+
+.table-view{
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-box-border: transparent;
+   -fx-font: 20px Roboto;
+    -fx-text-alignment: center;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+}
+
+.table-view .column-header{
+    -fx-background-color: transparent;
+
+}
+.column-header .label {
+    -fx-font: 20px Roboto;
+    -fx-text-fill: #999999;
+    -fx-alignment: center-left;
+}
+.column-header-background {
+    -fx-background-color: white;
+}
+.table-row-cell {
+
+    -fx-background-color: transparent;
+
+}
+
+.table-row-cell:filled:selected {
+    -fx-background: -fx-control-inner-background ;
+    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-view .column-header, .table-view .label {
+    -fx-size: 35;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-insets: 0 10 1 0;
+}
+
+

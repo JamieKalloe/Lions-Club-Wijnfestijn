@@ -1,11 +1,11 @@
-package IPSEN2.models.bestelling;
+package IPSEN2.models.order;
 
-public class Bestelling {
+public class Order {
     private int aantalDozen;
     private int wijnID;
     private int klantID;
 
-    public Bestelling(int aantalDozen, int wijnID, int klantID) {
+    public Order(int aantalDozen, int wijnID, int klantID) {
         this.aantalDozen = aantalDozen;
         this.wijnID = wijnID;
         this.klantID = klantID;
