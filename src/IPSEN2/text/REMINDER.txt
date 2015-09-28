@@ -1,0 +1,9 @@
+Beste %s %s,
+
+Bij deze willen wij u er op attenderen dat uw factuur nog niet is voldaan.
+
+U heeft nog 1 week de tijd om het bedrag te voldoen.
+
+Met vriendelijke groet,
+
+%s.

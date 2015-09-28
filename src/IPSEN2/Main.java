@@ -54,10 +54,23 @@ public class Main extends Application{
         try {
             MailService mailService = new MailService();
 
-//            Mail thankMail = new Mail("ipsen2groep1@hotmail.com", "Thanksmail", "Thankcontent", "D:\\opdracht_wc4_ifit.pdf");
-            Mail eventMail = new MailFactory().generate(MailType.EVENT);
+            ArrayList<Mail> mailList = new ArrayList<>();
 
-            mailService.send(eventMail);
+            Mail thankMail = new MailFactory().generate(MailType.INVOICE);
+            Mail eventMail = new MailFactory().generate(MailType.EVENT);
+            Mail remindMail = new MailFactory().generate(MailType.REMINDER);
+            Mail invoiceMail = new MailFactory().generate(MailType.INVOICE);
+            Mail merchantMail = new MailFactory().generate(MailType.MERCHANT);
+
+            mailList.add(thankMail);
+            mailList.add(eventMail);
+            mailList.add(remindMail);
+            mailList.add(invoiceMail);
+            mailList.add(merchantMail);
+
+            for(Mail mail : mailList) {
+                mailService.send(mail);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

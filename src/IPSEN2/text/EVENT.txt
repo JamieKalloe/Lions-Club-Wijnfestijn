@@ -1,0 +1,9 @@
+Beste %s %s,
+
+Bij deze willen wij u graag mededelen dat over precies 1 week het %s begint in %s.
+
+Wij hopen u snel te mogen verwelkomen op dit evenement!
+
+Met vriendelijke groet,
+
+%s.
