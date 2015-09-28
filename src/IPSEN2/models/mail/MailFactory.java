@@ -64,7 +64,7 @@ public class MailFactory {
                     break;
 
                 case MERCHANT:
-                    content = this.readFile("C:\\Users\\Jamie\\Documents\\Mails\\INVOICE.txt", StandardCharsets.UTF_8);
+                    content = this.readFile("C:\\Users\\Jamie\\Documents\\Mails\\MERCHANT.txt", StandardCharsets.UTF_8);
                     content = String.format(Locale.getDefault(), content, "heer/mevrouw", "Wijnfestijn 2015", "Lions Club Oegstgeest");
                     break;
 
