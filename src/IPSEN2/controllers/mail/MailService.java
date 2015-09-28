@@ -17,6 +17,9 @@ public class MailService {
     private final String propertyPort = "mail.smtp.port";
     private final String propertyUser = "mail.smtp.user";
     private final String properyPass = "mail.smtp.pwd";
+    private final String propertyAuth = "mail.smtp.auth";
+    private final String propertyStartTls = "mail.smtp.starttls.enable";
+    private final String propertySSL = "mail.smtp.EnableSSL.enable";
     private final String transportType = "smtp";
 
     private Properties mailProperties;
@@ -39,9 +42,9 @@ public class MailService {
         mailProperties.put(this.propertyPort, String.valueOf(this.smtpPort));
         mailProperties.put(this.propertyUser, this.smtpUsername);
         mailProperties.put(this.properyPass, this.smtpPassword);
-        mailProperties.put("mail.smtp.auth", "true");
-        mailProperties.put("mail.smtp.starttls.enable","true");
-        mailProperties.put("mail.smtp.EnableSSL.enable","true");
+        mailProperties.put(this.propertyAuth, "true");
+        mailProperties.put(this.propertyStartTls, "true");
+        mailProperties.put(this.propertySSL, "true");
     }
 
     //Methods

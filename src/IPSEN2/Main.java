@@ -59,12 +59,14 @@ public class Main extends Application{
                     "hsLeiden",
                     587);
 
-            mService.sendMail(new Mail(
-                    mService.getSession(),
-                    "ipsen2groep1@hotmail.com",
-                    "ipsen2groep1@hotmail.com",
-                    "test mail",
-                    "this is a test generated message"));
+                mService.sendMail(new Mail(
+                        mService.getSession(),
+                        "ipsen2groep1@hotmail.com",
+                        "ipsen2groep1@hotmail.com",
+                        "Wijnfestijn 2015 - Test email 0" + i,
+                        "This is an auto-generated test e-mail. \n Number: 0" + i,
+                        "D:\\ic_launcher.png"
+                ));
 
         } catch (Exception e) {
             e.printStackTrace();
