@@ -3,7 +3,9 @@ package IPSEN2;
 import IPSEN2.controllers.mail.MailService;
 import IPSEN2.controllers.menu.ContextMenuController;
 import IPSEN2.models.mail.Mail;
+import IPSEN2.models.mail.MailFactory;
 import IPSEN2.models.mail.MailMessage;
+import IPSEN2.models.mail.MailType;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -52,11 +54,10 @@ public class Main extends Application{
         try {
             MailService mailService = new MailService();
 
-            Mail thankMail = new Mail("ipsen2groep1@hotmail.com", "Thanksmail", "Thankcontent", "D:\\opdracht_wc4_ifit.pdf");
-//            Mail thanksMail = mailGenerator.generate(Mail.ThanksMail, order)
-            //alle guest gegevens worden uiteindelijk uit order gehaald.
+//            Mail thankMail = new Mail("ipsen2groep1@hotmail.com", "Thanksmail", "Thankcontent", "D:\\opdracht_wc4_ifit.pdf");
+            Mail eventMail = new MailFactory().generate(MailType.EVENT);
 
-            mailService.send(thankMail);
+            mailService.send(eventMail);
 
         } catch (Exception e) {
             e.printStackTrace();
