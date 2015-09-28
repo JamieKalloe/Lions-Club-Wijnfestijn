@@ -21,7 +21,7 @@ public class GuestRepository implements Crudable {
 
     public ArrayList<Guest> all() {
         ArrayList<Guest> guestList = new ArrayList<Guest>();
-        ResultSet queryResult = databaseInstance.select("guest");
+        ResultSet queryResult = databaseInstance.select("guest3");
         try {
             while(queryResult.next()) {
                 Guest guest = new Guest();
