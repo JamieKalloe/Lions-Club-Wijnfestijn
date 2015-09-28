@@ -5,6 +5,8 @@ import IPSEN2.controllers.mail.MailService;
 import IPSEN2.controllers.menu.ContextMenuController;
 import IPSEN2.database.Database;
 import IPSEN2.models.mail.Mail;
+import IPSEN2.models.mail.MailContent;
+import IPSEN2.models.mail.MailType;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -59,14 +61,14 @@ public class Main extends Application{
                     "hsLeiden",
                     587);
 
-                mService.sendMail(new Mail(
-                        mService.getSession(),
-                        "ipsen2groep1@hotmail.com",
-                        "ipsen2groep1@hotmail.com",
-                        "Wijnfestijn 2015 - Test email 0" + i,
-                        "This is an auto-generated test e-mail. \n Number: 0" + i,
-                        "D:\\ic_launcher.png"
-                ));
+            mService.sendMail(new Mail(
+                    mService.getSession(),
+                    "ipsen2groep1@hotmail.com",
+                    "ipsen2groep1@hotmail.com",
+                    new MailContent(MailType.INVOICE).generateTitle(),
+                    new MailContent(MailType.INVOICE).generateContent(),
+                    "D:\\opdracht_wc4_ifit.pdf"
+            ));
 
         } catch (Exception e) {
             e.printStackTrace();

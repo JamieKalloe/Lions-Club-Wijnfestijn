@@ -32,17 +32,17 @@ public class Mail extends MimeMessage {
         this.setSubject(subject);
         this.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 
-        BodyPart message1 = new javax.mail.internet.MimeBodyPart();
-        message1.setText(content);
+        BodyPart messageContent = new javax.mail.internet.MimeBodyPart();
+        messageContent.setText(content);
 
-        BodyPart message2 = new javax.mail.internet.MimeBodyPart();
+        BodyPart messageAttachment = new javax.mail.internet.MimeBodyPart();
         DataSource fileSource = new FileDataSource(attachment);
-        message2.setDataHandler(new DataHandler(fileSource));
-        message2.setFileName(attachment);
+        messageAttachment.setDataHandler(new DataHandler(fileSource));
+        messageAttachment.setFileName(attachment);
 
         Multipart multipart = new MimeMultipart();
-        multipart.addBodyPart(message1);
-        multipart.addBodyPart(message2);
+        multipart.addBodyPart(messageContent);
+        multipart.addBodyPart(messageAttachment);
 
         this.setContent(multipart);
     }
