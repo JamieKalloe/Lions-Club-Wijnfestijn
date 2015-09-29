@@ -6,6 +6,7 @@ import java.util.Set;
 
 public class Database {
 
+
     private Connection connection;
     private Statement statement;
 
@@ -25,16 +26,17 @@ public class Database {
         String password = "root";
         String dbName = "lions_club";*/
 
-        String url = "";
-        String user = "";
+        String url = "jdbc:mysql://127.0.0.1:3306/";
+        String user = "root";
         String password = "";
-        String dbName = "";
+        String dbName = "lions_club";
 
         try {
-            this.connection = DriverManager.getConnection(url+dbName, user, password);
+            this.connection = DriverManager.getConnection(url + dbName, user, password);
         } catch(Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public ResultSet select(String from) {

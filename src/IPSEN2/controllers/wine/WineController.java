@@ -1,4 +1,4 @@
-package IPSEN2.controllers.wijn;
+package IPSEN2.controllers.wine;
 
 import IPSEN2.ContentLoader;
 import javafx.fxml.Initializable;
@@ -6,9 +6,9 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class WijnController implements Initializable{
+public class WineController implements Initializable{
 
-    public WijnController() {
+    public WineController() {
 
     }
 
@@ -26,6 +26,6 @@ public class WijnController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ContentLoader.setMainFrameTitle(ContentLoader.WIJNEN_TITLE);
+        ContentLoader.setMainFrameTitle(ContentLoader.WINES_TITLE);
     }
 }
