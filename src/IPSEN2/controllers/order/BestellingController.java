@@ -34,6 +34,6 @@ public class BestellingController implements Initializable{
 
    @Override
    public void initialize(URL location, ResourceBundle resources) {
-      ContentLoader.setMainFrameTitle(ContentLoader.BESTELLINGEN_TITLE);
+      ContentLoader.setMainFrameTitle(ContentLoader.ORDERS_TITLE);
    }
 }

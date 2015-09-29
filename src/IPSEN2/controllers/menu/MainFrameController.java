@@ -6,7 +6,6 @@ import javafx.animation.TranslateTransition;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -62,17 +61,17 @@ public class MainFrameController extends ContentLoader implements Initializable{
     public void handleNavButton(MouseEvent event) throws Exception{
         Object selectedPane = event.getSource();
            if (selectedPane == homeNav || selectedPane == logoButton ){
-               addContent(HOOFDMENU);
+               addContent(MAINMENU);
            } else if (selectedPane == gastenNav){
-              addContent(GASTEN);
+              addContent(GUESTS);
            } else if (selectedPane == wijnenNav) {
                addContent(WIJNEN);
            } else if (selectedPane == bestellingenNav) {
-               addContent(BESTELLINGEN);
+               addContent(ORDER);
            } else if (selectedPane == evenementenNav) {
-               addContent(EVENEMENTEN);
+               addContent(EVENTS);
            } else if (selectedPane == handleidingNav) {
-               addContent(GASTEN);
+               addContent(GUESTS);
            }
 
         sluitNavMenu();
@@ -126,7 +125,7 @@ public class MainFrameController extends ContentLoader implements Initializable{
        contentHolder.getChildren().setAll(node);
     }
 
-    public void removeContent() { contentCover.getChildren().removeAll();}
+    public void removeContent() { contentHolder.getChildren().removeAll();}
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
