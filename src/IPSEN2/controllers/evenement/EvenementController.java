@@ -34,6 +34,6 @@ public class EvenementController implements Initializable{
 
    @Override
    public void initialize(URL location, ResourceBundle resources) {
-      ContentLoader.setMainFrameTitle(ContentLoader.EVENEMENTEN_TITLE);
+      ContentLoader.setMainFrameTitle(ContentLoader.EVENTS_TITLE);
    }
 }
