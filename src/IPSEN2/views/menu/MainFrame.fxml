@@ -11,7 +11,7 @@
    <children>
       <ImageView fitHeight="640.0" fitWidth="968.0" layoutX="-4.0" layoutY="49.0" pickOnBounds="true">
          <image>
-            <Image url="@../../images/WineBackground.jpg" />
+            <Image url="@../../images/achtergrondwijn.jpg" />
          </image>
       </ImageView>
       <StackPane fx:id="contentHolder" layoutX="-3.0" layoutY="65.0" prefHeight="621.0" prefWidth="965.0" />
