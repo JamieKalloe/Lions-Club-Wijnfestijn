@@ -1,7 +1,5 @@
 package IPSEN2;
 
-import IPSEN2.controllers.guest.AddGuestController;
-import IPSEN2.controllers.guest.EditGuestController;
 import IPSEN2.controllers.menu.MainFrameController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
@@ -18,7 +16,7 @@ public abstract class ContentLoader {
     public static final String GUESTS = "/IPSEN2/views/guest/GuestTableView.fxml";
     public static final String WIJNEN = "/IPSEN2/views/wine/WineTableView.fxml";
     public static final String ORDER = "/IPSEN2/views/order/OrderTableView.fxml";
-    public static final String EVENTS = "/IPSEN2/views/evenement/Evenementen.fxml";
+    public static final String EVENTS = "/IPSEN2/views/event/Events.fxml";
     public static final String MANUAL = "/IPSEN2/views/guest/GuestTableView.fxml";
     public static final String STYLE = "IPSEN2/styles/Style.css";
 

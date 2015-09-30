@@ -114,7 +114,6 @@ public class MainFrameController extends ContentLoader implements Initializable{
         sluitNavigatieMenu.setToX(-(navigatieMenu.getWidth()));
         sluitNavigatieMenu.play();
         contentCover.setStyle(null);
-
     }
 
     public void setTitel(String titel){
