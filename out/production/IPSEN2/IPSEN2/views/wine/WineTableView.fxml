@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="648.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IPSEN2.controllers.wine.WineController">
+   <children>
+      <ImageView fitHeight="595.0" fitWidth="829.0" layoutX="37.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/GastenAchtergrond.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="table" layoutX="130.0" layoutY="73.0" prefHeight="434.0" prefWidth="666.0" styleClass="table-view">
+         <columns>
+            <TableColumn prefWidth="75.0" styleClass="table-view" text="id" />
+            <TableColumn prefWidth="148.6134490966797" styleClass="table-view" text="Naam" />
+            <TableColumn prefWidth="140.38644409179688" styleClass="table-view" text="Email" />
+            <TableColumn prefWidth="153.39495849609375" styleClass="table-view" text="Telefoon" />
+            <TableColumn fx:id="editColumn" prefWidth="153.39495849609375" styleClass="table-view" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
