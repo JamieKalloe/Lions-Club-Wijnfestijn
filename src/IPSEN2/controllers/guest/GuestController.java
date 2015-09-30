@@ -48,29 +48,13 @@ public class GuestController extends ContentLoader implements Initializable{
     }
 
 
-
-    public void cmdAanmakenKlant() {
-
-    }
-
-    public void cmdAanpassenKlant() {
-
-    }
-
-    public void cmdVerwijderenKlant() {
-
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ContentLoader.setMainFrameTitle(ContentLoader.GUESTS_TITLE);
         service = new GuestService();
-        //System.out.println(service.all().get(9));
         HashMap data = new HashMap();
 
 
-//        int id=  service.subscribe(data);
-       // System.out.println(service.find(id).getAddress());
 
         idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("guestID"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("firstName"));
