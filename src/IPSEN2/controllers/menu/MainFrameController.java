@@ -129,7 +129,5 @@ public class MainFrameController extends ContentLoader implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         prepareSlideMenuAnimation();
-
-
     }
 }
