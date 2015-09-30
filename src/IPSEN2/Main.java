@@ -56,7 +56,7 @@ public class Main extends Application{
 
             ArrayList<Mail> mailList = new ArrayList<>();
 
-            Mail thankMail = new MailFactory().generate(MailType.INVOICE);
+            Mail thankMail = new MailFactory().generate(MailType.THANK);
             Mail eventMail = new MailFactory().generate(MailType.EVENT);
             Mail remindMail = new MailFactory().generate(MailType.REMINDER);
             Mail invoiceMail = new MailFactory().generate(MailType.INVOICE);

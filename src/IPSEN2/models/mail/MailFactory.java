@@ -23,7 +23,7 @@ public class MailFactory {
                 return new Mail("ipsen2groep1@hotmail.com", "Uw factuur is nog niet voldaan! - Lions Club", this.getMailContent(MailType.REMINDER), "D:\\opdracht_wc4_ifit.pdf");
 
             case INVOICE:
-                return new Mail("ipsen2groep1@hotmail.com", "Uw factuur - Lions Club", this.getMailContent(MailType.EVENT.INVOICE), "D:\\opdracht_wc4_ifit.pdf");
+                return new Mail("ipsen2groep1@hotmail.com", "Uw factuur - Lions Club", this.getMailContent(MailType.INVOICE), "D:\\opdracht_wc4_ifit.pdf");
 
             case MERCHANT:
                 return new Mail("ipsen2groep1@hotmail.com", "Wijn bestelling - Lions Club", this.getMailContent(MailType.MERCHANT), "D:\\opdracht_wc4_ifit.pdf");
@@ -49,28 +49,28 @@ public class MailFactory {
         try {
             switch (mailType) {
                 case THANK:
-                    content = this.readFile("C:\\Users\\Jamie\\Documents\\Mails\\THANK.txt", StandardCharsets.UTF_8);
-                    content = String.format(Locale.getDefault(), content, "meneer", "de Vries", "Wijnfestijn 2015", "Lions Club Oegstgeest");
+                    content = this.readFile(new File("src/IPSEN2/resources/THANK.txt").getAbsolutePath(), StandardCharsets.UTF_8);
+                    content = String.format(content, "meneer", "de Vries", "Wijnfestijn 2015", "Lions Club Oegstgeest");
                     break;
 
                 case REMINDER:
-                    content = this.readFile("C:\\Users\\Jamie\\Documents\\Mails\\REMINDER.txt", StandardCharsets.UTF_8);
-                    content = String.format(Locale.getDefault(), content, "meneer", "de Vries", "Lions Club Oegstgeest");
+                    content = this.readFile(new File("src/IPSEN2/resources/REMINDER.txt").getAbsolutePath(), StandardCharsets.UTF_8);
+                    content = String.format(content, "meneer", "de Vries", "Lions Club Oegstgeest");
                     break;
 
                 case INVOICE:
-                    content = this.readFile("C:\\Users\\Jamie\\Documents\\Mails\\INVOICE.txt", StandardCharsets.UTF_8);
-                    content = String.format(Locale.getDefault(), content, "meneer", "de Vries", "Wijnfestijn 2015", "Lions Club Oegstgeest");
+                    content = this.readFile(new File("src/IPSEN2/resources/INVOICE.txt").getAbsolutePath(), StandardCharsets.UTF_8);
+                    content = String.format(content, "meneer", "de Vries", "Wijnfestijn 2015", "Lions Club Oegstgeest");
                     break;
 
                 case MERCHANT:
-                    content = this.readFile("C:\\Users\\Jamie\\Documents\\Mails\\MERCHANT.txt", StandardCharsets.UTF_8);
-                    content = String.format(Locale.getDefault(), content, "heer/mevrouw", "Wijnfestijn 2015", "Lions Club Oegstgeest");
+                    content = this.readFile(new File("src/IPSEN2/resources/MERCHANT.txt").getAbsolutePath(), StandardCharsets.UTF_8);
+                    content = String.format(content, "heer/mevrouw", "Wijnfestijn 2015", "Lions Club Oegstgeest");
                     break;
 
                 case EVENT:
-                    content = this.readFile("C:\\Users\\Jamie\\Documents\\Mails\\EVENT.txt", StandardCharsets.UTF_8);
-                    content = String.format(Locale.getDefault(), content, "meneer", "de Vries", "Wijnfestijn 2015", "Oegstgeest", "Lions Club Oegstgeest");
+                    content = this.readFile(new File("src/IPSEN2/resources/EVENT.txt").getAbsolutePath(), StandardCharsets.UTF_8);
+                    content = String.format(content, "meneer", "de Vries", "Wijnfestijn 2015", "Oegstgeest", "Lions Club Oegstgeest");
                     break;
 
                 default:
