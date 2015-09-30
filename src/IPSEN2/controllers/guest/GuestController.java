@@ -7,6 +7,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -14,7 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class GuestController extends ContentLoader implements Initializable{
@@ -41,7 +41,6 @@ public class GuestController extends ContentLoader implements Initializable{
     }
 
     public void handleEditButton() throws IOException{
-       // addContent(EDIT_GUEST_DIALOG);
         if (selectedGuestID != 0) {
             addContent(new EditGuestController(selectedGuestID));
         }
@@ -61,14 +60,13 @@ public class GuestController extends ContentLoader implements Initializable{
         checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
 
         table_view.getItems().setAll(service.all());
-        System.out.print(service.all().size());
+        table_view.setPlaceholder(new Label("Er is geen content om te weergeven"));
 
         table_view.getSelectionModel().selectedIndexProperty().addListener(
                 new RowSelectChangeListener());
     }
 
     private class RowSelectChangeListener implements ChangeListener {
-
 
         @Override
         public void changed(ObservableValue observable, Object oldValue, Object newValue) {
