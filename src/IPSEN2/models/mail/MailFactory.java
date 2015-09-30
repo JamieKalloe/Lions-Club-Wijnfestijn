@@ -41,6 +41,20 @@ public class MailFactory {
         return new String(encoded, encoding);
     }
 
+    private String getFilePath(String path) {
+
+        String optimizedPath = "";
+        String[] directories = path.split("/");
+        String fileName = directories[directories.length - 1];
+
+        for(int i = 0; i < directories.length -1; i++) {
+            optimizedPath += directories[i] + File.separator;
+        }
+
+        optimizedPath += fileName;
+
+        return optimizedPath;
+    }
 
     private String getMailContent(MailType mailType) {
 
@@ -49,27 +63,27 @@ public class MailFactory {
         try {
             switch (mailType) {
                 case THANK:
-                    content = this.readFile(new File("src/IPSEN2/resources/THANK.txt").getAbsolutePath(), StandardCharsets.UTF_8);
+                    content = this.readFile(new File(getFilePath("src/IPSEN2/resources/THANK.txt")).getAbsolutePath(), StandardCharsets.UTF_8);
                     content = String.format(content, "meneer", "de Vries", "Wijnfestijn 2015", "Lions Club Oegstgeest");
                     break;
 
                 case REMINDER:
-                    content = this.readFile(new File("src/IPSEN2/resources/REMINDER.txt").getAbsolutePath(), StandardCharsets.UTF_8);
+                    content = this.readFile(new File(getFilePath("src/IPSEN2/resources/REMINDER.txt")).getAbsolutePath(), StandardCharsets.UTF_8);
                     content = String.format(content, "meneer", "de Vries", "Lions Club Oegstgeest");
                     break;
 
                 case INVOICE:
-                    content = this.readFile(new File("src/IPSEN2/resources/INVOICE.txt").getAbsolutePath(), StandardCharsets.UTF_8);
+                    content = this.readFile(new File(getFilePath("src/IPSEN2/resources/INVOICE.txt")).getAbsolutePath(), StandardCharsets.UTF_8);
                     content = String.format(content, "meneer", "de Vries", "Wijnfestijn 2015", "Lions Club Oegstgeest");
                     break;
 
                 case MERCHANT:
-                    content = this.readFile(new File("src/IPSEN2/resources/MERCHANT.txt").getAbsolutePath(), StandardCharsets.UTF_8);
+                    content = this.readFile(new File(getFilePath("src/IPSEN2/resources/MERCHANT.txt")).getAbsolutePath(), StandardCharsets.UTF_8);
                     content = String.format(content, "heer/mevrouw", "Wijnfestijn 2015", "Lions Club Oegstgeest");
                     break;
 
                 case EVENT:
-                    content = this.readFile(new File("src/IPSEN2/resources/EVENT.txt").getAbsolutePath(), StandardCharsets.UTF_8);
+                    content = this.readFile(new File(getFilePath("src/IPSEN2/resources/EVENT.txt")).getAbsolutePath(), StandardCharsets.UTF_8);
                     content = String.format(content, "meneer", "de Vries", "Wijnfestijn 2015", "Oegstgeest", "Lions Club Oegstgeest");
                     break;
 
