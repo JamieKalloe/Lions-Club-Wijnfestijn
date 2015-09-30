@@ -52,8 +52,6 @@ public class GuestController extends ContentLoader implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         ContentLoader.setMainFrameTitle(ContentLoader.GUESTS_TITLE);
         service = new GuestService();
-        HashMap data = new HashMap();
-
 
 
         idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("guestID"));
