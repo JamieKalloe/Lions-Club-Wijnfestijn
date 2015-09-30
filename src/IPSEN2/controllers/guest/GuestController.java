@@ -5,25 +5,15 @@ import IPSEN2.models.guest.Guest;
 import IPSEN2.services.guest.GuestService;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -38,7 +28,7 @@ public class GuestController extends ContentLoader implements Initializable{
 
 
     public int selectedGuestID;
-    GuestService service;
+    private GuestService service;
 
     public void handleAddButton() throws IOException {
        addContent(new AddGuestController());
@@ -52,7 +42,9 @@ public class GuestController extends ContentLoader implements Initializable{
 
     public void handleEditButton() throws IOException{
        // addContent(EDIT_GUEST_DIALOG);
-        addContent(new EditGuestController(selectedGuestID));
+        if (selectedGuestID != 0) {
+            addContent(new EditGuestController(selectedGuestID));
+        }
     }
 
 
@@ -75,21 +67,10 @@ public class GuestController extends ContentLoader implements Initializable{
         service = new GuestService();
         //System.out.println(service.all().get(9));
         HashMap data = new HashMap();
-        data = new HashMap();
-        data.put("firstname", "Philly ");
-        data.put("email", "Henk");
-        data.put("gender", "m");
-        data.put("lastname", "asdf");
-        data.put("prefix", "");
-        data.put("notes", "This is a note");
-        data.put("zipCode", "1354RT");
-        data.put("street", "Wat is deze laan");
-        data.put("houseNumber", "4");
-        data.put("country", "Nederland");
-        data.put("city", "Gekke dorp");
-        data.put("referralName", "Member");
-        service.subscribe(data);
 
+
+//        int id=  service.subscribe(data);
+       // System.out.println(service.find(id).getAddress());
 
         idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("guestID"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("firstName"));
@@ -113,6 +94,7 @@ public class GuestController extends ContentLoader implements Initializable{
             selectedGuestID = table_view.getSelectionModel().getSelectedItem().getGuestID();
             System.out.println(selectedGuestID);} catch (NullPointerException e){
                 System.out.print("No items in table to select");
+                selectedGuestID = 0;
             }
 
         }

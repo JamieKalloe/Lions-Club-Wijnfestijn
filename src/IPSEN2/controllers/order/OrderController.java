@@ -6,9 +6,9 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class BestellingController implements Initializable{
+public class OrderController implements Initializable{
 
-   public BestellingController() {
+   public OrderController() {
 
    }
 
