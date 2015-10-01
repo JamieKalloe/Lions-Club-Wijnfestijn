@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="648.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IPSEN2.controllers.order.OrderController">
+   <children>
+      <ImageView fitHeight="595.0" fitWidth="829.0" layoutX="37.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/GastenAchtergrond.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="table_view" layoutX="130.0" layoutY="73.0" prefHeight="434.0" prefWidth="666.0" styleClass="table-view" stylesheets="@../../styles/Style.css">
+         <columns>
+            <TableColumn prefWidth="53.0" styleClass="table-view" text="id" />
+            <TableColumn prefWidth="149.0" styleClass="table-view" text="Achternaam" />
+            <TableColumn prefWidth="88.40713500976562" styleClass="table-view" text="Wijn" />
+            <TableColumn prefWidth="65.21124267578125" styleClass="table-view" text="Jaar" />
+            <TableColumn prefWidth="89.21127319335938" text="Aantal" />
+            <TableColumn prefWidth="80.8092041015625" text="Soort" />
+            <TableColumn fx:id="editColumn" prefWidth="141.1907958984375" styleClass="table-view" text="Prijs" />
+         </columns>
+      </TableView>
+      <Pane layoutX="806.0" layoutY="44.0" onMouseClicked="#handleAddButton" prefHeight="69.0" prefWidth="94.0" styleClass="buttonWithoutHover">
+         <children>
+            <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="11.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/AddButton.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="806.0" layoutY="128.0" onMouseClicked="#handleEditButton" prefHeight="69.0" prefWidth="81.0" styleClass="buttonWithoutHover">
+         <children>
+            <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="12.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/EditButton.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="808.0" layoutY="217.0" onMouseClicked="#handleRemoveButton" prefHeight="69.0" prefWidth="81.0" styleClass="buttonWithoutHover">
+         <children>
+            <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/DeleteButton.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="808.0" layoutY="302.0" prefHeight="69.0" prefWidth="81.0" styleClass="buttonWithoutHover">
+         <children>
+            <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="10.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/MailButton.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

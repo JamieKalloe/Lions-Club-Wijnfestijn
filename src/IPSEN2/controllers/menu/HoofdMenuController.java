@@ -3,12 +3,8 @@ package IPSEN2.controllers.menu;
 import IPSEN2.ContentLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,20 +23,20 @@ public class HoofdMenuController extends ContentLoader implements Initializable 
     public void handleButton(MouseEvent event) throws Exception{
         Object selectedPane = event.getSource();
             if (selectedPane == gastenButton) {
-                ContentLoader.addContent(ContentLoader.GASTEN);
+                addContent(ContentLoader.GUESTS);
             } else if (selectedPane == wijnenButton) {
-                ContentLoader.addContent(ContentLoader.WIJNEN);
+                addContent(ContentLoader.WINE);
             } else if (selectedPane == bestellingenButton) {
-                ContentLoader.addContent(ContentLoader.BESTELLINGEN);
+                addContent(ContentLoader.ORDER);
             } else if (selectedPane == evenementenButton) {
-                ContentLoader.addContent(ContentLoader.EVENEMENTEN);
+                ContentLoader.addContent(ContentLoader.EVENTS);
             } else if (selectedPane == handLeidingButton) {
-                ContentLoader.addContent(ContentLoader.WIJNEN);
+                addContent(ContentLoader.WINE);
             }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ContentLoader.setMainFrameTitle(ContentLoader.HOME_TITLE);
+         setMainFrameTitle(ContentLoader.HOME_TITLE);
     }
 }

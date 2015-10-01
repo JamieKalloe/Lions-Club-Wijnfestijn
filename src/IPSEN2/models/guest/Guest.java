@@ -2,14 +2,22 @@ package IPSEN2.models.guest;
 
 import IPSEN2.models.address.Address;
 import IPSEN2.models.referral.Referral;
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 public class Guest {
+
     private int guestID;
 
     private String gender;
-    private String lastname;
+    private String lastName;
     private String prefix;
-    private String firstname;
+    private String firstName;
+    private SimpleBooleanProperty selected = new SimpleBooleanProperty(true);
+    public BooleanProperty checkedProperty() {       return selected;}
 
     private Address address;
 
@@ -22,18 +30,18 @@ public class Guest {
 
     }
 
-    public Guest(String gender, String lastname, String firstname) {
+    public Guest(String gender, String lastName, String firstName) {
         this.gender = gender;
-        this.lastname = lastname;
-        this.firstname = firstname;
+        this.lastName = lastName;
+        this.firstName = firstName;
     }
 
-    public Guest(int guestID, String gender, String lastname, String prefix, String firstname, int addressID ,String email, int referralID, String notes) {
+    public Guest(int guestID, String gender, String lastName, String prefix, String firstName, int addressID ,String email, int referralID, String notes) {
         this.guestID = guestID;
         this.gender = gender;
-        this.lastname = lastname;
+        this.lastName = lastName;
         this.prefix = prefix;
-        this.firstname = firstname;
+        this.firstName = firstName;
         this.address = new Address(addressID);
         this.email = email;
         this.referral = new Referral(referralID);
@@ -41,24 +49,26 @@ public class Guest {
     }
 
     //GETTERS
+    public Boolean getSelected() {return selected.get();}
+
     public int getGuestID() {
-        return guestID;
+        return guestID - 1;
     }
 
     public String getGender() {
         return gender;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
     public String getPrefix() {
         return prefix;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getEmail() {
@@ -78,6 +88,9 @@ public class Guest {
     }
 
     //SETTERS
+   // public void setSelected(boolean selected) {
+   //     this.selected = selected;
+   // }
     public void setGuestID(int guestID) {
         this.guestID = guestID;
     }
@@ -86,17 +99,18 @@ public class Guest {
         this.gender = gender;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setPrefix(String prefix) {
         this.prefix = prefix;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
