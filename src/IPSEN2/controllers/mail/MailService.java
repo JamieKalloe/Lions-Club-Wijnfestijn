@@ -54,14 +54,26 @@ public class MailService {
 
         session.setDebug(true);
 
-        MailMessage message = new MailMessage(
-                session,
-                this.smtpUsername,
-                mail.getRecipient(),
-                mail.getSubject(),
-                mail.getContent(),
-                mail.getAttachment()
-        );
+        MailMessage message;
+
+        if(mail.getAttachment() == null || mail.getAttachment().isEmpty()) {
+            message = new MailMessage(
+                    session,
+                    this.smtpUsername,
+                    mail.getRecipient(),
+                    mail.getSubject(),
+                    mail.getContent()
+            );
+        } else {
+            message = new MailMessage(
+                    session,
+                    this.smtpUsername,
+                    mail.getRecipient(),
+                    mail.getSubject(),
+                    mail.getContent(),
+                    mail.getAttachment()
+            );
+        }
 
         Transport transport = session.getTransport(this.transportType);
         transport.connect(this.smtpHost, this.smtpPort, this.smtpUsername, this.smtpPassword);

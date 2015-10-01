@@ -52,25 +52,12 @@ public class Main extends Application{
         //new GuestController();
 
         try {
-            MailService mailService = new MailService();
 
-            ArrayList<Mail> mailList = new ArrayList<>();
-
-            Mail thankMail = new MailFactory().generate(MailType.THANK);
-            Mail eventMail = new MailFactory().generate(MailType.EVENT);
-            Mail remindMail = new MailFactory().generate(MailType.REMINDER);
-            Mail invoiceMail = new MailFactory().generate(MailType.INVOICE);
-            Mail merchantMail = new MailFactory().generate(MailType.MERCHANT);
-
-            mailList.add(thankMail);
-            mailList.add(eventMail);
-            mailList.add(remindMail);
-            mailList.add(invoiceMail);
-            mailList.add(merchantMail);
-
-            for(Mail mail : mailList) {
-                mailService.send(mail);
-            }
+            new MailService().send(new MailFactory().generate(MailType.REMINDER));
+            new MailService().send(new MailFactory().generate(MailType.EVENT));
+            new MailService().send(new MailFactory().generate(MailType.INVOICE));
+            new MailService().send(new MailFactory().generate(MailType.MERCHANT));
+            new MailService().send(new MailFactory().generate(MailType.THANK));
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -19,6 +19,12 @@ public class Mail {
         this.attachment = attachment;
     }
 
+    public Mail(String recipient, String subject, String content) {
+        this.recipient = recipient;
+        this.subject = subject;
+        this.content = content;
+    }
+
     public String getRecipient() {
         return recipient;
     }

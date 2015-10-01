@@ -15,9 +15,14 @@ public class MailFactory {
 
     public Mail generate(MailType mailType) {
 
+        /*
+            TODO: order object toevoegen aan de constructor van generate.
+            TODO: ontvanger van de e-mail en de bijlage (absolute path) moet worden opgehaald vanuit order.
+         */
+
         switch(mailType) {
             case THANK:
-                return new Mail("ipsen2groep1@hotmail.com", "Bedankt voor uw deelname! - Lions Club", this.getMailContent(MailType.THANK), "D:\\opdracht_wc4_ifit.pdf");
+                return new Mail("ipsen2groep1@hotmail.com", "Bedankt voor uw deelname! - Lions Club", this.getMailContent(MailType.THANK));
 
             case REMINDER:
                 return new Mail("ipsen2groep1@hotmail.com", "Uw factuur is nog niet voldaan! - Lions Club", this.getMailContent(MailType.REMINDER), "D:\\opdracht_wc4_ifit.pdf");
@@ -29,7 +34,7 @@ public class MailFactory {
                 return new Mail("ipsen2groep1@hotmail.com", "Wijn bestelling - Lions Club", this.getMailContent(MailType.MERCHANT), "D:\\opdracht_wc4_ifit.pdf");
 
             case EVENT:
-                return new Mail("ipsen2groep1@hotmail.com", "Het evenement begint binnenkort weer! - Lions Club", this.getMailContent(MailType.EVENT), "D:\\opdracht_wc4_ifit.pdf");
+                return new Mail("ipsen2groep1@hotmail.com", "Het evenement begint binnenkort weer! - Lions Club", this.getMailContent(MailType.EVENT));
         }
 
         return new Mail("", "", "", "");
@@ -98,9 +103,4 @@ public class MailFactory {
 
         return content;
     }
-
-    //haal text uit een file, format de string met een speciaal token.
-    //bufferedReader, haalt tekst uit de file (private method).
-    //stop tekst in string, format de string met de data vanuit order (-> guest etc).
-
 }
