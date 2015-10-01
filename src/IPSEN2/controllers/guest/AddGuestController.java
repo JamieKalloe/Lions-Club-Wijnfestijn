@@ -45,11 +45,12 @@ public class AddGuestController extends ContentLoader implements Initializable {
         lastName = lastNameTextField.getText();
         System.out.print(firstName);
         data = new HashMap();
-        data.put("firstname", firstName);
+
         data.put("email", email);
-        data.put("gender", "m");
+        data.put("firstname", firstName);
         data.put("lastname", lastName);
-        data.put("prefix", "");
+        data.put("prefix", "is");
+        data.put("gender", "F");
         data.put("notes", "This is a note");
         data.put("zipCode", "1354RT");
         data.put("street", "Wat is deze laan");

@@ -2,7 +2,7 @@ package IPSEN2.models.wine;
 
 public class Wine {
     private int wineID;
-    private String type;
+    private WineType wineType;
     private String name;
     private String country;
     private String region;
@@ -15,9 +15,9 @@ public class Wine {
 
     }
 
-    public Wine (int wineID, String type, String country, String name, String region, int year, double purchasePrice, double price) {
+    public Wine (int wineID, int typeID, String country, String name, String region, int year, double purchasePrice, double price) {
         this.wineID = wineID;
-        this.type = type;
+        this.wineType = new WineType(typeID);
         this.name = name;
         this.country = country;
         this.region = region;
@@ -43,8 +43,8 @@ public class Wine {
         return wineID;
     }
 
-    public String getType() {
-        return type;
+    public WineType getType() {
+        return wineType;
     }
 
     public String getCountry() {
@@ -80,8 +80,8 @@ public class Wine {
         this.wineID = wineID;
     }
 
-    public void setType(WineType type) {
-        this.type = type;
+    public void setWineType (WineType wineType) {
+        this.wineType = wineType;
     }
 
     public void setCountry(String country) {
@@ -112,5 +112,8 @@ public class Wine {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public void setType(WineType type_id) {
     }
 }

@@ -85,12 +85,40 @@ public class WineRepository implements Crudable {
 
     }
 
-
+    /**
+     * Aanmaken hashmap, hier worden de kolommen uit de database
+     * omgezet naar java variabelen.
+     *
+     * @param data
+     * @return
+     */
 
     public int create(HashMap data) {
         HashMap databaseData = new HashMap();
-        databaseData.put("wine_id", Integer.parseInt(data.get("ID").toString()));
-        databaseData.put("t")
+        databaseData.put("type_id", Integer.parseInt(data.get("typeID").toString()));
+        databaseData.put("name", data.get("name").toString());
+        databaseData.put("country", data.get("country").toString());
+        databaseData.put("region", data.get("region"));
+        databaseData.put("year", Integer.parseInt(data.get("year").toString()));
+        databaseData.put("purchase_price", Double.parseDouble(data.get("purchasePrice").toString()));
+        databaseData.put("price", Double.parseDouble(data.get("price").toString()));
+
+        return databaseInstance.insertInto("wine", databaseData);
 
     }
+
+    public void update(int id, HashMap data) {
+        HashMap databaseData = new HashMap();
+        databaseData.put("type_id", Integer.parseInt(data.get("typeID").toString()));
+        databaseData.put("name", data.get("name").toString());
+        databaseData.put("country", data.get("country").toString());
+        databaseData.put("region", data.get("region"));
+        databaseData.put("year", Integer.parseInt(data.get("year").toString()));
+        databaseData.put("purchase_price", Double.parseDouble(data.get("purchasePrice").toString()));
+        databaseData.put("price", Double.parseDouble(data.get("price").toString()));
+
+        databaseInstance.update("wine", id, databaseData);
+
+    }
+    public void delete(int id) { databaseInstance.delete("guest", id);}
 }

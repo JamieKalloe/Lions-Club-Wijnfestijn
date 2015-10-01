@@ -65,7 +65,7 @@ public class MainFrameController extends ContentLoader implements Initializable{
            } else if (selectedPane == gastenNav){
               addContent(GUESTS);
            } else if (selectedPane == wijnenNav) {
-               addContent(WIJNEN);
+               addContent(WINE);
            } else if (selectedPane == bestellingenNav) {
                addContent(ORDER);
            } else if (selectedPane == evenementenNav) {
@@ -114,7 +114,6 @@ public class MainFrameController extends ContentLoader implements Initializable{
         sluitNavigatieMenu.setToX(-(navigatieMenu.getWidth()));
         sluitNavigatieMenu.play();
         contentCover.setStyle(null);
-
     }
 
     public void setTitel(String titel){
@@ -130,7 +129,5 @@ public class MainFrameController extends ContentLoader implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         prepareSlideMenuAnimation();
-
-
     }
 }
