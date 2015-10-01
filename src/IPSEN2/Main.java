@@ -50,23 +50,7 @@ public class Main extends Application{
 
     public static void main(String args[]){
         //new GuestController();
-
-        try {
-
-            new MailService().send(new MailFactory().generate(MailType.REMINDER));
-            new MailService().send(new MailFactory().generate(MailType.EVENT));
-            new MailService().send(new MailFactory().generate(MailType.INVOICE));
-            new MailService().send(new MailFactory().generate(MailType.MERCHANT));
-            new MailService().send(new MailFactory().generate(MailType.THANK));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         launch(args);
-
-
-
     }
 
 }
