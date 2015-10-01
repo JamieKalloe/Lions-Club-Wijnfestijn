@@ -1,7 +1,9 @@
 package IPSEN2.controllers.guest;
 
+import IPSEN2.models.guest.Guest;
 import IPSEN2.services.guest.GuestService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GuestController {
@@ -25,8 +27,8 @@ public class GuestController {
         data.put("city", "Gekke dorp");
         data.put("referralName", "Member");
 
-        int id = service.subscribe(data);
-        System.out.println(service.find(id).getFirstname());
+        ArrayList<Guest> guestList = service.all();
+        System.out.println(service.find(2).getAddress().getCity());
     }
 
 }

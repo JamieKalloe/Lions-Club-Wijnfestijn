@@ -3,6 +3,7 @@ package IPSEN2;
 import IPSEN2.controllers.guest.GuestController;
 import IPSEN2.controllers.menu.ContextMenuController;
 import IPSEN2.database.Database;
+import IPSEN2.generators.pdf.InvoiceGenerator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -45,7 +46,11 @@ public class Main extends Application{
     }
 
     public static void main(String args[]){
-        //new GuestController();
+        try {
+            new InvoiceGenerator().createInvoice("bin/invoice.pdf");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         launch(args);
     }
 
