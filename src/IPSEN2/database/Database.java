@@ -21,15 +21,21 @@ public class Database {
 
     private Database() {
         //Mike's DB settings
-        /*String url = "jdbc:mysql://localhost:3306/";
-        String user = "lions_club";
-        String password = "root";
-        String dbName = "lions_club";*/
+//        String url = "jdbc:mysql://localhost:3306/";
+//        String user = "lions_club";
+//        String password = "root";
+//        String dbName = "lions_club";
 
         String url = "jdbc:mysql://127.0.0.1:3306/";
         String user = "root";
         String password = "";
         String dbName = "lions_club";
+
+       /* String url = "";
+        String user = "";
+        String password = "";
+        String dbName = "";*/
+
 
         try {
             this.connection = DriverManager.getConnection(url + dbName, user, password);

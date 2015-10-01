@@ -17,9 +17,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
 public class GuestController extends ContentLoader implements Initializable{
 
-    @FXML private  TableView<Guest> table_view;
+    @FXML
+    private  TableView<Guest> table_view;
     @FXML private TableColumn idColumn;
     @FXML private TableColumn firstNameColumn;
     @FXML private TableColumn lastNameColumn;
@@ -30,6 +32,12 @@ public class GuestController extends ContentLoader implements Initializable{
     public int selectedGuestID;
     private GuestService service;
 
+
+    public GuestController() {
+        this.service = new GuestService();
+
+
+    }
     public void handleAddButton() throws IOException {
        addContent(new AddGuestController(), EDIT_GUEST_DIALOG);
 
