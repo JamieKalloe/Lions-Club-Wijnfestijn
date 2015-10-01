@@ -31,7 +31,7 @@ public class GuestController extends ContentLoader implements Initializable{
     private GuestService service;
 
     public void handleAddButton() throws IOException {
-       addContent(new AddGuestController());
+       addContent(new AddGuestController(), EDIT_GUEST_DIALOG);
 
     }
 
@@ -42,7 +42,7 @@ public class GuestController extends ContentLoader implements Initializable{
 
     public void handleEditButton() throws IOException{
         if (selectedGuestID != 0) {
-            addContent(new EditGuestController(selectedGuestID));
+            addContent(new EditGuestController(selectedGuestID), EDIT_GUEST_DIALOG);
         }
     }
 

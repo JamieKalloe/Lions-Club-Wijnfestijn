@@ -23,20 +23,20 @@ public class HoofdMenuController extends ContentLoader implements Initializable 
     public void handleButton(MouseEvent event) throws Exception{
         Object selectedPane = event.getSource();
             if (selectedPane == gastenButton) {
-                ContentLoader.addContent(ContentLoader.GUESTS);
+                addContent(ContentLoader.GUESTS);
             } else if (selectedPane == wijnenButton) {
-                ContentLoader.addContent(ContentLoader.WIJNEN);
+                addContent(ContentLoader.WINE);
             } else if (selectedPane == bestellingenButton) {
-                ContentLoader.addContent(ContentLoader.ORDER);
+                addContent(ContentLoader.ORDER);
             } else if (selectedPane == evenementenButton) {
                 ContentLoader.addContent(ContentLoader.EVENTS);
             } else if (selectedPane == handLeidingButton) {
-                ContentLoader.addContent(ContentLoader.WIJNEN);
+                addContent(ContentLoader.WINE);
             }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ContentLoader.setMainFrameTitle(ContentLoader.HOME_TITLE);
+         setMainFrameTitle(ContentLoader.HOME_TITLE);
     }
 }

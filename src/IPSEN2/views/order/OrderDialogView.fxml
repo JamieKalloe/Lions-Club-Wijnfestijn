@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="615.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ImageView fitHeight="635.0" fitWidth="812.0" layoutX="13.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../images/GastenAchtergrond.png" />
+            </image>
+        </ImageView>
+        <Label layoutX="97.0" layoutY="60.0" text="Bestelling toevoegen/aanpassen">
+            <font>
+                <Font name="Roboto Regular" size="24.0" />
+            </font>
+        </Label>
+        <AnchorPane layoutX="82.0" layoutY="109.0" prefHeight="192.0" prefWidth="692.0">
+            <children>
+                <Label layoutX="13.0" layoutY="3.0" text="Klant ID">
+                    <font>
+                        <Font name="Roboto Regular" size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="wineNameTextField" layoutX="14.0" layoutY="37.0" />
+                <Label layoutX="12.0" layoutY="83.0" text="Wijn ID">
+                    <font>
+                        <Font name="Roboto Regular" size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="countryNameTextField" layoutX="15.0" layoutY="117.0" prefHeight="26.0" prefWidth="159.0" />
+                <Label layoutX="586.0" layoutY="82.0" text="Aantal">
+                    <font>
+                        <Font name="Roboto Regular" size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="regionNameTextField" layoutX="601.0" layoutY="116.0" prefHeight="17.0" prefWidth="25.0" />
+            <Label layoutX="266.0" layoutY="36.0" text="Klantnaam en achternaam" textFill="#999999">
+               <font>
+                  <Font name="Roboto Regular" size="18.0" />
+               </font>
+            </Label>
+            </children>
+        </AnchorPane>
+        <Pane fx:id="cancelButton" layoutX="481.0" layoutY="509.0" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">
+            <children>
+                <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/AnnulerenButton.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </Pane>
+        <Pane fx:id="submitButton" layoutX="631.0" layoutY="509.0" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">
+            <children>
+                <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/GereedButton.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </Pane>
+      <Pane layoutX="108.0" layoutY="265.0" prefHeight="44.0" prefWidth="133.0">
+         <children>
+            <ImageView fitHeight="44.0" fitWidth="152.0" layoutX="4.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/PlusOneButton.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+    </children>
+</AnchorPane>

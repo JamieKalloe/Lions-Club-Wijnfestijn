@@ -8,12 +8,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class OrderController implements Initializable{
+public class OrderController extends ContentLoader implements Initializable{
 
-   private int selectedGuestID;
+   private int selectedOrderID;
 
    @FXML
    private TableView table_view;
@@ -22,6 +23,19 @@ public class OrderController implements Initializable{
 
    }
 
+   public void handleAddButton() throws IOException {
+      addContent(new AddOrderController(), EDIT_ORDER_DIALOG);
+   }
+
+   public void handleEditButton() throws IOException {
+      if (selectedOrderID != 0) {
+         addContent(new EditOrderController(), EDIT_ORDER_DIALOG);
+      }
+   }
+
+   public void handleRemoveButton() {
+
+   }
 
    @Override
    public void initialize(URL location, ResourceBundle resources) {
@@ -30,7 +44,6 @@ public class OrderController implements Initializable{
    }
 
    private class RowSelectChangeListener implements ChangeListener {
-
 
       @Override
       public void changed(ObservableValue observable, Object oldValue, Object newValue) {

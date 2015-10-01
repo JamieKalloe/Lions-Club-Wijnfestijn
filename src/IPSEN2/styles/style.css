@@ -49,7 +49,7 @@
     transparent
     derive(-fx-base, 5%)
     transparent;
-    -fx-border-insets: 0 10 1 0;
+
     -fx-margin-top: 10px;
 
 }

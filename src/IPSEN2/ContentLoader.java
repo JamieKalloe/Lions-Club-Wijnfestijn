@@ -14,13 +14,16 @@ public abstract class ContentLoader {
     public static final String MAINFRAME = "/IPSEN2/views/menu/MainFrame.fxml";
     public static final String MAINMENU = "/IPSEN2/views/menu/MainMenu.fxml";
     public static final String GUESTS = "/IPSEN2/views/guest/GuestTableView.fxml";
-    public static final String WIJNEN = "/IPSEN2/views/wine/WineTableView.fxml";
+    public static final String WINE = "/IPSEN2/views/wine/WineTableView.fxml";
     public static final String ORDER = "/IPSEN2/views/order/OrderTableView.fxml";
     public static final String EVENTS = "/IPSEN2/views/event/Events.fxml";
     public static final String MANUAL = "/IPSEN2/views/guest/GuestTableView.fxml";
     public static final String STYLE = "IPSEN2/styles/Style.css";
 
     public static final String EDIT_GUEST_DIALOG = "/IPSEN2/views/guest/GuestDialogView.fxml";
+    public static final String EDIT_WINE_DIALOG = "/IPSEN2/views/wine/WineDialogView.fxml";
+    public static final String EDIT_ORDER_DIALOG = "/IPSEN2/views/order/OrderDialogView.fxml";
+    public static final String EDIT_EVENT_DIALOG = "/IPSEN2/views/event/EventDialogView.fxml";
 
     public static final String HOME_TITLE = "Home";
     public static final String GUESTS_TITLE = "Gasten";
@@ -48,7 +51,6 @@ public abstract class ContentLoader {
     }
 
     public static Pane loadMainFrame() throws IOException {
-
         loader = configureFXMLLoader(MAINFRAME);
         Pane mainFrame =   loader.load();
         MainFrameController mainController = loader.getController();
@@ -60,8 +62,8 @@ public abstract class ContentLoader {
         return mainFrame;
     }
 
-    public static void addContent(Object controller) throws IOException{
-        FXMLLoader loader = configureFXMLLoader(EDIT_GUEST_DIALOG);
+    public static void addContent(Object controller, String fxml) throws IOException{
+        FXMLLoader loader = configureFXMLLoader(fxml);
         loader.setController(controller);
        mainController.setContent(loader.load());
     }

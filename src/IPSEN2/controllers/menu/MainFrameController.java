@@ -65,7 +65,7 @@ public class MainFrameController extends ContentLoader implements Initializable{
            } else if (selectedPane == gastenNav){
               addContent(GUESTS);
            } else if (selectedPane == wijnenNav) {
-               addContent(WIJNEN);
+               addContent(WINE);
            } else if (selectedPane == bestellingenNav) {
                addContent(ORDER);
            } else if (selectedPane == evenementenNav) {
