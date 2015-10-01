@@ -1,11 +1,8 @@
 package IPSEN2;
 
-import IPSEN2.controllers.mail.MailService;
+import IPSEN2.generators.pdf.InvoiceGenerator;
+
 import IPSEN2.controllers.menu.ContextMenuController;
-import IPSEN2.models.mail.Mail;
-import IPSEN2.models.mail.MailFactory;
-import IPSEN2.models.mail.MailMessage;
-import IPSEN2.models.mail.MailType;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,8 +11,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 /**
  * Created by Philip on 18-09-15.
@@ -49,7 +44,11 @@ public class Main extends Application{
     }
 
     public static void main(String args[]){
-        //new GuestController();
+        try {
+            new InvoiceGenerator().generate("bin/invoice.pdf");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         launch(args);
     }
 
