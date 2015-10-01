@@ -6,6 +6,7 @@ import IPSEN2.models.mail.Mail;
 import IPSEN2.models.mail.MailFactory;
 import IPSEN2.models.mail.MailMessage;
 import IPSEN2.models.mail.MailType;
+import com.opencsv.CSVReader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,9 +14,12 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Philip on 18-09-15.
@@ -53,11 +57,15 @@ public class Main extends Application{
 
         try {
 
-            new MailService().send(new MailFactory().generate(MailType.REMINDER));
-            new MailService().send(new MailFactory().generate(MailType.EVENT));
-            new MailService().send(new MailFactory().generate(MailType.INVOICE));
-            new MailService().send(new MailFactory().generate(MailType.MERCHANT));
-            new MailService().send(new MailFactory().generate(MailType.THANK));
+            CSVReader csvReader = new CSVReader(new FileReader("C:\\Users\\Jamie\\Documents\\Book1.csv"));
+
+            List<String[]> allRows = csvReader.readAll();
+
+//            for(String[] row : allRows) {
+//                System.out.println(Arrays.toString(row));
+//            }
+
+            System.out.println(Arrays.toString(allRows.get(1)));
 
         } catch (Exception e) {
             e.printStackTrace();
