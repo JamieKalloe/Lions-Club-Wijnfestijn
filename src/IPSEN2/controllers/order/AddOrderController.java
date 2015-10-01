@@ -28,10 +28,10 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
     @FXML
     public void handleCancelButton() {
-        addContent(WINE);
+        addContent(ORDER);
     }
 
-    public void handleSubmitButton() { addContent(WINE); }
+    public void handleSubmitButton() { addContent(ORDER); }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
