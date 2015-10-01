@@ -1,11 +1,7 @@
 package IPSEN2;
 
-import IPSEN2.controllers.mail.MailService;
 import IPSEN2.controllers.menu.ContextMenuController;
-import IPSEN2.models.mail.Mail;
-import IPSEN2.models.mail.MailFactory;
-import IPSEN2.models.mail.MailMessage;
-import IPSEN2.models.mail.MailType;
+import IPSEN2.generators.CSVGenerator;
 import com.opencsv.CSVReader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,8 +12,6 @@ import javafx.stage.StageStyle;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -67,13 +61,14 @@ public class Main extends Application{
 
             System.out.println(Arrays.toString(allRows.get(1)));
 
+//            CSVGenerator csvGen = new CSVGenerator();
+//            csvGen.importGuests();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         launch(args);
-
-
 
     }
 
