@@ -1,12 +1,20 @@
 package IPSEN2.controllers.wine;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.models.wine.Wine;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
+import javax.swing.table.TableColumn;
+import javax.swing.text.TableView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class WineController implements Initializable{
+public class WineController extends ContentLoader implements Initializable{
+
+    @FXML private TableView<Wine> table_view;
+    @FXML private TableColumn idColumn;
+    @FXML private TableColumn
 
     public WineController() {
 
