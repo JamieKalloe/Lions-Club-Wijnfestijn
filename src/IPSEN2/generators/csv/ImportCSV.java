@@ -38,6 +38,7 @@ public class ImportCSV {
             }
         }
 
+        //test the data (separated)
         for(String[] klant : rows) {
             for(int i = 0; i < klant.length; i++) {
                 System.out.println(klant[i]);
