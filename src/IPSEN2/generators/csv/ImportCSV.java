@@ -30,18 +30,12 @@ public class ImportCSV {
         File selectedFile = fileChooser.showOpenDialog(null);
         List<String[]> content = this.readCSV(selectedFile);
 
-        ArrayList<String[]> rows = new ArrayList();
-        for(String[] array : content) {
-            for(int i = 0; i < array.length; i++) {
-                String[] row = array[i].split(";");
-                rows.add(row);
-            }
-        }
+        ArrayList<String[]> rows = this.formatData(content, ";");
 
-        //test the data (separated)
-        for(String[] klant : rows) {
-            for(int i = 0; i < klant.length; i++) {
-                System.out.println(klant[i]);
+        //test the data (separated).
+        for(String[] customerData : rows) {
+            for(int i = 0; i < customerData.length; i++) {
+                System.out.println(customerData[i]);
             }
             System.out.println("_______________________");
         }
@@ -53,5 +47,17 @@ public class ImportCSV {
         List<String[]> allRows = reader.readAll();
 
         return allRows;
+    }
+
+    private ArrayList<String[]> formatData(List<String[]> data, String formatKey) {
+        ArrayList<String[]> formattedData = new ArrayList();
+        for(String[] array : data) {
+            for(int i = 0; i < array.length; i++) {
+                String[] row = array[i].split(";");
+                formattedData.add(row);
+            }
+        }
+
+        return formattedData;
     }
 }
