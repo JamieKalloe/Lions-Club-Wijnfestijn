@@ -38,9 +38,11 @@ public class ImportCSV {
             }
         }
 
-        //hard coded row.
-        for(int i = 0; i < rows.get(0).length; i++) {
-            System.out.println(rows.get(0)[i]);
+        for(String[] klant : rows) {
+            for(int i = 0; i < klant.length; i++) {
+                System.out.println(klant[i]);
+            }
+            System.out.println("_______________________");
         }
     }
 
