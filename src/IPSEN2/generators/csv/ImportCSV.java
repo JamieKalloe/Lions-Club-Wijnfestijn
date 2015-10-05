@@ -38,8 +38,9 @@ public class ImportCSV {
             }
         }
 
-        for(String[] row : rows) {
-            System.out.println(Arrays.toString(row));
+        //hard coded row.
+        for(int i = 0; i < rows.get(0).length; i++) {
+            System.out.println(rows.get(0)[i]);
         }
     }
 
