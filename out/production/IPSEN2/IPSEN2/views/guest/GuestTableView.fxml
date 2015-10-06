@@ -14,11 +14,12 @@
       </ImageView>
       <TableView fx:id="table_view" editable="true" fixedCellSize="0.0" layoutX="130.0" layoutY="73.0" prefHeight="434.0" prefWidth="641.0" styleClass="table-view" stylesheets="@../../styles/Style.css">
         <columns>
-            <TableColumn fx:id="checkBoxColumn" prefWidth="51.0" />
-          <TableColumn fx:id="idColumn" editable="false" prefWidth="79.0" sortable="false" text="ID" />
-          <TableColumn fx:id="firstNameColumn" editable="false" prefWidth="94.0" text="Naam" />
-            <TableColumn fx:id="lastNameColumn" prefWidth="160.0" text="Achternaam" />
-            <TableColumn fx:id="emailColumn" editable="false" prefWidth="331.0" sortable="false" text="Email" />
+            <TableColumn fx:id="checkBoxColumn" prefWidth="50.99607849121094" />
+          <TableColumn fx:id="idColumn" editable="false" prefWidth="49.00395202636719" sortable="false" text="ID" />
+          <TableColumn fx:id="firstNameColumn" editable="false" prefWidth="114.78211975097656" text="Naam" />
+            <TableColumn fx:id="lastNameColumn" prefWidth="146.12069702148438" text="Achternaam" />
+            <TableColumn fx:id="emailColumn" editable="false" prefWidth="174.00396728515625" sortable="false" text="Email" />
+            <TableColumn fx:id="attendedColumn" prefWidth="111.99603271484375" text="Aanwezig" />
         </columns>
       </TableView>
        <Pane layoutX="806.0" layoutY="44.0" onMouseClicked="#handleAddButton" prefHeight="69.0" prefWidth="80.0" styleClass="buttonWithoutHover">

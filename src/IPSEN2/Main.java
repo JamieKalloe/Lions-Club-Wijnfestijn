@@ -29,7 +29,7 @@ public class Main extends Application {
         try {
             new InvoiceGenerator().generate("bin/invoice.pdf");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("no invoice file found");
         }
 
         launch(args);

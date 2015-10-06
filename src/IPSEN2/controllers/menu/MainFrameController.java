@@ -3,7 +3,6 @@ package IPSEN2.controllers.menu;
 import IPSEN2.ContentLoader;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -37,7 +36,7 @@ public class MainFrameController extends ContentLoader implements Initializable{
 
 
     public void handleMousePressed(MouseEvent event) throws Exception{
-        getPrimaryStage(event);
+        primaryStage = getPrimaryStage(event);
         xOffset = primaryStage.getX() - event.getScreenX();
         yOffset = primaryStage.getY() - event.getScreenY();
     }
@@ -77,10 +76,6 @@ public class MainFrameController extends ContentLoader implements Initializable{
         sluitNavMenu();
     }
 
-    public Stage getPrimaryStage(Event event) {
-        primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        return primaryStage;
-    }
 
     private void prepareSlideMenuAnimation() {
 

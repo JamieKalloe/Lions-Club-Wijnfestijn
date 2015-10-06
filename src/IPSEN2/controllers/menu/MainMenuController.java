@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Philip on 21-09-15.
  */
-public class HoofdMenuController extends ContentLoader implements Initializable {
+public class MainMenuController extends ContentLoader implements Initializable {
 
     @FXML private Pane gastenButton, wijnenButton, bestellingenButton,
             evenementenButton, handLeidingButton;

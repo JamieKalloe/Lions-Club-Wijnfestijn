@@ -3,10 +3,17 @@ package IPSEN2.controllers.order;
 import IPSEN2.ContentLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -14,17 +21,20 @@ import java.util.ResourceBundle;
  */
 public class AddOrderController extends ContentLoader implements Initializable {
 
-    @FXML
-    private TextField wineNameTextField, countryNameNameTextField,
-            regionNameNameTextField, yearNameTextField, typeNameTextField,
-            priceNameTextField;
+
+
 
     @FXML
-    private Pane cancelButton, submitButton;
+    private AnchorPane wineIDandQuantityWrapper, deleteButtonWrapper;
 
-//    public AddWineController(int selectedWineID) {
-//        this.selectedWineID = selectedWineID;
-//    }
+    @FXML
+    private Pane cancelButton, submitButton, addWineButton;
+
+    private ArrayList<Pane> wineAndQuantityList;
+    private ArrayList<ImageView> deleteButtonList;
+
+    private double yPosition;
+
 
     @FXML
     public void handleCancelButton() {
@@ -33,9 +43,124 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
     public void handleSubmitButton() { addContent(ORDER); }
 
+    public void handleAddWineButton() throws IOException {
+
+       createWineIDAndQuanityContainer();
+
+        addWineButton.setLayoutY(addWineButton.getLayoutY() + 50);
+
+        createDeleteButton();
+
+    }
+
+    private void createWineIDAndQuanityContainer() throws IOException{
+        Pane wineIDAndQuantityContainer = new Pane();
+        TextField wineIDTextField = new TextField();
+        Label wineInfoLabel = new Label("Wijnnaam ,soort en streek");
+        TextField wineQuantityTextField = new TextField();
+
+        wineIDAndQuantityContainer.setPrefWidth(611);
+        wineIDTextField.setPrefWidth(167);
+        wineQuantityTextField.setPrefWidth(41);
+
+
+        wineInfoLabel.setTextFill(Paint.valueOf("#999999"));
+        wineInfoLabel.setLayoutX(252);
+        wineQuantityTextField.setLayoutX(570);
+
+        wineIDAndQuantityContainer.getChildren().addAll(wineIDTextField, wineInfoLabel, wineQuantityTextField);
+
+        if (wineAndQuantityList.size() != 0){
+            yPosition += 50;
+            wineIDAndQuantityContainer.setLayoutY(yPosition);
+        } else {
+            yPosition = 0;
+            wineIDAndQuantityContainer.setLayoutY(yPosition);
+
+        }
+
+        wineIDandQuantityWrapper.getChildren().add(wineIDAndQuantityContainer);
+        wineAndQuantityList.add(wineIDAndQuantityContainer);
+    }
+
+    private void createDeleteButton() throws IOException{
+        ImageView deleteButton = new ImageView("/IPSEN2/images/DeleteButton2.png");
+        deleteButton.setLayoutY(yPosition);
+        deleteButton.getStyleClass().add("buttonWithoutHover");
+
+        deleteButtonWrapper.getChildren().add(deleteButton);
+        deleteButtonList.add(deleteButton);
+
+        handleDeleteButton(deleteButton);
+
+
+
+    }
+
+    private void handleDeleteButton(ImageView deleteButton){
+        deleteButton.setOnMouseClicked(event -> deleteRow(event));
+    }
+
+
+    public void deleteRow(MouseEvent event) {
+        for(int i = 0; i < deleteButtonList.size(); i++){
+
+            if (event.getSource() == deleteButtonList.get(i)) {
+                repositionListItems(i);
+                deleteButtonWrapper.getChildren().remove(deleteButtonList.get(i));
+                wineIDandQuantityWrapper.getChildren().remove(wineAndQuantityList.get(i));
+                deleteButtonList.remove(i);
+                wineAndQuantityList.remove(i);
+                yPosition -= 50;
+
+            }
+        }
+    }
+
+
+    private void repositionListItems(int index) {
+        for(int j = index; j < deleteButtonList.size(); j++) {
+//                System.out.println(index);
+            if (j > index) {
+//                System.out.println("deleteButtonList.size() = " + deleteButtonList.size());
+//                System.out.println("wineAndQuantityList.size() = " + wineAndQuantityList.size());
+                deleteButtonWrapper.getChildren().get(j).setLayoutY(deleteButtonWrapper.getChildren().get(j).getLayoutY() - 50);
+                wineIDandQuantityWrapper.getChildren().get(j).setLayoutY(wineIDandQuantityWrapper.getChildren().get(j).getLayoutY() - 50);
+            }
+
+        }
+
+        addWineButton.setLayoutY(addWineButton.getLayoutY() - 50);
+    }
+
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
+        addWineButton.setOnMouseClicked(event -> {
+            try {
+                handleAddWineButton();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        deleteButtonList = new ArrayList<>();
+        wineAndQuantityList = new ArrayList<>();
+
+        try {
+           createWineIDAndQuanityContainer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            createDeleteButton();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
