@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,9 +22,6 @@ import java.util.ResourceBundle;
  */
 public class AddOrderController extends ContentLoader implements Initializable {
 
-
-
-
     @FXML
     private AnchorPane wineIDandQuantityWrapper, deleteButtonWrapper;
 
@@ -33,6 +31,8 @@ public class AddOrderController extends ContentLoader implements Initializable {
     private ArrayList<Pane> wineAndQuantityList;
     private ArrayList<ImageView> deleteButtonList;
 
+    private ArrayList<TextField> wineIDTextFieldList, wineQuantityTextFieldList;
+
     private double yPosition;
 
 
@@ -41,7 +41,14 @@ public class AddOrderController extends ContentLoader implements Initializable {
         addContent(ORDER);
     }
 
-    public void handleSubmitButton() { addContent(ORDER); }
+    public void handleSubmitButton() {
+        wineAndQuantityList.forEach(row -> {
+            int index = wineAndQuantityList.indexOf(row);
+          System.out.println("Wine ID: " + wineIDTextFieldList.get(index).getText());
+           System.out.println("Quantity: " + wineQuantityTextFieldList.get(index).getText());
+        });
+        addContent(ORDER);
+    }
 
     public void handleAddWineButton() throws IOException {
 
@@ -66,7 +73,13 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
         wineInfoLabel.setTextFill(Paint.valueOf("#999999"));
         wineInfoLabel.setLayoutX(252);
+        wineInfoLabel.setFont(new Font("Roboto", 18));
         wineQuantityTextField.setLayoutX(570);
+
+        wineIDTextFieldList.add(wineIDTextField);
+        wineQuantityTextFieldList.add(wineQuantityTextField);
+
+
 
         wineIDAndQuantityContainer.getChildren().addAll(wineIDTextField, wineInfoLabel, wineQuantityTextField);
 
@@ -92,9 +105,6 @@ public class AddOrderController extends ContentLoader implements Initializable {
         deleteButtonList.add(deleteButton);
 
         handleDeleteButton(deleteButton);
-
-
-
     }
 
     private void handleDeleteButton(ImageView deleteButton){
@@ -120,10 +130,7 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
     private void repositionListItems(int index) {
         for(int j = index; j < deleteButtonList.size(); j++) {
-//                System.out.println(index);
             if (j > index) {
-//                System.out.println("deleteButtonList.size() = " + deleteButtonList.size());
-//                System.out.println("wineAndQuantityList.size() = " + wineAndQuantityList.size());
                 deleteButtonWrapper.getChildren().get(j).setLayoutY(deleteButtonWrapper.getChildren().get(j).getLayoutY() - 50);
                 wineIDandQuantityWrapper.getChildren().get(j).setLayoutY(wineIDandQuantityWrapper.getChildren().get(j).getLayoutY() - 50);
             }
@@ -149,6 +156,8 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
         deleteButtonList = new ArrayList<>();
         wineAndQuantityList = new ArrayList<>();
+        wineIDTextFieldList = new ArrayList<>();
+        wineQuantityTextFieldList = new ArrayList<>();
 
         try {
            createWineIDAndQuanityContainer();
