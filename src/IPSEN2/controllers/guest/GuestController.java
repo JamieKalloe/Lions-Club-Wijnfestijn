@@ -40,7 +40,7 @@ public class GuestController extends ContentLoader implements Initializable{
 
 
     public void handleAddButton() throws IOException {
-     addContent(new AddGuestController(), EDIT_GUEST_DIALOG);
+       addContent(new AddGuestController(), EDIT_GUEST_DIALOG);
 
     }
 
@@ -49,8 +49,6 @@ public class GuestController extends ContentLoader implements Initializable{
 
         table_view.setItems(FXCollections.observableArrayList(service.all()));
     }
-
-
 
     public void handleEditButton() throws IOException{
         if (selectedGuestID != 0) {

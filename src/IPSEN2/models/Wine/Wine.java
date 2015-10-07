@@ -1,11 +1,13 @@
-package IPSEN2.models.Wine;
+package IPSEN2.models.wine;
 
 public class Wine {
     private int wineID;
-    private String type;
+    private WineType wineType;
     private String name;
     private String country;
+    private String region;
     private int year;
+    private double purchasePrice;
     private double price;
     public WineMerchant merchant;
 
@@ -13,11 +15,14 @@ public class Wine {
 
     }
 
-    public Wine (String type, String name, String country, int year, double price) {
-        this.type = type;
+    public Wine (int wineID, int typeID, String country, String name, String region, int year, double purchasePrice, double price) {
+        this.wineID = wineID;
+        this.wineType = new WineType(typeID);
         this.name = name;
         this.country = country;
+        this.region = region;
         this.year = year;
+        this.purchasePrice = purchasePrice;
         this.price = price;
     }
 
@@ -38,20 +43,24 @@ public class Wine {
         return wineID;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public String getName() {
-        return name;
+    public WineType getType() {
+        return wineType;
     }
 
     public String getCountry() {
         return country;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getYear() {
         return year;
+    }
+
+    public double getPurchasePrice() {
+        return purchasePrice;
     }
 
     public double getPrice() {
@@ -62,25 +71,35 @@ public class Wine {
         return merchant;
     }
 
+    public String getRegion() {
+        return region;
+    }
+
     //SETTERS
     public void setWineID(int wineID) {
         this.wineID = wineID;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setWineType (WineType wineType) {
+        this.wineType = wineType;
     }
 
     public void setCountry(String country) {
         this.country = country;
     }
 
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
     }
 
     public void setPrice(double price) {
@@ -89,5 +108,12 @@ public class Wine {
 
     public void setMerchant(WineMerchant merchant) {
         this.merchant = merchant;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public void setType(WineType type_id) {
     }
 }

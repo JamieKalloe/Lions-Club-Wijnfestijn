@@ -1,19 +1,23 @@
-package IPSEN2.models.Wine;
+package IPSEN2.models.wine;
 
 /**
  * Created by Bernd on 22-9-2015.
  */
 public class WineType {
-    private int wineID;
+    private int wineTypeID;
     private String name;
 
     public WineType() {
 
     }
 
+    public WineType(int wineTypeID) {
+        this.wineTypeID = wineTypeID;
+    }
+
     //GETTERS
-    public int getWineID() {
-        return wineID;
+    public int getWineTypeID() {
+        return wineTypeID;
     }
 
     public String getName() {
@@ -22,8 +26,8 @@ public class WineType {
 
     //SETTERS
 
-    public void setWineID(int wineID) {
-        this.wineID = wineID;
+    public void setWineTypeID(int wineTypeID) {
+        this.wineTypeID = wineTypeID;
     }
 
     public void setName(String name) {
