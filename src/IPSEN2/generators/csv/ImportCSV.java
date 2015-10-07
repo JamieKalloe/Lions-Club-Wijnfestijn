@@ -16,13 +16,10 @@ import java.util.List;
  */
 public class ImportCSV {
 
-    //Variables
-    private final String fileChooserTitle = "Import csv file";
-
     //Methods
     public void importTable(String table) throws Exception{
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle(this.fileChooserTitle);
+        fileChooser.setTitle("Select a CSV file");
         fileChooser.getExtensionFilters().addAll(
                 new ExtensionFilter("CSV Files", "*.csv")
         );
@@ -30,14 +27,10 @@ public class ImportCSV {
         File selectedFile = fileChooser.showOpenDialog(null);
         List<String[]> content = this.readCSV(selectedFile);
 
-        ArrayList<String[]> rows = this.formatData(content, ";");
-
-        //test the data (separated).
-        for(String[] customerData : rows) {
-            for(int i = 0; i < customerData.length; i++) {
-                System.out.println(customerData[i]);
+        for(String[] r : content) {
+            for(int i = 0; i < r.length; i++) {
+                System.out.println(r[i]);
             }
-            System.out.println("_______________________");
         }
     }
 
@@ -49,15 +42,7 @@ public class ImportCSV {
         return allRows;
     }
 
-    private ArrayList<String[]> formatData(List<String[]> data, String formatKey) {
-        ArrayList<String[]> formattedData = new ArrayList();
-        for(String[] array : data) {
-            for(int i = 0; i < array.length; i++) {
-                String[] row = array[i].split(";");
-                formattedData.add(row);
-            }
-        }
+    private void importToDatabase() {
 
-        return formattedData;
     }
 }
