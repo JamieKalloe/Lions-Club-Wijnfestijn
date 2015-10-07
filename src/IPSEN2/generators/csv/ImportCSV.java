@@ -1,5 +1,6 @@
 package IPSEN2.generators.csv;
 
+import IPSEN2.services.guest.GuestService;
 import com.opencsv.CSVReader;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -9,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,24 +27,42 @@ public class ImportCSV {
         );
 
         File selectedFile = fileChooser.showOpenDialog(null);
-        List<String[]> content = this.readCSV(selectedFile);
 
-        for(String[] r : content) {
-            for(int i = 0; i < r.length; i++) {
-                System.out.println(r[i]);
+        List<String[]> content = readCSV(selectedFile);
+
+//        HashMap data = new HashMap();
+//
+        //add csv data to the database.
+        for(String[] customerData : content) {
+            HashMap data = new HashMap();
+            GuestService service = new GuestService();
+
+            for(int record = 0; record < customerData.length; record++) {
+                data.put("email", customerData[9]);
+                data.put("firstname", customerData[2]);
+                data.put("lastname", customerData[1]);
+                data.put("prefix", customerData[3]);
+                data.put("gender", customerData[4]);
+                data.put("notes", "Not specified!");
+                data.put("zipCode", customerData[7]);
+                data.put("street", customerData[5]);
+                data.put("houseNumber", customerData[6]);
+                data.put("country", "Nederland");
+                data.put("city", customerData[8]);
+                data.put("referralName", "Not specified!");
+
             }
+            service.subscribe(data);
+
+            //Print to console.
+            System.out.println("Guest was added to the database!");
         }
     }
 
     private List<String[]> readCSV(File file) throws IOException {
-        CSVReader reader = new CSVReader(new FileReader(file), ',', '"', 1);
-
+        CSVReader reader = new CSVReader(new FileReader(file), ';', '"', 1);
         List<String[]> allRows = reader.readAll();
 
         return allRows;
-    }
-
-    private void importToDatabase() {
-
     }
 }
