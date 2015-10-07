@@ -27,15 +27,10 @@ public class ImportCSV {
         );
 
         File selectedFile = fileChooser.showOpenDialog(null);
-
         List<String[]> content = readCSV(selectedFile);
 
-//        HashMap data = new HashMap();
-//
-        //add csv data to the database.
         for(String[] customerData : content) {
             HashMap data = new HashMap();
-            GuestService service = new GuestService();
 
             for(int record = 0; record < customerData.length; record++) {
                 data.put("email", customerData[9]);
@@ -52,10 +47,7 @@ public class ImportCSV {
                 data.put("referralName", "Not specified!");
 
             }
-            service.subscribe(data);
-
-            //Print to console.
-            System.out.println("Guest was added to the database!");
+            new GuestService().subscribe(data);
         }
     }
 
