@@ -21,8 +21,7 @@ import java.util.ResourceBundle;
 
 public class GuestController extends ContentLoader implements Initializable{
 
-    @FXML
-    private  TableView<Guest> table_view;
+    @FXML private  TableView<Guest> table_view;
     @FXML private TableColumn idColumn;
     @FXML private TableColumn firstNameColumn;
     @FXML private TableColumn lastNameColumn;
@@ -32,43 +31,48 @@ public class GuestController extends ContentLoader implements Initializable{
 
     public int selectedGuestID;
     private GuestService service;
-    private  ObservableList<Guest> guestData;
-    private ArrayList<Integer> selectedRows;
+    private static ObservableList<Guest> guestData;
+    private static ArrayList<Integer> selectedRows;
+    private CheckBox selectAllCheckBox;
+    private static  boolean selected;
+    private static boolean keepCurrentData = false;
 
 
     public void handleAddButton() throws IOException {
+        keepCurrentData = false;
        addContent(new AddGuestController(), EDIT_GUEST_DIALOG);
-
     }
 
     public void handleRemoveButton() {
-        selectedRows.forEach(row -> service.remove(row + 1));
-
-        table_view.setItems(FXCollections.observableArrayList(service.all()));
+        selected = false;
+        for (Integer row : selectedRows){
+            service.remove(row + 1);
+         }
+        guestData = FXCollections.observableArrayList(service.all());
+        addContent(GUESTS);
     }
+
 
     public void handleEditButton() throws IOException{
         if (selectedGuestID != 0 && !String.valueOf(selectedGuestID).equals("") && String.valueOf(selectedGuestID) != null) {
+            keepCurrentData = false;
+            selected = false;
             addContent(new EditGuestController(selectedGuestID), EDIT_GUEST_DIALOG);
         }
+//        //TODO: delete test code, debug only.
+//        try {
+//            ImportCSV importCSV = new ImportCSV();
+//            importCSV.importGuests();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        keepCurrentData = false;
+//        addContent(GUESTS);
+
     }
 
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        ContentLoader.setMainFrameTitle(ContentLoader.GUESTS_TITLE);
-        service = new GuestService();
-
-       // guestData = service.all();
-
-        guestData = FXCollections.observableArrayList(service.all());
-
-        selectedRows = new ArrayList<>();
-
-        table_view.setItems(guestData);
-
+    private void setOnTableRowClickedListener() {
         table_view.setRowFactory(table -> {
-
             TableRow<Guest> row = new TableRow<>();
             row.getStyleClass().add("pane");
             row.setOnMouseClicked(event -> {
@@ -82,37 +86,74 @@ public class GuestController extends ContentLoader implements Initializable{
             });
             return row;
         });
+    }
+
+    private void createSelectAllCheckBox() {
+        selectAllCheckBox = new CheckBox();
+        selectAllCheckBox.setSelected(selected);
+        checkBoxColumn.setGraphic(selectAllCheckBox);
+        selectAllCheckBox.setOnAction(event -> {
+            selected  = selectAllCheckBox.isSelected();
+            guestData.forEach(guest -> {
+                guest.setAttended(selected);
+                selectedRows.add(guest.getGuestID());
+            });
+
+            addContent(GUESTS);
+            selectAllCheckBox.setSelected(selected);
+        });
+
+    }
+
+    private Callback createCheckBoxCellCallBack() {
+        Callback checkBoxCellCallBack = new Callback<TableColumn.CellDataFeatures<Guest, CheckBox>, ObservableValue<CheckBox>>() {
+
+            @Override
+            public ObservableValue<CheckBox> call(TableColumn.CellDataFeatures<Guest, CheckBox> cellDataFeatures) {
+                CheckBox checkBox = new CheckBox();
+                checkBox.setSelected(cellDataFeatures.getValue().getAttended());
+                checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue,
+                                                         Boolean oldValue, Boolean newValue) -> {
+                    cellDataFeatures.getValue().setAttended(newValue.booleanValue());
+
+                    selectedGuestID = cellDataFeatures.getValue().getGuestID();
+                    if (newValue.booleanValue()) {
+                        selectedRows.add(cellDataFeatures.getValue().getGuestID());
+                    } else if (!newValue.booleanValue()) {
+                        selectedRows.remove(selectedRows.indexOf(selectedGuestID));
+                        selectedGuestID = 0;
+                    }
+                });
+                return new SimpleObjectProperty(checkBox);
+            }
+        };
+        return  checkBoxCellCallBack;
+    }
+
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ContentLoader.setMainFrameTitle(ContentLoader.GUESTS_TITLE);
+        service = new GuestService();
+
+        if (!keepCurrentData) {
+            guestData = FXCollections.observableArrayList(service.all());
+            selectedRows = new ArrayList<>();
+            keepCurrentData = true;
+        }
+
+        table_view.setItems(guestData);
+        setOnTableRowClickedListener();
 
         idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("guestID"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("lastName"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("email"));
-//        attendedColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
-      //  attendedColumn.setCellValueFactory(new PropertyValueFactory<Guest, SimpleBooleanProperty>("attended"));
+        checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
 
-        checkBoxColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Guest, CheckBox>, ObservableValue<CheckBox>>() {
+        createSelectAllCheckBox();
 
-               @Override
-               public ObservableValue<CheckBox> call(TableColumn.CellDataFeatures<Guest, CheckBox> cellDataFeatures) {
-                   CheckBox checkBox = new CheckBox();
-                   checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue,
-                                                            Boolean oldValue, Boolean newValue) -> {
-                       cellDataFeatures.getValue().setAttended(newValue.booleanValue());
-                       selectedGuestID = cellDataFeatures.getValue().getGuestID();
-                       if (newValue.booleanValue()) {
-                           selectedRows.add(cellDataFeatures.getValue().getGuestID());
-                       } else if (!newValue.booleanValue()){
-                           selectedRows.remove(selectedRows.indexOf(selectedGuestID));
-                           selectedGuestID = 0;
-                       }
-                   });
-                   return new SimpleObjectProperty(checkBox);
-               }
-        });
-
-
-            table_view.setPlaceholder(new Label("Er is geen content om te weergeven"));
-
+        table_view.setPlaceholder(new Label("Er is geen content om te weergeven"));
         }
-
     }

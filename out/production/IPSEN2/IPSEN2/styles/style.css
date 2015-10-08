@@ -77,4 +77,11 @@
     -fx-alignment: center-left;
 }
 
+.checkBoxColumn{
+    -fx-alignment: center;
+}
+
+.table-view .column-header .checkBoxColumn .check-box {
+    -fx-alignment: center;
+}
 

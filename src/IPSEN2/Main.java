@@ -1,8 +1,5 @@
 package IPSEN2;
 
-import IPSEN2.generators.csv.ImportCSV;
-import IPSEN2.generators.pdf.InvoiceGenerator;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -24,13 +21,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        //TODO: delete test code, debug only.
-        try {
-            ImportCSV importCSV = new ImportCSV();
-            importCSV.importGuests();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
     public static void main(String args[]){
