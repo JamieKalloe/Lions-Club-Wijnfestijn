@@ -24,21 +24,19 @@ public class ImportCSV {
         for(String[] customerData : guestsCSV) {
             HashMap data = new HashMap();
 
-            for(int record = 0; record < customerData.length; record++) {
-                data.put("email", customerData[9]);
-                data.put("firstname", customerData[2]);
-                data.put("lastname", customerData[1]);
-                data.put("prefix", customerData[3]);
-                data.put("gender", customerData[4]);
-                data.put("notes", customerData[11]);
-                data.put("zipCode", customerData[7]);
-                data.put("street", customerData[5]);
-                data.put("houseNumber", customerData[6]);
-                data.put("country", "Nederland");
-                data.put("city", customerData[8]);
-                data.put("referralName", customerData[10]);
+            data.put("email", customerData[9]);
+            data.put("firstname", customerData[2]);
+            data.put("lastname", customerData[1]);
+            data.put("prefix", customerData[3]);
+            data.put("gender", customerData[4]);
+            data.put("notes", customerData[11]);
+            data.put("zipCode", customerData[7]);
+            data.put("street", customerData[5]);
+            data.put("houseNumber", customerData[6]);
+            data.put("country", "Nederland");
+            data.put("city", customerData[8]);
+            data.put("referralName", customerData[10]);
 
-            }
             new GuestService().subscribe(data);
         }
         System.out.println("Succesfully imported guests.");
@@ -51,21 +49,19 @@ public class ImportCSV {
         for(String[] wineData : wineCSV) {
             HashMap data = new HashMap();
 
-            for(int record = 0; record < wineData.length; record++) {
-                data.put("email", wineData[9]);
-                data.put("firstname", wineData[2]);
-                data.put("lastname", wineData[1]);
-                data.put("prefix", wineData[3]);
-                data.put("gender", wineData[4]);
-                data.put("notes", wineData[11]);
-                data.put("zipCode", wineData[7]);
-                data.put("street", wineData[5]);
-                data.put("houseNumber", wineData[6]);
-                data.put("country", "Nederland");
-                data.put("city", wineData[8]);
-                data.put("referralName", wineData[10]);
+            data.put("email", wineData[9]);
+            data.put("firstname", wineData[2]);
+            data.put("lastname", wineData[1]);
+            data.put("prefix", wineData[3]);
+            data.put("gender", wineData[4]);
+            data.put("notes", wineData[11]);
+            data.put("zipCode", wineData[7]);
+            data.put("street", wineData[5]);
+            data.put("houseNumber", wineData[6]);
+            data.put("country", "Nederland");
+            data.put("city", wineData[8]);
+            data.put("referralName", wineData[10]);
 
-            }
             //add wineService subscribe here.
             new GuestService().subscribe(data);
         }
