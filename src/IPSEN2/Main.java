@@ -29,7 +29,7 @@ public class Main extends Application {
             ImportCSV importCSV = new ImportCSV();
             importCSV.importGuests();
         } catch (Exception e) {
-            System.out.println("no invoice file found");
+            e.printStackTrace();
         }
     }
 
