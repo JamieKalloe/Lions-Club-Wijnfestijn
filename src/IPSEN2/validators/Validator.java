@@ -39,7 +39,7 @@ public class Validator {
     public boolean validateZipcode(int country, String zipCode) {
         switch(country) {
             case NETHERLANDS :
-                Pattern pattern = Pattern.compile("^[1-9]{1}[0-9]{3} ?[A-Z]{2}$");
+                Pattern pattern = Pattern.compile("^[1-9]{1}[0-9]{3} ?[a-zA-Z]{2}$");
                 Matcher matcher = pattern.matcher(zipCode);
                 if(matcher.matches()) {
                     return true;
