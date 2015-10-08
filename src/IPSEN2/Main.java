@@ -1,5 +1,6 @@
 package IPSEN2;
 
+import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.generators.pdf.InvoiceGenerator;
 
 import javafx.application.Application;
@@ -22,15 +23,23 @@ public class Main extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        //TODO: delete test code, debug only.
+        try {
+            ImportCSV importCSV = new ImportCSV();
+            importCSV.importGuests();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String args[]){
 
-        try {
-            new InvoiceGenerator().generate("bin/invoice.pdf");
-        } catch (Exception e) {
-            System.out.println("no invoice file found");
-        }
+//        try {
+//            new InvoiceGenerator().generate("bin/invoice.pdf");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         launch(args);
     }
