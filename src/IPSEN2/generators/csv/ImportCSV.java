@@ -8,8 +8,6 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,14 +18,8 @@ public class ImportCSV {
 
     //Methods
     public void importTable(String table) throws Exception{
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select a CSV file");
-        fileChooser.getExtensionFilters().addAll(
-                new ExtensionFilter("CSV Files", "*.csv")
-        );
-
-        File selectedFile = fileChooser.showOpenDialog(null);
-        List<String[]> content = readCSV(selectedFile);
+        File selectedFile = this.fileDialog("Select a guest CSV file", "*.csv").showOpenDialog(null);
+        List<String[]> content = this.readCSV(selectedFile);
 
         for(String[] customerData : content) {
             HashMap data = new HashMap();
@@ -38,17 +30,18 @@ public class ImportCSV {
                 data.put("lastname", customerData[1]);
                 data.put("prefix", customerData[3]);
                 data.put("gender", customerData[4]);
-                data.put("notes", "Not specified!");
+                data.put("notes", customerData[11]);
                 data.put("zipCode", customerData[7]);
                 data.put("street", customerData[5]);
                 data.put("houseNumber", customerData[6]);
                 data.put("country", "Nederland");
                 data.put("city", customerData[8]);
-                data.put("referralName", "Not specified!");
+                data.put("referralName", customerData[10]);
 
             }
             new GuestService().subscribe(data);
         }
+        System.out.println("Succesfully imported guests.");
     }
 
     private List<String[]> readCSV(File file) throws IOException {
@@ -56,5 +49,18 @@ public class ImportCSV {
         List<String[]> allRows = reader.readAll();
 
         return allRows;
+    }
+
+    private FileChooser fileDialog(String title, String...extensions) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(title);
+
+        for(String extension : extensions) {
+            fileChooser.getExtensionFilters().addAll(
+                    new ExtensionFilter(extension.substring(2).toUpperCase() + " Files", extension)
+            );
+        }
+
+        return fileChooser;
     }
 }
