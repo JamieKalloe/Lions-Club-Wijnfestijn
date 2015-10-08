@@ -1,5 +1,7 @@
 package IPSEN2.models.wine;
 
+import IPSEN2.models.winetype.WineType;
+
 public class Wine {
     private int wineID;
     private WineType wineType;
@@ -40,7 +42,7 @@ public class Wine {
 
     //GETTERS
     public int getWineID() {
-        return wineID;
+        return wineID -1;
     }
 
     public WineType getType() {
