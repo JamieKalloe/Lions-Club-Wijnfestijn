@@ -2,11 +2,7 @@ package IPSEN2.models.guest;
 
 import IPSEN2.models.address.Address;
 import IPSEN2.models.referral.Referral;
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 
 public class Guest {
 
@@ -16,8 +12,8 @@ public class Guest {
     private String lastName;
     private String prefix;
     private String firstName;
-    private SimpleBooleanProperty selected = new SimpleBooleanProperty(true);
-    public BooleanProperty checkedProperty() {       return selected;}
+    private SimpleBooleanProperty attended = new SimpleBooleanProperty(false);
+    //public BooleanProperty attendendProperty() {       return attended;}
 
     private Address address;
 
@@ -49,7 +45,7 @@ public class Guest {
     }
 
     //GETTERS
-    public Boolean getSelected() {return selected.get();}
+    public Boolean getAttended() {return attended.get();}
 
     public int getGuestID() {
         return guestID - 1;
@@ -91,6 +87,8 @@ public class Guest {
    // public void setSelected(boolean selected) {
    //     this.selected = selected;
    // }
+
+    public void setAttended(boolean attended) { this.attended = new SimpleBooleanProperty(attended);}
     public void setGuestID(int guestID) {
         this.guestID = guestID;
     }

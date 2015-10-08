@@ -1,8 +1,11 @@
 package IPSEN2;
 
 import IPSEN2.controllers.menu.MainFrameController;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -24,6 +27,8 @@ public abstract class ContentLoader {
     public static final String EDIT_WINE_DIALOG = "/IPSEN2/views/wine/WineDialogView.fxml";
     public static final String EDIT_ORDER_DIALOG = "/IPSEN2/views/order/OrderDialogView.fxml";
     public static final String EDIT_EVENT_DIALOG = "/IPSEN2/views/event/EventDialogView.fxml";
+
+    public static final String ADD_WINE = "/IPSEN2/views/order/WineIDAndQuantityContainer.fxml";
 
     public static final String HOME_TITLE = "Home";
     public static final String GUESTS_TITLE = "Gasten";
@@ -76,6 +81,11 @@ public abstract class ContentLoader {
 
     public static void setMainFrameTitle(String title){
         mainController.setTitel(title);
+    }
+
+    public static Stage getPrimaryStage(Event event) {
+        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        return primaryStage;
     }
 }
 

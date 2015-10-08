@@ -1,8 +1,0 @@
-Beste %s %s,
-
-Bij deze overhandigen wij uw factuur van uw bestelling tijdens het %s.
-
-Met vriendelijke groet,
-
-%s.
-

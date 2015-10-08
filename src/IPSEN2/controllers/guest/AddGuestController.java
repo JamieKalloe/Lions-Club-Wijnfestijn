@@ -1,7 +1,6 @@
 package IPSEN2.controllers.guest;
 
 import IPSEN2.ContentLoader;
-import IPSEN2.models.guest.Guest;
 import IPSEN2.services.guest.GuestService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,10 +29,6 @@ public class AddGuestController extends ContentLoader implements Initializable {
     private String lastName;
     private HashMap data;
 
-    public AddGuestController() {
-
-    }
-
     @FXML
     public void handleCancelButton() {
         addContent(GUESTS);
@@ -61,10 +56,6 @@ public class AddGuestController extends ContentLoader implements Initializable {
         service.subscribe(data);
 
         addContent(GUESTS);
-    }
-
-    public void handleEditButton() {
-
     }
 
     @Override

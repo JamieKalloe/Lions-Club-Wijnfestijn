@@ -1,4 +1,6 @@
-package IPSEN2.models.Wine;
+package IPSEN2.models.wine;
+
+import IPSEN2.models.address.Address;
 
 /**
  * Created by Bernd on 22-9-2015.
