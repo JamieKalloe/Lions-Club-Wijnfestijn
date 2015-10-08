@@ -27,6 +27,13 @@ public class Main extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        try {
+            ImportCSV importCSV = new ImportCSV();
+            importCSV.importGuests();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String args[]){
@@ -43,12 +50,14 @@ public class Main extends Application {
         data.put("city", "Gekke dorp");
 
         service.add(data);*/
-        try {
-            ImportCSV importCSV = new ImportCSV();
-            importCSV.importGuests();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            new InvoiceGenerator().generate("bin/invoice.pdf");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        launch(args);
     }
+
 }
 
