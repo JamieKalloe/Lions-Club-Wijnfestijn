@@ -9,10 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
@@ -51,7 +48,7 @@ public class GuestController extends ContentLoader implements Initializable{
     }
 
     public void handleEditButton() throws IOException{
-        if (selectedGuestID != 0) {
+        if (selectedGuestID != 0 && !String.valueOf(selectedGuestID).equals("") && String.valueOf(selectedGuestID) != null) {
             addContent(new EditGuestController(selectedGuestID), EDIT_GUEST_DIALOG);
         }
     }
@@ -69,6 +66,23 @@ public class GuestController extends ContentLoader implements Initializable{
         selectedRows = new ArrayList<>();
 
         table_view.setItems(guestData);
+
+        table_view.setRowFactory(table -> {
+
+            TableRow<Guest> row = new TableRow<>();
+            row.getStyleClass().add("pane");
+            row.setOnMouseClicked(event -> {
+                selectedGuestID = row.getTableView().getSelectionModel().getSelectedItem().getGuestID();
+
+                try {
+                    handleEditButton();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            return row;
+        });
+
         idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("guestID"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("lastName"));

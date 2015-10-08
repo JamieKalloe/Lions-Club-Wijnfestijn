@@ -12,12 +12,12 @@
             <Image url="@../../images/GastenAchtergrond.png" />
          </image>
       </ImageView>
-      <TableView fx:id="table_view" editable="true" fixedCellSize="0.0" layoutX="130.0" layoutY="73.0" prefHeight="434.0" prefWidth="641.0" styleClass="table-view" stylesheets="@../../styles/Style.css">
+      <TableView fx:id="table_view" editable="true" fixedCellSize="0.0" layoutX="130.0" layoutY="73.0" prefHeight="434.0" prefWidth="641.0" styleClass="table-view" stylesheets="@../../styles/style.css">
          <columns>
             <TableColumn fx:id="checkBoxColumn" prefWidth="51.0" />
             <TableColumn fx:id="idColumn" editable="false" prefWidth="79.0" sortable="false" text="ID" />
-            <TableColumn fx:id="firstNameColumn" editable="false" prefWidth="94.0" text="Naam" />
-            <TableColumn fx:id="lastNameColumn" prefWidth="110.0" text="Plaats" />
+            <TableColumn fx:id="nameColumn" editable="false" prefWidth="94.0" text="Naam" />
+            <TableColumn fx:id="placeNameColumn" prefWidth="110.0" text="Plaats" />
             <TableColumn fx:id="emailColumn" editable="false" prefWidth="124.0" sortable="false" text="Adres" />
             <TableColumn prefWidth="182.0" text="Datum" />
          </columns>
