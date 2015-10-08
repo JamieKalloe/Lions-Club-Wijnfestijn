@@ -17,11 +17,11 @@ import java.util.List;
 public class ImportCSV {
 
     //Methods
-    public void importTable(String table) throws Exception{
+    public void importGuests() throws Exception{
         File selectedFile = this.fileDialog("Select a guest CSV file", "*.csv").showOpenDialog(null);
-        List<String[]> content = this.readCSV(selectedFile);
+        List<String[]> guestsCSV = this.readCSV(selectedFile);
 
-        for(String[] customerData : content) {
+        for(String[] customerData : guestsCSV) {
             HashMap data = new HashMap();
 
             for(int record = 0; record < customerData.length; record++) {
@@ -42,6 +42,34 @@ public class ImportCSV {
             new GuestService().subscribe(data);
         }
         System.out.println("Succesfully imported guests.");
+    }
+
+    public void importWine() throws Exception {
+        File selectedFile = this.fileDialog("Select a wine CSV file", "*.csv").showOpenDialog(null);
+        List<String[]> wineCSV = this.readCSV(selectedFile);
+
+        for(String[] wineData : wineCSV) {
+            HashMap data = new HashMap();
+
+            for(int record = 0; record < wineData.length; record++) {
+                data.put("email", wineData[9]);
+                data.put("firstname", wineData[2]);
+                data.put("lastname", wineData[1]);
+                data.put("prefix", wineData[3]);
+                data.put("gender", wineData[4]);
+                data.put("notes", wineData[11]);
+                data.put("zipCode", wineData[7]);
+                data.put("street", wineData[5]);
+                data.put("houseNumber", wineData[6]);
+                data.put("country", "Nederland");
+                data.put("city", wineData[8]);
+                data.put("referralName", wineData[10]);
+
+            }
+            //add wineService subscribe here.
+            new GuestService().subscribe(data);
+        }
+        System.out.println("Succesfully imported wine.");
     }
 
     private List<String[]> readCSV(File file) throws IOException {

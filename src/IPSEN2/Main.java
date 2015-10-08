@@ -27,7 +27,7 @@ public class Main extends Application {
         //TODO: delete test code, debug only.
         try {
             ImportCSV importCSV = new ImportCSV();
-            importCSV.importTable("test");
+            importCSV.importGuests();
         } catch (Exception e) {
             e.printStackTrace();
         }
