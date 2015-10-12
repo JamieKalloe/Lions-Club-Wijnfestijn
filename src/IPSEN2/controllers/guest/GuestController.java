@@ -55,10 +55,11 @@ public class GuestController extends ContentLoader implements Initializable{
               selected = false;
 
             for (Integer row : selectedRows) {
-                if (guestData.get(selectedRows.indexOf(row)).getAttended()) {
-                    service.remove(row + 1);
+                //if (guestData.get(selectedRows.indexOf(row)).getAttended()) {
+                System.out.println("removing " + row);
+                service.remove(row);
 
-                }
+                //}
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
