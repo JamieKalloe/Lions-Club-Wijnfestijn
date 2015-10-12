@@ -56,7 +56,7 @@ public class OrderService {
     {
         Order order = this.orderRepository.find(id);
 
-        order.setGuest(guestService.find(order.getGuest().getID()));
+        order.setGuest(guestService.find(order.getGuest().getId()));
         order.setEvent(eventService.find(order.getEvent().getId()));
         order.setStatus(orderStatusRepository.find(order.getStatus().getId()));
 
