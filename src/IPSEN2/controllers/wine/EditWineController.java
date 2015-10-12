@@ -4,6 +4,7 @@ import IPSEN2.ContentLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,16 +14,20 @@ import java.util.ResourceBundle;
  */
 public class EditWineController extends ContentLoader implements Initializable{
 
-    @FXML
-    private TextField wineNameTextField, countryNameNameTextField,
-            regionNameNameTextField, yearNameTextField, typeNameTextField,
-            priceNameTextField;
+    @FXML private TextField wineNameTextField;
+    @FXML private TextField countryNameNameTextField;
+    @FXML private TextField regionNameNameTextField;
+    @FXML private TextField yearNameTextField;
+    @FXML private TextField typeNameTextField;
+    @FXML private TextField priceNameTextField;
+
+    @FXML private Pane submitButton, cancelButton;
 
     private int selectedWineID;
 
-//    public EditWineController(int selectedWineID) {
-//        this.selectedWineID = selectedWineID;
-//    }
+   public EditWineController(int selectedWineID) {
+        this.selectedWineID = selectedWineID;
+    }
 
 
     @Override

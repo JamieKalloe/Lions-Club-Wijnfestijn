@@ -2,6 +2,7 @@ package IPSEN2.services.wine;
 
 import IPSEN2.models.wine.Wine;
 import IPSEN2.repositories.wine.WineRepository;
+import IPSEN2.repositories.winetype.WineTypeRepository;
 import IPSEN2.services.referral.ReferralService;
 
 
@@ -14,12 +15,12 @@ import java.util.HashMap;
 public class WineService {
     private WineRepository repository;
     private ReferralService referralService;
-
+    private WineTypeRepository wineTypeRepository;
 
     public WineService() {
         this.repository = new WineRepository();
         this.referralService = new ReferralService();
-
+        this.wineTypeRepository = new WineTypeRepository();
     }
 
     /**
@@ -41,6 +42,11 @@ public class WineService {
     public Wine find(int id) {
         Wine wine = repository.find(id);
         return wine;
+    }
+
+    public int subscribe(HashMap data) {
+        int i = repository.create(data);
+        return i;
     }
 
     /**

@@ -8,138 +8,138 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="672.0" prefWidth="853.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ImageView fitHeight="1083.0" fitWidth="788.0" layoutX="39.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/GastenAchtergrond.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="97.0" layoutY="60.0" text="Gast toevoegen/aanpassen">
-         <font>
-            <Font name="Roboto Regular" size="24.0" />
-         </font>
-      </Label>
-      <AnchorPane layoutX="77.0" layoutY="127.0" prefHeight="331.0" prefWidth="308.0">
-         <children>
-            <Label layoutX="43.0" layoutY="4.0" text="Geslacht">
-               <font>
-                  <Font name="Roboto Regular" size="18.0" />
-               </font>
-            </Label>
-            <RadioButton fx:id="sexRadioM" layoutX="159.0" layoutY="7.0" mnemonicParsing="false" selected="true" text="Man">
-               <toggleGroup>
-                  <ToggleGroup fx:id="sexToggle" />
-               </toggleGroup>
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </RadioButton>
-            <RadioButton fx:id="sexRadioF" layoutX="248.0" layoutY="7.0" mnemonicParsing="false" text="Vrouw" toggleGroup="$sexToggle">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </RadioButton>
-            <Label layoutX="63.0" layoutY="43.0" text="Naam">
-               <font>
-                  <Font name="Roboto Regular" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="firstNameTextField" layoutX="159.0" layoutY="40.0" />
-            <Label layoutX="-5.0" layoutY="81.0" text="Tussenvoegsel">
-               <font>
-                  <Font name="Roboto Regular" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="prefixTextField" layoutX="159.0" layoutY="80.0" />
-            <Label layoutX="15.0" layoutY="124.0" text="Achternaam">
-               <font>
-                  <Font name="Roboto Regular" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="lastNameTextField" layoutX="159.0" layoutY="121.0" />
-            <Label layoutX="41.0" layoutY="165.0" text="Telefoon">
-               <font>
-                  <Font name="Roboto Regular" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="telephoneTextField" layoutX="158.0" layoutY="163.0" />
-            <Label layoutX="68.0" layoutY="205.0" text="Email">
-               <font>
-                  <Font name="Roboto Regular" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="emailTextField" layoutX="158.0" layoutY="203.0" />
-            <Label layoutX="64.0" layoutY="242.0" text="Straat">
-               <font>
-                  <Font name="Roboto Regular" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="addressTextField" layoutX="157.0" layoutY="244.0" />
-            <Label layoutX="8.0" layoutY="283.0" text="Huisnummer">
-               <font>
-                  <Font name="Roboto Regular" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="houseNumberTextField" layoutX="157.0" layoutY="285.0" />
-            <Label layoutX="37.0" layoutY="324.0" text="Postcode">
-               <font>
-                  <Font name="Roboto Regular" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="postalCodeTextField" layoutX="157.0" layoutY="325.0" />
-            <Label layoutX="15.0" layoutY="364.0" text="Woonplaats">
-               <font>
-                  <Font name="Roboto Regular" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="cityTextField" layoutX="157.0" layoutY="364.0" />
-         </children>
-      </AnchorPane>
-      <Pane fx:id="cancelButton" layoutX="481.0" layoutY="509.0" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">
-         <children>
-            <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/AnnulerenButton.png" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
-      <Pane fx:id="submitButton" layoutX="631.0" layoutY="509.0" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">
-         <children>
-            <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/GereedButton.png" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
-      <AnchorPane layoutX="499.0" layoutY="138.6036605834961">
-         <children>
-            <AnchorPane layoutX="19.0" layoutY="54.396339416503906">
-               <children>
-                  <RadioButton fx:id="referralMemberTextField" mnemonicParsing="false" selected="true" text="De persoon is lid">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="reffToggle" />
-                     </toggleGroup>
-                     <font>
+    <children>
+        <ImageView fitHeight="1083.0" fitWidth="788.0" layoutX="39.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../images/GastenAchtergrond.png" />
+            </image>
+        </ImageView>
+        <Label layoutX="97.0" layoutY="60.0" text="Gast toevoegen/aanpassen">
+            <font>
+                <Font name="Roboto Regular" size="24.0" />
+            </font>
+        </Label>
+        <AnchorPane layoutX="77.0" layoutY="127.0" prefHeight="331.0" prefWidth="308.0">
+            <children>
+                <RadioButton fx:id="sexRadioM" layoutX="159.0" layoutY="7.0" mnemonicParsing="false" selected="true" text="Man">
+                    <toggleGroup>
+                        <ToggleGroup fx:id="sexToggle" />
+                    </toggleGroup>
+                    <font>
                         <Font size="14.0" />
-                     </font></RadioButton>
-                  <RadioButton fx:id="referralFriendTextField" layoutX="1.0" layoutY="42.0" mnemonicParsing="false" text="Via familie/vrienden" toggleGroup="$reffToggle">
-                     <font>
+                    </font>
+                </RadioButton>
+                <RadioButton fx:id="sexRadioF" layoutX="248.0" layoutY="7.0" mnemonicParsing="false" text="Vrouw" toggleGroup="$sexToggle">
+                    <font>
                         <Font size="14.0" />
-                     </font></RadioButton>
-                  <RadioButton fx:id="referralAdTextField" layoutX="2.0" layoutY="82.99999237060547" mnemonicParsing="false" text="Via reclamefolders" toggleGroup="$reffToggle">
-                     <font>
-                        <Font size="14.0" />
-                     </font></RadioButton>
-               </children>
-            </AnchorPane>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hoe is de persoon hier gekomen? Maak een keuze:" wrappingWidth="261.4874267578125">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-         </children>
-      </AnchorPane>
-   </children>
+                    </font>
+                </RadioButton>
+                <Label layoutX="63.0" layoutY="43.0" text="Naam">
+                    <font>
+                        <Font name="Roboto Regular" size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="firstNameTextField" layoutX="159.0" layoutY="40.0" />
+                <TextField fx:id="prefixTextField" layoutX="159.0" layoutY="80.0" />
+                <Label layoutX="15.0" layoutY="124.0" text="Achternaam">
+                    <font>
+                        <Font name="Roboto Regular" size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="lastNameTextField" layoutX="159.0" layoutY="121.0" />
+                <Label layoutX="41.0" layoutY="165.0" text="Telefoon">
+                    <font>
+                        <Font name="Roboto Regular" size="18.0" />
+                    </font>
+                </Label>
+                <Label layoutX="68.0" layoutY="205.0" text="Email">
+                    <font>
+                        <Font name="Roboto Regular" size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="telephoneTextField" layoutX="158.0" layoutY="163.0" />
+                <Label layoutX="15.0" layoutY="364.0" text="Woonplaats">
+                    <font>
+                        <Font name="Roboto Regular" size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="emailTextField" layoutX="158.0" layoutY="203.0" />
+                <Label layoutX="64.0" layoutY="242.0" text="Straat">
+                    <font>
+                        <Font name="Roboto Regular" size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="addressTextField" layoutX="157.0" layoutY="244.0" />
+                <TextField fx:id="houseNumberTextField" layoutX="157.0" layoutY="285.0" />
+                <TextField fx:id="postalCodeTextField" layoutX="157.0" layoutY="325.0" />
+                <Label layoutX="8.0" layoutY="283.0" text="Huisnummer">
+                    <font>
+                        <Font name="Roboto Regular" size="18.0" />
+                    </font>
+                </Label>
+                <Label layoutX="37.0" layoutY="324.0" text="Postcode">
+                    <font>
+                        <Font name="Roboto Regular" size="18.0" />
+                    </font>
+                </Label>
+                <Label layoutX="43.0" layoutY="4.0" text="Geslacht">
+                    <font>
+                        <Font name="Roboto Regular" size="18.0" />
+                    </font>
+                </Label>
+                <Label layoutX="-5.0" layoutY="81.0" text="Tussenvoegsel">
+                    <font>
+                        <Font name="Roboto Regular" size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="cityTextField" layoutX="157.0" layoutY="364.0" />
+            </children>
+        </AnchorPane>
+        <Pane fx:id="cancelButton" layoutX="481.0" layoutY="509.0" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">
+            <children>
+                <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/AnnulerenButton.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </Pane>
+        <Pane fx:id="submitButton" layoutX="631.0" layoutY="509.0" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">
+            <children>
+                <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/GereedButton.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </Pane>
+        <AnchorPane layoutX="499.0" layoutY="138.6036605834961">
+            <children>
+                <AnchorPane layoutX="19.0" layoutY="54.396339416503906">
+                    <children>
+                        <RadioButton fx:id="referralMemberTextField" mnemonicParsing="false" selected="true" text="De persoon is lid">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="reffToggle" />
+                            </toggleGroup>
+                            <font>
+                                <Font size="14.0" />
+                            </font></RadioButton>
+                        <RadioButton fx:id="referralFriendTextField" layoutX="1.0" layoutY="42.0" mnemonicParsing="false" text="Via familie/vrienden" toggleGroup="$reffToggle">
+                            <font>
+                                <Font size="14.0" />
+                            </font></RadioButton>
+                        <RadioButton fx:id="referralAdTextField" layoutX="2.0" layoutY="82.99999237060547" mnemonicParsing="false" text="Via reclamefolders" toggleGroup="$reffToggle">
+                            <font>
+                                <Font size="14.0" />
+                            </font></RadioButton>
+                    </children>
+                </AnchorPane>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hoe is de persoon hier gekomen? Maak een keuze:" wrappingWidth="261.4874267578125">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Text>
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>

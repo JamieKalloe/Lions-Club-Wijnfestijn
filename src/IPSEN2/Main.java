@@ -20,12 +20,23 @@ public class Main extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
-
-
     }
 
-    public static void main(String args[]){
 
+    public static void main(String args[]){
+        //EVENT TESTING: Works
+        /*EventService service = new EventService();
+        HashMap data = new HashMap();
+        data.put("name", "Wijnproeverij deze shit");
+        data.put("startDate", new Date());
+        data.put("endDate", new Date());
+        data.put("zipCode", "1354RT");
+        data.put("street", "Wat is deze laan");
+        data.put("houseNumber", "4");
+        data.put("country", "Nederland");
+        data.put("city", "Gekke dorp");
+
+        service.add(data);*/
 //        try {
 //            new InvoiceGenerator().generate("bin/invoice.pdf");
 //        } catch (Exception e) {
