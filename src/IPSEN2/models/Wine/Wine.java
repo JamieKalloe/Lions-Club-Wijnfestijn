@@ -1,7 +1,5 @@
 package IPSEN2.models.wine;
 
-import IPSEN2.models.winetype.WineType;
-
 public class Wine {
     private int wineID;
     private WineType type;
