@@ -3,10 +3,10 @@ package IPSEN2.controllers.mail;
 import IPSEN2.models.mail.Mail;
 import IPSEN2.models.mail.MailMessage;
 
-import java.util.Properties;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import java.util.Properties;
 
 public class MailService {
 
