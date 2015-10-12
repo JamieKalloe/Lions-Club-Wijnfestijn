@@ -19,16 +19,20 @@ public abstract class ContentLoader {
     public static final String GUESTS = "/IPSEN2/views/guest/GuestTableView.fxml";
     public static final String WINE = "/IPSEN2/views/wine/WineTableView.fxml";
     public static final String ORDER = "/IPSEN2/views/order/OrderTableView.fxml";
-    public static final String EVENTS = "/IPSEN2/views/event/Events.fxml";
+    public static final String EVENTS = "/IPSEN2/views/event/EventTableView.fxml";
     public static final String MANUAL = "/IPSEN2/views/guest/GuestTableView.fxml";
-    public static final String STYLE = "IPSEN2/styles/Style.css";
+    public static final String EVENT_CHOOSER = "/IPSEN2/views/event/EventChooser.fxml";
+    public static final String STYLE = "IPSEN2/styles/style.css";
 
     public static final String EDIT_GUEST_DIALOG = "/IPSEN2/views/guest/GuestDialogView.fxml";
     public static final String EDIT_WINE_DIALOG = "/IPSEN2/views/wine/WineDialogView.fxml";
     public static final String EDIT_ORDER_DIALOG = "/IPSEN2/views/order/OrderDialogView.fxml";
     public static final String EDIT_EVENT_DIALOG = "/IPSEN2/views/event/EventDialogView.fxml";
 
+
     public static final String ADD_WINE = "/IPSEN2/views/order/WineIDAndQuantityContainer.fxml";
+
+
 
     public static final String HOME_TITLE = "Home";
     public static final String GUESTS_TITLE = "Gasten";
@@ -61,7 +65,7 @@ public abstract class ContentLoader {
         MainFrameController mainController = loader.getController();
 
         setMainController(mainController);
-        addContent(ContentLoader.MAINMENU);
+        addContent(ContentLoader.EVENTS);
         setMainFrameTitle(ContentLoader.HOME_TITLE);
 
         return mainFrame;
@@ -80,7 +84,7 @@ public abstract class ContentLoader {
     }
 
     public static void setMainFrameTitle(String title){
-        mainController.setTitel(title);
+        mainController.setTitle(title);
     }
 
     public static Stage getPrimaryStage(Event event) {

@@ -1,8 +1,11 @@
 package IPSEN2.controllers.wine;
 
 import IPSEN2.ContentLoader;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
@@ -20,6 +23,12 @@ public class AddWineController extends ContentLoader implements Initializable {
     priceNameTextField;
 
     @FXML
+    private SplitMenuButton wineTypeButton;
+
+    @FXML
+    private MenuItem typeWit, typeRood, typeRose, typeCava;
+
+    @FXML
     private Pane cancelButton, submitButton;
 
     private int selectedWineID;
@@ -27,6 +36,14 @@ public class AddWineController extends ContentLoader implements Initializable {
 //    public AddWineController(int selectedWineID) {
 //        this.selectedWineID = selectedWineID;
 //    }
+
+    @FXML
+    public void handleWineTypeButton(ActionEvent event) {
+        Object wineType = event.getSource();
+        if (wineType == typeWit) {
+            wineTypeButton.setText("Wit");
+        }
+    }
 
     @FXML
     public void handleCancelButton() {

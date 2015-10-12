@@ -1,6 +1,7 @@
 package IPSEN2.controllers.guest;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.guest.Guest;
 import IPSEN2.services.guest.GuestService;
 import javafx.beans.property.SimpleObjectProperty;
@@ -11,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
 import java.io.IOException;
@@ -37,6 +39,9 @@ public class GuestController extends ContentLoader implements Initializable{
     private static  boolean selected;
     private static boolean keepCurrentData = false;
 
+    @FXML
+    private Pane removeButton;
+
 
     public void handleAddButton() throws IOException {
         keepCurrentData = false;
@@ -44,31 +49,54 @@ public class GuestController extends ContentLoader implements Initializable{
     }
 
     public void handleRemoveButton() {
-        selected = false;
-        for (Integer row : selectedRows){
-            service.remove(row + 1);
-         }
+
+
+        if (selectedRows.size() != 0) {
+              selected = false;
+
+            for (Integer row : selectedRows) {
+                if (guestData.get(selectedRows.indexOf(row)).getAttended()) {
+                    service.remove(row + 1);
+
+                }
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Opgelet!");
+            alert.setContentText("U heeft geen items geselecteerd om te verwijderen!");
+
+            alert.showAndWait();
+        }
+
+
         guestData = FXCollections.observableArrayList(service.all());
         addContent(GUESTS);
+
     }
 
 
-    public void handleEditButton() throws IOException{
+    public void openEditGuestMenu() throws IOException{
         if (selectedGuestID != 0 && !String.valueOf(selectedGuestID).equals("") && String.valueOf(selectedGuestID) != null) {
             keepCurrentData = false;
             selected = false;
             addContent(new EditGuestController(selectedGuestID), EDIT_GUEST_DIALOG);
         }
-//        //TODO: delete test code, debug only.
-//        try {
-//            ImportCSV importCSV = new ImportCSV();
-//            importCSV.importGuests();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        keepCurrentData = false;
-//        addContent(GUESTS);
 
+
+    }
+
+    @FXML
+    private void importCSVFile() {
+        //TODO: delete test code, debug only.
+        try {
+            ImportCSV importCSV = new ImportCSV();
+            importCSV.importGuests();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        keepCurrentData = false;
+        addContent(GUESTS);
     }
 
     private void setOnTableRowClickedListener() {
@@ -79,7 +107,7 @@ public class GuestController extends ContentLoader implements Initializable{
                 selectedGuestID = row.getTableView().getSelectionModel().getSelectedItem().getGuestID();
 
                 try {
-                    handleEditButton();
+                    openEditGuestMenu();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -93,10 +121,19 @@ public class GuestController extends ContentLoader implements Initializable{
         selectAllCheckBox.setSelected(selected);
         checkBoxColumn.setGraphic(selectAllCheckBox);
         selectAllCheckBox.setOnAction(event -> {
-            selected  = selectAllCheckBox.isSelected();
+            selected = selectAllCheckBox.isSelected();
+            if (selected) {
+                selectedRows.clear();
+            }
             guestData.forEach(guest -> {
                 guest.setAttended(selected);
-                selectedRows.add(guest.getGuestID());
+                if (selected) {
+                    selectedRows.add(guest.getGuestID());
+                    System.out.println(selectedRows.size());
+                } else {
+                    selectedRows.clear();
+                    System.out.println(selectedRows.size());
+                }
             });
 
             addContent(GUESTS);
@@ -118,10 +155,14 @@ public class GuestController extends ContentLoader implements Initializable{
 
                     selectedGuestID = cellDataFeatures.getValue().getGuestID();
                     if (newValue.booleanValue()) {
-                        selectedRows.add(cellDataFeatures.getValue().getGuestID());
+                        selectedRows.add(selectedGuestID);
+                        System.out.println(selectedRows.size());
+                        System.out.println(selectedGuestID);
                     } else if (!newValue.booleanValue()) {
                         selectedRows.remove(selectedRows.indexOf(selectedGuestID));
-                        selectedGuestID = 0;
+                        System.out.println(selectedRows.size());
+                        System.out.println(selectedGuestID);
+//                        selectedGuestID = 0;
                     }
                 });
                 return new SimpleObjectProperty(checkBox);

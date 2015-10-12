@@ -1,6 +1,7 @@
 
 #menuButton:pressed {
     -fx-effect: dropshadow(two-pass-box, rgba(0,0,0,0.40), 8, 0.0, 0, 3);
+
 }
 
 #menuButton:focused {
@@ -77,6 +78,10 @@
     -fx-alignment: center-left;
 }
 
+.check-box:hover {
+    -fx-cursor: hand;
+}
+
 .checkBoxColumn{
     -fx-alignment: center;
 }
@@ -84,4 +89,6 @@
 .table-view .column-header .checkBoxColumn .check-box {
     -fx-alignment: center;
 }
+
+
 

@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="648.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IPSEN2.controllers.event.EventController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="618.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IPSEN2.controllers.event.EventController">
    <children>
       <ImageView fitHeight="595.0" fitWidth="829.0" layoutX="37.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/GastenAchtergrond.png" />
          </image>
       </ImageView>
-      <TableView fx:id="table_view" editable="true" fixedCellSize="0.0" layoutX="130.0" layoutY="73.0" prefHeight="434.0" prefWidth="641.0" styleClass="table-view" stylesheets="@../../styles/style.css">
+      <Label layoutX="97.0" layoutY="40.0" text="Selecteer een evenement">
+         <font>
+            <Font name="Roboto Regular" size="24.0" />
+         </font>
+      </Label>
+      <TableView fx:id="table_view" editable="true" fixedCellSize="0.0" layoutX="130.0" layoutY="103.0" prefHeight="434.0" prefWidth="641.0" styleClass="table-view" stylesheets="@../../styles/style.css">
          <columns>
-            <TableColumn fx:id="checkBoxColumn" prefWidth="51.0" />
-            <TableColumn fx:id="idColumn" editable="false" prefWidth="79.0" sortable="false" text="ID" />
-            <TableColumn fx:id="nameColumn" editable="false" prefWidth="94.0" text="Naam" />
-            <TableColumn fx:id="placeNameColumn" prefWidth="110.0" text="Plaats" />
-            <TableColumn fx:id="emailColumn" editable="false" prefWidth="124.0" sortable="false" text="Adres" />
-            <TableColumn prefWidth="182.0" text="Datum" />
+            <TableColumn fx:id="checkBoxColumn" prefWidth="30.0" />
+            <TableColumn fx:id="idColumn" editable="false" prefWidth="51.0" text="ID" />
+            <TableColumn fx:id="nameColumn" editable="false" prefWidth="122.0" text="Naam" />
+            <TableColumn fx:id="eventPlaceNameColumn" prefWidth="114.0" text="Plaats" />
+            <TableColumn fx:id="eventAddressColumn" editable="false" prefWidth="173.0" sortable="false" text="Adres" />
+            <TableColumn fx:id="eventDateColumn" prefWidth="150.0" text="Datum" />
          </columns>
       </TableView>
       <Pane layoutX="806.0" layoutY="44.0" prefHeight="69.0" prefWidth="80.0" styleClass="buttonWithoutHover">

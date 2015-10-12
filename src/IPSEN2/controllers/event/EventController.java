@@ -23,6 +23,18 @@ public class EventController extends ContentLoader implements Initializable{
    @FXML
    private TableColumn<Event, String> nameColumn;
 
+    @FXML
+    private TableColumn<Event, String> idColumn;
+
+    @FXML
+    private TableColumn<Event, String> eventPlaceNameColumn;
+
+    @FXML
+    private TableColumn<Event, String> eventAddressColumn;
+
+    @FXML
+    private TableColumn<Event, String> eventDateColumn;
+
    private ArrayList<Event> eventData;
 
    public EventController() {
@@ -35,40 +47,24 @@ public class EventController extends ContentLoader implements Initializable{
       setMainFrameTitle(EVENTS_TITLE);
 
       eventData = new ArrayList<>();
-      eventData.add(new Event("WijnFestijn", "Poelgeest"));
+      eventData.add(new Event("WijnFestijn", "Poelgeest", "Weegbreetuin 5", "1-12-15"));
 
-
+       idColumn.setCellValueFactory(new PropertyValueFactory<>("eventID"));
       nameColumn.setCellValueFactory(new PropertyValueFactory<>("eventName"));
+       eventPlaceNameColumn.setCellValueFactory(new PropertyValueFactory<>("eventPlace"));
+       eventAddressColumn.setCellValueFactory(new PropertyValueFactory<>("eventAddress"));
+       eventDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventDate"));
+
 
       table_view.setItems(FXCollections.observableArrayList(eventData));
        table_view.setRowFactory(table -> {
            TableRow<Event> row = new TableRow<>();
            row.getStyleClass().add("pane");
+
+           row.setOnMouseClicked(event -> addContent(MAINMENU));
            return row;
        });
 
    }
 
-  public class Event{
-
-//      public String eventID;
-      public String eventName;
-      public String eventPlace;
-      public String eventAdress;
-      public String eventDate;
-
-      public Event(String eventName, String eventPlace) {
-         this.eventName = eventName;
-         this.eventPlace = eventPlace;
-
-      }
-
-      public String getEventName() {
-         return eventName;
-      }
-
-      public void setEventName(String eventName) {
-         this.eventName = eventName;
-      }
-   }
 }

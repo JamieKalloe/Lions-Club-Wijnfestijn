@@ -19,7 +19,7 @@ public class WineController extends ContentLoader implements Initializable{
     private int selectedWineID;
 
     public void handleAddButton() throws IOException{
-        addContent(new AddWineController(), EDIT_WINE_DIALOG);
+        addContent(EDIT_WINE_DIALOG);
     }
 
     public void handleEditButton() throws IOException {

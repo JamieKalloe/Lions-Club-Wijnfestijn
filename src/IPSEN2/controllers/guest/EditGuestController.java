@@ -92,9 +92,7 @@ public class EditGuestController extends ContentLoader implements Initializable{
 
             submitButton.setOnMouseClicked(event -> handleSubmitButton());
             cancelButton.setOnMouseClicked(event -> handleCancelButton());
-        
-//
-//        addContent(GUESTS);
+
     }
 
 }
