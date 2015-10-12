@@ -20,7 +20,20 @@ public class WineTypeRepository implements Crudable{
     }
 
     public ArrayList<WineType> all() {
-        return new ArrayList<>();
+        ArrayList<WineType> wineTypes = new ArrayList<>();
+
+        ResultSet resultSet = databaseInstance.select("wine_type");
+
+        try {
+            while(resultSet.next()) {
+                WineType wineType = new WineType(resultSet.getInt("id"), resultSet.getString("name"));
+                wineTypes.add(wineType);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return wineTypes;
     }
 
     public WineType find(int id) {

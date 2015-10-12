@@ -33,12 +33,7 @@ public class WineService {
 
 
         for(Wine wine : wineList) {
-
-
             wine.setType(this.wineTypeRepository.find(wine.getType().getId()));
-
-            System.out.print(wine.getType().getName());
-
         }
 
 

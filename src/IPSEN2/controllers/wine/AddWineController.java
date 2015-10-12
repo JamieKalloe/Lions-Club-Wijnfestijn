@@ -1,6 +1,8 @@
 package IPSEN2.controllers.wine;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.models.winetype.WineType;
+import IPSEN2.repositories.wine.WineTypeRepository;
 import IPSEN2.services.wine.WineService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -41,12 +44,11 @@ public class AddWineController extends ContentLoader implements Initializable {
     private String country;
     private String region;
     private int year;
-    private int type;
+    private int pressedButtonIndex;
     private double price;
+    ArrayList<WineType> types;
 
     private HashMap data;
-
-
 
 
     public AddWineController() {
@@ -56,9 +58,10 @@ public class AddWineController extends ContentLoader implements Initializable {
     @FXML
     public void handleWineTypeButton(ActionEvent event) {
         Object wineType = event.getSource();
-        if (wineType == typeWit) {
-            wineTypeButton.setText("Wit");
-        }
+
+        pressedButtonIndex = wineTypeButton.getItems().indexOf(wineType);
+
+        wineTypeButton.setText(types.get(pressedButtonIndex).getName());
     }
 
     @FXML
@@ -71,9 +74,9 @@ public class AddWineController extends ContentLoader implements Initializable {
         country = countryNameTextField.getText();
         region = regionNameTextField.getText();
         year = Integer.parseInt(yearTextField.getText());
-        if (wineTypeButton.getText() == "Wit") {
-            type = 1;
-        }
+
+        String typeName = wineTypeButton.getText();
+
 
         price = Double.parseDouble(priceTextField.getText());
 
@@ -83,7 +86,7 @@ public class AddWineController extends ContentLoader implements Initializable {
         data.put("country", country);
         data.put("region", region);
         data.put("year", year);
-        data.put("type_id", type);
+        data.put("type_id", pressedButtonIndex);
         data.put("price", price);
 
 
@@ -103,5 +106,9 @@ public class AddWineController extends ContentLoader implements Initializable {
 
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
+
+        WineTypeRepository wineTypeRepository = new WineTypeRepository();
+       types = wineTypeRepository.all();
+
     }
 }
