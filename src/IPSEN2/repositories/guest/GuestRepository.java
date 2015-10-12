@@ -62,6 +62,7 @@ public class GuestRepository implements Crudable {
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
+            System.out.println(sqle.getSQLState());
             return null;
         }
         return null;

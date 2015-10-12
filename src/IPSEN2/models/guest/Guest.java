@@ -48,7 +48,7 @@ public class Guest {
     public Boolean getAttended() {return attended.get();}
 
     public int getGuestID() {
-        return guestID - 1;
+        return guestID;
     }
 
     public String getGender() {
