@@ -1,4 +1,4 @@
-package IPSEN2.models.winetype;
+package IPSEN2.models.wine;
 
 /**
  * Created by Bernd on 22-9-2015.

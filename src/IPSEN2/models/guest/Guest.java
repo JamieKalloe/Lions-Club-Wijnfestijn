@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 public class Guest {
 
-    private int guestID;
+    private int id;
 
     private String gender;
     private String lastName;
@@ -26,14 +26,18 @@ public class Guest {
 
     }
 
+    public Guest(int id) {
+        this.id = id;
+    }
+
     public Guest(String gender, String lastName, String firstName) {
         this.gender = gender;
         this.lastName = lastName;
         this.firstName = firstName;
     }
 
-    public Guest(int guestID, String gender, String lastName, String prefix, String firstName, int addressID ,String email, int referralID, String notes) {
-        this.guestID = guestID;
+    public Guest(int id, String gender, String lastName, String prefix, String firstName, int addressID ,String email, int referralID, String notes) {
+        this.id = id;
         this.gender = gender;
         this.lastName = lastName;
         this.prefix = prefix;
@@ -47,8 +51,8 @@ public class Guest {
     //GETTERS
     public Boolean getAttended() {return attended.get();}
 
-    public int getGuestID() {
-        return guestID;
+    public int getId() {
+        return id;
     }
 
     public String getGender() {
@@ -89,8 +93,8 @@ public class Guest {
    // }
 
     public void setAttended(boolean attended) { this.attended = new SimpleBooleanProperty(attended);}
-    public void setGuestID(int guestID) {
-        this.guestID = guestID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setGender(String gender) {

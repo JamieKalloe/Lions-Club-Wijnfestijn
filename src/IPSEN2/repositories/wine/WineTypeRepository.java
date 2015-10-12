@@ -1,7 +1,7 @@
 package IPSEN2.repositories.wine;
 
 import IPSEN2.database.Database;
-import IPSEN2.models.winetype.WineType;
+import IPSEN2.models.wine.WineType;
 import IPSEN2.repositories.Crudable;
 
 import java.sql.ResultSet;

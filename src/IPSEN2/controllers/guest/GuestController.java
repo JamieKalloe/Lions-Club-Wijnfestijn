@@ -62,12 +62,12 @@ public class GuestController extends ContentLoader implements Initializable{
                 //}
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText("Opgelet!");
-            alert.setContentText("U heeft geen items geselecteerd om te verwijderen!");
-
-            alert.showAndWait();
+//            Alert alert = new Alert(Alert.AlertType.WARNING);
+//            alert.setTitle("Information Dialog");
+//            alert.setHeaderText("Opgelet!");
+//            alert.setContentText("U heeft geen items geselecteerd om te verwijderen!");
+//
+//            alert.showAndWait();
         }
 
 
@@ -105,7 +105,7 @@ public class GuestController extends ContentLoader implements Initializable{
             TableRow<Guest> row = new TableRow<>();
             row.getStyleClass().add("pane");
             row.setOnMouseClicked(event -> {
-                selectedGuestID = row.getTableView().getSelectionModel().getSelectedItem().getGuestID();
+                selectedGuestID = row.getTableView().getSelectionModel().getSelectedItem().getId();
 
                 try {
                     openEditGuestMenu();
@@ -129,7 +129,7 @@ public class GuestController extends ContentLoader implements Initializable{
             guestData.forEach(guest -> {
                 guest.setAttended(selected);
                 if (selected) {
-                    selectedRows.add(guest.getGuestID());
+                    selectedRows.add(guest.getId());
                     System.out.println(selectedRows.size());
                 } else {
                     selectedRows.clear();
@@ -154,7 +154,7 @@ public class GuestController extends ContentLoader implements Initializable{
                                                          Boolean oldValue, Boolean newValue) -> {
                     cellDataFeatures.getValue().setAttended(newValue.booleanValue());
 
-                    selectedGuestID = cellDataFeatures.getValue().getGuestID();
+                    selectedGuestID = cellDataFeatures.getValue().getId();
                     if (newValue.booleanValue()) {
                         selectedRows.add(selectedGuestID);
                         System.out.println("Array size: " + selectedRows.size());

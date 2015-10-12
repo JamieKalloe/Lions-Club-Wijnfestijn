@@ -48,7 +48,7 @@ public class OrderController extends ContentLoader implements Initializable{
       @Override
       public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 //         try {
-//            selectedGuestID = table_view.getSelectionModel().getSelectedItem().getGuestID();
+//            selectedGuestID = table_view.getSelectionModel().getSelectedItem().getId();
 //            System.out.println(selectedGuestID);} catch (NullPointerException e){
 //            System.out.print("No items in table to select");
 //            selectedGuestID = 0;
