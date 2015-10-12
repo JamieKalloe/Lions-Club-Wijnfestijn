@@ -4,7 +4,7 @@ import IPSEN2.models.winetype.WineType;
 
 public class Wine {
     private int wineID;
-    private WineType wineType;
+    private WineType type;
     private String name;
     private String country;
     private String region;
@@ -12,14 +12,14 @@ public class Wine {
     private double purchasePrice;
     private double price;
     public WineMerchant merchant;
-
+    private String typeName;
     public Wine() {
 
     }
 
     public Wine (int wineID, int typeID, String country, String name, String region, int year, double purchasePrice, double price) {
         this.wineID = wineID;
-        this.wineType = new WineType(typeID);
+        this.type = new WineType(typeID);
         this.name = name;
         this.country = country;
         this.region = region;
@@ -46,7 +46,7 @@ public class Wine {
     }
 
     public WineType getType() {
-        return wineType;
+        return type;
     }
 
     public String getCountry() {
@@ -77,14 +77,19 @@ public class Wine {
         return region;
     }
 
+    public String getTypeName() {
+        return this.type.getName();
+    }
+
     //SETTERS
     public void setWineID(int wineID) {
         this.wineID = wineID;
     }
 
-    public void setWineType (WineType wineType) {
-        this.wineType = wineType;
+    public void setType(WineType type) {
+        this.type = type;
     }
+
 
     public void setCountry(String country) {
         this.country = country;
@@ -116,6 +121,5 @@ public class Wine {
         this.region = region;
     }
 
-    public void setType(WineType type_id) {
-    }
+
 }

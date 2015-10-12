@@ -44,7 +44,7 @@ public class AddOrderController extends ContentLoader implements Initializable {
     public void handleSubmitButton() {
         wineAndQuantityList.forEach(row -> {
             int index = wineAndQuantityList.indexOf(row);
-          System.out.println("Wine ID: " + wineIDTextFieldList.get(index).getText());
+          System.out.println("wine ID: " + wineIDTextFieldList.get(index).getText());
            System.out.println("Quantity: " + wineQuantityTextFieldList.get(index).getText());
         });
         addContent(ORDER);

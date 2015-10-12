@@ -64,6 +64,7 @@ public class WineRepository implements Crudable {
         try {
             while(queryResult.next()) {
                 Wine wine = new Wine();
+
                 wine.setWineID(queryResult.getInt("id"));
                 wine.setType(new WineType(queryResult.getInt("type_id")));
                 wine.setName(queryResult.getString("name"));
@@ -94,12 +95,15 @@ public class WineRepository implements Crudable {
 
     public int create(HashMap data) {
         HashMap databaseData = new HashMap();
-        databaseData.put("type_id", Integer.parseInt(data.get("type").toString()));
+        if(data == null) System.out.println("data is null");
+        if(databaseData == null) System.out.print("Database = null");
+        databaseData.put("type_id", Integer.parseInt(data.get("type_id").toString()));
+        databaseData.put("merchant_id", 1);
         databaseData.put("name", data.get("name").toString());
         databaseData.put("country", data.get("country").toString());
         databaseData.put("region", data.get("region"));
         databaseData.put("year", Integer.parseInt(data.get("year").toString()));
-        databaseData.put("purchase_price", Double.parseDouble(data.get("purchasePrice").toString()));
+        databaseData.put("purchase_price", 12.0);
         databaseData.put("price", Double.parseDouble(data.get("price").toString()));
 
         return databaseInstance.insertInto("wine", databaseData);

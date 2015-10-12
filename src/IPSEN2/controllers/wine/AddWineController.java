@@ -1,11 +1,8 @@
 package IPSEN2.controllers.wine;
 
 import IPSEN2.ContentLoader;
-
-import javafx.event.ActionEvent;
-
-import IPSEN2.models.winetype.WineType;
 import IPSEN2.services.wine.WineService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
@@ -74,7 +71,10 @@ public class AddWineController extends ContentLoader implements Initializable {
         country = countryNameTextField.getText();
         region = regionNameTextField.getText();
         year = Integer.parseInt(yearTextField.getText());
-        type = Integer.parseInt(typeTextField.getText());
+        if (wineTypeButton.getText() == "Wit") {
+            type = 1;
+        }
+
         price = Double.parseDouble(priceTextField.getText());
 
         data = new HashMap();

@@ -2,7 +2,7 @@ package IPSEN2.services.wine;
 
 import IPSEN2.models.wine.Wine;
 import IPSEN2.repositories.wine.WineRepository;
-import IPSEN2.repositories.winetype.WineTypeRepository;
+import IPSEN2.repositories.wine.WineTypeRepository;
 import IPSEN2.services.referral.ReferralService;
 
 
@@ -29,7 +29,20 @@ public class WineService {
      * @return
      */
     public ArrayList<Wine> all() {
-        ArrayList<Wine> wineList = repository.all();
+        ArrayList<Wine> wineList = this.repository.all();
+
+
+        for(Wine wine : wineList) {
+
+
+            wine.setType(this.wineTypeRepository.find(wine.getType().getId()));
+
+            System.out.print(wine.getType().getName());
+
+        }
+
+
+
         return wineList;
     }
 

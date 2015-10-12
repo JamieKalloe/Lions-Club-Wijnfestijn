@@ -1,7 +1,6 @@
 package IPSEN2.controllers.wine;
 
 import IPSEN2.ContentLoader;
-
 import IPSEN2.models.wine.Wine;
 import IPSEN2.services.wine.WineService;
 import javafx.beans.value.ChangeListener;
@@ -13,7 +12,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 
 import java.io.IOException;
 import java.net.URL;
@@ -66,7 +64,7 @@ public class WineController extends ContentLoader implements Initializable{
         wineNameColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("name"));
         countryColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("country"));
         regionColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("region"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("typeID"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("typeName"));
         yearColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("year"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<Wine, Double>("price"));
         checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));

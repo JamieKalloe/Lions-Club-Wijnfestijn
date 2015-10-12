@@ -23,6 +23,7 @@ public class GuestService {
 
     public ArrayList<Guest> all() {
         ArrayList<Guest> guestList = repository.all();
+
         for(Guest guest : guestList) {
             if(guest.getAddress().checkIfOnlyID()) {
                 guest.setAddress(addressService.find(guest.getAddress().getAddressID()));

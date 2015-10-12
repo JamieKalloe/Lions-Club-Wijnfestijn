@@ -1,4 +1,4 @@
-package IPSEN2.repositories.winetype;
+package IPSEN2.repositories.wine;
 
 import IPSEN2.database.Database;
 import IPSEN2.models.winetype.WineType;

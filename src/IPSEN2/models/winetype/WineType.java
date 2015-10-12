@@ -4,26 +4,21 @@ package IPSEN2.models.winetype;
  * Created by Bernd on 22-9-2015.
  */
 public class WineType {
-    private int wineTypeID;
+    private int id;
     private String name;
 
-    public WineType() {
-
+    public WineType(int id) {
+        this.id = id;
     }
 
-    public WineType(int wineTypeID) {
-        this.wineTypeID = wineTypeID;
-        this.name = null;
-    }
-
-    public WineType(int wineTypeID, String name) {
-        this.wineTypeID = wineTypeID;
-        this.name = null;
+    public WineType(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     //GETTERS
-    public int getWineTypeID() {
-        return wineTypeID;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -32,8 +27,8 @@ public class WineType {
 
     //SETTERS
 
-    public void setWineTypeID(int wineTypeID) {
-        this.wineTypeID = wineTypeID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setName(String name) {
