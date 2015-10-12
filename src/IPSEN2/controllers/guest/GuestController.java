@@ -77,7 +77,7 @@ public class GuestController extends ContentLoader implements Initializable{
 
 
     public void openEditGuestMenu() throws IOException{
-        if (selectedGuestID != 0 && !String.valueOf(selectedGuestID).equals("") && String.valueOf(selectedGuestID) != null) {
+        if (selectedGuestID != 0 ) {
             keepCurrentData = false;
             selected = false;
             addContent(new EditGuestController(selectedGuestID), EDIT_GUEST_DIALOG);
@@ -156,13 +156,14 @@ public class GuestController extends ContentLoader implements Initializable{
                     selectedGuestID = cellDataFeatures.getValue().getGuestID();
                     if (newValue.booleanValue()) {
                         selectedRows.add(selectedGuestID);
-                        System.out.println(selectedRows.size());
+                        System.out.println("Array size: " + selectedRows.size());
                         System.out.println(selectedGuestID);
                     } else if (!newValue.booleanValue()) {
+                        System.out.print("false");
                         selectedRows.remove(selectedRows.indexOf(selectedGuestID));
                         System.out.println(selectedRows.size());
                         System.out.println(selectedGuestID);
-//                        selectedGuestID = 0;
+                        selectedGuestID = 0;
                     }
                 });
                 return new SimpleObjectProperty(checkBox);
