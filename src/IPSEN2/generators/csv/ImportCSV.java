@@ -1,6 +1,7 @@
 package IPSEN2.generators.csv;
 
 import IPSEN2.services.guest.GuestService;
+import IPSEN2.services.wine.WineService;
 import com.opencsv.CSVReader;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -49,21 +50,15 @@ public class ImportCSV {
         for(String[] wineData : wineCSV) {
             HashMap data = new HashMap();
 
-            data.put("email", wineData[9]);
-            data.put("firstname", wineData[2]);
-            data.put("lastname", wineData[1]);
-            data.put("prefix", wineData[3]);
-            data.put("gender", wineData[4]);
-            data.put("notes", wineData[11]);
-            data.put("zipCode", wineData[7]);
-            data.put("street", wineData[5]);
-            data.put("houseNumber", wineData[6]);
-            data.put("country", "Nederland");
-            data.put("city", wineData[8]);
-            data.put("referralName", wineData[10]);
+            data.put("name", wineData[3]);
+            data.put("country", wineData[4]);
+            data.put("region", wineData[8]);
+            data.put("year", wineData[5]);
+            data.put("type_id", wineData[1]);
+            data.put("price", wineData[6]);
 
             //add wineService subscribe here.
-            new GuestService().subscribe(data);
+            new WineService().subscribe(data);
         }
         System.out.println("Succesfully imported wine.");
     }

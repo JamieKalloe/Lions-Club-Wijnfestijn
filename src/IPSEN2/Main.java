@@ -24,7 +24,7 @@ public class Main extends Application {
 
         try {
             ImportCSV CSV = new ImportCSV();
-            CSV.importGuests();
+            CSV.importWine();
         } catch (Exception e) {
             e.printStackTrace();
         }
