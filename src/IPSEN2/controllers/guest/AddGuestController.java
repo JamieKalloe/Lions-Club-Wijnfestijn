@@ -5,6 +5,7 @@ import IPSEN2.services.guest.GuestService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
@@ -18,6 +19,11 @@ public class AddGuestController extends ContentLoader implements Initializable {
 
     private GuestService service;
 
+    @FXML private RadioButton genderRadioM;
+    @FXML private RadioButton genderRadioF;
+    @FXML private RadioButton referralMemberRadio;
+    @FXML private RadioButton referralFriendRadio;
+    @FXML private RadioButton referralAdRadio;
     @FXML private TextField firstNameTextField;
     @FXML private TextField prefixTextField;
     @FXML private TextField lastNameTextField;
@@ -31,6 +37,8 @@ public class AddGuestController extends ContentLoader implements Initializable {
 
     @FXML private Pane cancelButton, submitButton;
 
+    private String gender;
+    private Integer referral;
     private String firstName;
     private String prefix;
     private String lastName;
@@ -49,6 +57,14 @@ public class AddGuestController extends ContentLoader implements Initializable {
     }
 
     public void handleSubmitButton() {
+        // Check if Male of Female radiobutton is selected
+        if (genderRadioM.isSelected()) {
+            gender = "M";
+        } else if (genderRadioF.isSelected()) {
+            gender = "F";
+        }
+
+        // Other values are being copied from textBoxes
         firstName = firstNameTextField.getText();
         lastName = lastNameTextField.getText();
         telephone = telephoneTextField.getText();
@@ -57,14 +73,23 @@ public class AddGuestController extends ContentLoader implements Initializable {
         houseNumber = houseNumberTextField.getText();
         postalCode = postalCodeTextField.getText();
         city = cityTextField.getText();
-        //System.out.print(referralMemberTextField.getText());
+
+        // Insert the right referral type in the referral variable
+        if (referralMemberRadio.isSelected()) {
+            referral = 1;
+        } else if (referralFriendRadio.isSelected()) {
+            referral = 2;
+        } else if (referralAdRadio.isSelected()) {
+            referral = 3;
+        }
+
         data = new HashMap();
 
         data.put("firstname", firstName);
         data.put("prefix", ".");
         data.put("lastname", lastName);
         data.put("email", email);
-        data.put("gender", "M");
+        data.put("gender", gender);
         data.put("notes", ".");
         data.put("zipCode", postalCode);
         data.put("street", address);

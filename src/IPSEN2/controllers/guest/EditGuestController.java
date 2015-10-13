@@ -39,8 +39,7 @@ public class EditGuestController extends ContentLoader implements Initializable{
     private int selectedGuestID;
 
     public EditGuestController(int selectedGuestID) {
-        this.selectedGuestID = selectedGuestID + 1;
-
+        this.selectedGuestID = selectedGuestID;
     }
 
     public void handleCancelButton() {
@@ -69,12 +68,12 @@ public class EditGuestController extends ContentLoader implements Initializable{
             service.edit(selectedGuestID, data);
             addContent(GUESTS);
 
-            Stage dialogStage = new Stage();
+           /* Stage dialogStage = new Stage();
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.setScene(new Scene(VBoxBuilder.create().
                     children(new Text("Hi"), new Button("Ok.")).
                     alignment(Pos.CENTER).padding(new Insets(5)).build()));
-            dialogStage.show();
+            dialogStage.show();*/
 
     }
 
