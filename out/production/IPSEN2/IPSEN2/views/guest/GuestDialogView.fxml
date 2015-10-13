@@ -21,7 +21,7 @@
         </Label>
         <AnchorPane layoutX="77.0" layoutY="127.0" prefHeight="331.0" prefWidth="308.0">
             <children>
-                <RadioButton fx:id="sexRadioM" layoutX="159.0" layoutY="7.0" mnemonicParsing="false" selected="true" text="Man">
+                <RadioButton fx:id="genderRadioM" layoutX="159.0" layoutY="7.0" mnemonicParsing="false" selected="true" text="Man">
                     <toggleGroup>
                         <ToggleGroup fx:id="sexToggle" />
                     </toggleGroup>
@@ -29,7 +29,7 @@
                         <Font size="14.0" />
                     </font>
                 </RadioButton>
-                <RadioButton fx:id="sexRadioF" layoutX="248.0" layoutY="7.0" mnemonicParsing="false" text="Vrouw" toggleGroup="$sexToggle">
+                <RadioButton fx:id="genderRadioF" layoutX="248.0" layoutY="7.0" mnemonicParsing="false" text="Vrouw" toggleGroup="$sexToggle">
                     <font>
                         <Font size="14.0" />
                     </font>
@@ -117,18 +117,18 @@
             <children>
                 <AnchorPane layoutX="19.0" layoutY="54.396339416503906">
                     <children>
-                        <RadioButton fx:id="referralMemberTextField" mnemonicParsing="false" selected="true" text="De persoon is lid">
+                        <RadioButton fx:id="referralMemberRadio" mnemonicParsing="false" selected="true" text="De persoon is lid">
                             <toggleGroup>
                                 <ToggleGroup fx:id="reffToggle" />
                             </toggleGroup>
                             <font>
                                 <Font size="14.0" />
                             </font></RadioButton>
-                        <RadioButton fx:id="referralFriendTextField" layoutX="1.0" layoutY="42.0" mnemonicParsing="false" text="Via familie/vrienden" toggleGroup="$reffToggle">
+                        <RadioButton fx:id="referralFriendRadio" layoutX="1.0" layoutY="42.0" mnemonicParsing="false" text="Via familie/vrienden" toggleGroup="$reffToggle">
                             <font>
                                 <Font size="14.0" />
                             </font></RadioButton>
-                        <RadioButton fx:id="referralAdTextField" layoutX="2.0" layoutY="82.99999237060547" mnemonicParsing="false" text="Via reclamefolders" toggleGroup="$reffToggle">
+                        <RadioButton fx:id="referralAdRadio" layoutX="2.0" layoutY="82.99999237060547" mnemonicParsing="false" text="Via reclamefolders" toggleGroup="$reffToggle">
                             <font>
                                 <Font size="14.0" />
                             </font></RadioButton>
