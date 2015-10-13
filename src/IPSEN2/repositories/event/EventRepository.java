@@ -61,12 +61,11 @@ public class EventRepository implements Crudable {
     }
 
     public int create(HashMap data){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         HashMap dbData = new HashMap();
         dbData.put("address_id",  Integer.parseInt(data.get("addressID").toString()));
         dbData.put("name", data.get("name").toString());
-        dbData.put("start_date", sdf.format(data.get("startDate")));
-        dbData.put("end_date", sdf.format(data.get("endDate")));
+        dbData.put("start_date", data.get("startDate"));
+        dbData.put("end_date", data.get("endDate"));
         return databaseInstance.insertInto("event", dbData);
     }
 

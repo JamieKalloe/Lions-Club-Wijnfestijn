@@ -207,6 +207,10 @@ public class GuestController extends ContentLoader implements Initializable{
         emailColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("email"));
         attendedColumn.setCellValueFactory(createAttendedCellCallBack());
 
+//        AttendeeService attendeeService = new AttendeeService();
+//        HashMap attendeeData = new HashMap();
+////        attendeeService.create(attendeeData);
+
 
         createSelectAllCheckBox();
 
