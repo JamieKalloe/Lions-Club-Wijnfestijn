@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * Created by Jamie on 5-10-2015.
@@ -52,12 +53,11 @@ public class ImportCSV {
 
             data.put("name", wineData[3]);
             data.put("country", wineData[4]);
-            data.put("region", wineData[8]);
+            data.put("region", StringEscapeUtils.escapeSql(wineData[8]));
             data.put("year", wineData[5]);
             data.put("type_id", wineData[1]);
             data.put("price", wineData[6]);
 
-            //add wineService subscribe here.
             new WineService().subscribe(data);
         }
         System.out.println("Succesfully imported wine.");
