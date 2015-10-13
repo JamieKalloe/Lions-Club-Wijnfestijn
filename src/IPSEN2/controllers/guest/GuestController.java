@@ -3,6 +3,7 @@ package IPSEN2.controllers.guest;
 import IPSEN2.ContentLoader;
 import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.guest.Guest;
+import IPSEN2.services.attendee.AttendeeService;
 import IPSEN2.services.guest.GuestService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -18,6 +19,7 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 
@@ -200,15 +202,16 @@ public class GuestController extends ContentLoader implements Initializable{
         table_view.setItems(guestData);
         setOnTableRowClickedListener();
 
-<<<<<<< HEAD
         checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
-=======
->>>>>>> 6f4d19643fc21dc50138126e59f1189e51a21892
         idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("id"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("lastName"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("email"));
         attendedColumn.setCellValueFactory(createAttendedCellCallBack());
+
+        AttendeeService attendeeService = new AttendeeService();
+        HashMap attendeeData = new HashMap();
+        attendeeService.create(attendeeData);
 
 
         createSelectAllCheckBox();

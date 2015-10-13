@@ -114,6 +114,13 @@ public class Database {
         return result;
     }
 
+    public int delete(String from, int guestID, int eventID ) {
+        String query = "DELETE FROM "+from+" WHERE guest_id="+ guestID +
+                "AND event_id=" + eventID;
+        int result = updateDatabase(query);
+        return result;
+    }
+
     private ResultSet queryDatabase(String query) {
         try {
             statement = databaseInstance.connection.createStatement();
