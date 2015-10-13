@@ -75,13 +75,13 @@ public class AddGuestController extends ContentLoader implements Initializable {
         city = cityTextField.getText();
 
         // Insert the right referral type in the referral variable
-        if (referralMemberRadio.isSelected()) {
+        /*if (referralMemberRadio.isSelected()) {
             referral = 1;
         } else if (referralFriendRadio.isSelected()) {
             referral = 2;
         } else if (referralAdRadio.isSelected()) {
             referral = 3;
-        }
+        }*/
 
         data = new HashMap();
 
@@ -96,7 +96,7 @@ public class AddGuestController extends ContentLoader implements Initializable {
         data.put("houseNumber", houseNumber);
         data.put("country", "Nederland");
         data.put("city", city);
-        data.put("referralName", "Member");
+        data.put("referralName", "Club lid");
         service.subscribe(data);
 
         addContent(GUESTS);
