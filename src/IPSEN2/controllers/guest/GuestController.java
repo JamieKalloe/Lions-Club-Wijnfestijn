@@ -189,7 +189,7 @@ public class GuestController extends ContentLoader implements Initializable{
         table_view.setItems(guestData);
         setOnTableRowClickedListener();
 
-        idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("guestID"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("id"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("lastName"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("email"));
