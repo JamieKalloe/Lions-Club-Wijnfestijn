@@ -79,7 +79,7 @@ public class GuestController extends ContentLoader implements Initializable{
 
     public void openEditGuestMenu() throws IOException{
         if (selectedGuestID != 0 ) {
-            keepCurrentData = false;
+
             selected = false;
             addContent(new EditGuestController(selectedGuestID), EDIT_GUEST_DIALOG);
         }
@@ -127,7 +127,7 @@ public class GuestController extends ContentLoader implements Initializable{
                 selectedRows.clear();
             }
             guestData.forEach(guest -> {
-                guest.setAttended(selected);
+                guest.setSelected(selected);
                 if (selected) {
                     selectedRows.add(guest.getId());
                     System.out.println(selectedRows.size());
@@ -149,21 +149,16 @@ public class GuestController extends ContentLoader implements Initializable{
             @Override
             public ObservableValue<CheckBox> call(TableColumn.CellDataFeatures<Guest, CheckBox> cellDataFeatures) {
                 CheckBox checkBox = new CheckBox();
-                checkBox.setSelected(cellDataFeatures.getValue().getAttended());
+                checkBox.setSelected(cellDataFeatures.getValue().getSelected());
                 checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue,
                                                          Boolean oldValue, Boolean newValue) -> {
-                    cellDataFeatures.getValue().setAttended(newValue.booleanValue());
+                    cellDataFeatures.getValue().setSelected(newValue.booleanValue());
 
                     selectedGuestID = cellDataFeatures.getValue().getId();
                     if (newValue.booleanValue()) {
                         selectedRows.add(selectedGuestID);
-                        System.out.println("Array size: " + selectedRows.size());
-                        System.out.println(selectedGuestID);
                     } else if (!newValue.booleanValue()) {
-                        System.out.print("false");
                         selectedRows.remove(selectedRows.indexOf(selectedGuestID));
-                        System.out.println(selectedRows.size());
-                        System.out.println(selectedGuestID);
                         selectedGuestID = 0;
                     }
                 });
@@ -173,7 +168,23 @@ public class GuestController extends ContentLoader implements Initializable{
         return  checkBoxCellCallBack;
     }
 
+    private Callback createAttendedCellCallBack() {
+        Callback attendedCellCallBack = new Callback<TableColumn.CellDataFeatures<Guest, CheckBox>, ObservableValue<CheckBox>>() {
 
+            @Override
+            public ObservableValue<CheckBox> call(TableColumn.CellDataFeatures<Guest, CheckBox> cellDataFeatures) {
+                CheckBox checkBox = new CheckBox();
+                checkBox.setSelected(cellDataFeatures.getValue().getAttended());
+                checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue,
+                                                         Boolean oldValue, Boolean newValue) -> {
+                    cellDataFeatures.getValue().setAttended(newValue.booleanValue());
+
+                });
+                return new SimpleObjectProperty(checkBox);
+            }
+        };
+        return  attendedCellCallBack;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -189,11 +200,13 @@ public class GuestController extends ContentLoader implements Initializable{
         table_view.setItems(guestData);
         setOnTableRowClickedListener();
 
+        checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
         idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("id"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("lastName"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("email"));
-        checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
+        attendedColumn.setCellValueFactory(createAttendedCellCallBack());
+
 
         createSelectAllCheckBox();
 
