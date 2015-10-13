@@ -52,7 +52,7 @@ public class EventController extends ContentLoader implements Initializable{
 
    @Override
    public void initialize(URL location, ResourceBundle resources) {
-      table_view.setPlaceholder(new Label("Er is geen content om te weergeven"));
+      table_view.setPlaceholder(new Label("Voeg een evenement toe"));
       setMainFrameTitle(EVENTS_TITLE);
        service = new EventService();
         eventData = service.all();
