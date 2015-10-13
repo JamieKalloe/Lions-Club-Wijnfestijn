@@ -33,7 +33,6 @@ public class AddGuestController extends ContentLoader implements Initializable {
     @FXML private TextField houseNumberTextField;
     @FXML private TextField postalCodeTextField;
     @FXML private TextField cityTextField;
-    //@FXML private TextField referralMemberTextField;
 
     @FXML private Pane cancelButton, submitButton;
 
