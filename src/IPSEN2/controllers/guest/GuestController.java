@@ -200,7 +200,10 @@ public class GuestController extends ContentLoader implements Initializable{
         table_view.setItems(guestData);
         setOnTableRowClickedListener();
 
+<<<<<<< HEAD
         checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
+=======
+>>>>>>> 6f4d19643fc21dc50138126e59f1189e51a21892
         idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("id"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("lastName"));
