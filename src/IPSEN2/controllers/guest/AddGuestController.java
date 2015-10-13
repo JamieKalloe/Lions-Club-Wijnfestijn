@@ -33,12 +33,11 @@ public class AddGuestController extends ContentLoader implements Initializable {
     @FXML private TextField houseNumberTextField;
     @FXML private TextField postalCodeTextField;
     @FXML private TextField cityTextField;
-    //@FXML private TextField referralMemberTextField;
 
     @FXML private Pane cancelButton, submitButton;
 
     private String gender;
-    private Integer referral;
+    private String referral;
     private String firstName;
     private String prefix;
     private String lastName;
@@ -66,6 +65,7 @@ public class AddGuestController extends ContentLoader implements Initializable {
 
         // Other values are being copied from textBoxes
         firstName = firstNameTextField.getText();
+        prefix = prefixTextField.getText();
         lastName = lastNameTextField.getText();
         telephone = telephoneTextField.getText();
         email = emailTextField.getText();
@@ -75,18 +75,18 @@ public class AddGuestController extends ContentLoader implements Initializable {
         city = cityTextField.getText();
 
         // Insert the right referral type in the referral variable
-        /*if (referralMemberRadio.isSelected()) {
-            referral = 1;
+        if (referralMemberRadio.isSelected()) {
+            referral = referralMemberRadio.getText();
         } else if (referralFriendRadio.isSelected()) {
-            referral = 2;
+            referral = referralFriendRadio.getText();
         } else if (referralAdRadio.isSelected()) {
-            referral = 3;
-        }*/
+            referral = referralAdRadio.getText();
+        }
 
         data = new HashMap();
 
         data.put("firstname", firstName);
-        data.put("prefix", ".");
+        data.put("prefix", prefix);
         data.put("lastname", lastName);
         data.put("email", email);
         data.put("gender", gender);
@@ -96,7 +96,7 @@ public class AddGuestController extends ContentLoader implements Initializable {
         data.put("houseNumber", houseNumber);
         data.put("country", "Nederland");
         data.put("city", city);
-        data.put("referralName", "Club lid");
+        data.put("referralName", referral);
         service.subscribe(data);
 
         addContent(GUESTS);
