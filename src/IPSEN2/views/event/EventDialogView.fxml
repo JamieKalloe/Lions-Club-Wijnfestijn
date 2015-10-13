@@ -25,37 +25,31 @@
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
+            <Label layoutX="55.0" layoutY="99.0" text="Adres">
+               <font>
+                  <Font name="Roboto Regular" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="50.0" layoutY="188.0" text="Datum">
+               <font>
+                  <Font name="Roboto Regular" size="18.0" />
+               </font>
+            </Label>
             <TextField fx:id="eventNameTextField" layoutX="159.0" />
-            <Label layoutX="57.0" layoutY="52.0" text="Pla">
+            <TextField fx:id="addressTextField" layoutX="158.0" layoutY="91.0" />
+            <DatePicker fx:id="datePicker" layoutX="157.0" layoutY="186.0" prefHeight="27.0" prefWidth="167.0" />
+            <Label layoutX="-5.0" layoutY="146.0" text="Huisnummer">
                <font>
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="countryNameTextField" layoutX="159.0" layoutY="50.0" />
-            <Label layoutX="45.0" layoutY="108.0" text="Streek">
+            <TextField fx:id="houseNumberTextField" layoutX="158.0" layoutY="138.0" />
+            <Label layoutX="50.0" layoutY="51.0" text="Plaats">
                <font>
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="60.0" layoutY="158.0" text="Jaar">
-               <font>
-                  <Font name="Roboto Regular" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="regionNameTextField" layoutX="158.0" layoutY="106.0" />
-            <Label layoutX="56.0" layoutY="208.0" text="Type ">
-               <font>
-                  <Font name="Roboto Regular" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="yearTextField" layoutX="158.0" layoutY="156.0" />
-            <TextField fx:id="typeTextField" layoutX="158.0" layoutY="206.0" />
-            <Label layoutX="59.0" layoutY="261.0" text="Prijs">
-               <font>
-                  <Font name="Roboto Regular" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="priceTextField" layoutX="158.0" layoutY="259.0" />
+            <TextField fx:id="cityTextField" layoutX="158.0" layoutY="46.0" />
          </children>
       </AnchorPane>
       <Pane fx:id="cancelButton" layoutX="481.0" layoutY="509.0" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">
