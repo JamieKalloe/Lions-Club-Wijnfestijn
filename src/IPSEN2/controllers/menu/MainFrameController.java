@@ -73,7 +73,7 @@ public class MainFrameController extends ContentLoader implements Initializable{
                addContent(GUESTS);
            }
 
-        sluitNavMenu();
+        closeNavMenu();
     }
 
 
@@ -82,9 +82,9 @@ public class MainFrameController extends ContentLoader implements Initializable{
     menuButton.setOnMouseClicked(event -> {
             if (navigatieMenu.getTranslateX() != 0) {
                 openNavMenu();
-                contentCover.setOnMouseClicked(e -> sluitNavMenu());
+                contentCover.setOnMouseClicked(e -> closeNavMenu());
             } else {
-                sluitNavMenu();
+                closeNavMenu();
             }
         });
     }
@@ -103,7 +103,7 @@ public class MainFrameController extends ContentLoader implements Initializable{
     }
 
 
-    private void sluitNavMenu() {
+    private void closeNavMenu() {
         contentCover.setDisable(true);
         TranslateTransition sluitNavigatieMenu = new TranslateTransition(new Duration(350), navigatieMenu);
         sluitNavigatieMenu.setToX(-(navigatieMenu.getWidth()));
@@ -111,7 +111,7 @@ public class MainFrameController extends ContentLoader implements Initializable{
         contentCover.setStyle(null);
     }
 
-    public void setTitel(String titel){
+    public void setTitle(String titel){
         titelLabel.setText(titel);
     }
 

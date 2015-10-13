@@ -4,7 +4,6 @@ import IPSEN2.database.Database;
 import IPSEN2.models.wine.Wine;
 import IPSEN2.models.wine.WineType;
 import IPSEN2.repositories.Crudable;
-import IPSEN2.repositories.guest.GuestRepository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,7 +33,7 @@ public class WineRepository implements Crudable {
         try {
             while(queryResult.next()) {
                 Wine wine = new Wine();
-                wine.setWineID(queryResult.getInt("wine_id"));
+                wine.setWineID(queryResult.getInt("id"));
                 wine.setType(new WineType(queryResult.getInt("type_id")));
                 wine.setName(queryResult.getString("name"));
                 wine.setCountry(queryResult.getString("country"));
@@ -65,6 +64,7 @@ public class WineRepository implements Crudable {
         try {
             while(queryResult.next()) {
                 Wine wine = new Wine();
+
                 wine.setWineID(queryResult.getInt("id"));
                 wine.setType(new WineType(queryResult.getInt("type_id")));
                 wine.setName(queryResult.getString("name"));
@@ -95,12 +95,13 @@ public class WineRepository implements Crudable {
 
     public int create(HashMap data) {
         HashMap databaseData = new HashMap();
-        databaseData.put("type_id", Integer.parseInt(data.get("typeID").toString()));
+        databaseData.put("type_id", Integer.parseInt(data.get("type_id").toString()));
+        databaseData.put("merchant_id", 1);
         databaseData.put("name", data.get("name").toString());
         databaseData.put("country", data.get("country").toString());
         databaseData.put("region", data.get("region"));
         databaseData.put("year", Integer.parseInt(data.get("year").toString()));
-        databaseData.put("purchase_price", Double.parseDouble(data.get("purchasePrice").toString()));
+        databaseData.put("purchase_price", 12.0);
         databaseData.put("price", Double.parseDouble(data.get("price").toString()));
 
         return databaseInstance.insertInto("wine", databaseData);
@@ -109,7 +110,7 @@ public class WineRepository implements Crudable {
 
     public void update(int id, HashMap data) {
         HashMap databaseData = new HashMap();
-        databaseData.put("type_id", Integer.parseInt(data.get("typeID").toString()));
+        databaseData.put("type_id", Integer.parseInt(data.get("type").toString()));
         databaseData.put("name", data.get("name").toString());
         databaseData.put("country", data.get("country").toString());
         databaseData.put("region", data.get("region"));

@@ -25,7 +25,7 @@ public class GuestRepository implements Crudable {
         try {
             while(queryResult.next()) {
                 Guest guest = new Guest();
-                guest.setGuestID(queryResult.getInt("id"));
+                guest.setId(queryResult.getInt("id"));
                 guest.setFirstName(queryResult.getString("first_name"));
                 guest.setPrefix(queryResult.getString("prefix_last_name"));
                 guest.setLastName(queryResult.getString("last_name"));
@@ -48,7 +48,7 @@ public class GuestRepository implements Crudable {
         try {
             while(queryResult.next()) {
                 Guest guest = new Guest();
-                guest.setGuestID(queryResult.getInt("id"));
+                guest.setId(queryResult.getInt("id"));
                 guest.setFirstName(queryResult.getString("first_name"));
                 guest.setPrefix(queryResult.getString("prefix_last_name"));
                 guest.setLastName(queryResult.getString("last_name"));
@@ -62,6 +62,7 @@ public class GuestRepository implements Crudable {
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
+            System.out.println(sqle.getSQLState());
             return null;
         }
         return null;
