@@ -95,8 +95,6 @@ public class WineRepository implements Crudable {
 
     public int create(HashMap data) {
         HashMap databaseData = new HashMap();
-        if(data == null) System.out.println("data is null");
-        if(databaseData == null) System.out.print("Database = null");
         databaseData.put("type_id", Integer.parseInt(data.get("type_id").toString()));
         databaseData.put("merchant_id", 1);
         databaseData.put("name", data.get("name").toString());
