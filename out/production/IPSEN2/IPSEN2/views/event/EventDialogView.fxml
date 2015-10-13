@@ -35,21 +35,37 @@
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
+<<<<<<< HEAD
             <TextField fx:id="eventNameTextField" layoutX="159.0" />
             <TextField fx:id="addressTextField" layoutX="158.0" layoutY="91.0" />
             <DatePicker fx:id="datePicker" layoutX="157.0" layoutY="186.0" prefHeight="27.0" prefWidth="167.0" />
             <Label layoutX="-5.0" layoutY="146.0" text="Huisnummer">
+=======
+            <Label layoutX="50.0" layoutY="51.0" text="Plaats">
+>>>>>>> 02b44c99e55902dda6e370fabd1dc54a9d6a0d70
                <font>
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
+<<<<<<< HEAD
             <TextField fx:id="houseNumberTextField" layoutX="158.0" layoutY="138.0" />
             <Label layoutX="50.0" layoutY="51.0" text="Plaats">
+=======
+            <Label layoutX="-5.0" layoutY="146.0" text="Huisnummer">
+>>>>>>> 02b44c99e55902dda6e370fabd1dc54a9d6a0d70
                <font>
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
+<<<<<<< HEAD
             <TextField fx:id="cityTextField" layoutX="158.0" layoutY="46.0" />
+=======
+            <TextField fx:id="eventNameTextField" layoutX="159.0" />
+            <TextField fx:id="cityTextField" layoutX="158.0" layoutY="46.0" />
+            <TextField fx:id="addressTextField" layoutX="158.0" layoutY="91.0" />
+            <TextField fx:id="houseNumberTextField" layoutX="158.0" layoutY="138.0" />
+            <DatePicker fx:id="datePicker" layoutX="157.0" layoutY="186.0" prefHeight="27.0" prefWidth="167.0" />
+>>>>>>> 02b44c99e55902dda6e370fabd1dc54a9d6a0d70
          </children>
       </AnchorPane>
       <Pane fx:id="cancelButton" layoutX="481.0" layoutY="509.0" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">

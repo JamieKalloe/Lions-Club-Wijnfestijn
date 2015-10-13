@@ -3,7 +3,6 @@ package IPSEN2.controllers.guest;
 import IPSEN2.ContentLoader;
 import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.guest.Guest;
-import IPSEN2.services.attendee.AttendeeService;
 import IPSEN2.services.guest.GuestService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -19,7 +18,6 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 
@@ -209,9 +207,12 @@ public class GuestController extends ContentLoader implements Initializable{
         emailColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("email"));
         attendedColumn.setCellValueFactory(createAttendedCellCallBack());
 
-        AttendeeService attendeeService = new AttendeeService();
-        HashMap attendeeData = new HashMap();
-        attendeeService.create(attendeeData);
+
+
+//        AttendeeService attendeeService = new AttendeeService();
+//        HashMap attendeeData = new HashMap();
+////        attendeeService.create(attendeeData);
+
 
 
         createSelectAllCheckBox();
