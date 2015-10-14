@@ -25,11 +25,6 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        try {
-            new ExportCSV().exportGuests();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 
