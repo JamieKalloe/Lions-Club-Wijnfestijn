@@ -57,10 +57,10 @@
             <TextField fx:id="priceTextField" layoutX="158.0" layoutY="259.0" />
             <SplitMenuButton fx:id="wineTypeButton" layoutX="158.0" layoutY="204.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="167.0" text="Type">
               <items>
-                  <MenuItem fx:id="typeWit" mnemonicParsing="false" onAction="#handleWineTypeButton" text="Wit" />
-                  <MenuItem fx:id="typeRood" mnemonicParsing="false" onAction="#handleWineTypeButton" text="Rood" />
-                <MenuItem fx:id="typeCava" mnemonicParsing="false" onAction="#handleWineTypeButton" text="Cava" />
-                <MenuItem fx:id="typeRose" mnemonicParsing="false" onAction="#handleWineTypeButton" text="Rose" />
+                  <MenuItem fx:id="typeWit" mnemonicParsing="false"  text="Wit" />
+                  <MenuItem fx:id="typeRood" mnemonicParsing="false" text="Rood" />
+                <MenuItem fx:id="typeCava" mnemonicParsing="false" text="Cava" />
+                <MenuItem fx:id="typeRose" mnemonicParsing="false" text="Rose" />
               </items>
             </SplitMenuButton>
          </children>

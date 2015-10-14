@@ -14,6 +14,10 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
@@ -87,6 +91,7 @@ public class WineController extends ContentLoader implements Initializable{
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         keepCurrentData = false;
         addContent(WINE);
     }
@@ -160,6 +165,9 @@ public class WineController extends ContentLoader implements Initializable{
     }
 
 
+
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ContentLoader.setMainFrameTitle(ContentLoader.WINES_TITLE);
@@ -187,26 +195,11 @@ public class WineController extends ContentLoader implements Initializable{
         createSelectAllCheckBox();
         table_view.setPlaceholder(new Label("Er is geen content om te weergeven"));
 
-        table_view.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());
-    }
-
-    public void handleEditButton(Event event) {
+        setOnTableRowClickedListener();
 
     }
 
 
-    private class RowSelectChangeListener implements ChangeListener {
 
-        @Override
-        public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-            try{
-                selectedWineID = table_view.getSelectionModel().getSelectedItem().getWineID();
-                System.out.println(selectedWineID);
-            } catch (NullPointerException e){
-                System.out.print("No items in table to select");
-                selectedWineID = 0;
-            }
 
-        }
-    }
 }

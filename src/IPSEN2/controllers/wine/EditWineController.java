@@ -104,8 +104,8 @@ public class EditWineController extends ContentLoader implements Initializable{
         priceTextField.setText(String.valueOf(wine.getPrice()));
         wineTypeButton.setText(wine.getType().getName());
 
-                //wine.getType().getName());
-       // wineTypeButton.set
+        //wine.getType().getName());
+        // wineTypeButton.set
 
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
