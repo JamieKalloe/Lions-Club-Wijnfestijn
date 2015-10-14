@@ -79,6 +79,7 @@ public class GuestRepository implements Crudable {
         databaseData.put("gender", data.get("gender").toString());
         databaseData.put("notes", data.get("notes").toString());
 
+
        return databaseInstance.insertInto("guest", databaseData);
     }
 
@@ -99,4 +100,33 @@ public class GuestRepository implements Crudable {
     public void delete(int id) {
         databaseInstance.delete("guest", id);
     }
+
+    public ArrayList<Guest> findAllIn(String inTable, String filterColumn, String where) {
+        ArrayList<Guest> guestList = new ArrayList<Guest>();
+        ResultSet queryResult = databaseInstance.select("guest", inTable, "id", filterColumn, where);
+        try {
+            while(queryResult.next()) {
+                Guest guest = new Guest();
+                guest.setId(queryResult.getInt("id"));
+                guest.setFirstName(queryResult.getString("first_name"));
+                guest.setPrefix(queryResult.getString("prefix_last_name"));
+                guest.setLastName(queryResult.getString("last_name"));
+                guest.setEmail(queryResult.getString("email"));
+                guest.setNotes(queryResult.getString("notes"));
+                guest.setGender(queryResult.getString("gender"));
+                guest.setAddress(new Address(queryResult.getInt("address_id")));
+                guest.setReferral(new Referral(queryResult.getInt("referral_id")));
+
+                guestList.add(guest);
+            }
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        return guestList;
+    }
+
+    public void deleteKeyFromTable(String table, String where) {
+        databaseInstance.delete(table, where);
+    }
+
 }

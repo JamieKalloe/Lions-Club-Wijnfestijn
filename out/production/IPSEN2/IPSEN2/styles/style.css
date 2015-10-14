@@ -2,9 +2,23 @@
     font-family: 'Roboto';
 }
 
-.text {
-    -fx-font-family: "Roboto";
+.root{
+    -fx-background-image: url("../images/WineBackground.jpg");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
 }
+
+#actionBar {
+    -fx-background-image: url("../images/ActionBar.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+    -fx-alignment: center;
+}
+
+#logoButton {
+
+}
+
 #menuButton:pressed {
     -fx-effect: dropshadow(two-pass-box, rgba(0,0,0,0.40), 8, 0.0, 0, 3);
 

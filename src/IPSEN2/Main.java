@@ -14,12 +14,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(ContentLoader.loadMainFrame());
         scene.getStylesheets().add((ContentLoader.STYLE));
-
         primaryStage.setScene(scene);
+
         primaryStage.show();
+
     }
 
 

@@ -1,8 +1,11 @@
 package IPSEN2.controllers.guest;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.controllers.mail.MailService;
 import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.guest.Guest;
+import IPSEN2.models.mail.MailFactory;
+import IPSEN2.models.mail.MailType;
 import IPSEN2.services.guest.GuestService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -45,14 +48,14 @@ public class GuestController extends ContentLoader implements Initializable{
 
     public void handleAddButton() throws IOException {
         keepCurrentData = false;
-       addContent(new AddGuestController(), EDIT_GUEST_DIALOG);
+        addContent(new AddGuestController(), EDIT_GUEST_DIALOG);
     }
 
     public void handleRemoveButton() {
 
 
         if (selectedRows.size() != 0) {
-              selected = false;
+            selected = false;
 
             for (Integer row : selectedRows) {
                 //if (guestData.get(selectedRows.indexOf(row)).getAttended()) {
@@ -76,11 +79,27 @@ public class GuestController extends ContentLoader implements Initializable{
 
     }
 
+    public void handleMailButton() {
+        if (selectedRows.size() != 0) {
+            selected = false;
+
+            for (Integer row : selectedRows) {
+                try {
+                    Guest guest = service.find(row);
+                    new MailService().send(new MailFactory().generate(MailType.EVENT, guest));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 
     public void openEditGuestMenu() throws IOException{
         if (selectedGuestID != 0 ) {
 
             selected = false;
+            keepCurrentData = false;
             addContent(new EditGuestController(selectedGuestID), EDIT_GUEST_DIALOG);
         }
 
@@ -215,5 +234,5 @@ public class GuestController extends ContentLoader implements Initializable{
         createSelectAllCheckBox();
 
         table_view.setPlaceholder(new Label("Er is geen content om te weergeven"));
-        }
     }
+}

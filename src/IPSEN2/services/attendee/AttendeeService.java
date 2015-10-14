@@ -16,7 +16,7 @@ public class AttendeeService {
         this.repository = new AttendeeRepository();
     }
 
-    public ArrayList<Attendee> all() { return new ArrayList<Attendee>(); }
+    public ArrayList<Attendee> all() { return repository.all(); }
 
     public Attendee find(int id) {
         Attendee attendee = repository.find(id);
@@ -24,7 +24,13 @@ public class AttendeeService {
     }
 
     public int create(HashMap data) {
-       return repository.create(data);
+        int exists = repository.exists(data);
+        if(exists == 0) {
+            return repository.create(data);
+        }
+        else{
+            return exists;
+        }
     }
 
     public Object delete(int id) {

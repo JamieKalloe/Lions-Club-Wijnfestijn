@@ -12,6 +12,10 @@ public class Attendee {
         this.eventID = eventID;
     }
 
+    public Attendee () {
+
+    }
+
     public int getGuestID() {return guestID;}
 
     public int getEventID() {return eventID;}
