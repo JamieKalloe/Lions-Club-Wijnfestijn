@@ -1,6 +1,7 @@
 package IPSEN2.controllers.wine;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.wine.Wine;
 import IPSEN2.services.wine.WineService;
 import javafx.beans.value.ChangeListener;
@@ -51,6 +52,18 @@ public class WineController extends ContentLoader implements Initializable{
         if (selectedWineID != 0) {
             addContent(new EditWineController(selectedWineID), EDIT_WINE_DIALOG);
         }
+    }
+
+    @FXML
+    private void importCSVFile() {
+        //TODO: delete test code, debug only.
+        try {
+            ImportCSV importCSV = new ImportCSV();
+            importCSV.importWine();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        addContent(WINE);
     }
 
 
