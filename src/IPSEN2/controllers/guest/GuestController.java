@@ -86,7 +86,6 @@ public class GuestController extends ContentLoader implements Initializable{
             for (Integer row : selectedRows) {
                 try {
                     Guest guest = service.find(row);
-                    System.out.println("removing " + row);
                     new MailService().send(new MailFactory().generate(MailType.EVENT, guest));
                 } catch (Exception e) {
                     e.printStackTrace();
