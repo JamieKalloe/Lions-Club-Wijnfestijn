@@ -78,4 +78,42 @@ public class GuestService {
         }
         return true;
     }
+
+    public void sendEventMail(Guest guest) {
+
+    }
+
+    public void sendInvoiceMail(Guest guest) {
+
+    }
+
+    public void sendMerchantMail(Guest guest) {
+
+    }
+
+    public void sendReminderMail(Guest guest) {
+
+    }
+
+    public void sendThankMail(Guest guest) {
+
+    }
+
+    public ArrayList<Guest> findAttendeesForEvent(int eventID) {
+        ArrayList<Guest> guestList = repository.findAllIn("attendee", "guest_id", "event_id="+eventID);
+
+        for(Guest guest : guestList) {
+            if(guest.getAddress().checkIfOnlyID()) {
+                guest.setAddress(addressService.find(guest.getAddress().getAddressID()));
+            }
+            if(guest.getReferral().checkIfOnlyID()) {
+                guest.setReferral(referralService.find(guest.getReferral().getReferralID()));
+            }
+        }
+        return guestList;
+    }
+
+    public void removeAsAttendee(int guestID, int eventID) {
+        repository.deleteKeyFromTable("attendee", "guest_id="+guestID+" AND event_id="+eventID);
+    }
 }

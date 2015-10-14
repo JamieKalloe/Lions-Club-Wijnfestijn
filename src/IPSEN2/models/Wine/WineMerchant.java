@@ -15,6 +15,13 @@ public class WineMerchant {
 
     }
 
+    public WineMerchant(int id) {
+        this.merchantID = id;
+        this.address = null;
+        this.name = null;
+        this.email = null;
+    }
+
     //GETTERS
     public int getMerchantID() {
         return merchantID;

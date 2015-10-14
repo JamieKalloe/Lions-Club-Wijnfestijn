@@ -1,9 +1,15 @@
 package IPSEN2.controllers.guest;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.controllers.mail.MailService;
 import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.guest.Guest;
+<<<<<<< HEAD
 import IPSEN2.services.attendee.AttendeeService;
+=======
+import IPSEN2.models.mail.MailFactory;
+import IPSEN2.models.mail.MailType;
+>>>>>>> c40696eeac4db4f7988df4906bbfa1e30053aba5
 import IPSEN2.services.guest.GuestService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -80,11 +86,27 @@ public class GuestController extends ContentLoader implements Initializable{
 
     }
 
+    public void handleMailButton() {
+        if (selectedRows.size() != 0) {
+            selected = false;
+
+            for (Integer row : selectedRows) {
+                try {
+                    Guest guest = service.find(row);
+                    new MailService().send(new MailFactory().generate(MailType.EVENT, guest));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 
     public void openEditGuestMenu() throws IOException{
         if (selectedGuestID != 0 ) {
 
             selected = false;
+            keepCurrentData = false;
             addContent(new EditGuestController(selectedGuestID), EDIT_GUEST_DIALOG);
         }
 

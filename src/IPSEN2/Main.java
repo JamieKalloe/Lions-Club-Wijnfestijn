@@ -1,10 +1,17 @@
 package IPSEN2;
 
+<<<<<<< HEAD
 import IPSEN2.controllers.menu.ResizeHelper;
+=======
+import IPSEN2.generators.csv.ExportCSV;
+import IPSEN2.generators.csv.ImportCSV;
+>>>>>>> c40696eeac4db4f7988df4906bbfa1e30053aba5
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.util.ArrayList;
 
 
 /**
@@ -22,6 +29,7 @@ public class Main extends Application {
         ResizeHelper.addResizeListener(primaryStage);
 
         primaryStage.show();
+
     }
 
 

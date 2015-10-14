@@ -1,6 +1,7 @@
 package IPSEN2.generators.csv;
 
 import IPSEN2.services.guest.GuestService;
+import IPSEN2.services.wine.WineService;
 import com.opencsv.CSVReader;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -8,6 +9,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,21 +26,19 @@ public class ImportCSV {
         for(String[] customerData : guestsCSV) {
             HashMap data = new HashMap();
 
-            for(int record = 0; record < customerData.length; record++) {
-                data.put("email", customerData[9]);
-                data.put("firstname", customerData[2]);
-                data.put("lastname", customerData[1]);
-                data.put("prefix", customerData[3]);
-                data.put("gender", customerData[4]);
-                data.put("notes", customerData[11]);
-                data.put("zipCode", customerData[7]);
-                data.put("street", customerData[5]);
-                data.put("houseNumber", customerData[6]);
-                data.put("country", "Nederland");
-                data.put("city", customerData[8]);
-                data.put("referralName", customerData[10]);
+            data.put("firstname", customerData[4]);
+            data.put("prefix", customerData[6]);
+            data.put("lastname", customerData[5]);
+            data.put("email", customerData[3]);
+            data.put("gender", customerData[7]);
+            data.put("notes", customerData[8]);
+            data.put("zipCode", customerData[9]);
+            data.put("street", customerData[10]);
+            data.put("houseNumber", customerData[11]);
+            data.put("country", customerData[12]);
+            data.put("city", customerData[13]);
+            data.put("referralName", customerData[2]);
 
-            }
             new GuestService().subscribe(data);
         }
         System.out.println("Succesfully imported guests.");
@@ -51,23 +51,14 @@ public class ImportCSV {
         for(String[] wineData : wineCSV) {
             HashMap data = new HashMap();
 
-            for(int record = 0; record < wineData.length; record++) {
-                data.put("email", wineData[9]);
-                data.put("firstname", wineData[2]);
-                data.put("lastname", wineData[1]);
-                data.put("prefix", wineData[3]);
-                data.put("gender", wineData[4]);
-                data.put("notes", wineData[11]);
-                data.put("zipCode", wineData[7]);
-                data.put("street", wineData[5]);
-                data.put("houseNumber", wineData[6]);
-                data.put("country", "Nederland");
-                data.put("city", wineData[8]);
-                data.put("referralName", wineData[10]);
+            data.put("name", wineData[3]);
+            data.put("country", wineData[4]);
+            data.put("region", wineData[8].replace("'", "''"));
+            data.put("year", wineData[5]);
+            data.put("type_id", wineData[1]);
+            data.put("price", wineData[6]);
 
-            }
-            //add wineService subscribe here.
-            new GuestService().subscribe(data);
+            new WineService().subscribe(data);
         }
         System.out.println("Succesfully imported wine.");
     }
@@ -75,6 +66,14 @@ public class ImportCSV {
     private List<String[]> readCSV(File file) throws IOException {
         CSVReader reader = new CSVReader(new FileReader(file), ';', '"', 1);
         List<String[]> allRows = reader.readAll();
+//        List<String[]> allRows = new ArrayList<>();
+//
+//        String[] nextLine;
+//        while((nextLine = reader.readNext()) != null) {
+//            allRows.add(nextLine);
+//        }
+
+        reader.close();
 
         return allRows;
     }
