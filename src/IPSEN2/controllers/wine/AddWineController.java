@@ -37,7 +37,6 @@ public class AddWineController extends ContentLoader implements Initializable {
     @FXML private TextField countryNameTextField;
     @FXML private TextField regionNameTextField;
     @FXML private TextField yearTextField;
-    @FXML private TextField typeTextField;
     @FXML private TextField priceTextField;
 
     private String name;
