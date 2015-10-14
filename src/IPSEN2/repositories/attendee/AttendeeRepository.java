@@ -54,11 +54,11 @@ public class AttendeeRepository implements Crudable {
 
     }
 
-
+/*
     public void delete(int guestID, int eventID) {
         databaseInstance.delete("attendee", guestID, eventID);
     }
-
+*/
     @Override
     public void update(int id, HashMap data) {
 

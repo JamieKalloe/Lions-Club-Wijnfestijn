@@ -112,4 +112,8 @@ public class GuestService {
         }
         return guestList;
     }
+
+    public void removeAsAttendee(int guestID, int eventID) {
+        repository.deleteKeyFromTable("attendee", "guest_id="+guestID+" AND event_id="+eventID);
+    }
 }

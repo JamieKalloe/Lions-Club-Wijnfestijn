@@ -123,4 +123,9 @@ public class GuestRepository implements Crudable {
         }
         return guestList;
     }
+
+    public void deleteKeyFromTable(String table, String where) {
+        databaseInstance.delete(table, where);
+    }
+
 }

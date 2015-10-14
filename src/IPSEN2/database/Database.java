@@ -120,11 +120,9 @@ public class Database {
         return result;
     }
 
-    public int delete(String from, int guestID, int eventID ) {
-        String query = "DELETE FROM "+from+" WHERE guest_id="+ guestID +
-                "AND event_id=" + eventID;
-        int result = updateDatabase(query);
-        return result;
+    public int delete(String from, String where) {
+        String query = "DELETE FROM "+from+" WHERE "+where;
+        return updateDatabase(query);
     }
 
     private ResultSet queryDatabase(String query) {
