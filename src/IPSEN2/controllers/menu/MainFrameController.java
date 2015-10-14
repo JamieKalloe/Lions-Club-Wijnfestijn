@@ -32,6 +32,7 @@ public class MainFrameController extends ContentLoader implements Initializable{
     @FXML private Pane logoButton, homeNav, gastenNav, wijnenNav,
     bestellingenNav, evenementenNav, handleidingNav;
 
+    @FXML
     public void handleMousePressed(MouseEvent event) throws Exception{
         primaryStage = getPrimaryStage(event);
         xOffset = primaryStage.getX() - event.getScreenX();

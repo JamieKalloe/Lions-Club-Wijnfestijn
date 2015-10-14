@@ -12,7 +12,7 @@
    <children>
       <StackPane fx:id="contentHolder" layoutX="-3.0" layoutY="65.0" prefHeight="621.0" prefWidth="965.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Pane fx:id="contentCover" disable="true" layoutY="61.0" prefHeight="628.0" prefWidth="964.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <AnchorPane id="actionBar" fx:id="actionBar" prefHeight="91.0" prefWidth="965.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane id="actionBar" fx:id="actionBar" onMouseDragged="#handleMouseDragged" onMousePressed="#handleMousePressed" prefHeight="91.0" prefWidth="965.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Label fx:id="titelLabel" layoutX="130.0" layoutY="26.0" prefHeight="29.0" prefWidth="164.0" textFill="WHITE">
                <font>
