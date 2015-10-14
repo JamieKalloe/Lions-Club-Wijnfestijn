@@ -2,7 +2,6 @@
     font-family: 'Roboto';
 }
 
-<<<<<<< HEAD
 .root{
     -fx-background-image: url("../images/WineBackground.jpg");
     -fx-background-size: 100% 100%;
@@ -21,13 +20,6 @@
 }
 
 
-
-.label {
-=======
-.text {
->>>>>>> c40696eeac4db4f7988df4906bbfa1e30053aba5
-    -fx-font-family: "Roboto";
-}
 #menuButton:pressed {
     -fx-effect: dropshadow(two-pass-box, rgba(0,0,0,0.40), 8, 0.0, 0, 3);
 

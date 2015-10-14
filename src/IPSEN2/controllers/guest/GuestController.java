@@ -4,12 +4,9 @@ import IPSEN2.ContentLoader;
 import IPSEN2.controllers.mail.MailService;
 import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.guest.Guest;
-<<<<<<< HEAD
 import IPSEN2.services.attendee.AttendeeService;
-=======
 import IPSEN2.models.mail.MailFactory;
 import IPSEN2.models.mail.MailType;
->>>>>>> c40696eeac4db4f7988df4906bbfa1e30053aba5
 import IPSEN2.services.guest.GuestService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;

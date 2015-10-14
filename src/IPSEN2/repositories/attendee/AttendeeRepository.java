@@ -66,7 +66,6 @@ public class AttendeeRepository implements Crudable {
 
     }
 
-<<<<<<< HEAD
     public int exists(HashMap data) {
         String where = "";
         where += "guest_id = '"+data.get("guestID")+"' AND ";
@@ -90,7 +89,6 @@ public class AttendeeRepository implements Crudable {
     }
 
 
-=======
 /*
 >>>>>>> c40696eeac4db4f7988df4906bbfa1e30053aba5
     public void delete(int guestID, int eventID) {
