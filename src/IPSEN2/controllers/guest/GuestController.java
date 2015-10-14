@@ -81,6 +81,7 @@ public class GuestController extends ContentLoader implements Initializable{
         if (selectedGuestID != 0 ) {
 
             selected = false;
+            keepCurrentData = false;
             addContent(new EditGuestController(selectedGuestID), EDIT_GUEST_DIALOG);
         }
 
