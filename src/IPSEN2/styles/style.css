@@ -1,4 +1,22 @@
 
+.root{
+    -fx-background-image: url("../images/WineBackground.jpg");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+}
+
+#actionBar {
+    -fx-background-image: url("../images/ActionBar.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+    -fx-alignment: center;
+}
+
+#logoButton {
+
+}
+
+
 
 .label {
     -fx-font-family: "Roboto";

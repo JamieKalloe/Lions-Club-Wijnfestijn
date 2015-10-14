@@ -12,7 +12,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -22,18 +21,16 @@ public class MainFrameController extends ContentLoader implements Initializable{
 
     private static double xOffset = 0;
     private static double yOffset = 0;
-    private Stage primaryStage;
 
 
 
     @FXML private ImageView menuButton;
-    @FXML private AnchorPane navigatieMenu;
+    @FXML private AnchorPane navigatieMenu, root, actionBar;
     @FXML private StackPane contentHolder;
     @FXML private Label titelLabel;
     @FXML private Pane contentCover;
     @FXML private Pane logoButton, homeNav, gastenNav, wijnenNav,
     bestellingenNav, evenementenNav, handleidingNav;
-
 
     public void handleMousePressed(MouseEvent event) throws Exception{
         primaryStage = getPrimaryStage(event);

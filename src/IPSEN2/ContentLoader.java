@@ -41,6 +41,7 @@ public abstract class ContentLoader {
     public static final String EVENTS_TITLE = "Evenementen";
     public static final String MANUAL_TITLE = "Handleiding";
     private static MainFrameController mainController;
+    public static Stage primaryStage;
     private static FXMLLoader loader;
 
     public static void setMainController(MainFrameController mainFrameController) {
@@ -83,13 +84,18 @@ public abstract class ContentLoader {
         return loader;
     }
 
-    public static void setMainFrameTitle(String title){
-        mainController.setTitle(title);
-    }
-
     public static Stage getPrimaryStage(Event event) {
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         return primaryStage;
     }
+
+    public static void setMainFrameTitle(String title){
+        mainController.setTitle(title);
+    }
+
+    public static void setPrimaryStage(Stage stage) {
+        primaryStage = stage;
+    }
+
 }
 
