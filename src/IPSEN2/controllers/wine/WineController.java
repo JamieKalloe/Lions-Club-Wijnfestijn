@@ -4,12 +4,11 @@ import IPSEN2.ContentLoader;
 import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.wine.Wine;
 import IPSEN2.services.wine.WineService;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -85,22 +84,27 @@ public class WineController extends ContentLoader implements Initializable{
         table_view.getItems().setAll(service.all());
         table_view.setPlaceholder(new Label("Er is geen content om te weergeven"));
 
-        table_view.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());
+        setOnTableRowClickedListener();
+
+    }
+
+    private void setOnTableRowClickedListener() {
+        table_view.setRowFactory(table -> {
+            TableRow<Wine> row = new TableRow<>();
+            row.getStyleClass().add("pane");
+            row.setOnMouseClicked(event -> {
+                selectedWineID = row.getTableView().getSelectionModel().getSelectedItem().getWineID();
+
+                try {
+                    handleEditButton();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            return row;
+        });
     }
 
 
-    private class RowSelectChangeListener implements ChangeListener {
 
-        @Override
-        public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-            try{
-                selectedWineID = table_view.getSelectionModel().getSelectedItem().getWineID();
-                System.out.println(selectedWineID);
-            } catch (NullPointerException e){
-                System.out.print("No items in table to select");
-                selectedWineID = 0;
-            }
-
-        }
-    }
 }

@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="672.0" prefWidth="853.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IPSEN2.controllers.wine.AddWineController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="672.0" prefWidth="853.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="1083.0" fitWidth="788.0" layoutX="39.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -57,10 +57,10 @@
             <TextField fx:id="priceTextField" layoutX="158.0" layoutY="259.0" />
             <SplitMenuButton fx:id="wineTypeButton" layoutX="158.0" layoutY="204.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="167.0" text="Type">
               <items>
-                  <MenuItem fx:id="typeWit" mnemonicParsing="false" onAction="#handleWineTypeButton" text="Wit" />
-                  <MenuItem fx:id="typeRood" mnemonicParsing="false" onAction="#handleWineTypeButton" text="Rood" />
-                <MenuItem fx:id="typeCava" mnemonicParsing="false" onAction="#handleWineTypeButton" text="Cava" />
-                <MenuItem fx:id="typeRose" mnemonicParsing="false" onAction="#handleWineTypeButton" text="Rose" />
+                  <MenuItem fx:id="typeWit" mnemonicParsing="false"  text="Wit" />
+                  <MenuItem fx:id="typeRood" mnemonicParsing="false" text="Rood" />
+                <MenuItem fx:id="typeCava" mnemonicParsing="false" text="Cava" />
+                <MenuItem fx:id="typeRose" mnemonicParsing="false" text="Rose" />
               </items>
             </SplitMenuButton>
          </children>
