@@ -78,4 +78,24 @@ public class GuestService {
         }
         return true;
     }
+
+    public void sendEventMail(Guest guest) {
+
+    }
+
+    public void sendInvoiceMail(Guest guest) {
+
+    }
+
+    public void sendMerchantMail(Guest guest) {
+
+    }
+
+    public void sendReminderMail(Guest guest) {
+
+    }
+
+    public void sendThankMail(Guest guest) {
+
+    }
 }
