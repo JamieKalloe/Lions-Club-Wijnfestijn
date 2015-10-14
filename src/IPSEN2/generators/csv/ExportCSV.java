@@ -37,6 +37,7 @@ public class ExportCSV {
     private void writeCSV(File file, ResultSet resultSet) throws Exception {
         CSVWriter writer = new CSVWriter(new FileWriter(file), ';');
         writer.writeAll(resultSet, true);
+        writer.close();
     }
 
     private FileChooser fileDialog(String title, String...extensions) {

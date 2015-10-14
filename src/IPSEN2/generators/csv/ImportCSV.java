@@ -26,18 +26,13 @@ public class ImportCSV {
         for(String[] customerData : guestsCSV) {
             HashMap data = new HashMap();
 
-            data.put("email", customerData[9]);
-            data.put("firstname", customerData[2]);
-            data.put("lastname", customerData[1]);
-            data.put("prefix", customerData[3]);
-            data.put("gender", customerData[4]);
-            data.put("notes", customerData[11]);
-            data.put("zipCode", customerData[7]);
-            data.put("street", customerData[5]);
-            data.put("houseNumber", customerData[6]);
-            data.put("country", "Nederland");
-            data.put("city", customerData[8]);
-            data.put("referralName", customerData[10]);
+            data.put("email", customerData[3]);
+            data.put("firstname", customerData[4]);
+            data.put("lastname", customerData[5]);
+            data.put("prefix", customerData[6]);
+            data.put("gender", customerData[7]);
+            data.put("notes", customerData[8]);
+            data.put("referralName", customerData[2]);
 
             new GuestService().subscribe(data);
         }

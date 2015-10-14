@@ -24,8 +24,9 @@ public class Main extends Application {
         primaryStage.show();
 
         try {
-            new ExportCSV().exportWine();
-//            new ImportCSV().importWine();
+//            new ExportCSV().exportGuests();
+            new ImportCSV().importGuests();
+            //import - read string[] index veranderen, naar structuur database.
         } catch (Exception e) {
             e.printStackTrace();
         }
