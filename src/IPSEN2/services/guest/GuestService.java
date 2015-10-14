@@ -98,4 +98,18 @@ public class GuestService {
     public void sendThankMail(Guest guest) {
 
     }
+
+    public ArrayList<Guest> findAttendeesForEvent(int eventID) {
+        ArrayList<Guest> guestList = repository.findAllIn("attendee", "guest_id", "event_id="+eventID);
+
+        for(Guest guest : guestList) {
+            if(guest.getAddress().checkIfOnlyID()) {
+                guest.setAddress(addressService.find(guest.getAddress().getAddressID()));
+            }
+            if(guest.getReferral().checkIfOnlyID()) {
+                guest.setReferral(referralService.find(guest.getReferral().getReferralID()));
+            }
+        }
+        return guestList;
+    }
 }

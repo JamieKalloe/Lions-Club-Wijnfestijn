@@ -21,10 +21,10 @@ public class Database {
 
     private Database() {
         //Mike's DB settings
-//        String url = "jdbc:mysql://localhost:3306/";
-//        String user = "lions_club";
-//        String password = "root";
-//        String dbName = "lions_club";
+        /*String url = "jdbc:mysql://localhost:3306/";
+        String user = "lions_club";
+        String password = "root";
+        String dbName = "lions_club";*/
 
         String url = "jdbc:mysql://127.0.0.1:3306/";
         String user = "root";
@@ -64,7 +64,7 @@ public class Database {
     }
 
     public ResultSet select(String from, String foreignTable, String resultColumn, String filterColumn,String where) {
-        String query = "SELECT * FROM " + from + " WHERE "+resultColumn+" IN ( SELECT "+filterColumn+" FROM "+foreignTable+ "WHERE " + where +" )";
+        String query = "SELECT * FROM " + from + " WHERE "+resultColumn+" IN ( SELECT "+filterColumn+" FROM "+foreignTable+ " WHERE " + where +" )";
         ResultSet resultSet = queryDatabase(query);
         return resultSet;
     }
