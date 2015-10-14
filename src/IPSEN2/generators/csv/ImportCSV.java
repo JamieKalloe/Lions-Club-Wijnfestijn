@@ -26,12 +26,17 @@ public class ImportCSV {
         for(String[] customerData : guestsCSV) {
             HashMap data = new HashMap();
 
-            data.put("email", customerData[3]);
             data.put("firstname", customerData[4]);
-            data.put("lastname", customerData[5]);
             data.put("prefix", customerData[6]);
+            data.put("lastname", customerData[5]);
+            data.put("email", customerData[3]);
             data.put("gender", customerData[7]);
             data.put("notes", customerData[8]);
+            data.put("zipCode", customerData[9]);
+            data.put("street", customerData[10]);
+            data.put("houseNumber", customerData[11]);
+            data.put("country", customerData[12]);
+            data.put("city", customerData[13]);
             data.put("referralName", customerData[2]);
 
             new GuestService().subscribe(data);
@@ -53,8 +58,6 @@ public class ImportCSV {
             data.put("type_id", wineData[1]);
             data.put("price", wineData[6]);
 
-            //check for null or empty values.
-
             new WineService().subscribe(data);
         }
         System.out.println("Succesfully imported wine.");
@@ -70,6 +73,7 @@ public class ImportCSV {
 //            allRows.add(nextLine);
 //        }
 
+        reader.close();
 
         return allRows;
     }

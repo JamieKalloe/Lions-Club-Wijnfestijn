@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by Philip on 18-09-15.
@@ -22,14 +24,6 @@ public class Main extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        try {
-//            new ExportCSV().exportGuests();
-            new ImportCSV().importGuests();
-            //import - read string[] index veranderen, naar structuur database.
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 
