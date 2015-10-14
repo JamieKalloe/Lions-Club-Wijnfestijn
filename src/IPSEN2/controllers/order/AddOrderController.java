@@ -146,6 +146,7 @@ public class AddOrderController extends ContentLoader implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
+
         addWineButton.setOnMouseClicked(event -> {
             try {
                 handleAddWineButton();
