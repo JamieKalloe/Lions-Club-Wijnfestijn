@@ -13,6 +13,13 @@ public class Guest {
     private String prefix;
     private String firstName;
     private SimpleBooleanProperty attended = new SimpleBooleanProperty(false);
+    private SimpleBooleanProperty selected = new SimpleBooleanProperty(false);
+
+
+    public boolean getSelected() {
+        return selected.get();
+    }
+
     //public BooleanProperty attendendProperty() {       return attended;}
 
     private Address address;
@@ -88,11 +95,11 @@ public class Guest {
     }
 
     //SETTERS
-   // public void setSelected(boolean selected) {
-   //     this.selected = selected;
-   // }
-
     public void setAttended(boolean attended) { this.attended = new SimpleBooleanProperty(attended);}
+
+    public void setSelected(boolean selected) {this.selected.set(selected);}
+
+
     public void setId(int id) {
         this.id = id;
     }
@@ -109,9 +116,7 @@ public class Guest {
         this.prefix = prefix;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    public void setFirstName(String firstName) {this.firstName = firstName;}
 
     public void setEmail(String email) {
         this.email = email;
