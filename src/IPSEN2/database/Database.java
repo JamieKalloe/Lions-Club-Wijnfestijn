@@ -63,6 +63,12 @@ public class Database {
         return resultSet;
     }
 
+    public ResultSet select(String from, String foreignTable, String resultColumn, String filterColumn,String where) {
+        String query = "SELECT * FROM " + from + " WHERE "+resultColumn+" IN ( SELECT "+filterColumn+" FROM "+foreignTable+ "WHERE " + where +" )";
+        ResultSet resultSet = queryDatabase(query);
+        return resultSet;
+    }
+
     public int insertInto(String table, HashMap data) {
         String queryTable = "INSERT INTO " + table + " (";
         String queryValues = ") VALUES(";
