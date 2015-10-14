@@ -11,6 +11,11 @@ public class Event {
     private int id;
     private String name;
     private Address address;
+
+
+
+    private String street;
+    private String city;
     private Date startDate;
     private Date endDate;
 
@@ -58,6 +63,10 @@ public class Event {
     public Date getEndDate() {
         return endDate;
     }
+
+    public String getStreet() {return address.getStreet() + " " + address.getHouseNumber();}
+
+    public String getCity() {return address.getCity();}
 
     //SETTERS
     public void setId(int id) {

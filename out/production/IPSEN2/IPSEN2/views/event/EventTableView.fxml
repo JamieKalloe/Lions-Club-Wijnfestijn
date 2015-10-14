@@ -29,7 +29,7 @@
             <TableColumn fx:id="eventDateColumn" prefWidth="150.0" text="Datum" />
          </columns>
       </TableView>
-      <Pane layoutX="806.0" layoutY="44.0" prefHeight="69.0" prefWidth="80.0" styleClass="buttonWithoutHover">
+      <Pane layoutX="806.0" layoutY="44.0" onMouseClicked="#openAddEventMenu" prefHeight="69.0" prefWidth="80.0" styleClass="buttonWithoutHover">
          <children>
             <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="10.0" pickOnBounds="true" preserveRatio="true">
                <image>
