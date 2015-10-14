@@ -67,8 +67,10 @@ public class EventController extends ContentLoader implements Initializable{
       table_view.setItems(FXCollections.observableArrayList(eventData));
        table_view.setRowFactory(table -> {
            TableRow<Event> row = new TableRow<>();
-           row.getStyleClass().add("pane");
 
+           if (row.isEmpty()) {
+               row.getStyleClass().add("pane");
+           }
            row.setOnMouseClicked(event -> addContent(MAINMENU));
            return row;
        });
