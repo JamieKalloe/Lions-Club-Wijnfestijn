@@ -37,7 +37,7 @@ public class ExportCSV {
         System.out.println("Exported table " + table + " to CSV.");
     }
 
-    public ArrayList<String[]> getData(String table) {
+    private ArrayList<String[]> getData(String table) {
         ArrayList<String[]> dataList = new ArrayList<>();
         switch (table) {
             case "guest":

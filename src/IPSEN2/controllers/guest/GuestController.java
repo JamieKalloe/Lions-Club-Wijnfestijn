@@ -1,8 +1,11 @@
 package IPSEN2.controllers.guest;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.controllers.mail.MailService;
 import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.guest.Guest;
+import IPSEN2.models.mail.MailFactory;
+import IPSEN2.models.mail.MailType;
 import IPSEN2.services.guest.GuestService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -74,6 +77,22 @@ public class GuestController extends ContentLoader implements Initializable{
         guestData = FXCollections.observableArrayList(service.all());
         addContent(GUESTS);
 
+    }
+
+    public void handleMailButton() {
+        if (selectedRows.size() != 0) {
+            selected = false;
+
+            for (Integer row : selectedRows) {
+                try {
+                    Guest guest = service.find(row);
+                    System.out.println("removing " + row);
+                    new MailService().send(new MailFactory().generate(MailType.EVENT, guest));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 
