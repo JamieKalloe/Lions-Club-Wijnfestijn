@@ -3,6 +3,7 @@ package IPSEN2.controllers.guest;
 import IPSEN2.ContentLoader;
 import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.guest.Guest;
+import IPSEN2.services.attendee.AttendeeService;
 import IPSEN2.services.guest.GuestService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -18,6 +19,7 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 
@@ -33,7 +35,9 @@ public class GuestController extends ContentLoader implements Initializable{
 
     public int selectedGuestID;
     private GuestService service;
+    private AttendeeService attendeeService;
     private static ObservableList<Guest> guestData;
+    private static ArrayList<Guest> attendeeList;
     private static ArrayList<Integer> selectedRows;
     private CheckBox selectAllCheckBox;
     private static  boolean selected;
@@ -57,7 +61,7 @@ public class GuestController extends ContentLoader implements Initializable{
             for (Integer row : selectedRows) {
                 //if (guestData.get(selectedRows.indexOf(row)).getAttended()) {
                 System.out.println("removing " + row);
-                service.remove(row);
+                attendeeService.delete(row);
 
                 //}
             }
@@ -126,14 +130,12 @@ public class GuestController extends ContentLoader implements Initializable{
             if (selected) {
                 selectedRows.clear();
             }
-            guestData.forEach(guest -> {
+            attendeeList.forEach(guest -> {
                 guest.setSelected(selected);
                 if (selected) {
                     selectedRows.add(guest.getId());
-                    System.out.println(selectedRows.size());
                 } else {
                     selectedRows.clear();
-                    System.out.println(selectedRows.size());
                 }
             });
 
@@ -149,11 +151,11 @@ public class GuestController extends ContentLoader implements Initializable{
             @Override
             public ObservableValue<CheckBox> call(TableColumn.CellDataFeatures<Guest, CheckBox> cellDataFeatures) {
                 CheckBox checkBox = new CheckBox();
+
                 checkBox.setSelected(cellDataFeatures.getValue().getSelected());
                 checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue,
                                                          Boolean oldValue, Boolean newValue) -> {
                     cellDataFeatures.getValue().setSelected(newValue.booleanValue());
-
                     selectedGuestID = cellDataFeatures.getValue().getId();
                     if (newValue.booleanValue()) {
                         selectedRows.add(selectedGuestID);
@@ -188,16 +190,11 @@ public class GuestController extends ContentLoader implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ContentLoader.setMainFrameTitle(ContentLoader.GUESTS_TITLE);
+        ContentLoader.setMainFrameTitle(GUESTS_TITLE);
         service = new GuestService();
+        attendeeService = new AttendeeService();
 
-        if (!keepCurrentData) {
-            guestData = FXCollections.observableArrayList(service.all());
-            selectedRows = new ArrayList<>();
-            keepCurrentData = true;
-        }
 
-        table_view.setItems(guestData);
         setOnTableRowClickedListener();
 
         checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
@@ -208,15 +205,40 @@ public class GuestController extends ContentLoader implements Initializable{
         attendedColumn.setCellValueFactory(createAttendedCellCallBack());
 
 
-
-//        AttendeeService attendeeService = new AttendeeService();
-//        HashMap attendeeData = new HashMap();
-////        attendeeService.create(attendeeData);
-
+            if (!keepCurrentData) {
+                selectedRows = new ArrayList<>();
+                attendeeList = new ArrayList<>();
+            }
+            refreshTable();
 
 
         createSelectAllCheckBox();
-
         table_view.setPlaceholder(new Label("Er is geen content om te weergeven"));
+    }
+
+        private void refreshTable() {
+            System.out.println("refreshTable");
+
+            HashMap attendeeData = new HashMap();
+
+
+
+                keepCurrentData = true;
+
+                service.all().forEach(guest -> {
+                    attendeeData.put("eventID", 1);
+                    attendeeData.put("guestID", guest.getId());
+                    attendeeService.create(attendeeData);
+
+                });
+
+
+                attendeeService.all().forEach(attendee -> {
+                    Guest guest = service.find(attendee.getGuestID());
+                    attendeeList.add(guest);
+                });
+                table_view.setItems(FXCollections.observableArrayList(attendeeList));
+
+
         }
     }

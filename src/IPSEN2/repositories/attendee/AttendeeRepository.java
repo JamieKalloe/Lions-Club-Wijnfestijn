@@ -21,7 +21,19 @@ public class AttendeeRepository implements Crudable {
 
     @Override
     public ArrayList<Attendee> all() {
-        return new ArrayList<Attendee>();
+        ArrayList<Attendee> eventList = new ArrayList<>();
+        ResultSet queryResult = databaseInstance.select("attendee");
+        try {
+            while(queryResult.next()) {
+                Attendee attendee = new Attendee();
+                attendee.setGuestID(queryResult.getInt("guest_id"));
+                attendee.setEventID(queryResult.getInt("event_id"));
+                eventList.add(attendee);
+            }
+        } catch(SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return eventList;
     }
 
     @Override
@@ -52,6 +64,28 @@ public class AttendeeRepository implements Crudable {
     @Override
     public void delete(int id) {
 
+    }
+
+    public int exists(HashMap data) {
+        String where = "";
+        where += "guest_id = '"+data.get("guestID")+"' AND ";
+        where += "event_id = '"+data.get("eventID") + "';";
+
+        ResultSet resultSet = databaseInstance.select("attendee", where);
+        try{
+            if(resultSet.isBeforeFirst()) {
+                while(resultSet.next()) {
+                    return resultSet.getInt("guest_id");
+                }
+            }
+            else {
+                return 0;
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+        return -1;
     }
 
 

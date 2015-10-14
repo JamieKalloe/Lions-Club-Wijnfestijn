@@ -79,6 +79,7 @@ public class GuestRepository implements Crudable {
         databaseData.put("gender", data.get("gender").toString());
         databaseData.put("notes", data.get("notes").toString());
 
+
        return databaseInstance.insertInto("guest", databaseData);
     }
 
