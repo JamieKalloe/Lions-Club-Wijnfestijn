@@ -9,9 +9,9 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * Created by Jamie on 5-10-2015.
@@ -53,10 +53,12 @@ public class ImportCSV {
 
             data.put("name", wineData[3]);
             data.put("country", wineData[4]);
-            data.put("region", StringEscapeUtils.escapeSql(wineData[8]));
+            data.put("region", wineData[8].replace("'", "''"));
             data.put("year", wineData[5]);
             data.put("type_id", wineData[1]);
             data.put("price", wineData[6]);
+
+            //check for null or empty values.
 
             new WineService().subscribe(data);
         }
@@ -66,6 +68,13 @@ public class ImportCSV {
     private List<String[]> readCSV(File file) throws IOException {
         CSVReader reader = new CSVReader(new FileReader(file), ';', '"', 1);
         List<String[]> allRows = reader.readAll();
+//        List<String[]> allRows = new ArrayList<>();
+//
+//        String[] nextLine;
+//        while((nextLine = reader.readNext()) != null) {
+//            allRows.add(nextLine);
+//        }
+
 
         return allRows;
     }

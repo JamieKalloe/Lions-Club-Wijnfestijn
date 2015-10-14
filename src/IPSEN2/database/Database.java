@@ -82,7 +82,6 @@ public class Database {
             }
         }
         int result = updateDatabase(queryTable + queryValues + ")", Statement.RETURN_GENERATED_KEYS);
-        System.out.println(queryTable + queryValues + ")");
 
         return result;
     }

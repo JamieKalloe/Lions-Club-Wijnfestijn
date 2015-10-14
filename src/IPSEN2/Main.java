@@ -1,5 +1,6 @@
 package IPSEN2;
 
+import IPSEN2.generators.csv.ExportCSV;
 import IPSEN2.generators.csv.ImportCSV;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -23,8 +24,8 @@ public class Main extends Application {
         primaryStage.show();
 
         try {
-            ImportCSV CSV = new ImportCSV();
-            CSV.importWine();
+            new ExportCSV().exportWine();
+//            new ImportCSV().importWine();
         } catch (Exception e) {
             e.printStackTrace();
         }
