@@ -35,6 +35,14 @@ public class Guest {
 
     public Guest(int id) {
         this.id = id;
+        this.gender = null;
+        this.lastName = null;
+        this.prefix = null;
+        this.firstName = null;
+        this.address = null;
+        this.email = null;
+        this.referral = null;
+        this.notes = null;
     }
 
     public Guest(String gender, String lastName, String firstName) {
@@ -53,6 +61,10 @@ public class Guest {
         this.email = email;
         this.referral = new Referral(referralID);
         this.notes = notes;
+    }
+
+    public boolean checkIfOnlyID() {
+        return this.gender == null && this.lastName == null && this.prefix== null && this.firstName == null && this.address == null && this.email == null && this.referral == null && this.notes == null;
     }
 
     //GETTERS

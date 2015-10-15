@@ -15,7 +15,9 @@ public class Order {
 
     private OrderStatus status;
 
-    private ArrayList<IPSEN2.models.wine.Wine> wines;
+    private ArrayList<WineOrder> wineOrders;
+
+    private double totalAmount;
 
     public Order (int id, int guestId, int eventId, int orderStatusId)
     {
@@ -23,6 +25,8 @@ public class Order {
         this.guest = new Guest(guestId);
         this.event = new Event(eventId);
         this.status = new OrderStatus(orderStatusId);
+        this.totalAmount = 0.0;
+        this.wineOrders = null;
     }
 
     public int getId() {
@@ -41,8 +45,12 @@ public class Order {
         return status;
     }
 
-    public ArrayList<IPSEN2.models.wine.Wine> getWines() {
-        return wines;
+    public ArrayList<WineOrder> getWineOrders() {
+        return wineOrders;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
     }
 
     public void setGuest(Guest guest) {
@@ -57,8 +65,16 @@ public class Order {
         this.status = status;
     }
 
-    public void setWines(ArrayList<IPSEN2.models.wine.Wine> wines) {
-        this.wines = wines;
+    public void setWineOrders(ArrayList<WineOrder> wineOrders) {
+        this.wineOrders = wineOrders;
+        double total = 0.0;
+        for(WineOrder order: wineOrders) {
+            //total += order.getAmount() * order.getWine().getPrice();
+        }
+        this.totalAmount = total;
     }
 
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
 }

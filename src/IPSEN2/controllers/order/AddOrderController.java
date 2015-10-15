@@ -1,6 +1,7 @@
 package IPSEN2.controllers.order;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.services.order.OrderService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -15,13 +16,13 @@ import javafx.scene.text.Font;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 /**
  * Created by Philip on 01-10-15.
  */
 public class AddOrderController extends ContentLoader implements Initializable {
-
     @FXML
     private AnchorPane wineIDandQuantityWrapper, deleteButtonWrapper;
 
@@ -32,6 +33,8 @@ public class AddOrderController extends ContentLoader implements Initializable {
     private ArrayList<ImageView> deleteButtonList;
 
     private ArrayList<TextField> wineIDTextFieldList, wineQuantityTextFieldList;
+    @FXML
+    private TextField customerIDTextField;
 
     private double yPosition;
 
@@ -42,11 +45,22 @@ public class AddOrderController extends ContentLoader implements Initializable {
     }
 
     public void handleSubmitButton() {
+        HashMap data = new HashMap();
+        data.put("guestId", customerIDTextField.getText());
+        data.put("eventId", 1);
+        data.put("orderStatusId", 1);
+        ArrayList<String> wineIDs = new ArrayList<String>();
+        ArrayList<String> amounts = new ArrayList<String>();
         wineAndQuantityList.forEach(row -> {
             int index = wineAndQuantityList.indexOf(row);
+            wineIDs.add(wineIDTextFieldList.get(index).getText());
+            amounts.add(wineQuantityTextFieldList.get(index).getText());
           System.out.println("wine ID: " + wineIDTextFieldList.get(index).getText());
            System.out.println("Quantity: " + wineQuantityTextFieldList.get(index).getText());
         });
+        data.put("wineIDs", wineIDs);
+        data.put("amounts", amounts);
+        new OrderService().add(data);
         addContent(ORDER);
     }
 

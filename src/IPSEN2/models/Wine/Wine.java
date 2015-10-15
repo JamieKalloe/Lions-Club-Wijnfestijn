@@ -11,8 +11,22 @@ public class Wine {
     private double price;
     public WineMerchant merchant;
     private String typeName;
+
     public Wine() {
 
+    }
+
+    public Wine(int wineID) {
+        this.wineID = wineID;
+        this.type = null;
+        this.name = null;
+        this.country = null;
+        this.region = null;
+        this.year = 0;
+        this.purchasePrice = 0;
+        this.price = 0;
+        this.merchant = null;
+        this.typeName = null;
     }
 
     public Wine (int wineID, int typeID, String country, String name, String region, int year, double purchasePrice, double price) {
@@ -36,6 +50,10 @@ public class Wine {
 
     public void editWine() {
 
+    }
+
+    public boolean checkIfOnlyID() {
+        return this.type == null && this.name == null && this.country == null && this.region == null && this.year == 0 && this.purchasePrice == 0 && this.price == 0 && this.merchant == null && this.typeName == null;
     }
 
     //GETTERS
