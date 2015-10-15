@@ -1,5 +1,7 @@
 package IPSEN2.models.wine;
 
+import javafx.beans.property.SimpleBooleanProperty;
+
 public class Wine {
     private int wineID;
     private WineType type;
@@ -11,6 +13,7 @@ public class Wine {
     private double price;
     public WineMerchant merchant;
     private String typeName;
+    private SimpleBooleanProperty selected = new SimpleBooleanProperty(false);
 
     public Wine() {
 
@@ -93,6 +96,10 @@ public class Wine {
         return region;
     }
 
+    public boolean getSelected() {
+        return selected.get();
+    }
+
     public String getTypeName() {
         return this.type.getName();
     }
@@ -137,5 +144,6 @@ public class Wine {
         this.region = region;
     }
 
+    public void setSelected(boolean selected) {this.selected.set(selected);}
 
 }
