@@ -43,6 +43,10 @@ public class Event {
         this.endDate = endDate;
     }
 
+    public boolean checkIfOnlyID() {
+        return this.name == null && this.address == null && this.startDate == null && this.endDate == null;
+    }
+
     //GETTERS
     public int getId() {
         return id;

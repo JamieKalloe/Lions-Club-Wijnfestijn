@@ -32,7 +32,7 @@ public class OrderRepository implements Crudable {
                         queryResult.getInt("id"),
                         queryResult.getInt("guest_id"),
                         queryResult.getInt("event_id"),
-                        queryResult.getInt("order_status_id")
+                        queryResult.getInt("status_id")
                 );
 
                 orders.add(order);
@@ -77,9 +77,9 @@ public class OrderRepository implements Crudable {
 
         databaseData.put("guest_id", Integer.parseInt(data.get("guestId").toString()));
         databaseData.put("event_id", Integer.parseInt(data.get("eventId").toString()));
-        databaseData.put("order_status_id", Integer.parseInt(data.get("orderStatusId").toString()));
+        databaseData.put("status_id", Integer.parseInt(data.get("orderStatusId").toString()));
 
-        return databaseInstance.insertInto("Order", databaseData);
+        return databaseInstance.insertInto("order", databaseData);
     }
 
     public void update(int id, HashMap data)
@@ -88,7 +88,7 @@ public class OrderRepository implements Crudable {
 
         databaseData.put("guest_id", Integer.parseInt(data.get("guestId").toString()));
         databaseData.put("event_id", Integer.parseInt(data.get("eventId").toString()));
-        databaseData.put("order_status_id", Integer.parseInt(data.get("orderStatusId").toString()));
+        databaseData.put("status_id", Integer.parseInt(data.get("orderStatusId").toString()));
 
         databaseInstance.update("order", id, databaseData);
     }
