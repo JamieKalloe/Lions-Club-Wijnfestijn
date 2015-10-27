@@ -61,7 +61,7 @@ public class Wine {
 
     //GETTERS
     public int getWineID() {
-        return wineID -1;
+        return wineID;
     }
 
     public WineType getType() {
