@@ -43,7 +43,7 @@ public class EditGuestController extends ContentLoader implements Initializable{
     @FXML private Pane submitButton, cancelButton;
 
     private String gender;
-    private String referral;
+    private int referral;
     private String firstName;
     private String prefix;
     private String lastName;
@@ -88,12 +88,17 @@ public class EditGuestController extends ContentLoader implements Initializable{
 
         // Insert the right referral type in the referral variable
         if (referralMemberRadio.isSelected()) {
-            referral = referralMemberRadio.getText();
+            //referral = referralMemberRadio.getText();
+            referral = 1;
         } else if (referralFriendRadio.isSelected()) {
-            referral = referralFriendRadio.getText();
+            //referral = referralFriendRadio.getText();
+            referral = 2;
         } else if (referralAdRadio.isSelected()) {
-            referral = referralAdRadio.getText();
+            //referral = referralAdRadio.getText();
+            referral = 3;
         }
+
+        System.out.println("Ref given: " + referral);
 
         data = new HashMap();
 
@@ -126,15 +131,31 @@ public class EditGuestController extends ContentLoader implements Initializable{
 
         service = new GuestService();
 
-
             Guest guest = service.find(selectedGuestID);
-            firstNameTextField.setText(guest.getFirstName());
-            lastNameTextField.setText(guest.getLastName());
-            emailTextField.setText(guest.getEmail());
+
+            System.out.println("Ref ID: " + guest.getReferral().getReferralID());
 
             firstNameTextField.setText(guest.getFirstName());
             prefixTextField.setText(guest.getPrefix());
             lastNameTextField.setText(guest.getLastName());
+
+            // Gender radio-buttons
+            if (guest.getGender().contentEquals("M")) {
+                genderRadioM.setSelected(true);
+                genderRadioF.setSelected(false);
+            } else if (guest.getGender().contentEquals("F")) {
+                genderRadioM.setSelected(false);
+                genderRadioF.setSelected(true);
+            }
+
+            // Referral type buttons
+            if (guest.getReferral().getReferralID() == 1) {
+                referralMemberRadio.setSelected(true);
+            } else if (guest.getReferral().getReferralID() == 2) {
+                referralFriendRadio.setSelected(true);
+            } else if (guest.getReferral().getReferralID() == 3) {
+                referralAdRadio.setSelected(true);
+            }
             //telephoneTextField.setText(guest.);
             emailTextField.setText(guest.getEmail());
             addressTextField.setText(guest.getAddress().getStreet());
