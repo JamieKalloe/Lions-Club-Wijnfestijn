@@ -142,9 +142,7 @@ public class EditGuestController extends ContentLoader implements Initializable{
             // Gender radio-buttons
             if (guest.getGender().contentEquals("M")) {
                 genderRadioM.setSelected(true);
-                genderRadioF.setSelected(false);
             } else if (guest.getGender().contentEquals("F")) {
-                genderRadioM.setSelected(false);
                 genderRadioF.setSelected(true);
             }
 

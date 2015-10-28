@@ -114,12 +114,12 @@ public class WineRepository implements Crudable {
     public void update(int id, HashMap data) {
         HashMap databaseData = new HashMap();
        // databaseData.put("id", Integer.parseInt(data.get("id").toString()));
-        databaseData.put("type_id", Integer.parseInt(data.get("type").toString()));
+        databaseData.put("type_id", data.get("type_id"));
         databaseData.put("name", data.get("name").toString());
         databaseData.put("country", data.get("country").toString());
         databaseData.put("region", data.get("region"));
         databaseData.put("year", Integer.parseInt(data.get("year").toString()));
-        databaseData.put("purchase_price", Double.parseDouble(data.get("purchasePrice").toString()));
+        //databaseData.put("purchase_price", Double.parseDouble(data.get("purchasePrice").toString()));
         databaseData.put("price", Double.parseDouble(data.get("price").toString()));
 
         databaseInstance.update("wine", id, databaseData);
