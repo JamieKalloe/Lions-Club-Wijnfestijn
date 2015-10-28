@@ -11,6 +11,7 @@ public class Wine {
     private double price;
     public WineMerchant merchant;
     private String typeName;
+    private boolean selected;
 
     public Wine() {
 
@@ -58,7 +59,7 @@ public class Wine {
 
     //GETTERS
     public int getWineID() {
-        return wineID -1;
+        return wineID;
     }
 
     public WineType getType() {
@@ -95,6 +96,10 @@ public class Wine {
 
     public String getTypeName() {
         return this.type.getName();
+    }
+
+    public boolean getSelected() {
+        return selected;
     }
 
     //SETTERS
@@ -137,5 +142,11 @@ public class Wine {
         this.region = region;
     }
 
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
 
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 }
