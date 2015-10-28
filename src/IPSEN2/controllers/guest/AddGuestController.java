@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 /**
- * Created by Philip on 24-09-15.
+ * Created by Philip on 24-09-15
  */
 public class AddGuestController extends ContentLoader implements Initializable {
 

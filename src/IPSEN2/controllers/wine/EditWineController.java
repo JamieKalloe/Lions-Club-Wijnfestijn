@@ -55,10 +55,11 @@ public class EditWineController extends ContentLoader implements Initializable{
 
     @FXML
     public void handleWineTypeButton(ActionEvent event) {
-        Object wineType = event.getSource();
-
-        pressedButtonIndex = wineTypeButton.getItems().indexOf(wineType);
-
+        System.out.println(event.toString());
+       // WineType wineType = new WineType(event.getSource());
+       // wineType.
+       // pressedButtonIndex = wineTypeButton.getItems().indexOf(wineType);
+        pressedButtonIndex = 1;
         wineTypeButton.setText(types.get(pressedButtonIndex).getName());
     }
 
@@ -67,6 +68,7 @@ public class EditWineController extends ContentLoader implements Initializable{
     }
 
     public void handleSubmitButton() {
+        this.selectedWineID = selectedWineID;
         name = wineNameTextField.getText();
         country = countryNameTextField.getText();
         region = regionNameTextField.getText();
@@ -75,13 +77,15 @@ public class EditWineController extends ContentLoader implements Initializable{
 
         data = new HashMap();
 
+       // data.put("id", selectedWineID);
         data.put("name", name);
         data.put("country", country);
         data.put("region", region);
         data.put("year", year);
+        System.out.println(pressedButtonIndex);
         data.put("type_id", pressedButtonIndex);
         data.put("price", price);
-        service.subscribe(data);
+        service.edit(selectedWineID,data);
 
         addContent(WINE);
     }

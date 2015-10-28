@@ -13,15 +13,24 @@ public class Wine {
     private double price;
     public WineMerchant merchant;
     private String typeName;
-
-    private SimpleBooleanProperty selected;
-
+    private SimpleBooleanProperty selected = new SimpleBooleanProperty(false);
 
     public Wine() {
-        selected = new SimpleBooleanProperty(false);
 
     }
 
+    public Wine(int wineID) {
+        this.wineID = wineID;
+        this.type = null;
+        this.name = null;
+        this.country = null;
+        this.region = null;
+        this.year = 0;
+        this.purchasePrice = 0;
+        this.price = 0;
+        this.merchant = null;
+        this.typeName = null;
+    }
 
     public Wine (int wineID, int typeID, String country, String name, String region, int year, double purchasePrice, double price) {
         this.wineID = wineID;
@@ -32,7 +41,6 @@ public class Wine {
         this.year = year;
         this.purchasePrice = purchasePrice;
         this.price = price;
-        selected = new SimpleBooleanProperty(false);
     }
 
     public void addWine() {
@@ -45,6 +53,10 @@ public class Wine {
 
     public void editWine() {
 
+    }
+
+    public boolean checkIfOnlyID() {
+        return this.type == null && this.name == null && this.country == null && this.region == null && this.year == 0 && this.purchasePrice == 0 && this.price == 0 && this.merchant == null && this.typeName == null;
     }
 
     //GETTERS
@@ -84,14 +96,13 @@ public class Wine {
         return region;
     }
 
-    public String getTypeName() {
-        return this.type.getName();
-    }
-
     public boolean getSelected() {
         return selected.get();
     }
 
+    public String getTypeName() {
+        return this.type.getName();
+    }
 
     //SETTERS
     public void setWineID(int wineID) {
@@ -134,6 +145,5 @@ public class Wine {
     }
 
     public void setSelected(boolean selected) {this.selected.set(selected);}
-
 
 }

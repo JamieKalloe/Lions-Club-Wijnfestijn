@@ -88,7 +88,7 @@ public class GuestService {
     }
 
     public void sendMerchantMail(Guest guest) {
-
+ 
     }
 
     public void sendReminderMail(Guest guest) {

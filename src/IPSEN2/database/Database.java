@@ -46,31 +46,31 @@ public class Database {
     }
 
     public ResultSet select(String from) {
-        String query = "SELECT * FROM " + from;
+        String query = "SELECT * FROM `" + from+"`";
         ResultSet resultSet = queryDatabase(query);
         return resultSet;
     }
 
     public ResultSet select(String from, String where) {
-        String query = "SELECT * FROM " + from + " WHERE " + where;
+        String query = "SELECT * FROM `" + from + "` WHERE " + where;
         ResultSet resultSet = queryDatabase(query);
         return resultSet;
     }
 
     public ResultSet select(String from, int id) {
-        String query = "SELECT * FROM " + from + " WHERE id=" + id;
+        String query = "SELECT * FROM `" + from + "` WHERE id=" + id;
         ResultSet resultSet = queryDatabase(query);
         return resultSet;
     }
 
     public ResultSet select(String from, String foreignTable, String resultColumn, String filterColumn,String where) {
-        String query = "SELECT * FROM " + from + " WHERE "+resultColumn+" IN ( SELECT "+filterColumn+" FROM "+foreignTable+ " WHERE " + where +" )";
+        String query = "SELECT * FROM `" + from + "` WHERE "+resultColumn+" IN ( SELECT "+filterColumn+" FROM "+foreignTable+ "` WHERE " + where +" )";
         ResultSet resultSet = queryDatabase(query);
         return resultSet;
     }
 
     public int insertInto(String table, HashMap data) {
-        String queryTable = "INSERT INTO " + table + " (";
+        String queryTable = "INSERT INTO `" + table + "` (";
         String queryValues = ") VALUES(";
         Set keySet = data.keySet();
         Object[] keyArray = keySet.toArray();
@@ -87,13 +87,14 @@ public class Database {
                 queryValues += ", ";
             }
         }
+        System.out.println(queryTable + queryValues + ")");
         int result = updateDatabase(queryTable + queryValues + ")", Statement.RETURN_GENERATED_KEYS);
 
         return result;
     }
 
     public int update(String table, int id, HashMap data) {
-        String query = "UPDATE " + table + " SET ";
+        String query = "UPDATE `" + table + "` SET ";
         Set keySet = data.keySet();
         Object[] keyArray = keySet.toArray();
         for(int index = 0; index < keyArray.length; index++) {
@@ -109,19 +110,18 @@ public class Database {
             }
         }
         query += " WHERE id="+id;
-        System.out.println(query);
         int result = updateDatabase(query);
         return result;
     }
 
     public int delete(String from, int id) {
-        String query = "DELETE FROM "+from+" WHERE id="+id;
+        String query = "DELETE FROM `"+from+"` WHERE id="+id;
         int result = updateDatabase(query);
         return result;
     }
 
     public int delete(String from, String where) {
-        String query = "DELETE FROM "+from+" WHERE "+where;
+        String query = "DELETE FROM `"+from+"` WHERE "+where;
         return updateDatabase(query);
     }
 

@@ -2,29 +2,20 @@ package IPSEN2.controllers.wine;
 
 import IPSEN2.ContentLoader;
 import IPSEN2.generators.csv.ImportCSV;
-import IPSEN2.models.guest.Guest;
 import IPSEN2.models.wine.Wine;
 import IPSEN2.services.wine.WineService;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
 import java.io.IOException;
-import java.net.Inet4Address;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -65,6 +56,7 @@ public class WineController extends ContentLoader implements Initializable{
 
             for(Integer row : selectedRows) {
                 System.out.println("removing " + row);
+                System.out.println(service.find(row));
                 service.remove(row);
             }
         }
