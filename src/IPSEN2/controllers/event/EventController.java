@@ -71,7 +71,10 @@ public class EventController extends ContentLoader implements Initializable{
            if (row.isEmpty()) {
                row.getStyleClass().add("pane");
            }
-           row.setOnMouseClicked(event -> addContent(MAINMENU));
+           row.setOnMouseClicked(event -> {
+               eventId = row.getTableView().getSelectionModel().getSelectedItem().getId();
+               addContent(MAINMENU);
+           });
            return row;
        });
 

@@ -64,7 +64,7 @@ public class Database {
     }
 
     public ResultSet select(String from, String foreignTable, String resultColumn, String filterColumn,String where) {
-        String query = "SELECT * FROM `" + from + "` WHERE "+resultColumn+" IN ( SELECT "+filterColumn+" FROM "+foreignTable+ "` WHERE " + where +" )";
+        String query = "SELECT * FROM `" + from + "` WHERE "+resultColumn+" IN ( SELECT "+filterColumn+" FROM `"+foreignTable+ "` WHERE " + where +" )";
         ResultSet resultSet = queryDatabase(query);
         return resultSet;
     }

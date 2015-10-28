@@ -21,7 +21,6 @@ public class EventService {
 
     public ArrayList<Event> all() {
         ArrayList<Event> eventList = eventRepository.all();
-        System.out.print(eventList.size());
         for(Event event : eventList) {
             if(event.getAddress().checkIfOnlyID()) {
                 event.setAddress(addressService.find(event.getAddress().getAddressID()));
