@@ -12,6 +12,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -38,7 +39,11 @@ public class SelectGuestController extends ContentLoader implements Initializabl
             row.setOnMouseClicked(event -> {
                 selectedGuestID = row.getTableView().getSelectionModel().
                         getSelectedItem().getId();
-                addContent(EDIT_ORDER_DIALOG);
+                try {
+                    addContent(new AddOrderController(selectedGuestID), EDIT_ORDER_DIALOG);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             });
             return row;
         });

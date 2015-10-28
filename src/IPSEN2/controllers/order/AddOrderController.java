@@ -1,6 +1,8 @@
 package IPSEN2.controllers.order;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.models.guest.Guest;
+import IPSEN2.services.guest.GuestService;
 import IPSEN2.services.order.OrderService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,10 +36,16 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
     private ArrayList<TextField> wineIDTextFieldList, wineQuantityTextFieldList;
     @FXML
-    private TextField customerIDTextField;
+    private Label customerNameLabel;
 
     private double yPosition;
+    private int selectedGuestID;
+    private GuestService guestService;
+    private Guest guest;
 
+    public AddOrderController(int selectedGuestID) {
+        this.selectedGuestID = selectedGuestID;
+    }
 
     @FXML
     public void handleCancelButton() {
@@ -46,7 +54,7 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
     public void handleSubmitButton() {
         HashMap data = new HashMap();
-        data.put("guestId", customerIDTextField.getText());
+        data.put("guestId", selectedGuestID);
         data.put("eventId", 1);
         data.put("orderStatusId", 1);
         ArrayList<String> wineIDs = new ArrayList<String>();
@@ -158,6 +166,11 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        guestService = new GuestService();
+        guest =  guestService.find(selectedGuestID);
+
+        customerNameLabel.setText(guest.getFirstName() + " " + guest.getLastName());
+
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
 
