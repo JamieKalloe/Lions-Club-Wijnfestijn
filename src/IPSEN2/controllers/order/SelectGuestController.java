@@ -38,7 +38,8 @@ public class SelectGuestController extends ContentLoader implements Initializabl
             row.setOnMouseClicked(event -> {
                 selectedGuestID = row.getTableView().getSelectionModel().
                         getSelectedItem().getId();
-                addContent(EDIT_ORDER_DIALOG);
+                    addContent(new AddOrderController(selectedGuestID), EDIT_ORDER_DIALOG);
+
             });
             return row;
         });

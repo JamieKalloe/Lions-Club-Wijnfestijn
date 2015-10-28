@@ -1,6 +1,7 @@
 package IPSEN2.models.order;
 
 import IPSEN2.models.wine.Wine;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  * Created by mdbaz on 15-10-2015.
@@ -8,6 +9,7 @@ import IPSEN2.models.wine.Wine;
 public class WineOrder {
     private int orderID;
     private Wine wine;
+    private SimpleStringProperty name = new SimpleStringProperty("");
     private int amount;
 
     public WineOrder(int wineID, int amount) {
@@ -33,6 +35,8 @@ public class WineOrder {
     public int getAmount() {
         return amount;
     }
+
+    public String getName() {return wine.getName();}
 
     //SETTERS
     public void setOrderID(int orderID) {

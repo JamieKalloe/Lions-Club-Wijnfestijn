@@ -29,6 +29,7 @@ public abstract class ContentLoader {
     public static final String EDIT_ORDER_DIALOG = "/IPSEN2/views/order/OrderDialogView.fxml";
     public static final String EDIT_EVENT_DIALOG = "/IPSEN2/views/event/EventDialogView.fxml";
     public static final String SELECT_GUEST_DIALOG = "/IPSEN2/views/order/SelectGuestView.fxml";
+    public static final String SELECT_WINE_DIALOG = "/IPSEN2/views/order/SelectWineView.fxml";
 
 
     public static final String ADD_WINE = "/IPSEN2/views/order/WineIDAndQuantityContainer.fxml";
@@ -74,10 +75,14 @@ public abstract class ContentLoader {
         return mainFrame;
     }
 
-    public static void addContent(Object controller, String fxml) throws IOException{
+    public static void addContent(Object controller, String fxml) {
         FXMLLoader loader = configureFXMLLoader(fxml);
         loader.setController(controller);
-       mainController.setContent(loader.load());
+        try {
+            mainController.setContent(loader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static FXMLLoader configureFXMLLoader(String fxml){

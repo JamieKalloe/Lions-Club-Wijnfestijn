@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="615.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IPSEN2.controllers.order.AddOrderController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="615.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <ImageView fitHeight="635.0" fitWidth="812.0" layoutX="13.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -20,28 +20,22 @@
                 <Font name="Roboto Regular" size="24.0" />
             </font>
         </Label>
-      <Label fx:id="customerNameLabel" layoutX="348.0" layoutY="135.0" text="Klantnaam en achternaam" textFill="#999999">
+      <Label fx:id="customerNameLabel" layoutX="95.0" layoutY="136.0" text="Klantnaam en achternaam">
          <font>
             <Font name="Roboto Regular" size="18.0" />
          </font>
       </Label>
-          <Label layoutX="94.0" layoutY="182.0" text="Wijn ID">
+          <Label layoutX="95.0" layoutY="102.0" text="Klant" textFill="#999999">
               <font>
                   <Font name="Roboto Regular" size="18.0" />
               </font>
           </Label>
-          <Label layoutX="668.0" layoutY="181.0" text="Aantal">
-              <font>
-                  <Font name="Roboto Regular" size="18.0" />
-              </font>
-          </Label>
-          <TextField fx:id="customerIDTextField" layoutX="96.0" layoutY="136.0" />
-          <Label layoutX="95.0" layoutY="102.0" text="Klant ID">
-              <font>
-                  <Font name="Roboto Regular" size="18.0" />
-              </font>
-          </Label>
-      <AnchorPane fx:id="wineIDandQuantityWrapper" layoutX="97.0" layoutY="215.0" prefHeight="275.0" prefWidth="611.0" />
+      <TableView fx:id="table_view" layoutX="88.0" layoutY="198.0" prefHeight="283.0" prefWidth="456.0">
+        <columns>
+          <TableColumn fx:id="wineNameColumn" prefWidth="315.0" text="Wijn" />
+          <TableColumn fx:id="quantityColumn" prefWidth="144.0" text="Aantal" />
+        </columns>
+      </TableView>
         <Pane fx:id="cancelButton" layoutX="481.0" layoutY="509.0" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">
             <children>
                 <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
@@ -60,15 +54,14 @@
                 </ImageView>
             </children>
         </Pane>
-      <Pane fx:id="addWineButton" layoutX="108.0" layoutY="275.0" prefHeight="44.0" prefWidth="133.0" styleClass="buttonWithoutHover">
+      <Pane fx:id="addWineButton" layoutX="590.0" layoutY="201.0" prefHeight="44.0" prefWidth="115.0" styleClass="buttonWithoutHover">
          <children>
-            <ImageView fitHeight="44.0" fitWidth="152.0" layoutX="4.0" layoutY="-13.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="44.0" fitWidth="152.0" layoutY="-10.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/PlusOneButton.png" />
                </image>
             </ImageView>
          </children>
       </Pane>
-      <AnchorPane fx:id="deleteButtonWrapper" layoutX="731.0" layoutY="205.0" prefHeight="275.0" prefWidth="57.0" />
     </children>
 </AnchorPane>
