@@ -57,7 +57,7 @@ public class OrderRepository implements Crudable {
                         queryResult.getInt("id"),
                         queryResult.getInt("guest_id"),
                         queryResult.getInt("event_id"),
-                        queryResult.getInt("order_status_id")
+                        queryResult.getInt("status_id")
                 );
 
                 return order;
