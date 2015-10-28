@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="757.0" prefWidth="1087.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="757.0" prefWidth="1087.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IPSEN2.controllers.order.SelectGuestController">
    <children>
        <ImageView fitHeight="678.0" fitWidth="948.0" layoutX="87.0" layoutY="53.0" pickOnBounds="true">
          <image>
@@ -18,19 +18,10 @@
         <columns>
           <TableColumn fx:id="idColumn" editable="false" prefWidth="99.0" sortable="false" text="ID" />
           <TableColumn fx:id="firstNameColumn" editable="false" prefWidth="124.95126342773438" text="Naam" />
-            <TableColumn fx:id="lastNameColumn" prefWidth="325.0416259765625" text="Achternaam" />
-            <TableColumn fx:id="emailColumn" editable="false" prefWidth="258.9583740234375" sortable="false" text="Email" />
+            <TableColumn fx:id="lastNameColumn" prefWidth="176.46273803710938" text="Achternaam" />
+            <TableColumn fx:id="emailColumn" editable="false" prefWidth="340.5372314453125" sortable="false" text="Email" />
         </columns>
       </TableView>
-      <Pane layoutX="894.0" layoutY="619.0" prefHeight="68.0" prefWidth="58.0" styleClass="buttonWithoutHover">
-         <children>
-            <ImageView fitHeight="59.0" fitWidth="57.0" layoutX="3.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/nextButton.png" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
       <Label layoutX="162.0" layoutY="105.0" text="Selecteer een gast">
          <font>
             <Font size="24.0" />
