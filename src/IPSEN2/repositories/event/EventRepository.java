@@ -23,7 +23,7 @@ public class EventRepository implements Crudable {
     }
 
     public ArrayList<Event> all() {
-        ArrayList<Event> events = new ArrayList<Event>();
+        ArrayList<Event> eventList = new ArrayList<>();
         ResultSet queryResult = databaseInstance.select("event");
         try {
             while(queryResult.next()) {
@@ -33,12 +33,12 @@ public class EventRepository implements Crudable {
                 event.setName(queryResult.getString("name"));
                 event.setStartDate(queryResult.getDate("start_date"));
                 event.setEndDate(queryResult.getDate("end_date"));
-                events.add(event);
+                eventList.add(event);
             }
         } catch(SQLException sqlException) {
             sqlException.printStackTrace();
         }
-        return events;
+        return eventList;
     }
 
     public Event find(int id) {

@@ -1,5 +1,7 @@
 package IPSEN2.models.wine;
 
+import javafx.beans.property.SimpleBooleanProperty;
+
 public class Wine {
     private int wineID;
     private WineType type;
@@ -11,9 +13,15 @@ public class Wine {
     private double price;
     public WineMerchant merchant;
     private String typeName;
+
+    private SimpleBooleanProperty selected;
+
+
     public Wine() {
+        selected = new SimpleBooleanProperty(false);
 
     }
+
 
     public Wine (int wineID, int typeID, String country, String name, String region, int year, double purchasePrice, double price) {
         this.wineID = wineID;
@@ -24,6 +32,7 @@ public class Wine {
         this.year = year;
         this.purchasePrice = purchasePrice;
         this.price = price;
+        selected = new SimpleBooleanProperty(false);
     }
 
     public void addWine() {
@@ -40,7 +49,7 @@ public class Wine {
 
     //GETTERS
     public int getWineID() {
-        return wineID -1;
+        return wineID;
     }
 
     public WineType getType() {
@@ -78,6 +87,11 @@ public class Wine {
     public String getTypeName() {
         return this.type.getName();
     }
+
+    public boolean getSelected() {
+        return selected.get();
+    }
+
 
     //SETTERS
     public void setWineID(int wineID) {
@@ -118,6 +132,8 @@ public class Wine {
     public void setRegion(String region) {
         this.region = region;
     }
+
+    public void setSelected(boolean selected) {this.selected.set(selected);}
 
 
 }

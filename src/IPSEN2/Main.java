@@ -1,13 +1,9 @@
 package IPSEN2;
 
-import IPSEN2.generators.csv.ExportCSV;
-import IPSEN2.generators.csv.ImportCSV;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
-import java.util.ArrayList;
 
 
 /**
@@ -18,11 +14,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(ContentLoader.loadMainFrame());
         scene.getStylesheets().add((ContentLoader.STYLE));
-
         primaryStage.setScene(scene);
+
         primaryStage.show();
 
     }

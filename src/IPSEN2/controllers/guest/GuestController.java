@@ -48,14 +48,14 @@ public class GuestController extends ContentLoader implements Initializable{
 
     public void handleAddButton() throws IOException {
         keepCurrentData = false;
-       addContent(new AddGuestController(), EDIT_GUEST_DIALOG);
+        addContent(new AddGuestController(), EDIT_GUEST_DIALOG);
     }
 
     public void handleRemoveButton() {
 
 
         if (selectedRows.size() != 0) {
-              selected = false;
+            selected = false;
 
             for (Integer row : selectedRows) {
                 //if (guestData.get(selectedRows.indexOf(row)).getAttended()) {
@@ -234,5 +234,5 @@ public class GuestController extends ContentLoader implements Initializable{
         createSelectAllCheckBox();
 
         table_view.setPlaceholder(new Label("Er is geen content om te weergeven"));
-        }
     }
+}

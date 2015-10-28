@@ -1,11 +1,12 @@
 package IPSEN2.controllers.guest;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.services.attendee.AttendeeService;
 import IPSEN2.services.guest.GuestService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
@@ -18,6 +19,7 @@ import java.util.ResourceBundle;
 public class AddGuestController extends ContentLoader implements Initializable {
 
     private GuestService service;
+    private AttendeeService attendeeService;
 
     @FXML private RadioButton genderRadioM;
     @FXML private RadioButton genderRadioF;
@@ -49,6 +51,7 @@ public class AddGuestController extends ContentLoader implements Initializable {
     private String city;
     //private String referralMemberTextField;
     private HashMap data;
+    private HashMap attendeeData;
 
     @FXML
     public void handleCancelButton() {
@@ -84,6 +87,7 @@ public class AddGuestController extends ContentLoader implements Initializable {
         }
 
         data = new HashMap();
+        attendeeData = new HashMap();
 
         data.put("firstname", firstName);
         data.put("prefix", prefix);
@@ -99,12 +103,14 @@ public class AddGuestController extends ContentLoader implements Initializable {
         data.put("referralName", referral);
         service.subscribe(data);
 
+
         addContent(GUESTS);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         service = new GuestService();
+
 
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
