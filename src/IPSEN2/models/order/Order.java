@@ -69,7 +69,7 @@ public class Order {
         this.wineOrders = wineOrders;
         double total = 0.0;
         for(WineOrder order: wineOrders) {
-            //total += order.getAmount() * order.getWine().getPrice();
+            total += order.getAmount() * order.getWine().getPrice();
         }
         this.totalAmount = total;
     }

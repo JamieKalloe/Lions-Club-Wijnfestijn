@@ -1,5 +1,6 @@
 package IPSEN2.services.order;
 
+import IPSEN2.generators.pdf.InvoiceGenerator;
 import IPSEN2.models.order.Order;
 import IPSEN2.models.order.OrderStatus;
 import IPSEN2.repositories.order.OrderRepository;
@@ -66,7 +67,7 @@ public class OrderService {
         order.setGuest(guestService.find(order.getGuest().getId()));
         order.setEvent(eventService.find(order.getEvent().getId()));
         order.setStatus(orderStatusService.find(order.getStatus().getId()));
-
+        order.setWineOrders(wineOrderService.allForOrder(order.getId()));
         //order.setWines(wineService.allWithOrderId(order.getId()));
 
         return order;
@@ -90,6 +91,11 @@ public class OrderService {
             }
             // Add status
             // Add guest
+            try {
+                new InvoiceGenerator().generate(this.find(id));
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
 
             return id;
         }
