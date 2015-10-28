@@ -2,9 +2,7 @@ package IPSEN2.services.order;
 
 import IPSEN2.generators.pdf.InvoiceGenerator;
 import IPSEN2.models.order.Order;
-import IPSEN2.models.order.OrderStatus;
 import IPSEN2.repositories.order.OrderRepository;
-import IPSEN2.repositories.order.OrderStatusRepository;
 import IPSEN2.services.event.EventService;
 import IPSEN2.services.guest.GuestService;
 import IPSEN2.services.wine.WineService;
@@ -76,6 +74,7 @@ public class OrderService {
     public int add(HashMap data)
     {
     //        boolean isValid = this.validator.validate(data);
+        System.out.print(data.get("wineIDs"));
         boolean isValid = true;
         if(isValid)
         {

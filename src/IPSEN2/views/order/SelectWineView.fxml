@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="757.0" prefWidth="1087.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="678.0" fitWidth="948.0" layoutX="87.0" layoutY="53.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../images/GastenAchtergrond.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="table_view" layoutX="151.0" layoutY="120.0" prefHeight="460.0" prefWidth="712.0" styleClass="table-view" stylesheets="@../../styles/style.css">
+         <columns>
+            <TableColumn fx:id="checkBoxColumn" prefWidth="51.0" />
+            <TableColumn fx:id="wineIdColumn" prefWidth="45.82844543457031" styleClass="table-view" text="id" />
+            <TableColumn fx:id="wineNameColumn" prefWidth="101.74020385742188" styleClass="table-view" text="Naam" />
+            <TableColumn fx:id="countryColumn" prefWidth="107.25973510742188" text="Land" />
+            <TableColumn fx:id="regionColumn" prefWidth="117.54544067382812" styleClass="table-view" text="Streek" />
+            <TableColumn fx:id="typeColumn" prefWidth="120.45452880859375" styleClass="table-view" text="Type" />
+            <TableColumn fx:id="yearColumn" prefWidth="122.23382568359375" styleClass="table-view" text="Jaar" />
+            <TableColumn fx:id="priceColumn" prefWidth="143.3505859375" text="Prijs" />
+         </columns>
+      </TableView>
+      <Pane fx:id="cancelButton" layoutX="616.0" layoutY="633.0" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">
+         <children>
+            <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/AnnulerenButton.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="submitButton" layoutX="766.0" layoutY="633.0" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">
+         <children>
+            <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/GereedButton.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
