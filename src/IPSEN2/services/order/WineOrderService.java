@@ -34,9 +34,7 @@ public class WineOrderService {
     public ArrayList<WineOrder> allForOrder(int orderID) {
         ArrayList<WineOrder> wineOrders = repository.find(orderID);
         for(WineOrder wineOrder : wineOrders) {
-            if(wineOrder.getWine().checkIfOnlyID()) {
-                wineOrder.setWine(wineService.find(wineOrder.getWine().getWineID()));
-            }
+            wineOrder.setWine(wineService.find(wineOrder.getWine().getWineID()));
         }
         return wineOrders;
     }
