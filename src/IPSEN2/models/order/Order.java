@@ -1,5 +1,6 @@
 package IPSEN2.models.order;
 
+import IPSEN2.generators.pdf.InvoiceGenerator;
 import IPSEN2.models.event.Event;
 import IPSEN2.models.guest.Guest;
 
@@ -8,6 +9,8 @@ import java.util.ArrayList;
 public class Order {
 
     private int id;
+
+//    private String invoice;
 
     private Guest guest;
 
@@ -18,6 +21,8 @@ public class Order {
     private ArrayList<WineOrder> wineOrders;
 
     private double totalAmount;
+
+    private String invoicePath;
 
     public Order (int id, int guestId, int eventId, int orderStatusId)
     {
@@ -53,6 +58,10 @@ public class Order {
         return totalAmount;
     }
 
+    public String getInvoicePath() {
+        return invoicePath;
+    }
+
     public void setGuest(Guest guest) {
         this.guest = guest;
     }
@@ -76,5 +85,9 @@ public class Order {
 
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public void setInvoicePath(String invoicePath) {
+        this.invoicePath = invoicePath;
     }
 }

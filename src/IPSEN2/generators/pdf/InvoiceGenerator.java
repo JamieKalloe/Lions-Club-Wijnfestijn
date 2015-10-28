@@ -18,12 +18,15 @@ import java.util.Date;
  */
 public class InvoiceGenerator {
 
-    public void generate(Order order) throws DocumentException, IOException{
+    public String generate(Order order) throws DocumentException, IOException{
         Date invoiceDate = new Date();
         Guest guest = order.getGuest();
+        guest.setOrder(order);
         Document document = new Document();
         Font defaultFont = new Font(Font.FontFamily.TIMES_ROMAN, 12);
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(""+new SimpleDateFormat("YYYY-MM-dd").format(invoiceDate)+" - "+order.getId()+".pdf"));
+        String filePath = ""+new SimpleDateFormat("YYYY-MM-dd").format(invoiceDate)+" - "+order.getId()+".pdf";
+        order.setInvoicePath(filePath);
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
         document.setMargins(30, 30, 30, 65);
         writer.setPageEvent(new InvoiceEventListener());
         document.open();
@@ -117,5 +120,6 @@ public class InvoiceGenerator {
 
         document.close();
         System.out.println("Succesfully generated invoice: " + order.getId()+" on Date: "+new SimpleDateFormat("dd MMMM YYYY").format(invoiceDate));
+        return filePath;
     }
 }

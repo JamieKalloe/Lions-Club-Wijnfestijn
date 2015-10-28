@@ -26,13 +26,13 @@ public class MailFactory {
                 return new Mail(guest.getEmail(), "Bedankt voor uw deelname! - Lions Club", this.getMailContent(MailType.THANK, guest));
 
             case REMINDER:
-                return new Mail(guest.getEmail(), "Uw factuur is nog niet voldaan! - Lions Club", this.getMailContent(MailType.REMINDER, guest), getFilePath("src/IPSEN2/resources/REMINDER.txt"));
+                return new Mail(guest.getEmail(), "Uw factuur is nog niet voldaan! - Lions Club", this.getMailContent(MailType.REMINDER, guest), getFilePath(guest.getOrder().getInvoicePath()));
 
             case INVOICE:
-                return new Mail(guest.getEmail(), "Uw factuur - Lions Club", this.getMailContent(MailType.INVOICE, guest), getFilePath("src/IPSEN2/resources/REMINDER.txt"));
+                return new Mail(guest.getEmail(), "Uw factuur - Lions Club", this.getMailContent(MailType.INVOICE, guest), getFilePath(guest.getOrder().getInvoicePath()));
 
             case MERCHANT:
-                return new Mail(guest.getEmail(), "Wijn bestelling - Lions Club", this.getMailContent(MailType.MERCHANT, guest), getFilePath("src/IPSEN2/resources/REMINDER.txt"));
+                return new Mail(guest.getEmail(), "Wijn bestelling - Lions Club", this.getMailContent(MailType.MERCHANT, guest), getFilePath(guest.getOrder().getInvoicePath()));
 
             case EVENT:
                 return new Mail(guest.getEmail(), "Het evenement begint binnenkort weer! - Lions Club", this.getMailContent(MailType.EVENT, guest));
