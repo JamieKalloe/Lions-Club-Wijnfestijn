@@ -28,6 +28,7 @@ public abstract class ContentLoader {
     public static final String EDIT_WINE_DIALOG = "/IPSEN2/views/wine/WineDialogView.fxml";
     public static final String EDIT_ORDER_DIALOG = "/IPSEN2/views/order/OrderDialogView.fxml";
     public static final String EDIT_EVENT_DIALOG = "/IPSEN2/views/event/EventDialogView.fxml";
+    public static final String SELECT_GUEST_DIALOG = "/IPSEN2/views/order/SelectGuestView.fxml";
 
 
     public static final String ADD_WINE = "/IPSEN2/views/order/WineIDAndQuantityContainer.fxml";

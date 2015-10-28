@@ -1,9 +1,7 @@
 package IPSEN2.controllers.order;
 
 import IPSEN2.ContentLoader;
-import IPSEN2.models.guest.Guest;
 import IPSEN2.models.order.Order;
-import IPSEN2.models.order.OrderStatus;
 import IPSEN2.services.order.OrderService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -38,7 +36,7 @@ public class OrderController extends ContentLoader implements Initializable{
    }
 
    public void handleAddButton() throws IOException {
-      addContent(new AddOrderController(), EDIT_ORDER_DIALOG);
+      addContent(SELECT_GUEST_DIALOG);
    }
 
    public void handleEditButton() throws IOException {
