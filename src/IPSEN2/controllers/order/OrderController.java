@@ -4,13 +4,13 @@ import IPSEN2.ContentLoader;
 import IPSEN2.models.order.Order;
 import IPSEN2.services.order.OrderService;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 
 public class OrderController extends ContentLoader implements Initializable{
 
+   private int selectedGuestID;
    private int selectedOrderID;
 
    @FXML
@@ -40,13 +41,25 @@ public class OrderController extends ContentLoader implements Initializable{
    }
 
    public void handleEditButton() throws IOException {
-      if (selectedOrderID != 0) {
+      if (selectedGuestID != 0) {
          addContent(new EditOrderController(), EDIT_ORDER_DIALOG);
       }
    }
 
    public void handleRemoveButton() {
 
+   }
+   private void setOnTableRowClickedListener() {
+      table_view.setRowFactory(table -> {
+         TableRow<Order> row = new TableRow<>();
+         row.getStyleClass().add("pane");
+         row.setOnMouseClicked(event -> {
+            selectedGuestID = row.getTableView().getSelectionModel().getSelectedItem().getGuest().getId();
+            selectedOrderID = row.getTableView().getSelectionModel().getSelectedItem().getId();
+            addContent(new AddOrderController(selectedGuestID, selectedOrderID), EDIT_ORDER_DIALOG);
+         });
+         return row;
+      });
    }
 
    @Override
@@ -56,6 +69,8 @@ public class OrderController extends ContentLoader implements Initializable{
       OrderService service = new OrderService();
 
       table_view.setItems(FXCollections.observableArrayList(service.all()));
+
+      setOnTableRowClickedListener();
 
       idColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("id"));
       lastNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order, String>, ObservableValue<String>>() {
@@ -78,18 +93,6 @@ public class OrderController extends ContentLoader implements Initializable{
 
    }
 
-   private class RowSelectChangeListener implements ChangeListener {
 
-      @Override
-      public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-//         try {
-//            selectedGuestID = table_view.getSelectionModel().getSelectedItem().getId();
-//            System.out.println(selectedGuestID);} catch (NullPointerException e){
-//            System.out.print("No items in table to select");
-//            selectedGuestID = 0;
-//         }
-
-      }
-   }
 
 }
