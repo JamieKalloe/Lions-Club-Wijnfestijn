@@ -18,7 +18,7 @@ public class MailFactory {
 
         /*
             TODO: Informatie van het event moet vanuit guest bereikbaar zijn.
-            TODO: Order moet vanuit guest bereikbaar zijn (vanwege de bijlage).
+            TODO: excel lijst van wijnen moeten naar de merchant worden verstuurd (export csv).
          */
 
         switch(mailType) {
@@ -32,7 +32,7 @@ public class MailFactory {
                 return new Mail(guest.getEmail(), "Uw factuur - Lions Club", this.getMailContent(MailType.INVOICE, guest), getFilePath(guest.getOrder().getInvoicePath()));
 
             case MERCHANT:
-                return new Mail(guest.getEmail(), "Wijn bestelling - Lions Club", this.getMailContent(MailType.MERCHANT, guest), getFilePath(guest.getOrder().getInvoicePath()));
+                return new Mail(guest.getEmail(), "Wijn bestelling - Lions Club", this.getMailContent(MailType.MERCHANT, guest), getFilePath("src/IPSEN2/resources/REMINDER.txt"));
 
             case EVENT:
                 return new Mail(guest.getEmail(), "Het evenement begint binnenkort weer! - Lions Club", this.getMailContent(MailType.EVENT, guest));
@@ -90,8 +90,8 @@ public class MailFactory {
                     content = String.format(content,
                             getSalutation(guest.getGender()),
                             guest.getLastName(),
-                            "Wijnfestijn 2015",
-                            "Lions Club Oegstgeest");
+                            guest.getOrder().getEvent().getName(),
+                            guest.getOrder().getEvent().getName());
                     break;
 
                 case MERCHANT:
@@ -122,13 +122,13 @@ public class MailFactory {
     }
 
     private String getSalutation(String gender) {
-        String aanhef = "";
+        String salutation;
         if(gender.toUpperCase().equals("M")) {
-            aanhef = "Meneer";
+            salutation = "Meneer";
         } else {
-            aanhef = "Mevrouw";
+            salutation = "Mevrouw";
         }
 
-        return aanhef;
+        return salutation;
     }
 }
