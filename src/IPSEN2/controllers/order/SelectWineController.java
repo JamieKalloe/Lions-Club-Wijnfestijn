@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
@@ -58,21 +57,6 @@ public class SelectWineController extends ContentLoader implements Initializable
 
     public void handleCancelButton() {
         addContent(new AddOrderController(selectedGuestID), EDIT_ORDER_DIALOG);
-    }
-
-    private void setOnTableRowClickedListener() {
-        table_view.setRowFactory(table -> {
-            TableRow<Wine> row = new TableRow<>();
-            row.getStyleClass().add("pane");
-            row.setOnMouseClicked(event -> {
-                selectedWineID = row.getTableView().getSelectionModel().
-                        getSelectedItem().getWineID();
-
-                    addContent(new AddOrderController(selectedGuestID, selectedRows), EDIT_ORDER_DIALOG);
-
-            });
-            return row;
-        });
     }
 
     private Callback createCheckBoxCellCallBack() {
@@ -124,6 +108,5 @@ public class SelectWineController extends ContentLoader implements Initializable
         wineData = FXCollections.observableArrayList(wineService.all());
         wineData.forEach(wine -> wine.setSelected(false));
         table_view.setItems(wineData);
-        setOnTableRowClickedListener();
     }
 }
