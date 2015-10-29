@@ -85,7 +85,7 @@ public class OrderRepository implements Crudable {
     public void update(int id, HashMap data)
     {
         HashMap databaseData = new HashMap();
-
+        System.out.println("update method in OrderRepository");
         databaseData.put("guest_id", Integer.parseInt(data.get("guestId").toString()));
         databaseData.put("event_id", Integer.parseInt(data.get("eventId").toString()));
         databaseData.put("status_id", Integer.parseInt(data.get("orderStatusId").toString()));

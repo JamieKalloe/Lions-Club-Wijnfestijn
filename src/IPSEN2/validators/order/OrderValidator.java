@@ -10,7 +10,6 @@ import java.util.HashMap;
  */
 public class OrderValidator extends Validator implements Validatable {
     public boolean validate(HashMap data) {
-        return validateEmail(data.get("email").toString()) &&
-                validateGender(data.get("gender").toString());
+        return true;
     }
 }

@@ -6,6 +6,7 @@ import IPSEN2.models.order.WineOrder;
 import IPSEN2.services.guest.GuestService;
 import IPSEN2.services.order.OrderService;
 import IPSEN2.services.order.WineOrderService;
+import IPSEN2.services.wine.WineService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,13 +16,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 /**
@@ -29,36 +30,35 @@ import java.util.ResourceBundle;
  */
 public class AddOrderController extends ContentLoader implements Initializable {
 
-    @FXML
-    private AnchorPane wineIDandQuantityWrapper, deleteButtonWrapper;
 
-    @FXML
-    private Pane cancelButton, submitButton, addWineButton;
-
+    @FXML private Pane cancelButton, submitButton, addWineButton;
     @FXML private TableView<WineOrder> table_view;
     @FXML private TableColumn wineNameColumn;
     @FXML private TableColumn quantityColumn;
     @FXML private TableColumn deleteButtonColumn;
 
-    private ArrayList<Pane> wineAndQuantityList;
-    private ArrayList<ImageView> deleteButtonList;
     private static ObservableList<WineOrder> wineOrderData;
 
-    private ArrayList<TextField> wineIDTextFieldList, wineQuantityTextFieldList;
     @FXML
     private Label customerNameLabel;
 
     private double yPosition;
     private int selectedGuestID;
+    private int selectedOrderID;
     private ArrayList<String> selectedWineIDs;
     private GuestService guestService;
     private WineOrderService wineOrderService;
-    private  OrderService orderService;
+    private OrderService orderService;
 
     private Guest guest;
 
     public AddOrderController(int selectedGuestID) {
         this.selectedGuestID = selectedGuestID;
+    }
+
+    public AddOrderController(int selectedGuestID, int selectedOrderID) {
+        this.selectedGuestID = selectedGuestID;
+        this.selectedOrderID = selectedOrderID;
     }
 
     public AddOrderController(int selectedGuestID, ArrayList<String> selectedWineIDs) {
@@ -67,26 +67,37 @@ public class AddOrderController extends ContentLoader implements Initializable {
     }
 
     public void handleCancelButton() {
+        wineOrderData = null;
         addContent(ORDER);
     }
 
     public void handleSubmitButton() {
-//        HashMap data = new HashMap();
-//        data.put("guestId", selectedGuestID);
-//        data.put("eventId", 1);
-//        data.put("orderStatusId", 1);
-//        ArrayList<String> wineIDs = new ArrayList<String>();
-//        ArrayList<String> amounts = new ArrayList<String>();
-//        wineAndQuantityList.forEach(row -> {
-//            int index = wineAndQuantityList.indexOf(row);
-//            wineIDs.add(wineIDTextFieldList.get(index).getText());
-//            amounts.add(wineQuantityTextFieldList.get(index).getText());
-//            System.out.println("wine ID: " + wineIDTextFieldList.get(index).getText());
-//            System.out.println("Quantity: " + wineQuantityTextFieldList.get(index).getText());
-//        });
-//        data.put("wineIDs", wineIDs);
-//        data.put("amounts", amounts);
-//        new OrderService().add(data);
+        HashMap orderData = new HashMap();
+        ArrayList<String> amounts= new ArrayList<>();
+        if (wineOrderData.size() != 0) {
+            if (selectedWineIDs == null) {
+                selectedWineIDs = new ArrayList<>();
+            }
+            selectedWineIDs.clear();
+            wineOrderData.forEach(wineOrder -> {
+                amounts.add(wineOrder.getAmount() + "");
+
+
+                selectedWineIDs.add(wineOrder.getWine().getWineID() + "");
+            });
+            orderData.put("guestId", selectedGuestID);
+            orderData.put("eventId", eventId);
+            orderData.put("orderStatusId", "2");
+            orderData.put("wineIDs", selectedWineIDs);
+            orderData.put("amounts", amounts);
+            if (selectedOrderID != 0) {
+                orderService.edit(selectedOrderID, orderData);
+            } else {
+                orderService.add(orderData);
+            }
+
+        }
+        wineOrderData = null;
         addContent(ORDER);
     }
       public void handleAddWineButton(){
@@ -103,9 +114,11 @@ public class AddOrderController extends ContentLoader implements Initializable {
                 textField.setText(cellDataFeatures.getValue().getAmount() + "");
                 textField.textProperty().addListener((ObservableValue<? extends String> observableValue,
                                                       String oldValue, String newValue) -> {
-                    cellDataFeatures.getValue().setAmount(Integer.parseInt(newValue));
 
-
+                    if (!newValue.equals("")) {
+                        cellDataFeatures.getValue().setAmount(Integer.parseInt(newValue));
+                        System.out.println("amount: " + cellDataFeatures.getValue().getAmount());
+                    }
                 });
                 return new SimpleObjectProperty(textField);
             }
@@ -122,10 +135,17 @@ public class AddOrderController extends ContentLoader implements Initializable {
                 deleteButton.getStyleClass().addAll( "deleteButton", "buttonWithoutHover");
                 deleteButton.setGraphic(new ImageView("/IPSEN2/images/deleteIcon.png"));
 
+                int wineID = cellDataFeatures.getValue().getWine().getWineID();
+
                 deleteButton.setOnAction(event -> {
-                    wineOrderService.delete(cellDataFeatures.getValue().getOrderID(), cellDataFeatures.getValue().getWine().getWineID());
-                    wineOrderData = FXCollections.observableArrayList(wineOrderService.
-                            allForOrder((orderService.all().size())));
+                    for( Iterator<WineOrder> iterator = wineOrderData.iterator(); iterator.hasNext() ; )
+                    {
+                        WineOrder wineOrder = iterator.next();
+                        if(wineOrder.getWine().getWineID() == wineID)
+                        {
+                            iterator.remove();
+                        }
+                    }
                     table_view.setItems(wineOrderData);
                 });
 
@@ -143,8 +163,21 @@ public class AddOrderController extends ContentLoader implements Initializable {
         guest = guestService.find(selectedGuestID);
         wineOrderService = new WineOrderService();
         orderService= new OrderService();
+        WineService wineService = new WineService();
 
 
+
+        if (wineOrderData == null) {
+            wineOrderData = FXCollections.observableArrayList(new ArrayList<>());
+        }
+
+        if (selectedOrderID != 0) {
+            System.out.println("selectedOrder id is not null");
+            wineOrderData = FXCollections.observableArrayList(wineOrderService.allForOrder(selectedOrderID));
+            table_view.setItems(FXCollections.observableArrayList(wineOrderData));
+        } else{
+            table_view.setItems(wineOrderData);
+        }
         customerNameLabel.setText(guest.getFirstName() + " " + guest.getLastName());
 
         addWineButton.setOnMouseClicked(event -> handleAddWineButton());
@@ -152,56 +185,20 @@ public class AddOrderController extends ContentLoader implements Initializable {
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
 
+        wineNameColumn.setCellValueFactory(new PropertyValueFactory<WineOrder, String>("name"));
+        quantityColumn.setCellValueFactory(createTextFieldCellCallBack());
+        deleteButtonColumn.setCellValueFactory(createDeleteButtonCellCallBack());
 
         if (selectedWineIDs != null) {
-            wineNameColumn.setCellValueFactory(new PropertyValueFactory<WineOrder, String>("name"));
-            quantityColumn.setCellValueFactory(createTextFieldCellCallBack());
-            deleteButtonColumn.setCellValueFactory(createDeleteButtonCellCallBack());
 
-            HashMap orderData = new HashMap();
-
-            ArrayList<String> amounts = new ArrayList<>();
-
-            selectedWineIDs.forEach(selectedWineID -> amounts.add("1"));
-            orderData.put("guestId", selectedGuestID);
-            orderData.put("eventId", eventId);
-            orderData.put("orderStatusId", "2");
-            orderData.put("wineIDs", selectedWineIDs);
-            orderData.put("amounts", amounts);
-            orderService.add(orderData);
+            selectedWineIDs.forEach(selectedWineID -> {
+                WineOrder wineOrder = new WineOrder(Integer.parseInt(selectedWineID), 1);
+                wineOrder.setWine(wineService.find(Integer.parseInt(selectedWineID)));
+                wineOrderData.add(wineOrder);
+            });
         }
 
 
-        wineOrderData = FXCollections.observableArrayList(wineOrderService.
-                allForOrder((orderService.all().size())));
-        table_view.setItems(wineOrderData);
 
-//        addWineButton.setOnMouseClicked(event -> {
-//            try {
-//                handleAddWineButton();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        });
-//
-//        deleteButtonList = new ArrayList<>();
-//        wineAndQuantityList = new ArrayList<>();
-//        wineIDTextFieldList = new ArrayList<>();
-//        wineQuantityTextFieldList = new ArrayList<>();
-//
-//        try {
-//           createWineIDAndQuanityContainer();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        try {
-//            createDeleteButton();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//        });
     }
 }
