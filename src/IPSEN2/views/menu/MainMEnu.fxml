@@ -44,13 +44,9 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane layoutX="427.0" layoutY="337.0" onMouseClicked="#handleButton" styleClass="buttonWithoutHover" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Pane layoutX="427.0" layoutY="337.0" onMouseClicked="#handleButton" styleClass="buttonWithoutHover" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <ImageView fitHeight="193.0" fitWidth="193.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/HandleidingShortcut.png" />
-                     </image>
-                  </ImageView>
+                  <ImageView fitHeight="193.0" fitWidth="193.0" pickOnBounds="true" preserveRatio="true" visible="false" />
                </children>
             </Pane>
             <Pane fx:id="gastenButton" layoutX="148.0" layoutY="115.0" onMouseClicked="#handleButton" styleClass="buttonWithoutHover">
