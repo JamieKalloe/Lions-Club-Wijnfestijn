@@ -4,8 +4,6 @@ import IPSEN2.models.wine.Wine;
 import IPSEN2.repositories.wine.WineRepository;
 import IPSEN2.repositories.wine.WineTypeRepository;
 import IPSEN2.services.referral.ReferralService;
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -31,12 +29,9 @@ public class WineService {
     public ArrayList<Wine> all() {
         ArrayList<Wine> wineList = this.repository.all();
 
-
         for(Wine wine : wineList) {
             wine.setType(this.wineTypeRepository.find(wine.getType().getId()));
         }
-
-
 
         return wineList;
     }

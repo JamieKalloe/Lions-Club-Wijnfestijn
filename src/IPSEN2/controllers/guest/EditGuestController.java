@@ -75,7 +75,7 @@ public class EditGuestController extends ContentLoader implements Initializable{
             gender = "F";
         }
 
-        // Other values are being copied from textBoxes
+        // Other values are being copied from textBoxes to variables
         firstName = firstNameTextField.getText();
         prefix = prefixTextField.getText();
         lastName = lastNameTextField.getText();
@@ -88,20 +88,15 @@ public class EditGuestController extends ContentLoader implements Initializable{
 
         // Insert the right referral type in the referral variable
         if (referralMemberRadio.isSelected()) {
-            //referral = referralMemberRadio.getText();
             referral = 1;
         } else if (referralFriendRadio.isSelected()) {
-            //referral = referralFriendRadio.getText();
             referral = 2;
         } else if (referralAdRadio.isSelected()) {
-            //referral = referralAdRadio.getText();
             referral = 3;
         }
 
-        System.out.println("Ref given: " + referral);
-
+        // Create en fill the data HashMap with inserted data.
         data = new HashMap();
-
         data.put("firstname", firstName);
         data.put("prefix", prefix);
         data.put("lastname", lastName);
@@ -114,15 +109,12 @@ public class EditGuestController extends ContentLoader implements Initializable{
         data.put("country", "Nederland");
         data.put("city", city);
         data.put("referralName", referral);
-            service.edit(selectedGuestID, data);
-            addContent(GUESTS);
 
-           /* Stage dialogStage = new Stage();
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.setScene(new Scene(VBoxBuilder.create().
-                    children(new Text("Hi"), new Button("Ok.")).
-                    alignment(Pos.CENTER).padding(new Insets(5)).build()));
-            dialogStage.show();*/
+            // Give the guest-service the HashMap and GuestID
+            service.edit(selectedGuestID, data);
+
+            // Return to the main Guests view
+            addContent(GUESTS);
 
     }
 
@@ -131,9 +123,7 @@ public class EditGuestController extends ContentLoader implements Initializable{
 
         service = new GuestService();
 
-            Guest guest = service.find(selectedGuestID);
-
-            System.out.println("Ref ID: " + guest.getReferral().getReferralID());
+            Guest guest = service.find(selectedGuestID);4
 
             firstNameTextField.setText(guest.getFirstName());
             prefixTextField.setText(guest.getPrefix());
