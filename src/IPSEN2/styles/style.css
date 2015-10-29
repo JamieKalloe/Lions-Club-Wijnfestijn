@@ -110,5 +110,12 @@
     -fx-alignment: center;
 }
 
+.deleteButton {
+    -fx-cursor: hand;
+
+    -fx-background-color: transparent;
+    /*-fx-background-image: url("../images/WineBackground.jpg");*/
+}
+
 
 

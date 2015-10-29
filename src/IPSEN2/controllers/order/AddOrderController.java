@@ -6,18 +6,18 @@ import IPSEN2.models.order.WineOrder;
 import IPSEN2.services.guest.GuestService;
 import IPSEN2.services.order.OrderService;
 import IPSEN2.services.order.WineOrderService;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -38,6 +38,7 @@ public class AddOrderController extends ContentLoader implements Initializable {
     @FXML private TableView<WineOrder> table_view;
     @FXML private TableColumn wineNameColumn;
     @FXML private TableColumn quantityColumn;
+    @FXML private TableColumn deleteButtonColumn;
 
     private ArrayList<Pane> wineAndQuantityList;
     private ArrayList<ImageView> deleteButtonList;
@@ -91,86 +92,49 @@ public class AddOrderController extends ContentLoader implements Initializable {
       public void handleAddWineButton(){
         addContent( new SelectWineController(selectedGuestID), SELECT_WINE_DIALOG);
     }
-/*
-  private void createWineIDAndQuanityContainer() throws IOException{
-        Pane wineIDAndQuantityContainer = new Pane();
-        TextField wineIDTextField = new TextField();
-        Label wineInfoLabel = new Label("Wijnnaam ,soort en streek");
-        TextField wineQuantityTextField = new TextField();
-
-        wineIDAndQuantityContainer.setPrefWidth(611);
-        wineIDTextField.setPrefWidth(167);
-        wineQuantityTextField.setPrefWidth(41);
 
 
-        wineInfoLabel.setTextFill(Paint.valueOf("#999999"));
-        wineInfoLabel.setLayoutX(252);
-        wineInfoLabel.setFont(new Font("Roboto", 18));
-        wineQuantityTextField.setLayoutX(570);
+    private Callback createTextFieldCellCallBack() {
+        Callback textFieldCellCallBack = new Callback<TableColumn.CellDataFeatures<WineOrder, TextField>, ObservableValue<TextField>>() {
 
-        wineIDTextFieldList.add(wineIDTextField);
-        wineQuantityTextFieldList.add(wineQuantityTextField);
+            @Override
+            public ObservableValue<TextField> call(TableColumn.CellDataFeatures<WineOrder, TextField> cellDataFeatures) {
+                TextField textField = new TextField();
+                textField.setText(cellDataFeatures.getValue().getAmount() + "");
+                textField.textProperty().addListener((ObservableValue<? extends String> observableValue,
+                                                      String oldValue, String newValue) -> {
+                    cellDataFeatures.getValue().setAmount(Integer.parseInt(newValue));
 
 
-
-        wineIDAndQuantityContainer.getChildren().addAll(wineIDTextField, wineInfoLabel, wineQuantityTextField);
-
-        if (wineAndQuantityList.size() != 0){
-            yPosition += 50;
-            wineIDAndQuantityContainer.setLayoutY(yPosition);
-        } else {
-            yPosition = 0;
-            wineIDAndQuantityContainer.setLayoutY(yPosition);
-
-        }
-
-        wineIDandQuantityWrapper.getChildren().add(wineIDAndQuantityContainer);
-        wineAndQuantityList.add(wineIDAndQuantityContainer);
+                });
+                return new SimpleObjectProperty(textField);
+            }
+        };
+        return  textFieldCellCallBack;
     }
 
-    private void createDeleteButton() throws IOException{
-        ImageView deleteButton = new ImageView("/IPSEN2/images/DeleteButton2.png");
-        deleteButton.setLayoutY(yPosition);
-        deleteButton.getStyleClass().add("buttonWithoutHover");
+    private Callback createDeleteButtonCellCallBack() {
+        Callback deleteButtonCellCallBack = new Callback<TableColumn.CellDataFeatures<WineOrder, Button>, ObservableValue<Button>>() {
 
-        deleteButtonWrapper.getChildren().add(deleteButton);
-        deleteButtonList.add(deleteButton);
+            @Override
+            public ObservableValue<Button> call(TableColumn.CellDataFeatures<WineOrder, Button> cellDataFeatures) {
+               Button deleteButton = new Button();
+                deleteButton.getStyleClass().addAll( "deleteButton", "buttonWithoutHover");
+                deleteButton.setGraphic(new ImageView("/IPSEN2/images/deleteIcon.png"));
 
-        handleDeleteButton(deleteButton);
+                deleteButton.setOnAction(event -> {
+                    wineOrderService.delete(cellDataFeatures.getValue().getOrderID(), cellDataFeatures.getValue().getWine().getWineID());
+                    wineOrderData = FXCollections.observableArrayList(wineOrderService.
+                            allForOrder((orderService.all().size())));
+                    table_view.setItems(wineOrderData);
+                });
+
+                return new SimpleObjectProperty(deleteButton);
+                }
+
+        };
+        return  deleteButtonCellCallBack;
     }
-
-    private void handleDeleteButton(ImageView deleteButton){
-        deleteButton.setOnMouseClicked(event -> deleteRow(event));
-    } */
-
-
-//    public void deleteRow(MouseEvent event) {
-//        for (int i = 0; i < deleteButtonList.size(); i++) {
-//
-//            if (event.getSource() == deleteButtonList.get(i)) {
-//                repositionListItems(i);
-//                deleteButtonWrapper.getChildren().remove(deleteButtonList.get(i));
-//                wineIDandQuantityWrapper.getChildren().remove(wineAndQuantityList.get(i));
-//                deleteButtonList.remove(i);
-//                wineAndQuantityList.remove(i);
-//                yPosition -= 50;
-//
-//            }
-//        }
-//    }
-
-
-//    private void repositionListItems(int index) {
-//        for (int j = index; j < deleteButtonList.size(); j++) {
-//            if (j > index) {
-//                deleteButtonWrapper.getChildren().get(j).setLayoutY(deleteButtonWrapper.getChildren().get(j).getLayoutY() - 50);
-//                wineIDandQuantityWrapper.getChildren().get(j).setLayoutY(wineIDandQuantityWrapper.getChildren().get(j).getLayoutY() - 50);
-//            }
-//
-//        }
-//
-//        addWineButton.setLayoutY(addWineButton.getLayoutY() - 50);
-//    }
 
 
     @Override
@@ -191,17 +155,17 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
         if (selectedWineIDs != null) {
             wineNameColumn.setCellValueFactory(new PropertyValueFactory<WineOrder, String>("name"));
-            quantityColumn.setCellValueFactory(new PropertyValueFactory<WineOrder, String>("amount"));
+            quantityColumn.setCellValueFactory(createTextFieldCellCallBack());
+            deleteButtonColumn.setCellValueFactory(createDeleteButtonCellCallBack());
 
             HashMap orderData = new HashMap();
 
             ArrayList<String> amounts = new ArrayList<>();
 
-            amounts.add(3 + "");
-            amounts.add(2 + "");
+            selectedWineIDs.forEach(selectedWineID -> amounts.add("1"));
             orderData.put("guestId", selectedGuestID);
             orderData.put("eventId", eventId);
-            orderData.put("orderStatusId", "1");
+            orderData.put("orderStatusId", "2");
             orderData.put("wineIDs", selectedWineIDs);
             orderData.put("amounts", amounts);
             orderService.add(orderData);

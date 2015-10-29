@@ -30,10 +30,11 @@
                   <Font name="Roboto Regular" size="18.0" />
               </font>
           </Label>
-      <TableView fx:id="table_view" layoutX="88.0" layoutY="198.0" prefHeight="283.0" prefWidth="456.0">
+      <TableView fx:id="table_view" layoutX="88.0" layoutY="198.0" prefHeight="283.0" prefWidth="443.0">
         <columns>
-          <TableColumn fx:id="wineNameColumn" prefWidth="315.0" text="Wijn" />
-          <TableColumn fx:id="quantityColumn" prefWidth="144.0" text="Aantal" />
+          <TableColumn fx:id="wineNameColumn" prefWidth="241.0" text="Wijn" />
+          <TableColumn fx:id="quantityColumn" prefWidth="113.0" text="Aantal" />
+            <TableColumn fx:id="deleteButtonColumn" prefWidth="88.0" />
         </columns>
       </TableView>
         <Pane fx:id="cancelButton" layoutX="481.0" layoutY="509.0" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">
