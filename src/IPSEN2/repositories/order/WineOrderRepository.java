@@ -69,6 +69,6 @@ public class WineOrderRepository implements Crudable {
     }
 
     public void delete(int orderID, int wineID) {
-
+        databaseInstance.delete("wine_order", "order_id="+orderID+" AND wine_id="+wineID);
     }
 }
