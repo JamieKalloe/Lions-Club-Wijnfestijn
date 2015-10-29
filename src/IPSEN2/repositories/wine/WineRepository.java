@@ -41,7 +41,7 @@ public class WineRepository implements Crudable {
                 wine.setCountry(queryResult.getString("country"));
                 wine.setRegion(queryResult.getString("region"));
                 wine.setYear(queryResult.getInt("year"));
-                wine.setPurchasePrice(queryResult.getDouble("purchase_price"));
+                wine.setPurchasePrice(0.0);
                 wine.setPrice(queryResult.getDouble("price"));
 
                 wineList.add(wine);
@@ -102,9 +102,9 @@ public class WineRepository implements Crudable {
         databaseData.put("merchant_id", 1);
         databaseData.put("name", data.get("name").toString());
         databaseData.put("country", data.get("country").toString());
-        databaseData.put("region", data.get("region"));
+        //databaseData.put("region", data.get("region"));
         databaseData.put("year", Integer.parseInt(data.get("year").toString()));
-        databaseData.put("purchase_price", 12.0);
+        //databaseData.put("purchase_price", 12.0);
         databaseData.put("price", Double.parseDouble(data.get("price").toString()));
 
         return databaseInstance.insertInto("wine", databaseData);
