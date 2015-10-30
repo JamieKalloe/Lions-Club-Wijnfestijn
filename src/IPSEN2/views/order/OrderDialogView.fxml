@@ -64,5 +64,6 @@
             </ImageView>
          </children>
       </Pane>
+      <ComboBox fx:id="orderStatusComboBox" layoutX="381.0" layoutY="134.0" prefWidth="150.0" />
     </children>
 </AnchorPane>
