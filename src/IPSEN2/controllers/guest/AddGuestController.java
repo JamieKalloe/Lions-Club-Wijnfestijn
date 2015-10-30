@@ -111,7 +111,6 @@ public class AddGuestController extends ContentLoader implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         service = new GuestService();
 
-
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
     }

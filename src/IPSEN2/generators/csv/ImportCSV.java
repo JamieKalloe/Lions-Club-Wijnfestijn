@@ -65,12 +65,6 @@ public class ImportCSV {
     private List<String[]> readCSV(File file) throws IOException {
         CSVReader reader = new CSVReader(new FileReader(file), ';', '"', 1);
         List<String[]> allRows = reader.readAll();
-//        List<String[]> allRows = new ArrayList<>();
-//
-//        String[] nextLine;
-//        while((nextLine = reader.readNext()) != null) {
-//            allRows.add(nextLine);
-//        }
 
         reader.close();
 

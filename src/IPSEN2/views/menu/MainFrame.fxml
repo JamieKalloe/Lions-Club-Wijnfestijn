@@ -109,15 +109,6 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="handleidingNav" layoutY="356.0" onMouseClicked="#handleNavButton" prefHeight="54.0" prefWidth="266.0" styleClass="pane">
-               <children>
-                  <ImageView fitHeight="54.0" fitWidth="186.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/HandleidingNav.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
          </children>
       </AnchorPane>
    </children>
