@@ -18,7 +18,7 @@
             <Font name="Roboto Regular" size="24.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="77.0" layoutY="129.0">
+      <AnchorPane layoutX="77.0" layoutY="129.0" prefHeight="298.0" prefWidth="326.0">
          <children>
             <Label layoutX="53.0" layoutY="3.0" text="Naam">
                <font>
@@ -30,7 +30,7 @@
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="50.0" layoutY="188.0" text="Datum">
+            <Label layoutX="50.0" layoutY="258.0" text="Datum">
                <font>
                   <Font name="Roboto Regular" size="18.0" />
                </font>
@@ -44,8 +44,14 @@
                </font>
             </Label>
             <TextField fx:id="houseNumberTextField" layoutX="158.0" layoutY="138.0" />
-            <DatePicker fx:id="datePicker" layoutX="157.0" layoutY="186.0" prefHeight="27.0" prefWidth="167.0" />
+            <TextField fx:id="zipCodeTextField" layoutX="158.0" layoutY="192.0" />
+            <DatePicker fx:id="datePicker" layoutX="157.0" layoutY="246.0" prefHeight="27.0" prefWidth="167.0" />
             <Label layoutX="50.0" layoutY="51.0" text="Plaats">
+               <font>
+                  <Font name="Roboto Regular" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="24.0" layoutY="193.0" text="Postcode">
                <font>
                   <Font name="Roboto Regular" size="18.0" />
                </font>
