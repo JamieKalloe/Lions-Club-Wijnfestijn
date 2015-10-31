@@ -4,11 +4,9 @@ import IPSEN2.ContentLoader;
 import IPSEN2.models.wine.WineType;
 import IPSEN2.repositories.wine.WineTypeRepository;
 import IPSEN2.services.wine.WineService;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
@@ -24,11 +22,9 @@ public class AddWineController extends ContentLoader implements Initializable {
 
     private WineService service;
 
-    @FXML
-    private SplitMenuButton wineTypeButton;
 
     @FXML
-    private MenuItem typeWit, typeRood, typeRose, typeCava;
+    private RadioButton typeWit, typeRood, typeRose, typeCava;
 
     @FXML
     private Pane cancelButton, submitButton;
@@ -43,8 +39,8 @@ public class AddWineController extends ContentLoader implements Initializable {
     private String country;
     private String region;
     private int year;
-    private int pressedButtonIndex;
     private double price;
+    private int type;
     ArrayList<WineType> types;
 
     private HashMap data;
@@ -54,14 +50,6 @@ public class AddWineController extends ContentLoader implements Initializable {
 
     }
 
-    @FXML
-    public void handleWineTypeButton(ActionEvent event) {
-        Object wineType = event.getSource();
-
-        pressedButtonIndex = wineTypeButton.getItems().indexOf(wineType);
-
-        wineTypeButton.setText(types.get(pressedButtonIndex).getName());
-    }
 
     @FXML
     public void handleCancelButton() {
@@ -75,23 +63,28 @@ public class AddWineController extends ContentLoader implements Initializable {
         year = Integer.parseInt(yearTextField.getText());
         price = Double.parseDouble(priceTextField.getText());
 
+        if (typeWit.isSelected()) {
+            type = 1;
+        } else if (typeRood.isSelected()) {
+            type = 2;
+        } else if (typeCava.isSelected()) {
+            type = 3;
+        } else if (typeRose.isSelected()) {
+            type = 4;
+        }
+
         data = new HashMap();
 
         data.put("name", name);
         data.put("country", country);
-        data.put("region", region);
+        data.put("region", region.replace("'", "''"));
         data.put("year", year);
-        data.put("type_id", pressedButtonIndex);
+        data.put("type_id", type);
         data.put("price", price);
         service.subscribe(data);
 
         addContent(WINE);
     }
-
-    public void handleEditButton() {
-
-    }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

@@ -104,6 +104,7 @@ public class WineRepository implements Crudable {
         databaseData.put("type_id", Integer.parseInt(data.get("type_id").toString()));
         databaseData.put("merchant_id", 1);
         databaseData.put("name", data.get("name").toString());
+        databaseData.put("region", data.get("region").toString());
         databaseData.put("country", data.get("country").toString());
         databaseData.put("year", Integer.parseInt(data.get("year").toString()));
         databaseData.put("price", Double.parseDouble(data.get("price").toString()));
@@ -127,5 +128,5 @@ public class WineRepository implements Crudable {
         databaseInstance.update("wine", id, databaseData);
     }
     // If delete is called, delete the chosen wine based on its ID.
-    public void delete(int id) { databaseInstance.delete("guest", id);}
+    public void delete(int id) { databaseInstance.delete("wine", id);}
 }

@@ -34,7 +34,7 @@ public class WineController extends ContentLoader implements Initializable{
     @FXML private TableColumn checkBoxColumn;
 
     private int selectedWineID;
-    private WineService service;
+    private WineService wineService;
     private static ObservableList<Wine> wineData;
     private static ArrayList<Integer> selectedRows;
     private CheckBox selectAllCheckBox;
@@ -54,13 +54,14 @@ public class WineController extends ContentLoader implements Initializable{
         if(selectedRows.size() != 0) {
             selected = false;
 
-            for(Integer row : selectedRows) {
-                service.remove(row);
-            }
+            selectedRows.forEach(row -> {
+                    System.out.println("removing row: " + row);
+                    wineService.remove(row);
+         });
         }
-       table_view.setItems(FXCollections.observableArrayList(service.all()));
-        addContent(WINE);
 
+        wineData = FXCollections.observableArrayList(wineService.all());
+        addContent(WINE);
     }
 
 
@@ -159,10 +160,10 @@ public class WineController extends ContentLoader implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ContentLoader.setMainFrameTitle(ContentLoader.WINES_TITLE);
-        service = new WineService();
+        wineService = new WineService();
 
         if (!keepCurrentData) {
-            wineData = FXCollections.observableArrayList(service.all());
+            wineData = FXCollections.observableArrayList(wineService.all());
             selectedRows = new ArrayList<>();
             keepCurrentData = true;
         }
