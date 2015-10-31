@@ -45,6 +45,7 @@ public class GuestController extends ContentLoader implements Initializable{
     private static  boolean selected;
     private static boolean keepCurrentData = false;
     private static int currentEventId = 0;
+    private AttendeeService attendeeService;
 
     @FXML
     private Pane removeButton;
@@ -66,9 +67,7 @@ public class GuestController extends ContentLoader implements Initializable{
             for (Integer row : selectedRows) {
                 //if (guestData.get(selectedRows.indexOf(row)).getAttended()) {
                 System.out.println("removing " + row);
-                service.remove(row);
-
-                //}
+                attendeeService.delete(row);
             }
         } else {
 //            Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -80,7 +79,8 @@ public class GuestController extends ContentLoader implements Initializable{
         }
 
 
-        attendeeData = FXCollections.observableArrayList(service.all());
+
+        attendeeData = FXCollections.observableArrayList(service.findAttendeesForEvent(eventId));
         addContent(GUESTS);
 
     }
@@ -119,7 +119,6 @@ public class GuestController extends ContentLoader implements Initializable{
         try {
             ImportCSV importCSV = new ImportCSV();
             importCSV.importGuests();
-            AttendeeService attendeeService = new AttendeeService();
             guestData.forEach(guest -> {
                 HashMap data = new HashMap();
 
@@ -229,7 +228,7 @@ public class GuestController extends ContentLoader implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         ContentLoader.setMainFrameTitle(ContentLoader.GUESTS_TITLE);
         service = new GuestService();
-
+        attendeeService = new AttendeeService();
 
         if (currentEventId != eventId || currentEventId == 0) {
             keepCurrentData = false;

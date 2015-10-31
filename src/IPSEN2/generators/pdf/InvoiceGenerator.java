@@ -23,7 +23,8 @@ public class InvoiceGenerator {
         Guest guest = order.getGuest();
         Document document = new Document();
         Font defaultFont = new Font(Font.FontFamily.TIMES_ROMAN, 12);
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(""+new SimpleDateFormat("YYYY-MM-dd").format(invoiceDate)+" - "+order.getId()+".pdf"));
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(System.getProperty("user.dir") + "/src/IPSEN2/invoice/"
+                + new SimpleDateFormat("YYYY-MM-dd").format(invoiceDate) + " - " + order.getId() + ".pdf"));
         document.setMargins(30, 30, 30, 65);
         writer.setPageEvent(new InvoiceEventListener());
         document.open();
@@ -116,6 +117,6 @@ public class InvoiceGenerator {
         document.add(addressTable);
 
         document.close();
-        System.out.println("Succesfully generated invoice: " + order.getId()+" on Date: "+new SimpleDateFormat("dd MMMM YYYY").format(invoiceDate));
+        System.out.println("Succesfully generated IPSEN2.invoice: " + order.getId()+" on Date: "+new SimpleDateFormat("dd MMMM YYYY").format(invoiceDate));
     }
 }

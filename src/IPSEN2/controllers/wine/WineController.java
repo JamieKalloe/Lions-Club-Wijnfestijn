@@ -55,12 +55,10 @@ public class WineController extends ContentLoader implements Initializable{
             selected = false;
 
             for(Integer row : selectedRows) {
-                System.out.println("removing " + row);
-                System.out.println(service.find(row));
                 service.remove(row);
             }
         }
-        wineData = FXCollections.observableArrayList(service.all());
+       table_view.setItems(FXCollections.observableArrayList(service.all()));
         addContent(WINE);
 
     }
@@ -118,10 +116,8 @@ public class WineController extends ContentLoader implements Initializable{
                 wine.setSelected(selected);
                 if (selected) {
                     selectedRows.add(wine.getWineID());
-                    System.out.println(selectedRows.size());
                 } else {
                     selectedRows.clear();
-                    System.out.println(selectedRows.size());
                 }
             });
 

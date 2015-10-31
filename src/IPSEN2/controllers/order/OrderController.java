@@ -3,20 +3,24 @@ package IPSEN2.controllers.order;
 import IPSEN2.ContentLoader;
 import IPSEN2.models.order.Order;
 import IPSEN2.services.order.OrderService;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 public class OrderController extends ContentLoader implements Initializable{
@@ -31,6 +35,8 @@ public class OrderController extends ContentLoader implements Initializable{
    @FXML private TableColumn totalAmountColumn;
    @FXML private TableColumn statusColumn;
    @FXML private TableColumn invoiceColumn;
+
+   private OrderService orderService;
 
    public OrderController() {
 
@@ -62,13 +68,54 @@ public class OrderController extends ContentLoader implements Initializable{
       });
    }
 
+   private Callback createInvoiceButtonCellCallBack() {
+      Callback deleteButtonCellCallBack = new Callback<TableColumn.CellDataFeatures<Order, Button>, ObservableValue<Button>>() {
+
+         @Override
+         public ObservableValue<Button> call(TableColumn.CellDataFeatures<Order, Button> cellDataFeatures) {
+            Button invoiceButton = new Button("Open");
+            invoiceButton.setStyle("-fx-font-size: 14");
+
+            int orderID = cellDataFeatures.getValue().getId();
+
+            invoiceButton.setOnAction(event -> {
+               for( Iterator<Order> iterator = orderService.all().iterator(); iterator.hasNext() ; )
+               {
+                  Order order = iterator.next();
+                  if(order.getId() == orderID) {
+                     try {
+                        Files.walk(Paths.get(System.getProperty("user.dir") + "/src/IPSEN2/invoice")).forEach(
+                                fileDirectory -> {
+                                   if ((fileDirectory).toString().contains(" " + orderID + ".pdf")) {
+                                      try {
+                                         Desktop.getDesktop().open(fileDirectory.toFile());
+                                      } catch (IOException e) {
+                                         e.printStackTrace();
+                                      }
+                                   }
+                                }
+                        );
+                     } catch (IOException e) {
+                        e.printStackTrace();
+                     }
+                  }
+               }
+
+            });
+
+            return new SimpleObjectProperty(invoiceButton);
+         }
+      };
+      return  deleteButtonCellCallBack;
+   }
+
    @Override
    public void initialize(URL location, ResourceBundle resources) {
       ContentLoader.setMainFrameTitle(ContentLoader.ORDERS_TITLE);
       table_view.setPlaceholder(new Label("Er is geen content om te weergeven"));
-      OrderService service = new OrderService();
+      orderService = new OrderService();
 
-      table_view.setItems(FXCollections.observableArrayList(service.all()));
+      table_view.setItems(FXCollections.observableArrayList(orderService.all()));
 
       setOnTableRowClickedListener();
 
@@ -90,6 +137,7 @@ public class OrderController extends ContentLoader implements Initializable{
             return new SimpleStringProperty("");
          }
       });
+      invoiceColumn.setCellValueFactory(createInvoiceButtonCellCallBack());
 
    }
 

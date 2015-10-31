@@ -19,8 +19,8 @@
             <TableColumn fx:id="idColumn" prefWidth="53.0" styleClass="table-view" text="id" />
             <TableColumn fx:id="lastNameColumn" prefWidth="149.0" styleClass="table-view" text="Achternaam" />
             <TableColumn fx:id="totalAmountColumn" prefWidth="150.0" styleClass="table-view" text="Totaal Bedrag" />
-            <TableColumn fx:id="statusColumn" prefWidth="200" styleClass="table-view" text="Status" />
-            <TableColumn fx:id="invoiceColumn" prefWidth="114" styleClass="table-view" text="Factuur" />
+            <TableColumn fx:id="statusColumn" prefWidth="164.0" styleClass="table-view" text="Status" />
+            <TableColumn fx:id="invoiceColumn" prefWidth="150.0" styleClass="table-view" text="Factuur" />
          </columns>
       </TableView>
       <Pane layoutX="806.0" layoutY="44.0" onMouseClicked="#handleAddButton" prefHeight="69.0" prefWidth="94.0" styleClass="buttonWithoutHover">
@@ -32,16 +32,7 @@
             </ImageView>
          </children>
       </Pane>
-      <Pane layoutX="806.0" layoutY="128.0" onMouseClicked="#handleEditButton" prefHeight="69.0" prefWidth="81.0" styleClass="buttonWithoutHover">
-         <children>
-            <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="12.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/EditButton.png" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
-      <Pane layoutX="808.0" layoutY="217.0" onMouseClicked="#handleRemoveButton" prefHeight="69.0" prefWidth="81.0" styleClass="buttonWithoutHover">
+      <Pane layoutX="808.0" layoutY="117.0" onMouseClicked="#handleRemoveButton" prefHeight="69.0" prefWidth="81.0" styleClass="buttonWithoutHover">
          <children>
             <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="10.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -50,7 +41,7 @@
             </ImageView>
          </children>
       </Pane>
-      <Pane layoutX="808.0" layoutY="302.0" prefHeight="69.0" prefWidth="81.0" styleClass="buttonWithoutHover">
+      <Pane layoutX="808.0" layoutY="192.0" prefHeight="69.0" prefWidth="81.0" styleClass="buttonWithoutHover">
          <children>
             <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="10.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                <image>

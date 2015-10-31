@@ -50,7 +50,7 @@ public class AddOrderController extends ContentLoader implements Initializable {
     private WineOrderService wineOrderService;
     private OrderService orderService;
     private OrderStatusService orderStatusService;
-    private int orderStatusID;
+    private static int orderStatusID;
 
     private Guest guest;
 
@@ -87,11 +87,6 @@ public class AddOrderController extends ContentLoader implements Initializable {
                 selectedWineIDs.add(wineOrder.getWine().getWineID() + "");
             });
 
-            orderStatusService.all().forEach(orderStatus -> {
-                if (orderStatus.getName().equals(orderStatusComboBox.getValue())) {
-                    orderStatusID = orderStatus.getId();
-                }
-            });
 
             orderData.put("guestId", selectedGuestID);
             orderData.put("eventId", eventId);
@@ -104,8 +99,17 @@ public class AddOrderController extends ContentLoader implements Initializable {
             } else
                 orderService.add(orderData);
         }
+        orderStatusID = 0;
         wineOrderData = null;
         addContent(ORDER);
+    }
+
+    private void handleOrderStatusComboBox() {
+        orderStatusService.all().forEach(orderStatus -> {
+            if (orderStatus.getName().equals(orderStatusComboBox.getValue())) {
+                orderStatusID = orderStatus.getId();
+            }
+        });
     }
 
       public void handleAddWineButton(){
@@ -158,7 +162,6 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
                 return new SimpleObjectProperty(deleteButton);
                 }
-
         };
         return  deleteButtonCellCallBack;
     }
@@ -173,23 +176,27 @@ public class AddOrderController extends ContentLoader implements Initializable {
         orderStatusService = new OrderStatusService();
         WineService wineService = new WineService();
 
-
         orderStatusService.all().forEach(orderStatus -> {
                     orderStatusComboBox.getItems().addAll(orderStatusService.
                             find(orderStatus.getId()).getName());
                 });
-        orderStatusComboBox.setValue(orderStatusService.all().get(orderStatusService.all().size() -1).getName());
 
-
+        orderStatusComboBox.setOnAction(event -> handleOrderStatusComboBox());
 
         if (wineOrderData == null) {
             wineOrderData = FXCollections.observableArrayList(new ArrayList<>());
+            orderStatusComboBox.setValue(orderStatusService.all().get(orderStatusService.all().size() - 1).getName());
+            orderStatusID = orderStatusService.all().get(orderStatusService.all().size() - 1).getId();
         }
 
+            orderStatusComboBox.setValue(orderStatusService.find(orderStatusID).getName());
+
+
         if (selectedOrderID != 0) {
-            System.out.println("selectedOrder id is not null");
             wineOrderData = FXCollections.observableArrayList(wineOrderService.allForOrder(selectedOrderID));
             table_view.setItems(FXCollections.observableArrayList(wineOrderData));
+            orderStatusID = orderService.find(selectedOrderID).getStatus().getId();
+            orderStatusComboBox.setValue(orderStatusService.find(orderStatusID).getName());
         } else{
             table_view.setItems(wineOrderData);
         }
