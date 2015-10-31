@@ -54,15 +54,6 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane layoutX="808.0" layoutY="302.0" prefHeight="69.0" prefWidth="81.0" styleClass="buttonWithoutHover">
-               <children>
-                  <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="10.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/MailButton.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
          </children>
       </Group>
    </children>
