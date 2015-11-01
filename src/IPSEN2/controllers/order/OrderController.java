@@ -1,6 +1,8 @@
 package IPSEN2.controllers.order;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.controllers.mail.MailController;
+import IPSEN2.generators.pdf.InvoiceGenerator;
 import IPSEN2.models.order.Order;
 import IPSEN2.services.order.OrderService;
 import javafx.beans.property.SimpleObjectProperty;
@@ -20,6 +22,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -48,11 +51,20 @@ public class OrderController extends ContentLoader implements Initializable{
 
    }
 
-   public void handleAddButton() throws IOException {
+   @FXML
+   private void handleMailButton() {
+      if (selectedRows.size() != 0) {
+         addContent(new MailController(selectedRows), MAIL);
+      }
+   }
+
+   @FXML
+   private void handleAddButton(){
       addContent(SELECT_GUEST_DIALOG);
    }
 
-   public void handleEditButton() throws IOException {
+   @FXML
+   public void handleEditButton() {
       if (selectedGuestID != 0) {
          addContent(new EditOrderController(), EDIT_ORDER_DIALOG);
       }
@@ -123,8 +135,18 @@ public class OrderController extends ContentLoader implements Initializable{
                {
                   Order order = iterator.next();
                   if(order.getId() == orderID) {
+
+                     Path directory = Paths.get(System.getProperty("user.dir") + "/src/IPSEN2/invoice");
+                     if (!(directory.toString().contains(" " + orderID + ".pdf"))) {
+                        try {
+                           new InvoiceGenerator().generate(orderService.find(orderID));
+                        } catch(Exception e) {
+                           e.printStackTrace();
+                        }
+                     }
+
                      try {
-                        Files.walk(Paths.get(System.getProperty("user.dir") + "/src/IPSEN2/invoice")).forEach(
+                        Files.walk(directory).forEach(
                                 fileDirectory -> {
                                    if ((fileDirectory).toString().contains(" " + orderID + ".pdf")) {
                                       try {

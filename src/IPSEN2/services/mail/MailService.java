@@ -93,12 +93,19 @@ public class MailService {
 
     public MailType getMailType(String mailType) {
         switch (mailType) {
-            case "Dankmail":
+            case "Bedanken":
                 this.mailType = MailType.THANK;
                 break;
-            case "Uitnodigingsmail":
+            case "Uitnodiging":
                 this.mailType = MailType.EVENT;
                 break;
+            case "Factuur":
+                this.mailType = MailType.INVOICE;
+                break;
+            case "Factuur herrinnering" :
+                this.mailType = MailType.REMINDER;
+                break;
+
         }
         return this.mailType;
     }

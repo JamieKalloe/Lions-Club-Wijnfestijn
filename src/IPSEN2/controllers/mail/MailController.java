@@ -65,7 +65,7 @@ public class MailController extends ContentLoader implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         guestService = new GuestService();
         mailService = new MailService();
-        mailTypes = new ArrayList<>(Arrays.asList("Dankmail", "Uitnodigingsmail"));
+        mailTypes = new ArrayList<>(Arrays.asList("Bedanken", "Uitnodiging", "Factuur", "Factuur herrinnering"));
         listView.setItems(FXCollections.observableArrayList(mailTypes));
         listView.setOnMouseClicked(event -> handleListView(event));
 
