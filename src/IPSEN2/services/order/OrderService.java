@@ -60,8 +60,8 @@ public class OrderService {
 
     public Order find(int id)
     {
-        Order order = this.orderRepository.find(id);
 
+        Order order = this.orderRepository.find(id);
         order.setGuest(guestService.find(order.getGuest().getId()));
         order.setEvent(eventService.find(order.getEvent().getId()));
         order.setStatus(orderStatusService.find(order.getStatus().getId()));
@@ -74,7 +74,6 @@ public class OrderService {
     public int add(HashMap data)
     {
     //        boolean isValid = this.validator.validate(data);
-        System.out.print(data.get("wineIDs"));
         boolean isValid = true;
         if(isValid)
         {
@@ -124,7 +123,6 @@ public class OrderService {
     public boolean remove(int id)
     {
         Order order = this.orderRepository.find(id);
-
         if(order != null)
         {
             this.orderRepository.delete(order.getId());

@@ -136,6 +136,7 @@ public class GuestController extends ContentLoader implements Initializable{
             e.printStackTrace();
         }
 
+            keepCurrentData = false;
         addContent(GUESTS);
     }}
 
