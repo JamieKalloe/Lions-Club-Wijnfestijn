@@ -120,17 +120,17 @@ public class GuestController extends ContentLoader implements Initializable{
             ImportCSV importCSV = new ImportCSV();
             importCSV.importGuests();
             guestData.forEach(guest -> {
-                HashMap data = new HashMap();
+                HashMap attendeeData = new HashMap();
 
-                data.put("guestID", guest.getId());
-                data.put("eventID", eventId);
-                data.put("zipCode", guest.getAddress().getZipCode());
-                data.put("street", guest.getAddress().getStreet());
-                data.put("houseNumber", guest.getAddress().getHouseNumber());
-                data.put("country", guest.getAddress().getCountry());
-                data.put("city", guest.getAddress().getCity());
-                data.put("referralName", guest.getReferral());
-                attendeeService.create(data);
+                attendeeData.put("guestID", guest.getId());
+                attendeeData.put("eventID", eventId);
+                attendeeData.put("zipCode", guest.getAddress().getZipCode());
+                attendeeData.put("street", guest.getAddress().getStreet());
+                attendeeData.put("houseNumber", guest.getAddress().getHouseNumber());
+                attendeeData.put("country", guest.getAddress().getCountry());
+                attendeeData.put("city", guest.getAddress().getCity());
+                attendeeData.put("referralName", guest.getReferral());
+                attendeeService.create(attendeeData);
             });
         } catch (Exception e) {
             e.printStackTrace();
