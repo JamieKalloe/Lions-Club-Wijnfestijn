@@ -1,4 +1,4 @@
-package IPSEN2.controllers.mail;
+package IPSEN2.services.mail;
 
 import IPSEN2.models.mail.Mail;
 import IPSEN2.models.mail.MailMessage;
