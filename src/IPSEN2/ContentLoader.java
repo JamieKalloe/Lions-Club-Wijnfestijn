@@ -20,8 +20,7 @@ public abstract class ContentLoader {
     public static final String WINE = "/IPSEN2/views/wine/WineTableView.fxml";
     public static final String ORDER = "/IPSEN2/views/order/OrderTableView.fxml";
     public static final String EVENTS = "/IPSEN2/views/event/EventTableView.fxml";
-    public static final String MANUAL = "/IPSEN2/views/guest/GuestTableView.fxml";
-    public static final String EVENT_CHOOSER = "/IPSEN2/views/event/EventChooser.fxml";
+    public static final String MAIL = "/IPSEN2/views/mail/SelectMailView.fxml";
     public static final String STYLE = "IPSEN2/styles/style.css";
 
     public static final String EDIT_GUEST_DIALOG = "/IPSEN2/views/guest/GuestDialogView.fxml";
@@ -56,6 +55,7 @@ public abstract class ContentLoader {
         mainController.removeContent();
 
         try {
+
             mainController.setContent(
                     configureFXMLLoader(fxml).load());
         } catch (IOException e) {

@@ -1,7 +1,10 @@
 package IPSEN2.services.mail;
 
 import IPSEN2.models.mail.Mail;
+import IPSEN2.models.mail.MailFactory;
 import IPSEN2.models.mail.MailMessage;
+import IPSEN2.models.mail.MailType;
+import IPSEN2.services.guest.GuestService;
 
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -28,6 +31,9 @@ public class MailService {
     private final String smtpUsername = "ipsen2groep1@hotmail.com";
     private final String smtpPassword = "hsLeiden";
     private final int smtpPort = 587;
+    private Mail mail;
+    private MailType mailType;
+    private GuestService guestService;
 
     //Constructor
     public MailService() {
@@ -40,11 +46,13 @@ public class MailService {
         mailProperties.put(this.propertyAuth, "true");
         mailProperties.put(this.propertyStartTls, "true");
         mailProperties.put(this.propertySSL, "true");
+
     }
 
     //Methods
     public void send(Mail mail) throws Exception {
 
+        this.mail = mail;
         Session session = Session.getInstance(mailProperties,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
@@ -81,5 +89,22 @@ public class MailService {
 
         System.out.println("MailMessage was succesfuly sent.");
         transport.close();
+    }
+
+    public MailType getMailType(String mailType) {
+        switch (mailType) {
+            case "Dankmail":
+                this.mailType = MailType.THANK;
+                break;
+            case "Uitnodigingsmail":
+                this.mailType = MailType.EVENT;
+                break;
+        }
+        return this.mailType;
+    }
+    public Mail getMail(int selectedGuestID, MailType mailType) {
+        guestService = new GuestService();
+        mail = new MailFactory().generate(mailType, guestService.find(selectedGuestID));
+        return mail;
     }
 }
