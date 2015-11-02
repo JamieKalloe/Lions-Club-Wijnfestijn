@@ -17,6 +17,9 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * The type Main frame controller.
+ */
 public class MainFrameController extends ContentLoader implements Initializable{
 
     private static double xOffset = 0;
@@ -32,6 +35,12 @@ public class MainFrameController extends ContentLoader implements Initializable{
     @FXML private Pane logoButton, homeNav, gastenNav, wijnenNav,
     bestellingenNav, evenementenNav, wijnHandelNav;
 
+    /**
+     * Handle mouse pressed.
+     *
+     * @param event the event
+     * @throws Exception the exception
+     */
     @FXML
     public void handleMousePressed(MouseEvent event) throws Exception{
         primaryStage = getPrimaryStage(event);
@@ -39,21 +48,44 @@ public class MainFrameController extends ContentLoader implements Initializable{
         yOffset = primaryStage.getY() - event.getScreenY();
     }
 
+    /**
+     * Handle mouse dragged.
+     *
+     * @param event the event
+     * @throws Exception the exception
+     */
     @FXML
     public void handleMouseDragged(MouseEvent event) throws Exception{
         primaryStage.setX(event.getScreenX() + xOffset);
         primaryStage.setY(event.getScreenY() + yOffset);
     }
 
+    /**
+     * Handle minimize button.
+     *
+     * @param event the event
+     */
     public void handleMinimizeButton(MouseEvent event) {
         getPrimaryStage(event).toBack();
     }
 
+    /**
+     * Handle close button.
+     *
+     * @param event the event
+     * @throws Exception the exception
+     */
     @FXML
     public void handleCloseButton(MouseEvent event) throws Exception {
             getPrimaryStage(event).close();
     }
 
+    /**
+     * Handle nav button.
+     *
+     * @param event the event
+     * @throws Exception the exception
+     */
     @FXML
     public void handleNavButton(MouseEvent event) throws Exception{
         Object selectedPane = event.getSource();
@@ -109,14 +141,28 @@ public class MainFrameController extends ContentLoader implements Initializable{
         contentCover.setStyle(null);
     }
 
+    /**
+     * Set title.
+     *
+     * @param titel the titel
+     */
     public void setTitle(String titel){
         titelLabel.setText(titel);
     }
 
+    /**
+     * Sets content.
+     *
+     * @param node the node
+     */
     public void setContent(Node node) {
        contentHolder.getChildren().setAll(node);
     }
 
+
+    /**
+     * Remove content.
+     */
     public void removeContent() { contentHolder.getChildren().removeAll();}
 
     @Override

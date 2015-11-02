@@ -35,6 +35,9 @@ public class AddEventController extends ContentLoader implements Initializable{
 
     @FXML private DatePicker datePicker;
 
+    /**
+     * Instantiates a new Add event controller.
+     */
     public AddEventController() {
     }
 

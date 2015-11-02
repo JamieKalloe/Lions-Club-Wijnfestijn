@@ -49,6 +49,9 @@ public class EventController extends ContentLoader implements Initializable{
     private int selectedEventID;
 
 
+    /**
+     * Handle remove button.
+     */
     @FXML
     public void handleRemoveButton() {
         if(selectedRows.size() != 0) {

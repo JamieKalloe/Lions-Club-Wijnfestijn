@@ -40,10 +40,21 @@ public class MailController extends ContentLoader implements Initializable{
     private int selectedID;
     private boolean isMerchant = false;
 
+    /**
+     * Instantiates a new Mail controller.
+     *
+     * @param selectedGuestIDs the selected guest i ds
+     */
     public MailController(ArrayList<Integer> selectedGuestIDs) {
         this.selectedIDs = selectedGuestIDs;
     }
 
+    /**
+     * Instantiates a new Mail controller.
+     *
+     * @param selectedMerchantIDs the selected merchant i ds
+     * @param isMerchant          the is merchant
+     */
     public MailController(ArrayList<Integer> selectedMerchantIDs, boolean isMerchant) {
         this.selectedIDs = selectedMerchantIDs;
         this.isMerchant = isMerchant;

@@ -5,17 +5,9 @@ import IPSEN2.models.guest.Guest;
 import IPSEN2.services.guest.GuestService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBoxBuilder;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -66,6 +58,9 @@ public class EditGuestController extends ContentLoader implements Initializable{
         addContent(GUESTS);
     }
 
+    /**
+     * Handle submit button.
+     */
     public void handleSubmitButton() {
 
         // Check if Male of Female radiobutton is selected
