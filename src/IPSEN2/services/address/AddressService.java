@@ -57,7 +57,7 @@ public class AddressService {
         return exists;
     }
 
-    public Object update(int id, HashMap data)
+    public boolean update(int id, HashMap data)
     {
         Address address = repository.find(id);
 
