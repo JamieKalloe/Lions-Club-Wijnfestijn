@@ -28,7 +28,7 @@ public class MailFactory {
     }
 
     public MailFactory(Guest guest) {
-        this.mail = guest.getEmail();
+        this.receiver = guest;
     }
 
     public MailFactory(Merchant merchant) {

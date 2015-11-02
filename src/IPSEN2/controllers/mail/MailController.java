@@ -71,12 +71,19 @@ public class MailController extends ContentLoader implements Initializable{
     }
 
     private void handleCancelButton() {
-        addContent(GUESTS);
+        if (isMerchant) {
+            addContent(MERCHANT);
+        } else {
+            addContent(GUESTS);
+        }
     }
 
     private void handleListView(Event event) {
         selectedMailType = ((ListView) event.getSource()).getSelectionModel().getSelectedItem().toString();
-        mail = (mailService.getMail(selectedIDs.get(0), mailService.getMailType(selectedMailType)));
+        if (isMerchant) {
+            mail = (mailService.getMail(selectedIDs.get(0), mailService.getMailType(selectedMailType), false));
+        } else {
+        mail = (mailService.getMail(selectedIDs.get(0), mailService.getMailType(selectedMailType), true));}
         mailTextArea.setText(mail.getContent());
     }
 

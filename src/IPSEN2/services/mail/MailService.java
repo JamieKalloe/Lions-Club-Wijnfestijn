@@ -112,9 +112,15 @@ public class MailService {
         }
         return this.mailType;
     }
-    public Mail getMail(int selectedGuestID, MailType mailType) {
-        guestService = new GuestService();
-        mail = new MailFactory(selectedGuestID).generate(mailType);
+    public Mail getMail(int selectedID, MailType mailType, boolean isGuest) {
+
+        if (isGuest) {
+            guestService = new GuestService();
+            mail = new MailFactory(guestService.find(selectedID)).generate(mailType);
+        } else{
+            mail = new MailFactory(selectedID).generate(mailType);
+
+        }
         return mail;
     }
 }
