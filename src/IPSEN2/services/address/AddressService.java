@@ -2,6 +2,7 @@ package IPSEN2.services.address;
 
 import IPSEN2.models.address.Address;
 import IPSEN2.repositories.address.AddressRepository;
+import IPSEN2.services.message.Messaging;
 import IPSEN2.validators.address.AddressValidator;
 
 import java.util.ArrayList;
@@ -14,46 +15,77 @@ public class AddressService {
     private AddressRepository repository;
     private AddressValidator validator;
 
-    public AddressService() {
+    public AddressService()
+    {
         repository = new AddressRepository();
         validator = new AddressValidator();
     }
 
-    public ArrayList<Address> all() {
+    public ArrayList<Address> all()
+    {
         return new ArrayList<Address>();
     }
 
-    public Address find(int id) {
+    public Address find(int id)
+    {
         Address address = repository.find(id);
         return address;
     }
 
-    public int create(HashMap data) {
-        boolean isValid = validator.validate(data);
-        if(isValid) {
-            int exists = repository.exists(data);
-            if(exists == 0) {
-                return repository.create(data);
-            }
-            else{
-                return exists;
-            }
+    public int create(HashMap data)
+    {
+        boolean isValid = this.validator.validate(data);
+
+        if (!isValid)
+        {
+            Messaging.getInstance().show(
+                    "Foutmelding",
+                    "Adres invoerfout",
+                    "Een van de adres velden zijn niet of incorrect ingevuld"
+            );
+
+            return -1;
         }
-        return -1;
+
+        int exists = repository.exists(data);
+
+        if (exists == 0)
+        {
+            return repository.create(data);
+        }
+
+        return exists;
     }
 
-    public Object update(int id, HashMap data) {
+    public Object update(int id, HashMap data)
+    {
         Address address = repository.find(id);
-        if(address != null) {
+
+        if (address != null)
+        {
             boolean isValid = validator.validate(data);
-            if(isValid) {
-                repository.update(id, data);
+
+            if (!isValid)
+            {
+                Messaging.getInstance().show(
+                        "Foutmelding",
+                        "Adres invoerfout",
+                        "Een van de adres velden zijn niet of incorrect ingevuld"
+                );
+
+                return false;
             }
+
+            repository.update(id, data);
+
+            return false;
         }
+
         return true;
     }
 
-    public Object delete(int id) {
+    public Object delete(int id)
+    {
         repository.delete(id);
         return true;
     }
