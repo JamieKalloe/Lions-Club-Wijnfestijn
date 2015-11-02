@@ -116,6 +116,7 @@ public class MailService {
 
         if (isGuest) {
             guestService = new GuestService();
+System.out.println(selectedID);
             mail = new MailFactory(guestService.find(selectedID)).generate(mailType);
         } else{
             mail = new MailFactory(selectedID).generate(mailType);
