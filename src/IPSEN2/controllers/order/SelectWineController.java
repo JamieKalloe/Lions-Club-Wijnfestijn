@@ -37,7 +37,7 @@ public class SelectWineController extends ContentLoader implements Initializable
 
     private WineService wineService;
     private  ObservableList<Wine> wineData;
-    private  ArrayList<String> selectedRows;
+    private  ArrayList<Integer> selectedRows;
     private int selectedWineID;
     private int selectedGuestID;
 
@@ -72,7 +72,7 @@ public class SelectWineController extends ContentLoader implements Initializable
 
                     selectedWineID = cellDataFeatures.getValue().getWineID();
                     if (newValue.booleanValue()) {
-                        selectedRows.add(selectedWineID + "");
+                        selectedRows.add(selectedWineID);
                     } else if (!newValue.booleanValue()) {
                         selectedRows.remove(selectedRows.indexOf(selectedWineID + ""));
                         selectedWineID = 0;

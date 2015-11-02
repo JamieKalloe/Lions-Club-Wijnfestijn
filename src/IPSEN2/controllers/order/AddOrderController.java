@@ -45,7 +45,7 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
     private int selectedGuestID;
     private int selectedOrderID;
-    private ArrayList<String> selectedWineIDs;
+    private ArrayList<Integer> selectedWineIDs;
     private GuestService guestService;
     private WineOrderService wineOrderService;
     private OrderService orderService;
@@ -63,7 +63,7 @@ public class AddOrderController extends ContentLoader implements Initializable {
         this.selectedOrderID = selectedOrderID;
     }
 
-    public AddOrderController(int selectedGuestID, ArrayList<String> selectedWineIDs) {
+    public AddOrderController(int selectedGuestID, ArrayList<Integer> selectedWineIDs) {
         this.selectedGuestID = selectedGuestID;
         this.selectedWineIDs = selectedWineIDs;
     }
@@ -75,7 +75,7 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
     public void handleSubmitButton() {
         HashMap orderData = new HashMap();
-        ArrayList<String> amounts= new ArrayList<>();
+        ArrayList<Integer> amounts= new ArrayList<>();
         if (wineOrderData.size() != 0) {
             if (selectedWineIDs == null) {
                 selectedWineIDs = new ArrayList<>();
@@ -83,8 +83,8 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
             selectedWineIDs.clear();
             wineOrderData.forEach(wineOrder -> {
-                amounts.add(wineOrder.getAmount() + "");
-                selectedWineIDs.add(wineOrder.getWine().getWineID() + "");
+                amounts.add(wineOrder.getAmount());
+                selectedWineIDs.add(wineOrder.getWine().getWineID());
             });
 
 
@@ -213,8 +213,8 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
         if (selectedWineIDs != null) {
             selectedWineIDs.forEach(selectedWineID -> {
-                WineOrder wineOrder = new WineOrder(Integer.parseInt(selectedWineID), 1);
-                wineOrder.setWine(wineService.find(Integer.parseInt(selectedWineID)));
+                WineOrder wineOrder = new WineOrder(selectedWineID, 1);
+                wineOrder.setWine(wineService.find(selectedWineID));
                 wineOrderData.add(wineOrder);
             });
         }
