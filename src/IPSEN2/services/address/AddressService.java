@@ -12,6 +12,7 @@ import java.util.HashMap;
  * Created by mdbaz on 22-09-2015.
  */
 public class AddressService {
+
     private AddressRepository repository;
     private AddressValidator validator;
 
