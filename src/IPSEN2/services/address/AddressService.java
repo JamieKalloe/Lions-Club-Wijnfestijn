@@ -84,9 +84,17 @@ public class AddressService {
         return true;
     }
 
-    public Object delete(int id)
+    public boolean delete(int id)
     {
-        repository.delete(id);
+        Address address = repository.find(id);
+
+        if (address != null)
+        {
+            repository.delete(id);
+
+            return true;
+        }
+
         return true;
     }
 }

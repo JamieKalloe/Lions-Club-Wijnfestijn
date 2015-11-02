@@ -105,11 +105,14 @@ public class EventService {
     public boolean remove(int id)
     {
         Event event = eventRepository.find(id);
+
         if (event != null)
         {
             eventRepository.delete(id);
+
             return true;
         }
+
         return false;
     }
 }
