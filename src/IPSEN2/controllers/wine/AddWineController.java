@@ -3,6 +3,7 @@ package IPSEN2.controllers.wine;
 import IPSEN2.ContentLoader;
 import IPSEN2.models.wine.WineType;
 import IPSEN2.repositories.wine.WineTypeRepository;
+import IPSEN2.services.merchant.MerchantService;
 import IPSEN2.services.wine.WineService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -79,7 +80,8 @@ public class AddWineController extends ContentLoader implements Initializable {
         data.put("country", country);
         data.put("region", region.replace("'", "''"));
         data.put("year", year);
-        data.put("type_id", type);
+        data.put("typeId", type);
+        data.put("merchantId", new MerchantService().all().get(0).getId());
         data.put("price", price);
         service.subscribe(data);
 
