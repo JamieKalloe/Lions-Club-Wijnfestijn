@@ -66,9 +66,13 @@ public class AddEventController extends ContentLoader implements Initializable{
         data.put("city", city);
         data.put("startDate", dateFormatter.format(date));
         data.put("endDate", dateFormatter.format(date));
-        service.add(data);
 
-        addContent(EVENTS);
+        eventId = service.add(data);
+
+        if (eventId != -1)
+        {
+            addContent(EVENTS);
+        }
     }
 
     @Override

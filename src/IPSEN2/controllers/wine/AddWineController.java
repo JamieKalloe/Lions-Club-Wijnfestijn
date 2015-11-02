@@ -81,6 +81,7 @@ public class AddWineController extends ContentLoader implements Initializable {
         data.put("year", year);
         data.put("type_id", type);
         data.put("price", price);
+
         service.subscribe(data);
 
         addContent(WINE);

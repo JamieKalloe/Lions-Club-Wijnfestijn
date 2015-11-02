@@ -12,7 +12,8 @@ public class WineValidator extends Validator implements Validatable {
 
     public boolean validate(HashMap data)
     {
-        return !data.get("name").toString().isEmpty()
+        return Integer.parseInt(data.get("type_id").toString()) != -1
+                && !data.get("name").toString().isEmpty()
                 && !data.get("country").toString().isEmpty()
                 && !data.get("region").toString().isEmpty()
                 && !data.get("year").toString().isEmpty()

@@ -59,7 +59,7 @@ public class EventService {
         data.put("addressID", addressService.create(data));
         boolean isValid = this.validator.validate(data);
 
-        if (!isValid)
+        if (! isValid)
         {
             Messaging.getInstance().show(
                     "Foutmelding",
