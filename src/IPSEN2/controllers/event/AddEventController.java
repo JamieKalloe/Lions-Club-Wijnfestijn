@@ -29,13 +29,18 @@ public class AddEventController extends ContentLoader implements Initializable{
     private HashMap data;
     private EventService service;
 
-    @FXML private Pane submitButton;
+    @FXML private Pane submitButton, cancelButton;
     @FXML private TextField eventNameTextField, cityTextField,
             addressTextField, houseNumberTextField, zipCodeTextField;
 
     @FXML private DatePicker datePicker;
 
     public AddEventController() {
+    }
+
+    @FXML
+    private void handleCancelButton() {
+        addContent(EVENTS);
     }
 
     @FXML
@@ -69,6 +74,7 @@ public class AddEventController extends ContentLoader implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
+        cancelButton.setOnMouseClicked(event -> handleCancelButton());
         service = new EventService();
     }
 }

@@ -105,13 +105,16 @@ public class MailService {
             case "Factuur herrinnering" :
                 this.mailType = MailType.REMINDER;
                 break;
+            case "Wijnhandel" :
+                this.mailType = MailType.MERCHANT;
+                break;
 
         }
         return this.mailType;
     }
     public Mail getMail(int selectedGuestID, MailType mailType) {
         guestService = new GuestService();
-        mail = new MailFactory().generate(mailType, guestService.find(selectedGuestID));
+        mail = new MailFactory(selectedGuestID).generate(mailType);
         return mail;
     }
 }

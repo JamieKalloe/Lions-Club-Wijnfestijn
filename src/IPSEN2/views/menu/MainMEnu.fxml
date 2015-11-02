@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
@@ -53,6 +54,15 @@
                   <ImageView fitHeight="190.0" fitWidth="193.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/GastenShortcut.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="merchantButton" layoutX="10.0" layoutY="276.0" onMouseClicked="#handleButton" styleClass="buttonWithoutHover" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="195.0" fitWidth="193.0" onMouseClicked="#handleButton" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/wineMerchant.png" />
                      </image>
                   </ImageView>
                </children>

@@ -30,7 +30,7 @@ public class MainFrameController extends ContentLoader implements Initializable{
     @FXML private Label titelLabel;
     @FXML private Pane contentCover;
     @FXML private Pane logoButton, homeNav, gastenNav, wijnenNav,
-    bestellingenNav, evenementenNav, handleidingNav;
+    bestellingenNav, evenementenNav, wijnHandelNav;
 
     @FXML
     public void handleMousePressed(MouseEvent event) throws Exception{
@@ -67,8 +67,8 @@ public class MainFrameController extends ContentLoader implements Initializable{
                addContent(ORDER);
            } else if (selectedPane == evenementenNav) {
                addContent(EVENTS);
-           } else if (selectedPane == handleidingNav) {
-               addContent(GUESTS);
+           } else if (selectedPane == wijnHandelNav) {
+               addContent(MERCHANT);
            }
 
         closeNavMenu();

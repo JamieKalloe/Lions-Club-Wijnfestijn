@@ -116,6 +116,7 @@ public class Database {
 
     public int delete(String from, int id) {
         String query = "DELETE FROM `"+from+"` WHERE id="+id;
+        System.out.print("hello");
         int result = updateDatabase(query);
         return result;
     }

@@ -102,7 +102,7 @@ public class WineRepository implements Crudable {
         HashMap databaseData = new HashMap();
 
         databaseData.put("type_id", Integer.parseInt(data.get("type_id").toString()));
-        databaseData.put("merchant_id", 1);
+        databaseData.put("merchant_id", 9);
         databaseData.put("name", data.get("name").toString());
         databaseData.put("region", data.get("region").toString());
         databaseData.put("country", data.get("country").toString());

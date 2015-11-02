@@ -15,7 +15,6 @@ public class Guest {
     private SimpleBooleanProperty attended = new SimpleBooleanProperty(false);
     private SimpleBooleanProperty selected = new SimpleBooleanProperty(false);
 
-
     public boolean getSelected() {
         return selected.get();
     }
@@ -49,6 +48,12 @@ public class Guest {
         this.gender = gender;
         this.lastName = lastName;
         this.firstName = firstName;
+    }
+
+    public Guest(String name, String email) {
+        this.lastName = name;
+        this.email = email;
+        this.gender = "M";
     }
 
     public Guest(int id, String gender, String lastName, String prefix, String firstName, int addressID ,String email, int referralID, String notes) {

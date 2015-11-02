@@ -16,22 +16,22 @@ import java.util.ResourceBundle;
 public class MainMenuController extends ContentLoader implements Initializable {
 
     @FXML private Pane gastenButton, wijnenButton, bestellingenButton,
-            evenementenButton, handLeidingButton;
+            evenementenButton, merchantButton;
 
 
     @FXML
     public void handleButton(MouseEvent event) throws Exception{
         Object selectedPane = event.getSource();
             if (selectedPane == gastenButton) {
-                addContent(ContentLoader.GUESTS);
+                addContent(GUESTS);
             } else if (selectedPane == wijnenButton) {
-                addContent(ContentLoader.WINE);
+                addContent(WINE);
             } else if (selectedPane == bestellingenButton) {
-                addContent(ContentLoader.ORDER);
+                addContent(ORDER);
             } else if (selectedPane == evenementenButton) {
-                ContentLoader.addContent(ContentLoader.EVENTS);
-            } else if (selectedPane == handLeidingButton) {
-                addContent(ContentLoader.WINE);
+                ContentLoader.addContent(EVENTS);
+            } else if (selectedPane == merchantButton) {
+                addContent(MERCHANT);
             }
     }
 

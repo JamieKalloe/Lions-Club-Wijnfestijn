@@ -21,12 +21,14 @@ public abstract class ContentLoader {
     public static final String ORDER = "/IPSEN2/views/order/OrderTableView.fxml";
     public static final String EVENTS = "/IPSEN2/views/event/EventTableView.fxml";
     public static final String MAIL = "/IPSEN2/views/mail/SelectMailView.fxml";
+    public static final String MERCHANT = "/IPSEN2/views/merchant/MerchantView.fxml";
     public static final String STYLE = "IPSEN2/styles/style.css";
 
     public static final String EDIT_GUEST_DIALOG = "/IPSEN2/views/guest/GuestDialogView.fxml";
     public static final String EDIT_WINE_DIALOG = "/IPSEN2/views/wine/WineDialogView.fxml";
     public static final String EDIT_ORDER_DIALOG = "/IPSEN2/views/order/OrderDialogView.fxml";
     public static final String EDIT_EVENT_DIALOG = "/IPSEN2/views/event/EventDialogView.fxml";
+    public static final String ADD_MERCHANT_DIALOG = "/IPSEN2/views/merchant/MerchantDialogView.fxml";
     public static final String SELECT_GUEST_DIALOG = "/IPSEN2/views/order/SelectGuestView.fxml";
     public static final String SELECT_WINE_DIALOG = "/IPSEN2/views/order/SelectWineView.fxml";
 
@@ -40,7 +42,7 @@ public abstract class ContentLoader {
     public static final String WINES_TITLE = "Wijnen";
     public static final String ORDERS_TITLE = "Bestellingen";
     public static final String EVENTS_TITLE = "Evenementen";
-    public static final String MANUAL_TITLE = "Handleiding";
+    public static final String MERCHANT_TITLE = "Wijnhandel";
     private static MainFrameController mainController;
     public static Stage primaryStage;
     private static FXMLLoader loader;
