@@ -54,6 +54,8 @@ public class OrderController extends ContentLoader implements Initializable{
    @FXML
    private void handleMailButton() {
       if (selectedRows.size() != 0) {
+         ArrayList<Integer> guestIDs = new ArrayList<>();
+         selectedRows.forEach(row -> guestIDs.add(orderService.find(row).getGuest().getId()));
          addContent(new MailController(selectedRows), MAIL);
       }
    }
