@@ -93,7 +93,6 @@ public class MerchantController extends ContentLoader implements Initializable {
         nameColumn.setCellValueFactory(new PropertyValueFactory<Merchant, String>("name"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<Merchant, String>("email"));
 
-       System.out.println(merchantService.all().size());
 
         table_view.setItems(FXCollections.observableArrayList(merchantService.all()));
 

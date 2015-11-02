@@ -80,11 +80,15 @@ public class MailController extends ContentLoader implements Initializable{
 
     private void handleListView(Event event) {
         selectedMailType = ((ListView) event.getSource()).getSelectionModel().getSelectedItem().toString();
-        if (isMerchant) {
-            mail = (mailService.getMail(selectedIDs.get(0), mailService.getMailType(selectedMailType), false));
-        } else {
-        mail = (mailService.getMail(selectedIDs.get(0), mailService.getMailType(selectedMailType), true));}
-        mailTextArea.setText(mail.getContent());
+
+        if (selectedMailType != null) {
+            if (isMerchant) {
+                mail = (mailService.getMail(selectedIDs.get(0), mailService.getMailType(selectedMailType), false));
+            } else {
+                mail = (mailService.getMail(selectedIDs.get(0), mailService.getMailType(selectedMailType), true));
+            }
+            mailTextArea.setText(mail.getContent());
+        }
     }
 
     @Override
