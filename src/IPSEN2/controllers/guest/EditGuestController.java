@@ -123,7 +123,6 @@ public class EditGuestController extends ContentLoader implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         service = new GuestService();
 
             Guest guest = service.find(selectedGuestID);

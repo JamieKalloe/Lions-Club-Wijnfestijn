@@ -85,7 +85,7 @@ public class MailController extends ContentLoader implements Initializable{
         if (isMerchant) {
             addContent(MERCHANT);
         } else {
-            addContent(GUESTS);
+            addContent(MAINMENU);
         }
     }
 

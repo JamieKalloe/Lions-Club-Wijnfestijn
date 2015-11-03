@@ -90,7 +90,7 @@ public class GuestController extends ContentLoader implements Initializable{
         }
     }
 
-    public void openEditGuestMenu() throws IOException{
+    public void openEditGuestMenu(){
         if (selectedGuestID != 0 ) {
 
             selected = false;
@@ -135,12 +135,7 @@ public class GuestController extends ContentLoader implements Initializable{
             row.getStyleClass().add("pane");
             row.setOnMouseClicked(event -> {
                 selectedGuestID = row.getTableView().getSelectionModel().getSelectedItem().getId();
-
-                try {
-                    openEditGuestMenu();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                openEditGuestMenu();
             });
             return row;
         });

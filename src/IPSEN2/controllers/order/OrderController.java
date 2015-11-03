@@ -56,7 +56,7 @@ public class OrderController extends ContentLoader implements Initializable{
       if (selectedRows.size() != 0) {
          ArrayList<Integer> guestIDs = new ArrayList<>();
          selectedRows.forEach(row -> guestIDs.add(orderService.find(row).getGuest().getId()));
-         addContent(new MailController(selectedRows), MAIL);
+         addContent(new MailController(guestIDs), MAIL);
       }
    }
 
@@ -67,9 +67,9 @@ public class OrderController extends ContentLoader implements Initializable{
 
    @FXML
    public void handleEditButton() {
-      if (selectedGuestID != 0) {
-         addContent(new EditOrderController(), EDIT_ORDER_DIALOG);
-      }
+
+         addContent(new EditOrderController(selectedOrderID, null), EDIT_ORDER_DIALOG);
+
    }
 
    public void handleRemoveButton() {
@@ -89,9 +89,9 @@ public class OrderController extends ContentLoader implements Initializable{
          TableRow<Order> row = new TableRow<>();
          row.getStyleClass().add("pane");
          row.setOnMouseClicked(event -> {
-            selectedGuestID = row.getTableView().getSelectionModel().getSelectedItem().getId();
+            selectedGuestID = row.getTableView().getSelectionModel().getSelectedItem().getGuest().getId();
             selectedOrderID = row.getTableView().getSelectionModel().getSelectedItem().getId();
-            addContent(new AddOrderController(selectedGuestID, selectedOrderID), EDIT_ORDER_DIALOG);
+            handleEditButton();
          });
          return row;
       });

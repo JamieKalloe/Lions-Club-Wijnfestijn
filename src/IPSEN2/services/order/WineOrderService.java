@@ -41,8 +41,8 @@ public class WineOrderService {
         return repository.create(data);
     }
 
-    public void update(int orderID, int wineID, HashMap data) {
-
+    public void update(int wineOrderID, HashMap data) {
+        repository.update(wineOrderID, data);
     }
 
     public void delete(int orderID, int wineID) {

@@ -60,7 +60,6 @@ public class OrderService {
 
     public Order find(int id)
     {
-
         Order order = this.orderRepository.find(id);
         order.setGuest(guestService.find(order.getGuest().getId()));
         order.setEvent(eventService.find(order.getEvent().getId()));
