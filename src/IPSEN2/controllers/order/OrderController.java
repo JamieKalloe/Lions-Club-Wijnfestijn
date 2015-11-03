@@ -4,6 +4,7 @@ import IPSEN2.ContentLoader;
 import IPSEN2.controllers.mail.MailController;
 import IPSEN2.generators.pdf.InvoiceGenerator;
 import IPSEN2.models.order.Order;
+import IPSEN2.services.guest.GuestService;
 import IPSEN2.services.order.OrderService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -57,6 +58,9 @@ public class OrderController extends ContentLoader implements Initializable{
          ArrayList<Integer> guestIDs = new ArrayList<>();
          selectedRows.forEach(row -> guestIDs.add(orderService.find(row).getGuest().getId()));
          addContent(new MailController(guestIDs), MAIL);
+//         ArrayList<Integer> guestIDs = new ArrayList<>();
+//         selectedRows.forEach(row -> guestIDs.add(orderService.find(row).getGuest().getId()));
+         addContent(new MailController(selectedRows), MAIL);
       }
    }
 

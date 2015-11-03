@@ -8,6 +8,7 @@ import IPSEN2.models.merchant.Merchant;
 import IPSEN2.services.guest.GuestService;
 import IPSEN2.services.mail.MailService;
 import IPSEN2.services.merchant.MerchantService;
+import IPSEN2.services.order.OrderService;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -43,10 +44,11 @@ public class MailController extends ContentLoader implements Initializable{
     /**
      * Instantiates a new Mail controller.
      *
-     * @param selectedGuestIDs the selected guest i ds
+     * @param selectedIDs the selected guest i ds
      */
-    public MailController(ArrayList<Integer> selectedGuestIDs) {
-        this.selectedIDs = selectedGuestIDs;
+
+    public MailController(ArrayList<Integer> selectedIDs) {
+        this.selectedIDs = selectedIDs;
     }
 
     /**
@@ -62,12 +64,15 @@ public class MailController extends ContentLoader implements Initializable{
 
 
     private void handleSubmitButton() throws Exception {
+
         for (Integer id : selectedIDs) {
             if (isMerchant) {
                 Merchant merchant = merchantService.find(id);
                 new MailService().send(new MailFactory(merchant).generate(mailService.getMailType(selectedMailType)));
             } else {
-                Guest guest = guestService.find(id);
+//                Guest guest = guestService.find(id);
+                Guest guest = new OrderService().find(id).getGuest();
+                guest.setOrder(new OrderService().find(id));
                 new MailService().send(new MailFactory(guest).generate(mailService.getMailType(selectedMailType)));
             }
             try {

@@ -21,6 +21,8 @@ public class InvoiceGenerator {
     public void generate(Order order) throws DocumentException, IOException{
         Date invoiceDate = new Date();
         Guest guest = order.getGuest();
+        guest.setOrder(order);
+        System.out.println("invoice generator orderID: " + order.getId());
         Document document = new Document();
         Font defaultFont = new Font(Font.FontFamily.TIMES_ROMAN, 12);
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(System.getProperty("user.dir") + "/src/IPSEN2/invoice/"

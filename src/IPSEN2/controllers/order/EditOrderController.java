@@ -76,11 +76,11 @@ public class EditOrderController extends ContentLoader implements Initializable 
     public void handleSubmitButton() {
         HashMap newOrderData = new HashMap();
 
-//        newOrderData.put("guestId", orderService.find(selectedOrderId).getGuest().getId());
-//        newOrderData.put("eventId", eventId);
-//        newOrderData.put("orderStatusId", orderStatusId + "");
-//
-//        orderService.edit(selectedOrderId, newOrderData);
+        newOrderData.put("guestId", orderService.find(selectedOrderId).getGuest().getId());
+        newOrderData.put("eventId", eventId);
+        newOrderData.put("orderStatusId", orderStatusId + "");
+
+        orderService.edit(selectedOrderId, newOrderData);
 
 //        wineOrderData.forEach(wineOrder -> wineOrderService.delete(selectedOrderId, wineOrder.getWine().getWineID()));
 //        wineOrderData.forEach(wineOrder -> {

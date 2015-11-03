@@ -47,6 +47,7 @@ public abstract class ContentLoader {
     public static Stage primaryStage;
     private static FXMLLoader loader;
     public static int eventId;
+    public static String lastWindow;
 
     public static void setMainController(MainFrameController mainFrameController) {
         mainController = mainFrameController;

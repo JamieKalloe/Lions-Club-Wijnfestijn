@@ -5,6 +5,7 @@ import IPSEN2.models.order.Order;
 import IPSEN2.repositories.order.OrderRepository;
 import IPSEN2.services.event.EventService;
 import IPSEN2.services.guest.GuestService;
+import IPSEN2.services.message.Messaging;
 import IPSEN2.services.wine.WineService;
 import IPSEN2.validators.order.OrderValidator;
 
@@ -47,7 +48,7 @@ public class OrderService {
     {
         ArrayList<Order> orderList = this.orderRepository.all();
 
-        for (Order order: orderList)
+        for (Order order : orderList)
         {
             order.setGuest(guestService.find(order.getGuest().getId()));
             order.setEvent(eventService.find(order.getEvent().getId()));
@@ -72,9 +73,9 @@ public class OrderService {
 
     public int add(HashMap data)
     {
-    //        boolean isValid = this.validator.validate(data);
-        boolean isValid = true;
-        if(isValid)
+        boolean isValid = this.validator.validate(data);
+
+        if (!isValid)
         {
             int id = this.orderRepository.create(data);
             ArrayList<Integer> wineIDs = (ArrayList<Integer>) data.get("wineIDs");
@@ -94,24 +95,60 @@ public class OrderService {
                 e.printStackTrace();
             }
 
-            return id;
+            Messaging.getInstance().show(
+                    "Foutmelding",
+                    "Order invoerfout",
+                    "Een van de order velden zijn incorrect ingevuld"
+            );
+
+            return -1;
         }
 
-        return -1;
+        int id = this.orderRepository.create(data);
+        ArrayList<Integer> wineIDs = (ArrayList<Integer>) data.get("wineIDs");
+        ArrayList<Integer> amounts = (ArrayList<Integer>) data.get("amounts");
+        for (int i = 0; i < wineIDs.size(); i++)
+        {
+            HashMap orderData = new HashMap();
+            orderData.put("orderID", id);
+            orderData.put("wineID", wineIDs.get(i));
+            orderData.put("amount", amounts.get(i));
+            wineOrderService.create(orderData);
+        }
+        // Add status
+        // Add guest
+        try
+        {
+            new InvoiceGenerator().generate(this.find(id));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return id;
     }
 
     public boolean edit(int id, HashMap data)
     {
         Order order = this.orderRepository.find(id);
 
-        if(order != null)
+        if (order != null)
         {
             boolean isValid = this.validator.validate(data);
 
-            if(isValid)
+            if (!isValid)
             {
-                orderRepository.update(id, data);
+                Messaging.getInstance().show(
+                        "Foutmelding",
+                        "Order invoerfout",
+                        "Een van de order velden zijn incorrect ingevuld"
+                );
+
+                return false;
             }
+
+            orderRepository.update(id, data);
 
             return true;
         }
@@ -122,12 +159,15 @@ public class OrderService {
     public boolean remove(int id)
     {
         Order order = this.orderRepository.find(id);
-        if(order != null)
+
+        if (order != null)
         {
             this.orderRepository.delete(order.getId());
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 
 }
