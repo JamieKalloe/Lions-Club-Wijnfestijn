@@ -1,6 +1,7 @@
 package IPSEN2.models.guest;
 
 import IPSEN2.models.address.Address;
+import IPSEN2.models.order.Order;
 import IPSEN2.models.referral.Referral;
 import javafx.beans.property.SimpleBooleanProperty;
 
@@ -12,6 +13,7 @@ public class Guest {
     private String lastName;
     private String prefix;
     private String firstName;
+    private Order order;
     private SimpleBooleanProperty attended = new SimpleBooleanProperty(false);
     private SimpleBooleanProperty selected = new SimpleBooleanProperty(false);
 
@@ -79,6 +81,10 @@ public class Guest {
         return id;
     }
 
+    public Order getOrder() {
+        return this.order;
+    }
+
     public String getGender() {
         return gender;
     }
@@ -123,6 +129,10 @@ public class Guest {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public void setLastName(String lastName) {

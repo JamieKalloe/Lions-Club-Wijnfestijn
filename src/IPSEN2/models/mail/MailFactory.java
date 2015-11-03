@@ -1,14 +1,19 @@
 package IPSEN2.models.mail;
 
+import IPSEN2.generators.pdf.InvoiceGenerator;
 import IPSEN2.models.guest.Guest;
 import IPSEN2.models.merchant.Merchant;
+import IPSEN2.models.order.Order;
 import IPSEN2.services.merchant.MerchantService;
+import IPSEN2.services.order.OrderService;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
@@ -17,6 +22,7 @@ import java.nio.file.Paths;
 public class MailFactory {
 
     private String mail;
+    private File file;
     private Guest receiver;
     private int selectedID;
     private MerchantService merchantService;
@@ -36,7 +42,8 @@ public class MailFactory {
         this.receiver = new Guest(merchant.getName(), merchant.getEmail());
     }
 
-    public Mail generate(MailType mailType) {
+
+    public Mail generate(MailType mailType) throws IOException {
 
         /*
             TODO: Informatie van het event moet vanuit guest bereikbaar zijn.
@@ -48,10 +55,10 @@ public class MailFactory {
                 return new Mail(this.receiver.getEmail(), "Bedankt voor uw deelname! - Lions Club", this.getMailContent(MailType.THANK, receiver));
 
             case REMINDER:
-                return new Mail(this.receiver.getEmail(), "Uw factuur is nog niet voldaan! - Lions Club", this.getMailContent(MailType.REMINDER, receiver), getFilePath("src/IPSEN2/resources/REMINDER.txt"));
+                return new Mail(this.receiver.getEmail(), "Uw factuur is nog niet voldaan! - Lions Club", this.getMailContent(MailType.REMINDER, receiver), this.getInvoice(receiver.getOrder().getId()).getAbsolutePath());
 
             case INVOICE:
-                return new Mail(this.receiver.getEmail(), "Uw factuur - Lions Club", this.getMailContent(MailType.INVOICE, receiver), getFilePath("src/IPSEN2/resources/REMINDER.txt"));
+                return new Mail(this.receiver.getEmail(), "Uw factuur - Lions Club", this.getMailContent(MailType.INVOICE, receiver), this.getInvoice(receiver.getOrder().getId()).getAbsolutePath());
 
             case MERCHANT:
                 return new Mail(this.receiver.getEmail(), "Wijn bestelling - Lions Club", this.getMailContent(MailType.MERCHANT, receiver), getFilePath("src/IPSEN2/resources/REMINDER.txt"));
@@ -82,6 +89,32 @@ public class MailFactory {
         optimizedPath += fileName;
 
         return optimizedPath;
+    }
+
+    private File getInvoice(int orderID) throws IOException {
+        System.out.println(orderID);
+        OrderService orderService = new OrderService();
+//        this.file = null;
+        Path directory = Paths.get(System.getProperty("user.dir") + "/src/IPSEN2/invoice");
+        if (!(directory.toString().contains(" " + orderID + ".pdf"))) {
+            try {
+                new InvoiceGenerator().generate(orderService.find(orderID));
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            Files.walk(directory).forEach(
+                    fileDirectory -> {
+                        if ((fileDirectory).toString().contains(" " + orderID + ".pdf")) {
+                            file = fileDirectory.toFile();
+                        }
+                        });
+            } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
     }
 
     private String getMailContent(MailType mailType, Guest guest) {

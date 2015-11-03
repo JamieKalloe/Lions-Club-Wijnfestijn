@@ -1,14 +1,17 @@
 package IPSEN2.services.mail;
 
+import IPSEN2.models.guest.Guest;
 import IPSEN2.models.mail.Mail;
 import IPSEN2.models.mail.MailFactory;
 import IPSEN2.models.mail.MailMessage;
 import IPSEN2.models.mail.MailType;
 import IPSEN2.services.guest.GuestService;
+import IPSEN2.services.order.OrderService;
 
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import java.io.IOException;
 import java.util.Properties;
 
 public class MailService {
@@ -114,12 +117,22 @@ public class MailService {
     }
     public Mail getMail(int selectedID, MailType mailType, boolean isGuest) {
 
-        if (isGuest) {
-            guestService = new GuestService();
-            mail = new MailFactory(guestService.find(selectedID)).generate(mailType);
-        } else{
-            mail = new MailFactory(selectedID).generate(mailType);
+        try {
 
+            if (isGuest) {
+                System.out.println(selectedID);
+                OrderService orderService = new OrderService();
+                System.out.println(selectedID);
+                Guest guest = orderService.find(selectedID).getGuest();
+                guest.setOrder(orderService.find(selectedID));
+//                System.out.println(guest.getOrder().getId());
+                mail = new MailFactory(guest).generate(mailType);
+            } else{
+                mail = new MailFactory(selectedID).generate(mailType);
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return mail;
     }
