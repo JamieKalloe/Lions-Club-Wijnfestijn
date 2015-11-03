@@ -11,11 +11,10 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by Jamie on 13-10-2015.
@@ -35,6 +34,17 @@ public class ExportCSV {
         this.writeCSV(saveFile, getData(table));
 
         System.out.println("Exported table " + table + " to CSV.");
+    }
+
+    public File createMerchantCSV() throws Exception{
+        String fileName = System.getProperty("user.dir") + "/src/IPSEN2/invoice/"
+                + new SimpleDateFormat("YYYY-MM-dd").format(new Date()) + ".csv";
+        File merchantFile = new File(fileName);
+        this.writeCSV(merchantFile, getData("wine"));
+
+        System.out.println("Succesfully made the merchant file.");
+
+        return merchantFile;
     }
 
     private ArrayList<String[]> getData(String table) {

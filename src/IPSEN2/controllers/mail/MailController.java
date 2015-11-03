@@ -1,6 +1,7 @@
 package IPSEN2.controllers.mail;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.generators.csv.ExportCSV;
 import IPSEN2.models.guest.Guest;
 import IPSEN2.models.mail.Mail;
 import IPSEN2.models.mail.MailFactory;
