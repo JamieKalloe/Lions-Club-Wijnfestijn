@@ -26,7 +26,6 @@ public class EditGuestController extends ContentLoader implements Initializable{
     @FXML private TextField firstNameTextField;
     @FXML private TextField prefixTextField;
     @FXML private TextField lastNameTextField;
-    @FXML private TextField telephoneTextField;
     @FXML private TextField emailTextField;
     @FXML private TextField addressTextField;
     @FXML private TextField houseNumberTextField;
@@ -74,7 +73,6 @@ public class EditGuestController extends ContentLoader implements Initializable{
         firstName = firstNameTextField.getText();
         prefix = prefixTextField.getText();
         lastName = lastNameTextField.getText();
-        telephone = telephoneTextField.getText();
         email = emailTextField.getText();
         address = addressTextField.getText();
         houseNumber = houseNumberTextField.getText();

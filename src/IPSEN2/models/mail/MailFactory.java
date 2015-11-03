@@ -3,11 +3,9 @@ package IPSEN2.models.mail;
 import IPSEN2.generators.pdf.InvoiceGenerator;
 import IPSEN2.models.guest.Guest;
 import IPSEN2.models.merchant.Merchant;
-import IPSEN2.models.order.Order;
 import IPSEN2.services.merchant.MerchantService;
 import IPSEN2.services.order.OrderService;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
