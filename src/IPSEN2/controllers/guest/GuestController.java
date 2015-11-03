@@ -1,11 +1,10 @@
 package IPSEN2.controllers.guest;
 
 import IPSEN2.ContentLoader;
-import IPSEN2.controllers.mail.MailService;
+import IPSEN2.controllers.mail.MailController;
 import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.guest.Guest;
-import IPSEN2.models.mail.MailFactory;
-import IPSEN2.models.mail.MailType;
+import IPSEN2.services.attendee.AttendeeService;
 import IPSEN2.services.guest.GuestService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -21,6 +20,7 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 
@@ -37,18 +37,23 @@ public class GuestController extends ContentLoader implements Initializable{
     public int selectedGuestID;
     private GuestService service;
     private static ObservableList<Guest> guestData;
+    private static ObservableList<Guest> attendeeData;
     private static ArrayList<Integer> selectedRows;
     private CheckBox selectAllCheckBox;
     private static  boolean selected;
     private static boolean keepCurrentData = false;
+    private static int currentEventId = 0;
+    private AttendeeService attendeeService;
 
     @FXML
     private Pane removeButton;
 
 
     public void handleAddButton() throws IOException {
-        keepCurrentData = false;
-        addContent(new AddGuestController(), EDIT_GUEST_DIALOG);
+        if (eventId != 0) {
+            keepCurrentData = false;
+            addContent(new AddGuestController(), EDIT_GUEST_DIALOG);
+        }
     }
 
     public void handleRemoveButton() {
@@ -60,9 +65,7 @@ public class GuestController extends ContentLoader implements Initializable{
             for (Integer row : selectedRows) {
                 //if (guestData.get(selectedRows.indexOf(row)).getAttended()) {
                 System.out.println("removing " + row);
-                service.remove(row);
-
-                //}
+                attendeeService.delete(row);
             }
         } else {
 //            Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -74,7 +77,8 @@ public class GuestController extends ContentLoader implements Initializable{
         }
 
 
-        guestData = FXCollections.observableArrayList(service.all());
+
+        attendeeData = FXCollections.observableArrayList(service.findAttendeesForEvent(eventId));
         addContent(GUESTS);
 
     }
@@ -82,18 +86,9 @@ public class GuestController extends ContentLoader implements Initializable{
     public void handleMailButton() {
         if (selectedRows.size() != 0) {
             selected = false;
-
-            for (Integer row : selectedRows) {
-                try {
-                    Guest guest = service.find(row);
-                    new MailService().send(new MailFactory().generate(MailType.EVENT, guest));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+            addContent(new MailController(selectedRows), MAIL);
         }
     }
-
 
     public void openEditGuestMenu() throws IOException{
         if (selectedGuestID != 0 ) {
@@ -109,15 +104,30 @@ public class GuestController extends ContentLoader implements Initializable{
     @FXML
     private void importCSVFile() {
         //TODO: delete test code, debug only.
+        if (eventId != 0) {
         try {
             ImportCSV importCSV = new ImportCSV();
             importCSV.importGuests();
+            guestData.forEach(guest -> {
+                HashMap attendeeData = new HashMap();
+
+                attendeeData.put("guestID", guest.getId());
+                attendeeData.put("eventID", eventId);
+                attendeeData.put("zipCode", guest.getAddress().getZipCode());
+                attendeeData.put("street", guest.getAddress().getStreet());
+                attendeeData.put("houseNumber", guest.getAddress().getHouseNumber());
+                attendeeData.put("country", guest.getAddress().getCountry());
+                attendeeData.put("city", guest.getAddress().getCity());
+                attendeeData.put("referralName", guest.getReferral());
+                attendeeService.create(attendeeData);
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
-        keepCurrentData = false;
+
+            keepCurrentData = false;
         addContent(GUESTS);
-    }
+    }}
 
     private void setOnTableRowClickedListener() {
         table_view.setRowFactory(table -> {
@@ -145,17 +155,16 @@ public class GuestController extends ContentLoader implements Initializable{
             if (selected) {
                 selectedRows.clear();
             }
-            guestData.forEach(guest -> {
+
+            attendeeData.forEach(guest -> {
                 guest.setSelected(selected);
                 if (selected) {
                     selectedRows.add(guest.getId());
-                    System.out.println(selectedRows.size());
                 } else {
                     selectedRows.clear();
-                    System.out.println(selectedRows.size());
                 }
             });
-
+            keepCurrentData = true;
             addContent(GUESTS);
             selectAllCheckBox.setSelected(selected);
         });
@@ -209,14 +218,21 @@ public class GuestController extends ContentLoader implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         ContentLoader.setMainFrameTitle(ContentLoader.GUESTS_TITLE);
         service = new GuestService();
+        attendeeService = new AttendeeService();
 
-        if (!keepCurrentData) {
-            guestData = FXCollections.observableArrayList(service.all());
-            selectedRows = new ArrayList<>();
-            keepCurrentData = true;
+        if (currentEventId != eventId || currentEventId == 0) {
+            keepCurrentData = false;
         }
 
-        table_view.setItems(guestData);
+        if (!keepCurrentData) {
+                currentEventId = eventId;
+                guestData = FXCollections.observableArrayList(service.all());
+                attendeeData = FXCollections.observableArrayList(service.findAttendeesForEvent(eventId));
+                selectedRows = new ArrayList<>();
+            }
+
+
+
         setOnTableRowClickedListener();
 
         checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
@@ -226,13 +242,17 @@ public class GuestController extends ContentLoader implements Initializable{
         emailColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("email"));
         attendedColumn.setCellValueFactory(createAttendedCellCallBack());
 
-//        AttendeeService attendeeService = new AttendeeService();
-//        HashMap attendeeData = new HashMap();
-////        attendeeService.create(attendeeData);
+
+        table_view.setItems(attendeeData);
 
 
         createSelectAllCheckBox();
 
-        table_view.setPlaceholder(new Label("Er is geen content om te weergeven"));
+        if (eventId == 0) {
+            table_view.setPlaceholder(new Label("Er is nog geen event geselecteerd"));
+
+        } else {
+            table_view.setPlaceholder(new Label("Er is geen content om te weergeven"));
+        }
     }
 }

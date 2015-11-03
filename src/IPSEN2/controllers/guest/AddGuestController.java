@@ -1,6 +1,7 @@
 package IPSEN2.controllers.guest;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.models.guest.Guest;
 import IPSEN2.services.attendee.AttendeeService;
 import IPSEN2.services.guest.GuestService;
 import javafx.fxml.FXML;
@@ -101,16 +102,29 @@ public class AddGuestController extends ContentLoader implements Initializable {
         data.put("country", "Nederland");
         data.put("city", city);
         data.put("referralName", referral);
+
         service.subscribe(data);
 
+        Guest guest = service.all().get(service.all().size() - 1);
 
+        attendeeData.put("guestID", guest.getId());
+        attendeeData.put("eventID", eventId);
+        attendeeData.put("zipCode", guest.getAddress().getZipCode());
+        attendeeData.put("street", guest.getAddress().getStreet());
+        attendeeData.put("houseNumber", guest.getAddress().getHouseNumber());
+        attendeeData.put("country", guest.getAddress().getCountry());
+        attendeeData.put("city", guest.getAddress().getCity());
+        attendeeData.put("referralName", guest.getReferral());
+
+
+        attendeeService.create(attendeeData);
         addContent(GUESTS);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         service = new GuestService();
-
+        attendeeService = new AttendeeService();
 
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());

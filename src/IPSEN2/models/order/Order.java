@@ -18,6 +18,7 @@ public class Order {
     private ArrayList<WineOrder> wineOrders;
 
     private double totalAmount;
+    private boolean selected;
 
     public Order (int id, int guestId, int eventId, int orderStatusId)
     {
@@ -53,6 +54,10 @@ public class Order {
         return totalAmount;
     }
 
+    public boolean getSelected() {
+        return selected;
+    }
+
     public void setGuest(Guest guest) {
         this.guest = guest;
     }
@@ -69,12 +74,16 @@ public class Order {
         this.wineOrders = wineOrders;
         double total = 0.0;
         for(WineOrder order: wineOrders) {
-            //total += order.getAmount() * order.getWine().getPrice();
+            total += order.getAmount() * order.getWine().getPrice();
         }
         this.totalAmount = total;
     }
 
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

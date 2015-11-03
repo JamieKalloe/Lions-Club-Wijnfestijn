@@ -11,13 +11,11 @@ public class Event {
     private int id;
     private String name;
     private Address address;
-
-
-
     private String street;
     private String city;
     private Date startDate;
     private Date endDate;
+    private boolean selected;
 
     public Event() {
         this.id = -1;
@@ -72,6 +70,11 @@ public class Event {
 
     public String getCity() {return address.getCity();}
 
+    public boolean getSelected() {
+        return selected;
+    }
+
+
     //SETTERS
     public void setId(int id) {
         this.id = id;
@@ -92,4 +95,7 @@ public class Event {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    public void setSelected(boolean selected) {this.selected = selected;}
+
 }

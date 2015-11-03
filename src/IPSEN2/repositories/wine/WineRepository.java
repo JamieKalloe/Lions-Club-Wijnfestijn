@@ -18,6 +18,7 @@ public class WineRepository implements Crudable {
 
     private Database databaseInstance;
 
+    // Constructor creates a DB instance
     public WineRepository() {
         this.databaseInstance = Database.getInstance();
     }
@@ -27,13 +28,18 @@ public class WineRepository implements Crudable {
      *
      * @return
      */
+    // ArrayList with all Wine entries
     public ArrayList<Wine> all() {
         ArrayList<Wine> wineList = new ArrayList<Wine>();
+        // MySQL Query
         ResultSet queryResult = databaseInstance.select("wine");
 
         try {
             while(queryResult.next()) {
+                // Creates a new wine object
                 Wine wine = new Wine();
+
+                // Fill the wine object with data from the query
                 wine.setWineID(queryResult.getInt("id"));
                 wine.setType(new WineType(queryResult.getInt("type_id")));
                 wine.setMerchant(new WineMerchant(queryResult.getInt("merchant_id")));
@@ -41,41 +47,38 @@ public class WineRepository implements Crudable {
                 wine.setCountry(queryResult.getString("country"));
                 wine.setRegion(queryResult.getString("region"));
                 wine.setYear(queryResult.getInt("year"));
-                wine.setPurchasePrice(queryResult.getDouble("purchase_price"));
                 wine.setPrice(queryResult.getDouble("price"));
 
+                // Add the wine object in the ArrayList
                 wineList.add(wine);
 
-
             }
+        // Error handling
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return wineList;
     }
 
-    /**
-     * zoeken van een wijn in de database
-     * aan de hand van een id.
-     *
-     * @param wine_id
-     * @return
-     */
+    // Searching for a wine based on a ID
     public Wine find(int wine_id) {
+        // MySQL query
         ResultSet queryResult = databaseInstance.select("wine", wine_id);
         try {
             while(queryResult.next()) {
+               // If he finds a wine, create a new object.
                 Wine wine = new Wine();
 
+                // Fill this object with data from the query
                 wine.setWineID(queryResult.getInt("id"));
                 wine.setType(new WineType(queryResult.getInt("type_id")));
                 wine.setName(queryResult.getString("name"));
                 wine.setCountry(queryResult.getString("country"));
                 wine.setRegion(queryResult.getString("region"));
                 wine.setYear(queryResult.getInt("year"));
-                wine.setPurchasePrice(queryResult.getDouble("purchase_price"));
                 wine.setPrice(queryResult.getDouble("price"));
 
+                // Return the wine object.
                 return wine;
 
             }
@@ -99,31 +102,31 @@ public class WineRepository implements Crudable {
         HashMap databaseData = new HashMap();
 
         databaseData.put("type_id", Integer.parseInt(data.get("type_id").toString()));
-        databaseData.put("merchant_id", 1);
+        databaseData.put("merchant_id", 9);
         databaseData.put("name", data.get("name").toString());
+        databaseData.put("region", data.get("region").toString());
         databaseData.put("country", data.get("country").toString());
-        databaseData.put("region", data.get("region"));
         databaseData.put("year", Integer.parseInt(data.get("year").toString()));
-        databaseData.put("purchase_price", 12.0);
         databaseData.put("price", Double.parseDouble(data.get("price").toString()));
 
         return databaseInstance.insertInto("wine", databaseData);
-
     }
 
     public void update(int id, HashMap data) {
+        // Create new DB ready HashMap object.
         HashMap databaseData = new HashMap();
-       // databaseData.put("id", Integer.parseInt(data.get("id").toString()));
-        databaseData.put("type_id", Integer.parseInt(data.get("type").toString()));
+
+        // Fill the HashMap with data from the WineService
+        databaseData.put("type_id", data.get("type_id"));
         databaseData.put("name", data.get("name").toString());
         databaseData.put("country", data.get("country").toString());
         databaseData.put("region", data.get("region"));
         databaseData.put("year", Integer.parseInt(data.get("year").toString()));
-        databaseData.put("purchase_price", Double.parseDouble(data.get("purchasePrice").toString()));
         databaseData.put("price", Double.parseDouble(data.get("price").toString()));
 
+        // Update the wine table based on the given HashMap
         databaseInstance.update("wine", id, databaseData);
-
     }
-    public void delete(int id) { databaseInstance.delete("guest", id);}
+    // If delete is called, delete the chosen wine based on its ID.
+    public void delete(int id) { databaseInstance.delete("wine", id);}
 }

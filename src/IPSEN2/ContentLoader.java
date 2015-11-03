@@ -20,14 +20,17 @@ public abstract class ContentLoader {
     public static final String WINE = "/IPSEN2/views/wine/WineTableView.fxml";
     public static final String ORDER = "/IPSEN2/views/order/OrderTableView.fxml";
     public static final String EVENTS = "/IPSEN2/views/event/EventTableView.fxml";
-    public static final String MANUAL = "/IPSEN2/views/guest/GuestTableView.fxml";
-    public static final String EVENT_CHOOSER = "/IPSEN2/views/event/EventChooser.fxml";
+    public static final String MAIL = "/IPSEN2/views/mail/SelectMailView.fxml";
+    public static final String MERCHANT = "/IPSEN2/views/merchant/MerchantView.fxml";
     public static final String STYLE = "IPSEN2/styles/style.css";
 
     public static final String EDIT_GUEST_DIALOG = "/IPSEN2/views/guest/GuestDialogView.fxml";
     public static final String EDIT_WINE_DIALOG = "/IPSEN2/views/wine/WineDialogView.fxml";
     public static final String EDIT_ORDER_DIALOG = "/IPSEN2/views/order/OrderDialogView.fxml";
     public static final String EDIT_EVENT_DIALOG = "/IPSEN2/views/event/EventDialogView.fxml";
+    public static final String ADD_MERCHANT_DIALOG = "/IPSEN2/views/merchant/MerchantDialogView.fxml";
+    public static final String SELECT_GUEST_DIALOG = "/IPSEN2/views/order/SelectGuestView.fxml";
+    public static final String SELECT_WINE_DIALOG = "/IPSEN2/views/order/SelectWineView.fxml";
 
 
     public static final String ADD_WINE = "/IPSEN2/views/order/WineIDAndQuantityContainer.fxml";
@@ -39,10 +42,11 @@ public abstract class ContentLoader {
     public static final String WINES_TITLE = "Wijnen";
     public static final String ORDERS_TITLE = "Bestellingen";
     public static final String EVENTS_TITLE = "Evenementen";
-    public static final String MANUAL_TITLE = "Handleiding";
+    public static final String MERCHANT_TITLE = "Wijnhandel";
     private static MainFrameController mainController;
     public static Stage primaryStage;
     private static FXMLLoader loader;
+    public static int eventId;
 
     public static void setMainController(MainFrameController mainFrameController) {
         mainController = mainFrameController;
@@ -53,6 +57,7 @@ public abstract class ContentLoader {
         mainController.removeContent();
 
         try {
+
             mainController.setContent(
                     configureFXMLLoader(fxml).load());
         } catch (IOException e) {
@@ -72,10 +77,14 @@ public abstract class ContentLoader {
         return mainFrame;
     }
 
-    public static void addContent(Object controller, String fxml) throws IOException{
+    public static void addContent(Object controller, String fxml) {
         FXMLLoader loader = configureFXMLLoader(fxml);
         loader.setController(controller);
-       mainController.setContent(loader.load());
+        try {
+            mainController.setContent(loader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static FXMLLoader configureFXMLLoader(String fxml){

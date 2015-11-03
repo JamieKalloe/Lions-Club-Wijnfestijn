@@ -31,16 +31,16 @@
     -fx-background-insets: 0, 1;
 }
 
-.buttonWithoutHover:hover {
+.buttonWithoutHover:hover  {
     -fx-cursor: hand;
     -fx-effect: dropshadow(two-pass-box, rgba(0,0,0,0.40), 8, 0.0, 0, 3);
 }
-.pane:hover {
+.pane:hover, .list-cell:hover {
      -fx-background-color: rgba(0,0,0,0.2);
     -fx-cursor: hand;
 }
 
-.table-view{
+.table-view, .list-view{
     -fx-background-color: transparent;
     -fx-background-insets: 0;
     -fx-box-border: transparent;
@@ -109,6 +109,15 @@
 .table-view .column-header .checkBoxColumn .check-box {
     -fx-alignment: center;
 }
+
+.deleteButton {
+    -fx-cursor: hand;
+
+    -fx-background-color: transparent;
+    /*-fx-background-image: url("../images/WineBackground.jpg");*/
+}
+
+
 
 
 

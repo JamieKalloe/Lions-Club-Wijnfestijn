@@ -1,190 +1,224 @@
 package IPSEN2.controllers.order;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.models.guest.Guest;
+import IPSEN2.models.order.WineOrder;
+import IPSEN2.services.guest.GuestService;
 import IPSEN2.services.order.OrderService;
+import IPSEN2.services.order.OrderStatusService;
+import IPSEN2.services.order.WineOrderService;
+import IPSEN2.services.wine.WineService;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
+import javafx.util.Callback;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 /**
  * Created by Philip on 01-10-15.
  */
 public class AddOrderController extends ContentLoader implements Initializable {
-    @FXML
-    private AnchorPane wineIDandQuantityWrapper, deleteButtonWrapper;
-
-    @FXML
-    private Pane cancelButton, submitButton, addWineButton;
-
-    private ArrayList<Pane> wineAndQuantityList;
-    private ArrayList<ImageView> deleteButtonList;
-
-    private ArrayList<TextField> wineIDTextFieldList, wineQuantityTextFieldList;
-    @FXML
-    private TextField customerIDTextField;
-
-    private double yPosition;
 
 
-    @FXML
+    @FXML private Pane cancelButton, submitButton, addWineButton;
+    @FXML private TableView<WineOrder> table_view;
+    @FXML private TableColumn wineNameColumn;
+    @FXML private TableColumn quantityColumn;
+    @FXML private TableColumn deleteButtonColumn;
+
+    private static ObservableList<WineOrder> wineOrderData;
+
+    @FXML private Label customerNameLabel;
+    @FXML private ComboBox orderStatusComboBox;
+
+    private int selectedGuestID;
+    private int selectedOrderID;
+    private ArrayList<String> selectedWineIDs;
+    private GuestService guestService;
+    private WineOrderService wineOrderService;
+    private OrderService orderService;
+    private OrderStatusService orderStatusService;
+    private static int orderStatusID;
+
+    private Guest guest;
+
+    public AddOrderController(int selectedGuestID) {
+        this.selectedGuestID = selectedGuestID;
+    }
+
+    public AddOrderController(int selectedGuestID, int selectedOrderID) {
+        this.selectedGuestID = selectedGuestID;
+        this.selectedOrderID = selectedOrderID;
+    }
+
+    public AddOrderController(int selectedGuestID, ArrayList<String> selectedWineIDs) {
+        this.selectedGuestID = selectedGuestID;
+        this.selectedWineIDs = selectedWineIDs;
+    }
+
     public void handleCancelButton() {
+        wineOrderData = null;
         addContent(ORDER);
     }
 
     public void handleSubmitButton() {
-        HashMap data = new HashMap();
-        data.put("guestId", customerIDTextField.getText());
-        data.put("eventId", 1);
-        data.put("orderStatusId", 1);
-        ArrayList<String> wineIDs = new ArrayList<String>();
-        ArrayList<String> amounts = new ArrayList<String>();
-        wineAndQuantityList.forEach(row -> {
-            int index = wineAndQuantityList.indexOf(row);
-            wineIDs.add(wineIDTextFieldList.get(index).getText());
-            amounts.add(wineQuantityTextFieldList.get(index).getText());
-          System.out.println("wine ID: " + wineIDTextFieldList.get(index).getText());
-           System.out.println("Quantity: " + wineQuantityTextFieldList.get(index).getText());
-        });
-        data.put("wineIDs", wineIDs);
-        data.put("amounts", amounts);
-        new OrderService().add(data);
+        HashMap orderData = new HashMap();
+        ArrayList<String> amounts= new ArrayList<>();
+        if (wineOrderData.size() != 0) {
+            if (selectedWineIDs == null) {
+                selectedWineIDs = new ArrayList<>();
+            }
+
+            selectedWineIDs.clear();
+            wineOrderData.forEach(wineOrder -> {
+                amounts.add(wineOrder.getAmount() + "");
+                selectedWineIDs.add(wineOrder.getWine().getWineID() + "");
+            });
+
+
+            orderData.put("guestId", selectedGuestID);
+            orderData.put("eventId", eventId);
+            orderData.put("orderStatusId", orderStatusID + "");
+            orderData.put("wineIDs", selectedWineIDs);
+            orderData.put("amounts", amounts);
+
+            if (selectedOrderID != 0) {
+                orderService.edit(selectedOrderID, orderData);
+            } else
+                orderService.add(orderData);
+        }
+        orderStatusID = 0;
+        wineOrderData = null;
         addContent(ORDER);
     }
 
-    public void handleAddWineButton() throws IOException {
-
-       createWineIDAndQuanityContainer();
-
-        addWineButton.setLayoutY(addWineButton.getLayoutY() + 50);
-
-        createDeleteButton();
-
-    }
-
-    private void createWineIDAndQuanityContainer() throws IOException{
-        Pane wineIDAndQuantityContainer = new Pane();
-        TextField wineIDTextField = new TextField();
-        Label wineInfoLabel = new Label("Wijnnaam ,soort en streek");
-        TextField wineQuantityTextField = new TextField();
-
-        wineIDAndQuantityContainer.setPrefWidth(611);
-        wineIDTextField.setPrefWidth(167);
-        wineQuantityTextField.setPrefWidth(41);
-
-
-        wineInfoLabel.setTextFill(Paint.valueOf("#999999"));
-        wineInfoLabel.setLayoutX(252);
-        wineInfoLabel.setFont(new Font("Roboto", 18));
-        wineQuantityTextField.setLayoutX(570);
-
-        wineIDTextFieldList.add(wineIDTextField);
-        wineQuantityTextFieldList.add(wineQuantityTextField);
-
-
-
-        wineIDAndQuantityContainer.getChildren().addAll(wineIDTextField, wineInfoLabel, wineQuantityTextField);
-
-        if (wineAndQuantityList.size() != 0){
-            yPosition += 50;
-            wineIDAndQuantityContainer.setLayoutY(yPosition);
-        } else {
-            yPosition = 0;
-            wineIDAndQuantityContainer.setLayoutY(yPosition);
-
-        }
-
-        wineIDandQuantityWrapper.getChildren().add(wineIDAndQuantityContainer);
-        wineAndQuantityList.add(wineIDAndQuantityContainer);
-    }
-
-    private void createDeleteButton() throws IOException{
-        ImageView deleteButton = new ImageView("/IPSEN2/images/DeleteButton2.png");
-        deleteButton.setLayoutY(yPosition);
-        deleteButton.getStyleClass().add("buttonWithoutHover");
-
-        deleteButtonWrapper.getChildren().add(deleteButton);
-        deleteButtonList.add(deleteButton);
-
-        handleDeleteButton(deleteButton);
-    }
-
-    private void handleDeleteButton(ImageView deleteButton){
-        deleteButton.setOnMouseClicked(event -> deleteRow(event));
-    }
-
-
-    public void deleteRow(MouseEvent event) {
-        for(int i = 0; i < deleteButtonList.size(); i++){
-
-            if (event.getSource() == deleteButtonList.get(i)) {
-                repositionListItems(i);
-                deleteButtonWrapper.getChildren().remove(deleteButtonList.get(i));
-                wineIDandQuantityWrapper.getChildren().remove(wineAndQuantityList.get(i));
-                deleteButtonList.remove(i);
-                wineAndQuantityList.remove(i);
-                yPosition -= 50;
-
+    private void handleOrderStatusComboBox() {
+        orderStatusService.all().forEach(orderStatus -> {
+            if (orderStatus.getName().equals(orderStatusComboBox.getValue())) {
+                orderStatusID = orderStatus.getId();
             }
-        }
+        });
     }
 
+      public void handleAddWineButton(){
+        addContent( new SelectWineController(selectedGuestID), SELECT_WINE_DIALOG);
+    }
 
-    private void repositionListItems(int index) {
-        for(int j = index; j < deleteButtonList.size(); j++) {
-            if (j > index) {
-                deleteButtonWrapper.getChildren().get(j).setLayoutY(deleteButtonWrapper.getChildren().get(j).getLayoutY() - 50);
-                wineIDandQuantityWrapper.getChildren().get(j).setLayoutY(wineIDandQuantityWrapper.getChildren().get(j).getLayoutY() - 50);
+    private Callback createTextFieldCellCallBack() {
+        Callback textFieldCellCallBack = new Callback<TableColumn.CellDataFeatures<WineOrder, TextField>, ObservableValue<TextField>>() {
+
+            @Override
+            public ObservableValue<TextField> call(TableColumn.CellDataFeatures<WineOrder, TextField> cellDataFeatures) {
+                TextField textField = new TextField();
+                textField.setText(cellDataFeatures.getValue().getAmount() + "");
+                textField.textProperty().addListener((ObservableValue<? extends String> observableValue,
+                                                      String oldValue, String newValue) -> {
+
+                    if (!newValue.equals("")) {
+                        cellDataFeatures.getValue().setAmount(Integer.parseInt(newValue));
+                        System.out.println("amount: " + cellDataFeatures.getValue().getAmount());
+                    }
+                });
+                return new SimpleObjectProperty(textField);
             }
-
-        }
-
-        addWineButton.setLayoutY(addWineButton.getLayoutY() - 50);
+        };
+        return  textFieldCellCallBack;
     }
 
+    private Callback createDeleteButtonCellCallBack() {
+        Callback deleteButtonCellCallBack = new Callback<TableColumn.CellDataFeatures<WineOrder, Button>, ObservableValue<Button>>() {
+
+            @Override
+            public ObservableValue<Button> call(TableColumn.CellDataFeatures<WineOrder, Button> cellDataFeatures) {
+               Button deleteButton = new Button();
+                deleteButton.getStyleClass().addAll( "deleteButton", "buttonWithoutHover");
+                deleteButton.setGraphic(new ImageView("/IPSEN2/images/deleteIcon.png"));
+
+                int wineID = cellDataFeatures.getValue().getWine().getWineID();
+
+                deleteButton.setOnAction(event -> {
+                    for( Iterator<WineOrder> iterator = wineOrderData.iterator(); iterator.hasNext() ; )
+                    {
+                        WineOrder wineOrder = iterator.next();
+                        if(wineOrder.getWine().getWineID() == wineID)
+                        {
+                            iterator.remove();
+                        }
+                    }
+                    table_view.setItems(wineOrderData);
+                });
+
+                return new SimpleObjectProperty(deleteButton);
+                }
+        };
+        return  deleteButtonCellCallBack;
+    }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        guestService = new GuestService();
+        guest = guestService.find(selectedGuestID);
+        wineOrderService = new WineOrderService();
+        orderService= new OrderService();
+        orderStatusService = new OrderStatusService();
+        WineService wineService = new WineService();
+
+        orderStatusService.all().forEach(orderStatus -> {
+                    orderStatusComboBox.getItems().addAll(orderStatusService.
+                            find(orderStatus.getId()).getName());
+                });
+
+        orderStatusComboBox.setOnAction(event -> handleOrderStatusComboBox());
+
+        if (wineOrderData == null) {
+            wineOrderData = FXCollections.observableArrayList(new ArrayList<>());
+            orderStatusComboBox.setValue(orderStatusService.all().get(orderStatusService.all().size() - 1).getName());
+            orderStatusID = orderStatusService.all().get(orderStatusService.all().size() - 1).getId();
+        }
+
+            orderStatusComboBox.setValue(orderStatusService.find(orderStatusID).getName());
+
+
+        if (selectedOrderID != 0) {
+            wineOrderData = FXCollections.observableArrayList(wineOrderService.allForOrder(selectedOrderID));
+            table_view.setItems(FXCollections.observableArrayList(wineOrderData));
+            orderStatusID = orderService.find(selectedOrderID).getStatus().getId();
+            orderStatusComboBox.setValue(orderStatusService.find(orderStatusID).getName());
+        } else{
+            table_view.setItems(wineOrderData);
+        }
+        customerNameLabel.setText(guest.getFirstName() + " " + guest.getLastName());
+
+        addWineButton.setOnMouseClicked(event -> handleAddWineButton());
+
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
 
-        addWineButton.setOnMouseClicked(event -> {
-            try {
-                handleAddWineButton();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        wineNameColumn.setCellValueFactory(new PropertyValueFactory<WineOrder, String>("name"));
+        quantityColumn.setCellValueFactory(createTextFieldCellCallBack());
+        deleteButtonColumn.setCellValueFactory(createDeleteButtonCellCallBack());
 
-        deleteButtonList = new ArrayList<>();
-        wineAndQuantityList = new ArrayList<>();
-        wineIDTextFieldList = new ArrayList<>();
-        wineQuantityTextFieldList = new ArrayList<>();
-
-        try {
-           createWineIDAndQuanityContainer();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (selectedWineIDs != null) {
+            selectedWineIDs.forEach(selectedWineID -> {
+                WineOrder wineOrder = new WineOrder(Integer.parseInt(selectedWineID), 1);
+                wineOrder.setWine(wineService.find(Integer.parseInt(selectedWineID)));
+                wineOrderData.add(wineOrder);
+            });
         }
 
 
-        try {
-            createDeleteButton();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -109,11 +109,11 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="handleidingNav" layoutY="356.0" onMouseClicked="#handleNavButton" prefHeight="54.0" prefWidth="266.0" styleClass="pane">
+            <Pane fx:id="wijnHandelNav" layoutX="1.0" layoutY="346.0" onMouseClicked="#handleNavButton" prefHeight="58.0" prefWidth="266.0" styleClass="pane">
                <children>
-                  <ImageView fitHeight="54.0" fitWidth="186.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="58.0" fitWidth="257.0" layoutX="4.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/HandleidingNav.png" />
+                        <Image url="@../../images/WineMerchantNav.png" />
                      </image>
                   </ImageView>
                </children>

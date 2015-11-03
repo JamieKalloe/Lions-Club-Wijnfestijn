@@ -39,7 +39,7 @@ public class Main extends Application {
 
         service.add(data);*/
 //        try {
-//            new InvoiceGenerator().generate("bin/invoice.pdf");
+//            new InvoiceGenerator().generate("bin/IPSEN2.invoice.pdf");
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }

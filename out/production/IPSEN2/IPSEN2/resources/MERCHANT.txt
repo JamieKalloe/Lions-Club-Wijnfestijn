@@ -1,7 +1,0 @@
-Beste %s,
-
-In de bijlage vindt u de bestelling voor het %s.
-
-Mocht u vragen hebben, neemt u dan alstublieft contact op!
-
-%s

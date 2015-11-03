@@ -14,13 +14,14 @@
             <Image url="@../../images/GastenAchtergrond.png" />
          </image>
       </ImageView>
-      <TableView fx:id="table_view" layoutX="130.0" layoutY="73.0" prefHeight="434.0" prefWidth="666.0" styleClass="table-view" stylesheets="@../../styles/Style.css">
+      <TableView fx:id="table_view" layoutX="130.0" layoutY="73.0" prefHeight="434.0" prefWidth="666.0" styleClass="table-view" stylesheets="@../../styles/style.css">
          <columns>
-            <TableColumn fx:id="idColumn" prefWidth="53.0" styleClass="table-view" text="id" />
-            <TableColumn fx:id="lastNameColumn" prefWidth="149.0" styleClass="table-view" text="Achternaam" />
-            <TableColumn fx:id="totalAmountColumn" prefWidth="150.0" styleClass="table-view" text="Totaal Bedrag" />
-            <TableColumn fx:id="statusColumn" prefWidth="200" styleClass="table-view" text="Status" />
-            <TableColumn fx:id="invoiceColumn" prefWidth="114" styleClass="table-view" text="Factuur" />
+            <TableColumn fx:id="checkBoxColumn" prefWidth="62.0" />
+            <TableColumn fx:id="idColumn" prefWidth="66.0" styleClass="table-view" text="id" />
+            <TableColumn fx:id="lastNameColumn" prefWidth="151.14569091796875" styleClass="table-view" text="Achternaam" />
+            <TableColumn fx:id="totalAmountColumn" prefWidth="124.85430908203125" styleClass="table-view" text="Bedrag" />
+            <TableColumn fx:id="statusColumn" prefWidth="148.40252685546875" styleClass="table-view" text="Status" />
+            <TableColumn fx:id="invoiceColumn" prefWidth="114.0" styleClass="table-view" text="Factuur" />
          </columns>
       </TableView>
       <Pane layoutX="806.0" layoutY="44.0" onMouseClicked="#handleAddButton" prefHeight="69.0" prefWidth="94.0" styleClass="buttonWithoutHover">
@@ -32,16 +33,7 @@
             </ImageView>
          </children>
       </Pane>
-      <Pane layoutX="806.0" layoutY="128.0" onMouseClicked="#handleEditButton" prefHeight="69.0" prefWidth="81.0" styleClass="buttonWithoutHover">
-         <children>
-            <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="12.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/EditButton.png" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
-      <Pane layoutX="808.0" layoutY="217.0" onMouseClicked="#handleRemoveButton" prefHeight="69.0" prefWidth="81.0" styleClass="buttonWithoutHover">
+      <Pane layoutX="808.0" layoutY="117.0" onMouseClicked="#handleRemoveButton" prefHeight="69.0" prefWidth="81.0" styleClass="buttonWithoutHover">
          <children>
             <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="10.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -50,7 +42,7 @@
             </ImageView>
          </children>
       </Pane>
-      <Pane layoutX="808.0" layoutY="302.0" prefHeight="69.0" prefWidth="81.0" styleClass="buttonWithoutHover">
+      <Pane layoutX="808.0" layoutY="192.0" onMouseClicked="#handleMailButton" prefHeight="69.0" prefWidth="81.0" styleClass="buttonWithoutHover">
          <children>
             <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="10.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                <image>

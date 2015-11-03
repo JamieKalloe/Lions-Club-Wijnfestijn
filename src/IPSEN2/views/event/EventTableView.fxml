@@ -20,36 +20,18 @@
             <Font name="Roboto Regular" size="24.0" />
          </font>
       </Label>
-      <TableView fx:id="table_view" editable="true" fixedCellSize="0.0" layoutX="210.0" layoutY="153.0" prefHeight="525.0" prefWidth="731.0" styleClass="table-view" stylesheets="@../../styles/style.css">
+      <TableView fx:id="table_view" editable="true" fixedCellSize="0.0" layoutX="184.0" layoutY="153.0" prefHeight="525.0" prefWidth="757.0" styleClass="table-view" stylesheets="@../../styles/style.css">
          <columns>
-            <TableColumn fx:id="checkBoxColumn" prefWidth="30.0" />
-            <TableColumn fx:id="idColumn" editable="false" prefWidth="51.0" text="ID" />
-            <TableColumn fx:id="nameColumn" editable="false" prefWidth="141.40216064453125" text="Naam" />
-            <TableColumn fx:id="eventPlaceNameColumn" prefWidth="150.19546508789062" text="Plaats" />
-            <TableColumn fx:id="eventAddressColumn" editable="false" prefWidth="188.80450439453125" sortable="false" text="Adres" />
-            <TableColumn fx:id="eventDateColumn" prefWidth="168.24652099609375" text="Datum" />
+            <TableColumn fx:id="checkBoxColumn" prefWidth="41.32649230957031" />
+            <TableColumn fx:id="idColumn" editable="false" prefWidth="44.85423278808594" text="ID" />
+            <TableColumn fx:id="nameColumn" editable="false" prefWidth="146.145751953125" text="Naam" />
+            <TableColumn fx:id="eventPlaceNameColumn" prefWidth="151.90966796875" text="Plaats" />
+            <TableColumn fx:id="eventAddressColumn" editable="false" prefWidth="180.90948486328125" sortable="false" text="Adres" />
+            <TableColumn fx:id="eventDateColumn" prefWidth="192.9998779296875" text="Datum" />
          </columns>
       </TableView>
-      <Group layoutX="171.0" layoutY="71.0">
+      <Group layoutX="171.0" layoutY="70.0">
          <children>
-            <Pane layoutX="808.0" layoutY="302.0" prefHeight="94.0" prefWidth="81.0" styleClass="buttonWithoutHover">
-               <children>
-                  <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="9.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/MailButton.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane layoutX="808.0" layoutY="217.0" prefHeight="94.0" prefWidth="81.0" styleClass="buttonWithoutHover">
-               <children>
-                  <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="9.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/DeleteButton.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
             <Pane layoutX="806.0" layoutY="44.0" onMouseClicked="#openAddEventMenu" prefHeight="69.0" prefWidth="80.0" styleClass="buttonWithoutHover">
                <children>
                   <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="10.0" pickOnBounds="true" preserveRatio="true">
@@ -59,11 +41,20 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane layoutX="806.0" layoutY="128.0" prefHeight="63.0" prefWidth="81.0" styleClass="buttonWithoutHover">
+            <Pane layoutX="806.0" layoutY="126.0" onMouseClicked="#handleRemoveButton" prefHeight="94.0" prefWidth="81.0" styleClass="buttonWithoutHover">
                <children>
-                  <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="11.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="9.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/EditButton.png" />
+                        <Image url="@../../images/DeleteButton.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane layoutX="808.0" layoutY="201.0" prefHeight="94.0" prefWidth="81.0" styleClass="buttonWithoutHover">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="70.0" layoutX="9.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/MailButton.png" />
                      </image>
                   </ImageView>
                </children>

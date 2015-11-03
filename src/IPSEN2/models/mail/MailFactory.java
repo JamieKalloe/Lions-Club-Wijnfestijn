@@ -1,6 +1,8 @@
 package IPSEN2.models.mail;
 
 import IPSEN2.models.guest.Guest;
+import IPSEN2.models.merchant.Merchant;
+import IPSEN2.services.merchant.MerchantService;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +16,27 @@ import java.nio.file.Paths;
  */
 public class MailFactory {
 
-    public Mail generate(MailType mailType, Guest guest) {
+    private String mail;
+    private Guest receiver;
+    private int selectedID;
+    private MerchantService merchantService;
+
+    public MailFactory(int selectedID) {
+        merchantService = new MerchantService();
+        Merchant merchant = merchantService.find(selectedID);
+        receiver = new Guest(merchant.getName(), merchant.getEmail());
+    }
+
+    public MailFactory(Guest guest) {
+        this.receiver = guest;
+    }
+
+    public MailFactory(Merchant merchant) {
+        this.mail = merchant.getEmail();
+        this.receiver = new Guest(merchant.getName(), merchant.getEmail());
+    }
+
+    public Mail generate(MailType mailType) {
 
         /*
             TODO: Informatie van het event moet vanuit guest bereikbaar zijn.
@@ -23,19 +45,19 @@ public class MailFactory {
 
         switch(mailType) {
             case THANK:
-                return new Mail(guest.getEmail(), "Bedankt voor uw deelname! - Lions Club", this.getMailContent(MailType.THANK, guest));
+                return new Mail(this.receiver.getEmail(), "Bedankt voor uw deelname! - Lions Club", this.getMailContent(MailType.THANK, receiver));
 
             case REMINDER:
-                return new Mail(guest.getEmail(), "Uw factuur is nog niet voldaan! - Lions Club", this.getMailContent(MailType.REMINDER, guest), getFilePath("src/IPSEN2/resources/REMINDER.txt"));
+                return new Mail(this.receiver.getEmail(), "Uw factuur is nog niet voldaan! - Lions Club", this.getMailContent(MailType.REMINDER, receiver), getFilePath("src/IPSEN2/resources/REMINDER.txt"));
 
             case INVOICE:
-                return new Mail(guest.getEmail(), "Uw factuur - Lions Club", this.getMailContent(MailType.INVOICE, guest), getFilePath("src/IPSEN2/resources/REMINDER.txt"));
+                return new Mail(this.receiver.getEmail(), "Uw factuur - Lions Club", this.getMailContent(MailType.INVOICE, receiver), getFilePath("src/IPSEN2/resources/REMINDER.txt"));
 
             case MERCHANT:
-                return new Mail(guest.getEmail(), "Wijn bestelling - Lions Club", this.getMailContent(MailType.MERCHANT, guest), getFilePath("src/IPSEN2/resources/REMINDER.txt"));
+                return new Mail(this.receiver.getEmail(), "Wijn bestelling - Lions Club", this.getMailContent(MailType.MERCHANT, receiver), getFilePath("src/IPSEN2/resources/REMINDER.txt"));
 
             case EVENT:
-                return new Mail(guest.getEmail(), "Het evenement begint binnenkort weer! - Lions Club", this.getMailContent(MailType.EVENT, guest));
+                return new Mail(this.receiver.getEmail(), "Het evenement begint binnenkort weer! - Lions Club", this.getMailContent(MailType.EVENT, receiver));
         }
 
         return new Mail("", "", "", "");

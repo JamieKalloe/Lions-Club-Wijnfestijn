@@ -1,9 +1,0 @@
-Beste %s %s,
-
-Bij deze willen wij u van harte bedanken voor uw deelname aan het %s!
-
-Wij hopen u volgend jaar weer te mogen verwelkomen op het volgende evenement.
-
-Met vriendelijke groet,
-
-%s.

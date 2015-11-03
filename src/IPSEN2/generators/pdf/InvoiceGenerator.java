@@ -1,5 +1,8 @@
 package IPSEN2.generators.pdf;
 
+import IPSEN2.models.guest.Guest;
+import IPSEN2.models.order.Order;
+import IPSEN2.models.order.WineOrder;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -15,27 +18,30 @@ import java.util.Date;
  */
 public class InvoiceGenerator {
 
-    public void generate(String filename) throws DocumentException, IOException{
+    public void generate(Order order) throws DocumentException, IOException{
+        Date invoiceDate = new Date();
+        Guest guest = order.getGuest();
         Document document = new Document();
         Font defaultFont = new Font(Font.FontFamily.TIMES_ROMAN, 12);
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filename));
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(System.getProperty("user.dir") + "/src/IPSEN2/invoice/"
+                + new SimpleDateFormat("YYYY-MM-dd").format(invoiceDate) + " - " + order.getId() + ".pdf"));
         document.setMargins(30, 30, 30, 65);
         writer.setPageEvent(new InvoiceEventListener());
         document.open();
         Paragraph header = new Paragraph("Lionsclub Oegstgeest/Warmond", new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD));
         header.setAlignment(Element.ALIGN_CENTER);
         document.add(header);
-        Paragraph address = new Paragraph("Naam van debiteur\n" +
-                "Adres debiteur 10\n" +
-                "Postcode Plaats", defaultFont);
+        Paragraph address = new Paragraph(guest.getFirstName()+ " "+guest.getPrefix()+ " " + guest.getLastName()+ "\n" +
+                guest.getAddress().getStreet()+ " " + guest.getAddress().getHouseNumber() + "\n" +
+                guest.getAddress().getZipCode() + " "+guest.getAddress().getCity(), defaultFont);
         address.setSpacingBefore(35);
         address.setSpacingAfter(25);
         address.setLeading(15);
         document.add(address);
 
-        Paragraph invoiceDetails = new Paragraph("Factuurdatum: " + new SimpleDateFormat("dd MMMM YYYY").format(new Date()) + "\n" +
-                "FactuurNummer: 231.216\n" +
-                "Debiteurennummer: 1024", defaultFont);
+        Paragraph invoiceDetails = new Paragraph("Factuurdatum: " + new SimpleDateFormat("dd MMMM YYYY").format(invoiceDate) + "\n" +
+                "FactuurNummer: "+ order.getId()+ " \n" +
+                "Debiteurennummer: "+guest.getId(), defaultFont);
 
         invoiceDetails.setSpacingAfter(15);
         invoiceDetails.setLeading(15);
@@ -63,17 +69,17 @@ public class InvoiceGenerator {
         orderTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
         wineCell.setBorder(Rectangle.NO_BORDER);
 
-        for(int i = 0; i < 1; i++) {
-            orderTable.addCell(new Paragraph("21", defaultFont));
-            orderTable.addCell(new Paragraph("3", defaultFont));
-            wineCell.setPhrase(new Phrase("Example Clarette de Die", defaultFont));
+        for(WineOrder wineOrder : order.getWineOrders() ) {
+            orderTable.addCell(new Paragraph(""+wineOrder.getWine().getWineID(), defaultFont));
+            orderTable.addCell(new Paragraph(""+wineOrder.getAmount(), defaultFont));
+            wineCell.setPhrase(new Phrase(wineOrder.getWine().getName(), defaultFont));
             orderTable.addCell(wineCell);
             orderTable.completeRow();
         }
         orderTable.addCell(" ");
         orderTable.completeRow();
         Font totalFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
-        PdfPCell totalAmount = new PdfPCell(new Paragraph("1000,51", totalFont));
+        PdfPCell totalAmount = new PdfPCell(new Paragraph(""+order.getTotalAmount(), totalFont));
         totalAmount.setBorder(Rectangle.TOP);
         totalAmount.setPaddingTop(10);
         PdfPCell totalCell = new PdfPCell(new Paragraph("Totaal", totalFont));
@@ -111,6 +117,6 @@ public class InvoiceGenerator {
         document.add(addressTable);
 
         document.close();
-        System.out.println("Succesfully generated invoice: " + filename);
+        System.out.println("Succesfully generated IPSEN2.invoice: " + order.getId()+" on Date: "+new SimpleDateFormat("dd MMMM YYYY").format(invoiceDate));
     }
 }
