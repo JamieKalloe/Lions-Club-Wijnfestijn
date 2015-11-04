@@ -136,7 +136,6 @@ public class OrderController extends ContentLoader implements Initializable{
                {
                   Order order = iterator.next();
                   if(order.getId() == orderID) {
-
                      Path directory = Paths.get(System.getProperty("user.dir") + "/src/IPSEN2/invoice");
                      if (!(directory.toString().contains(" " + orderID + ".pdf"))) {
                         try {
