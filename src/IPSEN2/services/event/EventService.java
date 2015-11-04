@@ -73,13 +73,13 @@ public class EventService {
         return this.eventRepository.create(data);
     }
 
-    public boolean edit(int id, HashMap data)
+    public boolean edit(int id,int addressId, HashMap data)
     {
         Event event = eventRepository.find(id);
 
         if (event != null)
         {
-            data.put("addressId", addressService.create(data));
+            data.put("addressId", addressService.update(addressId, data));
 
             boolean isValid = this.validator.validate(data);
 
