@@ -64,7 +64,7 @@ public class EditEventController extends ContentLoader implements Initializable 
         data.put("zipCode", zipCode);
         data.put("street", address);
         data.put("houseNumber", houseNumber);
-        data.put("country", "Nederland");
+        data.put("country", "Nederlandg");
         data.put("city", city);
         data.put("startDate", dateFormatter.format(date));
         data.put("endDate", dateFormatter.format(date));
