@@ -5,17 +5,9 @@ import IPSEN2.models.guest.Guest;
 import IPSEN2.services.guest.GuestService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBoxBuilder;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -34,7 +26,6 @@ public class EditGuestController extends ContentLoader implements Initializable{
     @FXML private TextField firstNameTextField;
     @FXML private TextField prefixTextField;
     @FXML private TextField lastNameTextField;
-    @FXML private TextField telephoneTextField;
     @FXML private TextField emailTextField;
     @FXML private TextField addressTextField;
     @FXML private TextField houseNumberTextField;
@@ -66,6 +57,9 @@ public class EditGuestController extends ContentLoader implements Initializable{
         addContent(GUESTS);
     }
 
+    /**
+     * Handle submit button.
+     */
     public void handleSubmitButton() {
 
         // Check if Male of Female radiobutton is selected
@@ -79,7 +73,6 @@ public class EditGuestController extends ContentLoader implements Initializable{
         firstName = firstNameTextField.getText();
         prefix = prefixTextField.getText();
         lastName = lastNameTextField.getText();
-        telephone = telephoneTextField.getText();
         email = emailTextField.getText();
         address = addressTextField.getText();
         houseNumber = houseNumberTextField.getText();
@@ -113,22 +106,13 @@ public class EditGuestController extends ContentLoader implements Initializable{
         data.put("houseNumber", houseNumber);
         data.put("country", "Nederland");
         data.put("city", city);
-        data.put("referralName", referral);
+        data.put("referralID", referral);
             service.edit(selectedGuestID, data);
             addContent(GUESTS);
-
-           /* Stage dialogStage = new Stage();
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.setScene(new Scene(VBoxBuilder.create().
-                    children(new Text("Hi"), new Button("Ok.")).
-                    alignment(Pos.CENTER).padding(new Insets(5)).build()));
-            dialogStage.show();*/
-
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         service = new GuestService();
 
             Guest guest = service.find(selectedGuestID);

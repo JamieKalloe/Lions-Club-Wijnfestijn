@@ -3,6 +3,7 @@ package IPSEN2.controllers.event;
 import IPSEN2.ContentLoader;
 import IPSEN2.models.event.Event;
 import IPSEN2.services.event.EventService;
+import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,7 +12,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.util.Callback;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,6 +45,7 @@ public class EventController extends ContentLoader implements Initializable{
     @FXML
     private TableColumn<Event, String> eventDateColumn;
 
+    @FXML Pane eventToolTip;
 
    private ObservableList<Event> eventData;
     private static ArrayList<Integer> selectedRows;
@@ -49,6 +53,17 @@ public class EventController extends ContentLoader implements Initializable{
     private int selectedEventID;
 
 
+    @FXML
+    private void handleNextButton() {
+        if (selectedEventID != 0) {
+            eventId = selectedEventID;
+            addContent(MAINMENU);
+        }
+    }
+
+    /**
+     * Handle remove button.
+     */
     @FXML
     public void handleRemoveButton() {
         if(selectedRows.size() != 0) {
@@ -78,9 +93,15 @@ public class EventController extends ContentLoader implements Initializable{
                     selectedEventID = cellDataFeatures.getValue().getId();
                     if (newValue.booleanValue()) {
                         selectedRows.add(selectedEventID);
+                        eventToolTip.setVisible(true);
+                        FadeTransition animation = new FadeTransition(Duration.millis(200), eventToolTip);
+                        animation.setFromValue(0);
+                        animation.setToValue(1.0);
+                        animation.play();
                     } else if (!newValue.booleanValue()) {
                         selectedRows.remove(selectedRows.indexOf(selectedEventID));
                         selectedEventID= 0;
+                        eventToolTip.setVisible(false);
                     }
                 });
                 return new SimpleObjectProperty(checkBox);
@@ -95,7 +116,27 @@ public class EventController extends ContentLoader implements Initializable{
         addContent(new AddEventController(), EDIT_EVENT_DIALOG);
     }
 
-   @Override
+    private void setOnTableRowClickedListener() {
+        table_view.setRowFactory(table -> {
+            TableRow<Event> row = new TableRow<>();
+
+            row.getStyleClass().add("pane");
+
+            row.setOnMouseClicked(event -> {
+                if (row.getTableView().getSelectionModel().getSelectedItem() != null) {
+                    if (event.getClickCount() == 2) {
+                        addContent(new EditEventController(row.getTableView().
+                                getSelectionModel().getSelectedItem().getId()), EDIT_EVENT_DIALOG);
+                    }
+                }
+
+
+            });
+            return row;
+        });
+    }
+
+    @Override
    public void initialize(URL location, ResourceBundle resources) {
       table_view.setPlaceholder(new Label("Voeg een evenement toe"));
        selectedRows = new ArrayList();
@@ -110,20 +151,9 @@ public class EventController extends ContentLoader implements Initializable{
        eventAddressColumn.setCellValueFactory(new PropertyValueFactory<>("street"));
        eventDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
 
-
       table_view.setItems(FXCollections.observableArrayList(eventData));
-       table_view.setRowFactory(table -> {
-           TableRow<Event> row = new TableRow<>();
 
-               row.getStyleClass().add("pane");
-
-           row.setOnMouseClicked(event -> {
-               if (row.getTableView().getSelectionModel().getSelectedItem() != null) {
-               eventId = row.getTableView().getSelectionModel().getSelectedItem().getId();
-               addContent(MAINMENU);}
-           });
-           return row;
-       });
+        setOnTableRowClickedListener();
 
    }
 

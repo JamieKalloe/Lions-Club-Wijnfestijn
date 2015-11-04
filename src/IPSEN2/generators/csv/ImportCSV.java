@@ -1,6 +1,7 @@
 package IPSEN2.generators.csv;
 
 import IPSEN2.services.guest.GuestService;
+import IPSEN2.services.merchant.MerchantService;
 import IPSEN2.services.wine.WineService;
 import com.opencsv.CSVReader;
 import javafx.stage.FileChooser;
@@ -57,8 +58,9 @@ public class ImportCSV {
                 data.put("country", wineData[4]);
                 data.put("region", wineData[8].replace("'", "''"));
                 data.put("year", wineData[5]);
-                data.put("type_id", wineData[1]);
+                data.put("typeId", wineData[1]);
                 data.put("price", wineData[6]);
+                data.put("merchantId", new MerchantService().all().get(0).getId());
 
                 new WineService().subscribe(data);
             }

@@ -48,7 +48,8 @@ public class MerchantService {
     public boolean edit(int id, HashMap data) {
         Merchant merchant = repository.find(id);
         if(merchant != null) {
-                data.put("addressID", merchant.getAddress().getAddressID());
+            new AddressService().update(merchant.getAddress().getAddressID(), data);
+            data.put("addressID", merchant.getAddress().getAddressID());
                 repository.update(id, data);
 
             return true;

@@ -47,37 +47,31 @@
                     </font>
                 </Label>
                 <TextField fx:id="lastNameTextField" layoutX="159.0" layoutY="121.0" />
-                <Label layoutX="41.0" layoutY="165.0" text="Telefoon">
+                <Label layoutX="68.0" layoutY="165.0" text="Email">
                     <font>
                         <Font name="Roboto Regular" size="18.0" />
                     </font>
                 </Label>
-                <Label layoutX="68.0" layoutY="205.0" text="Email">
+                <Label layoutX="15.0" layoutY="324.0" text="Woonplaats">
                     <font>
                         <Font name="Roboto Regular" size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="telephoneTextField" layoutX="158.0" layoutY="163.0" />
-                <Label layoutX="15.0" layoutY="364.0" text="Woonplaats">
+                <TextField fx:id="emailTextField" layoutX="158.0" layoutY="163.0" />
+                <Label layoutX="64.0" layoutY="202.0" text="Straat">
                     <font>
                         <Font name="Roboto Regular" size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="emailTextField" layoutX="158.0" layoutY="203.0" />
-                <Label layoutX="64.0" layoutY="242.0" text="Straat">
+                <TextField fx:id="addressTextField" layoutX="157.0" layoutY="204.0" />
+                <TextField fx:id="houseNumberTextField" layoutX="157.0" layoutY="245.0" />
+                <TextField fx:id="postalCodeTextField" layoutX="157.0" layoutY="285.0" />
+                <Label layoutX="8.0" layoutY="243.0" text="Huisnummer">
                     <font>
                         <Font name="Roboto Regular" size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="addressTextField" layoutX="157.0" layoutY="244.0" />
-                <TextField fx:id="houseNumberTextField" layoutX="157.0" layoutY="285.0" />
-                <TextField fx:id="postalCodeTextField" layoutX="157.0" layoutY="325.0" />
-                <Label layoutX="8.0" layoutY="283.0" text="Huisnummer">
-                    <font>
-                        <Font name="Roboto Regular" size="18.0" />
-                    </font>
-                </Label>
-                <Label layoutX="37.0" layoutY="324.0" text="Postcode">
+                <Label layoutX="37.0" layoutY="284.0" text="Postcode">
                     <font>
                         <Font name="Roboto Regular" size="18.0" />
                     </font>
@@ -92,7 +86,7 @@
                         <Font name="Roboto Regular" size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="cityTextField" layoutX="157.0" layoutY="364.0" />
+                <TextField fx:id="cityTextField" layoutX="157.0" layoutY="324.0" />
             </children>
         </AnchorPane>
         <Pane fx:id="cancelButton" layoutX="481.0" layoutY="509.0" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">

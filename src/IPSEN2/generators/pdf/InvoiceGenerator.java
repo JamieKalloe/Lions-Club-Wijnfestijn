@@ -105,7 +105,7 @@ public class InvoiceGenerator {
         retrievalDetails.setSpacingAfter(20);
         document.add(retrievalDetails);
 
-        document.add(new Paragraph("U kunt uw wijnen ophalen op <Date> tussen <startTime> en <endTime> h.", defaultFont));
+        document.add(new Paragraph("U kunt uw wijnen ophalen op " +  new SimpleDateFormat("dd MMMM YYYY").format(invoiceDate) , defaultFont));
         document.add(new Paragraph("Adres:", defaultFont));
 
         PdfPTable addressTable = new PdfPTable(1);

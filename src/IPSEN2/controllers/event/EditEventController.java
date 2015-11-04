@@ -1,6 +1,7 @@
 package IPSEN2.controllers.event;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.models.event.Event;
 import IPSEN2.services.event.EventService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,9 +16,9 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 /**
- * Created by Philip on 13-10-15.
+ * Created by Philip on 03-11-15.
  */
-public class AddEventController extends ContentLoader implements Initializable{
+public class EditEventController extends ContentLoader implements Initializable {
 
     private String name;
     private String city;
@@ -27,7 +28,9 @@ public class AddEventController extends ContentLoader implements Initializable{
     private LocalDate date;
 
     private HashMap data;
-    private EventService service;
+    private EventService eventService;
+    private int selectedEventId;
+    private Event event;
 
     @FXML private Pane submitButton, cancelButton;
     @FXML private TextField eventNameTextField, cityTextField,
@@ -35,10 +38,8 @@ public class AddEventController extends ContentLoader implements Initializable{
 
     @FXML private DatePicker datePicker;
 
-    /**
-     * Instantiates a new Add event controller.
-     */
-    public AddEventController() {
+    public EditEventController(int selectedEventId) {
+        this.selectedEventId = selectedEventId;
     }
 
     @FXML
@@ -61,6 +62,7 @@ public class AddEventController extends ContentLoader implements Initializable{
         }
 
         data = new HashMap();
+        data.put("addressID" , event.getAddress().getAddressID());
         data.put("name", name);
         data.put("zipCode", zipCode);
         data.put("street", address);
@@ -70,18 +72,23 @@ public class AddEventController extends ContentLoader implements Initializable{
         data.put("startDate", dateFormatter.format(date));
         data.put("endDate", dateFormatter.format(date));
 
-        eventId = service.add(data);
+        eventService.edit(selectedEventId, event.getAddress().getAddressID(), data);
 
-        if (eventId != -1)
-        {
-            addContent(EVENTS);
-        }
+        addContent(EVENTS);
+
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        submitButton.setOnMouseClicked(event -> handleSubmitButton());
-        cancelButton.setOnMouseClicked(event -> handleCancelButton());
-        service = new EventService();
+        event = new EventService().find(selectedEventId);
+        eventNameTextField.setText(event.getName());
+        cityTextField.setText(event.getAddress().getCity());
+        addressTextField.setText(event.getAddress().getStreet());
+        houseNumberTextField.setText(event.getAddress().getHouseNumber());
+        zipCodeTextField.setText(event.getAddress().getZipCode());
+        datePicker.setValue(new java.sql.Date(event.getStartDate().getTime() ).toLocalDate());
+        submitButton.setOnMouseClicked(mouseEvent -> handleSubmitButton());
+        cancelButton.setOnMouseClicked(mouseEvent -> handleCancelButton());
+        eventService = new EventService();
     }
 }

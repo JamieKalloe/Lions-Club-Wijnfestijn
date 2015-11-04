@@ -38,7 +38,7 @@ public class AttendeeRepository implements Crudable {
 
     @Override
     public Attendee find(int id) {
-        ResultSet queryResult = databaseInstance.select("attendee", id);
+        ResultSet queryResult = databaseInstance.select("attendee", "guest_id=" + id);
         try {
             while (queryResult.next()) {
                 Attendee attendee = new Attendee(queryResult.getInt("event_id"));
@@ -63,7 +63,7 @@ public class AttendeeRepository implements Crudable {
 
     @Override
     public void delete(int id) {
-        databaseInstance.delete("guest" , id);
+        databaseInstance.delete("attendee" , "guest_id=" + id);
     }
 
     public int exists(HashMap data) {

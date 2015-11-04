@@ -61,7 +61,6 @@ public class OrderService {
 
     public Order find(int id)
     {
-
         Order order = this.orderRepository.find(id);
         order.setGuest(guestService.find(order.getGuest().getId()));
         order.setEvent(eventService.find(order.getEvent().getId()));
@@ -78,6 +77,24 @@ public class OrderService {
 
         if (!isValid)
         {
+            int id = this.orderRepository.create(data);
+            ArrayList<Integer> wineIDs = (ArrayList<Integer>) data.get("wineIDs");
+            ArrayList<Integer> amounts = (ArrayList<Integer>)data.get("amounts");
+            for(int i = 0; i < wineIDs.size(); i++) {
+                HashMap orderData = new HashMap();
+                orderData.put("orderID", id);
+                orderData.put("wineID", Integer.parseInt(wineIDs.get(i).toString()));
+                orderData.put("amount", Integer.parseInt(amounts.get(i).toString()));
+                wineOrderService.create(orderData);
+            }
+            // Add status
+            // Add guest
+            try {
+                new InvoiceGenerator().generate(this.find(id));
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+
             Messaging.getInstance().show(
                     "Foutmelding",
                     "Order invoerfout",
@@ -88,14 +105,14 @@ public class OrderService {
         }
 
         int id = this.orderRepository.create(data);
-        ArrayList<String> wineIDs = (ArrayList<String>) data.get("wineIDs");
-        ArrayList<String> amounts = (ArrayList<String>) data.get("amounts");
+        ArrayList<Integer> wineIDs = (ArrayList<Integer>) data.get("wineIDs");
+        ArrayList<Integer> amounts = (ArrayList<Integer>) data.get("amounts");
         for (int i = 0; i < wineIDs.size(); i++)
         {
             HashMap orderData = new HashMap();
             orderData.put("orderID", id);
-            orderData.put("wineID", Integer.parseInt(wineIDs.get(i)));
-            orderData.put("amount", Integer.parseInt(amounts.get(i)));
+            orderData.put("wineID", wineIDs.get(i));
+            orderData.put("amount", amounts.get(i));
             wineOrderService.create(orderData);
         }
         // Add status

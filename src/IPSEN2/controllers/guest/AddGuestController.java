@@ -44,7 +44,6 @@ public class AddGuestController extends ContentLoader implements Initializable {
     private String firstName;
     private String prefix;
     private String lastName;
-    private String telephone;
     private String email;
     private String address;
     private String houseNumber;
@@ -71,7 +70,6 @@ public class AddGuestController extends ContentLoader implements Initializable {
         firstName = firstNameTextField.getText();
         prefix = prefixTextField.getText();
         lastName = lastNameTextField.getText();
-        telephone = telephoneTextField.getText();
         email = emailTextField.getText();
         address = addressTextField.getText();
         houseNumber = houseNumberTextField.getText();

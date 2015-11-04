@@ -57,7 +57,11 @@ public class WineOrderRepository implements Crudable {
     }
 
     public void update(int id, HashMap data) {
-
+        HashMap dbData = new HashMap();
+        dbData.put("order_id", data.get("orderID"));
+        dbData.put("wine_id", data.get("wineID"));
+        dbData.put("total_boxes", data.get("amount"));
+        databaseInstance.update("wine_order", id, dbData);
     }
 
     public void update(int orderID, int wineID, HashMap data) {

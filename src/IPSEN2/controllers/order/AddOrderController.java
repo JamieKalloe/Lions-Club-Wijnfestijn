@@ -43,30 +43,29 @@ public class AddOrderController extends ContentLoader implements Initializable {
     @FXML private Label customerNameLabel;
     @FXML private ComboBox orderStatusComboBox;
 
-    private int selectedGuestID;
-    private int selectedOrderID;
-    private ArrayList<String> selectedWineIDs;
+    private ArrayList<Integer> selectedWineIDs;
     private GuestService guestService;
     private WineOrderService wineOrderService;
     private OrderService orderService;
     private OrderStatusService orderStatusService;
+    private WineService wineService;
+    private static boolean isForEdit;
     private static int orderStatusID;
+    private  int selectedGuestID;
 
     private Guest guest;
 
-    public AddOrderController(int selectedGuestID) {
-        this.selectedGuestID = selectedGuestID;
+
+    public AddOrderController(int selectedID) {
+           this.selectedGuestID = selectedID;
     }
 
-    public AddOrderController(int selectedGuestID, int selectedOrderID) {
-        this.selectedGuestID = selectedGuestID;
-        this.selectedOrderID = selectedOrderID;
-    }
-
-    public AddOrderController(int selectedGuestID, ArrayList<String> selectedWineIDs) {
+    public AddOrderController(int selectedGuestID, ArrayList<Integer> selectedWineIDs) {
         this.selectedGuestID = selectedGuestID;
         this.selectedWineIDs = selectedWineIDs;
+        wineService = new WineService();
     }
+
 
     public void handleCancelButton() {
         wineOrderData = null;
@@ -74,30 +73,23 @@ public class AddOrderController extends ContentLoader implements Initializable {
     }
 
     public void handleSubmitButton() {
-        HashMap orderData = new HashMap();
-        ArrayList<String> amounts= new ArrayList<>();
         if (wineOrderData.size() != 0) {
-            if (selectedWineIDs == null) {
-                selectedWineIDs = new ArrayList<>();
-            }
+            HashMap orderData = new HashMap();
+            ArrayList<Integer> amounts= new ArrayList<>();
+                wineOrderData.forEach(wineOrder -> {
+                    amounts.add(wineOrder.getAmount());
+                });
 
-            selectedWineIDs.clear();
-            wineOrderData.forEach(wineOrder -> {
-                amounts.add(wineOrder.getAmount() + "");
-                selectedWineIDs.add(wineOrder.getWine().getWineID() + "");
-            });
-
+            System.out.println("amounts.size: " + amounts.size());
+            System.out.println("wineIds: " + selectedWineIDs.size());
 
             orderData.put("guestId", selectedGuestID);
-            orderData.put("eventId", eventId);
-            orderData.put("orderStatusId", orderStatusID + "");
-            orderData.put("wineIDs", selectedWineIDs);
-            orderData.put("amounts", amounts);
-
-            if (selectedOrderID != 0) {
-                orderService.edit(selectedOrderID, orderData);
-            } else
+                orderData.put("eventId", eventId);
+                orderData.put("orderStatusId", orderStatusID + "");
+                orderData.put("wineIDs", selectedWineIDs);
+                orderData.put("amounts", amounts);
                 orderService.add(orderData);
+
         }
         orderStatusID = 0;
         wineOrderData = null;
@@ -112,9 +104,10 @@ public class AddOrderController extends ContentLoader implements Initializable {
         });
     }
 
-      public void handleAddWineButton(){
-        addContent( new SelectWineController(selectedGuestID), SELECT_WINE_DIALOG);
-    }
+    public void handleAddWineButton(){
+              addContent( new SelectWineController(selectedGuestID, false), SELECT_WINE_DIALOG);
+          }
+
 
     private Callback createTextFieldCellCallBack() {
         Callback textFieldCellCallBack = new Callback<TableColumn.CellDataFeatures<WineOrder, TextField>, ObservableValue<TextField>>() {
@@ -128,7 +121,6 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
                     if (!newValue.equals("")) {
                         cellDataFeatures.getValue().setAmount(Integer.parseInt(newValue));
-                        System.out.println("amount: " + cellDataFeatures.getValue().getAmount());
                     }
                 });
                 return new SimpleObjectProperty(textField);
@@ -155,6 +147,7 @@ public class AddOrderController extends ContentLoader implements Initializable {
                         if(wineOrder.getWine().getWineID() == wineID)
                         {
                             iterator.remove();
+                            selectedWineIDs.remove(selectedWineIDs.indexOf(wineID));
                         }
                     }
                     table_view.setItems(wineOrderData);
@@ -166,44 +159,46 @@ public class AddOrderController extends ContentLoader implements Initializable {
         return  deleteButtonCellCallBack;
     }
 
+    private void initializeWineData() {
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        guestService = new GuestService();
-        guest = guestService.find(selectedGuestID);
-        wineOrderService = new WineOrderService();
-        orderService= new OrderService();
-        orderStatusService = new OrderStatusService();
-        WineService wineService = new WineService();
 
-        orderStatusService.all().forEach(orderStatus -> {
-                    orderStatusComboBox.getItems().addAll(orderStatusService.
-                            find(orderStatus.getId()).getName());
-                });
-
-        orderStatusComboBox.setOnAction(event -> handleOrderStatusComboBox());
-
-        if (wineOrderData == null) {
+        if(selectedWineIDs != null) {
+        selectedWineIDs.forEach(selectedWineID -> {
+            WineOrder wineOrder = new WineOrder(selectedWineID, 1);
+            wineOrder.setWine(wineService.find(selectedWineID));
+            wineOrderData.add(wineOrder);
+        });} else {
             wineOrderData = FXCollections.observableArrayList(new ArrayList<>());
+        }
+    }
+
+    private void initializeComboBox() {
+        orderStatusService.all().forEach(orderStatus ->
+                orderStatusComboBox.getItems().addAll(orderStatusService.
+                        find(orderStatus.getId()).getName()));
+
+        if (wineOrderData != null) {
+            orderStatusComboBox.setValue(orderStatusService.find(orderStatusID).getName());
+        } else {
             orderStatusComboBox.setValue(orderStatusService.all().get(orderStatusService.all().size() - 1).getName());
             orderStatusID = orderStatusService.all().get(orderStatusService.all().size() - 1).getId();
         }
 
-            orderStatusComboBox.setValue(orderStatusService.find(orderStatusID).getName());
+        initializeWineData();
+        orderStatusComboBox.setOnAction(event -> handleOrderStatusComboBox());
+    }
 
-
-        if (selectedOrderID != 0) {
-            wineOrderData = FXCollections.observableArrayList(wineOrderService.allForOrder(selectedOrderID));
-            table_view.setItems(FXCollections.observableArrayList(wineOrderData));
-            orderStatusID = orderService.find(selectedOrderID).getStatus().getId();
-            orderStatusComboBox.setValue(orderStatusService.find(orderStatusID).getName());
-        } else{
-            table_view.setItems(wineOrderData);
-        }
-        customerNameLabel.setText(guest.getFirstName() + " " + guest.getLastName());
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        guestService = new GuestService();
+        wineOrderService = new WineOrderService();
+        orderService = new OrderService();
+        orderStatusService = new OrderStatusService();
+        wineService = new WineService();
+        guest = guestService.find(selectedGuestID);
+        initializeComboBox();
 
         addWineButton.setOnMouseClicked(event -> handleAddWineButton());
-
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
 
@@ -211,14 +206,7 @@ public class AddOrderController extends ContentLoader implements Initializable {
         quantityColumn.setCellValueFactory(createTextFieldCellCallBack());
         deleteButtonColumn.setCellValueFactory(createDeleteButtonCellCallBack());
 
-        if (selectedWineIDs != null) {
-            selectedWineIDs.forEach(selectedWineID -> {
-                WineOrder wineOrder = new WineOrder(Integer.parseInt(selectedWineID), 1);
-                wineOrder.setWine(wineService.find(Integer.parseInt(selectedWineID)));
-                wineOrderData.add(wineOrder);
-            });
-        }
-
-
+        customerNameLabel.setText(guest.getFirstName() + " " + guest.getLastName());
+        table_view.setItems(wineOrderData);
     }
 }

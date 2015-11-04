@@ -115,21 +115,25 @@ public class MailService {
         }
         return this.mailType;
     }
-    public Mail getMail(int selectedID, MailType mailType, boolean isGuest) {
+    public Mail getMail(int selectedID, MailType mailType, int receiverId) {
 
         try {
 
-            if (isGuest) {
-                System.out.println(selectedID);
+            if (receiverId == 3) {
                 OrderService orderService = new OrderService();
-                System.out.println(selectedID);
                 Guest guest = orderService.find(selectedID).getGuest();
                 guest.setOrder(orderService.find(selectedID));
-//                System.out.println(guest.getOrder().getId());
                 mail = new MailFactory(guest).generate(mailType);
-            } else{
+            } else if (receiverId == 2){
+                if (mailType == MailType.INVOICE || mailType == MailType.REMINDER){
+                    return null;
+                }
+                mail = new MailFactory(new GuestService().find(selectedID)).generate(mailType);
+            } else if (receiverId == 1) {
+                if (mailType == MailType.INVOICE || mailType == MailType.REMINDER){
+                    return null;
+                }
                 mail = new MailFactory(selectedID).generate(mailType);
-
             }
         } catch (Exception e) {
             e.printStackTrace();

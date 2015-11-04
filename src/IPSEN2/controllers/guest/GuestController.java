@@ -87,11 +87,11 @@ public class GuestController extends ContentLoader implements Initializable{
         if (selectedRows.size() != 0) {
             selected = false;
             lastWindow = "GuestMenu";
-            addContent(new MailController(selectedRows), MAIL);
+            addContent(new MailController(selectedRows, 2), MAIL);
         }
     }
 
-    public void openEditGuestMenu() throws IOException{
+    public void openEditGuestMenu(){
         if (selectedGuestID != 0 ) {
 
             selected = false;
@@ -135,12 +135,9 @@ public class GuestController extends ContentLoader implements Initializable{
             TableRow<Guest> row = new TableRow<>();
             row.getStyleClass().add("pane");
             row.setOnMouseClicked(event -> {
-                selectedGuestID = row.getTableView().getSelectionModel().getSelectedItem().getId();
-
-                try {
+                if (event.getClickCount() == 2) {
+                    selectedGuestID = row.getTableView().getSelectionModel().getSelectedItem().getId();
                     openEditGuestMenu();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             });
             return row;

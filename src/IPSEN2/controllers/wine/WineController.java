@@ -20,6 +20,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * The type Wine controller.
+ */
 public class WineController extends ContentLoader implements Initializable{
 
     @FXML private TableView<Wine> table_view;
@@ -44,12 +47,20 @@ public class WineController extends ContentLoader implements Initializable{
     @FXML private Pane removeButton;
 
 
+    /**
+     * Handle add button.
+     *
+     * @throws IOException the io exception
+     */
     public void handleAddButton() throws IOException{
         keepCurrentData = false;
 
         addContent(new AddWineController(), EDIT_WINE_DIALOG);
     }
 
+    /**
+     * Handle remove button.
+     */
     public void handleRemoveButton() {
         if(selectedRows.size() != 0) {
             selected = false;
@@ -65,7 +76,12 @@ public class WineController extends ContentLoader implements Initializable{
     }
 
 
-    public void openEditWineMenu() throws IOException {
+    /**
+     * Open edit wine menu.
+     *
+     * @throws IOException the io exception
+     */
+    public void openEditWineMenu(){
         if (selectedWineID != 0) {
             keepCurrentData = false;
             selected = false;
@@ -92,13 +108,11 @@ public class WineController extends ContentLoader implements Initializable{
             TableRow<Wine> row = new TableRow<>();
             row.getStyleClass().add("pane");
             row.setOnMouseClicked(event -> {
-                selectedWineID = row.getTableView().getSelectionModel().getSelectedItem().getWineID();
-
-                try {
+                if (event.getClickCount() == 2) {
+                    selectedWineID = row.getTableView().getSelectionModel().getSelectedItem().getWineID();
                     openEditWineMenu();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
+
             });
             return row;
         });
@@ -152,10 +166,6 @@ public class WineController extends ContentLoader implements Initializable{
         return  checkBoxCellCallBack;
 
     }
-
-
-
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
