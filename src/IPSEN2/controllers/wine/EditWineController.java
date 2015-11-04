@@ -2,19 +2,14 @@ package IPSEN2.controllers.wine;
 
 import IPSEN2.ContentLoader;
 import IPSEN2.models.wine.Wine;
-import IPSEN2.models.wine.WineType;
 import IPSEN2.services.wine.WineService;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -83,7 +78,7 @@ public class EditWineController extends ContentLoader implements Initializable{
         data.put("country", country);
         data.put("region", region);
         data.put("year", year);
-        data.put("type_id", type);
+        data.put("typeId", type);
         data.put("price", price);
         service.edit(selectedWineID,data);
 
