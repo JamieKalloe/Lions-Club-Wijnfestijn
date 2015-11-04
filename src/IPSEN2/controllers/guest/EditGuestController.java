@@ -106,17 +106,9 @@ public class EditGuestController extends ContentLoader implements Initializable{
         data.put("houseNumber", houseNumber);
         data.put("country", "Nederland");
         data.put("city", city);
-        data.put("referralName", referral);
+        data.put("referralID", referral);
             service.edit(selectedGuestID, data);
             addContent(GUESTS);
-
-           /* Stage dialogStage = new Stage();
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.setScene(new Scene(VBoxBuilder.create().
-                    children(new Text("Hi"), new Button("Ok.")).
-                    alignment(Pos.CENTER).padding(new Insets(5)).build()));
-            dialogStage.show();*/
-
     }
 
     @Override
