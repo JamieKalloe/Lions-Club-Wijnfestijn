@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
@@ -56,6 +57,25 @@ public class MerchantController extends ContentLoader implements Initializable {
         }
     }
 
+    @FXML private void openEditMerchantMenu() {
+        addContent(new EditMerchantController(selectedMerchantID), ADD_MERCHANT_DIALOG);
+    }
+
+    private void setOnTableRowClickedListener() {
+        table_view.setRowFactory(table -> {
+            TableRow<Merchant> row = new TableRow<>();
+            row.getStyleClass().add("pane");
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2) {
+                    selectedMerchantID = row.getTableView().getSelectionModel().getSelectedItem().getId();
+                    openEditMerchantMenu();
+                }
+            });
+            return row;
+        });
+    }
+
+
     private Callback createCheckBoxCellCallBack() {
         Callback checkBoxCellCallBack = new Callback<TableColumn.CellDataFeatures<Merchant, CheckBox>, ObservableValue<CheckBox>>() {
 
@@ -93,6 +113,7 @@ public class MerchantController extends ContentLoader implements Initializable {
         nameColumn.setCellValueFactory(new PropertyValueFactory<Merchant, String>("name"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<Merchant, String>("email"));
 
+        setOnTableRowClickedListener();
 
         table_view.setItems(FXCollections.observableArrayList(merchantService.all()));
 

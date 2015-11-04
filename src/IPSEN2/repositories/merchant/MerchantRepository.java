@@ -95,9 +95,9 @@ public class MerchantRepository implements Crudable {
     @Override
     public void update(int id, HashMap data) {
         HashMap databaseData = new HashMap();
-        databaseData.put("address_id", Integer.parseInt(data.get("id").toString()));
-        databaseData.put("name", data.get("name").toString());
-        databaseData.put("enail", data.get("email").toString());
+        databaseData.put("address_id", Integer.parseInt(data.get("addressID").toString()));
+        databaseData.put("name", data.get("name"));
+        databaseData.put("email", data.get("email"));
 
         databaseInstance.update("wine_merchant", id, databaseData);
     }
