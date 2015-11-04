@@ -156,7 +156,11 @@ public class MainFrameController extends ContentLoader implements Initializable{
      * @param node the node
      */
     public void setContent(Node node) {
-       contentHolder.getChildren().setAll(node);
+        contentHolder.getChildren().setAll(node);
+        FadeTransition animation = new FadeTransition(Duration.millis(400), node);
+        animation.setFromValue(0);
+        animation.setToValue(1.0);
+        animation.play();
     }
 
 

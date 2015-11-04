@@ -52,7 +52,7 @@ public class MerchantController extends ContentLoader implements Initializable {
 
     @FXML private void handleMailButton() {
         if (selectedRows.size() != 0) {
-            addContent(new MailController(selectedRows, true), MAIL);
+            addContent(new MailController(selectedRows, 1) ,  MAIL);
         }
     }
 

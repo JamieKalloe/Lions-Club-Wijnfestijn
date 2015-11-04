@@ -87,7 +87,7 @@ public class GuestController extends ContentLoader implements Initializable{
         if (selectedRows.size() != 0) {
             selected = false;
             lastWindow = "GuestMenu";
-            addContent(new MailController(selectedRows), MAIL);
+            addContent(new MailController(selectedRows, 2), MAIL);
         }
     }
 
