@@ -1,5 +1,6 @@
 package IPSEN2.models.mail;
 
+import IPSEN2.generators.csv.ExportCSV;
 import IPSEN2.generators.pdf.InvoiceGenerator;
 import IPSEN2.models.guest.Guest;
 import IPSEN2.models.merchant.Merchant;
@@ -41,7 +42,7 @@ public class MailFactory {
     }
 
 
-    public Mail generate(MailType mailType) throws IOException {
+    public Mail generate(MailType mailType) throws IOException, Exception {
 
         /*
             TODO: Informatie van het event moet vanuit guest bereikbaar zijn.
@@ -59,7 +60,7 @@ public class MailFactory {
                 return new Mail(this.receiver.getEmail(), "Uw factuur - Lions Club", this.getMailContent(MailType.INVOICE, receiver), this.getInvoice(receiver.getOrder().getId()).getAbsolutePath());
 
             case MERCHANT:
-                return new Mail(this.receiver.getEmail(), "Wijn bestelling - Lions Club", this.getMailContent(MailType.MERCHANT, receiver), getFilePath("src/IPSEN2/resources/REMINDER.txt"));
+                return new Mail(this.receiver.getEmail(), "Wijn bestelling - Lions Club", this.getMailContent(MailType.MERCHANT, receiver), new ExportCSV().createMerchantCSV().getAbsolutePath());
 
             case EVENT:
                 return new Mail(this.receiver.getEmail(), "Het evenement begint binnenkort weer! - Lions Club", this.getMailContent(MailType.EVENT, receiver));

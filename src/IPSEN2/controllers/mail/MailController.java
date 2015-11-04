@@ -69,7 +69,10 @@ public class MailController extends ContentLoader implements Initializable{
             if (receiverId == 1) {
                 Merchant merchant = merchantService.find(id);
                 new MailService().send(new MailFactory(merchant).generate(mailService.getMailType(selectedMailType)));
-            } else {
+            } else if (receiverId == 2) {
+                Guest guest = guestService.find(id);
+                new MailService().send(new MailFactory(guest).generate(mailService.getMailType(selectedMailType)));
+            } else if (receiverId == 3){
 //                Guest guest = guestService.find(id);
                 Guest guest = new OrderService().find(id).getGuest();
                 guest.setOrder(new OrderService().find(id));

@@ -135,7 +135,7 @@ public class MailService {
                 }
                 mail = new MailFactory(selectedID).generate(mailType);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return mail;
