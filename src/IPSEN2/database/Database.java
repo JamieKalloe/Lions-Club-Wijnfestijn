@@ -58,11 +58,7 @@ public class Database {
     }
 
     public ResultSet select(String from, int id) {
-        String query;
-        if (from.equals("attendee")){
-            query = "SELECT * FROM `" + from + "` WHERE guest_id=" + id;
-        } else {
-            query = "SELECT * FROM `" + from + "` WHERE id=" + id;}
+        String query = "SELECT * FROM `" + from + "` WHERE id=" + id;
         ResultSet resultSet = queryDatabase(query);
         return resultSet;
     }
@@ -119,11 +115,7 @@ public class Database {
     }
 
     public int delete(String from, int id) {
-        String query;
-        if (from.equals("attendee")){
-            query = "DELETE FROM `" + from + "` WHERE guest_id=" + id;
-        } else {
-            query = "DELETE FROM `" + from + "` WHERE id=" + id;}
+        String query = "DELETE FROM `" + from + "` WHERE id=" + id;
         int result = updateDatabase(query);
         return result;
     }

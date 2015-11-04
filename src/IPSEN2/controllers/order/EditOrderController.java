@@ -82,14 +82,14 @@ public class EditOrderController extends ContentLoader implements Initializable 
 
         orderService.edit(selectedOrderId, newOrderData);
 
-//        wineOrderData.forEach(wineOrder -> wineOrderService.delete(selectedOrderId, wineOrder.getWine().getWineID()));
-//        wineOrderData.forEach(wineOrder -> {
-//            HashMap wineOrderData = new HashMap();
-//            wineOrderData.put("orderID", selectedOrderId);
-//            wineOrderData.put("wineID" , wineOrder.getWine().getWineID());
-//            wineOrderData.put("amount", wineOrder.getAmount());
-//            wineOrderService.create( wineOrder.getWine().getWineID(), wineOrderData);
-//        });
+        wineOrderData.forEach(wineOrder -> wineOrderService.delete(selectedOrderId, wineOrder.getWine().getWineID()));
+        wineOrderData.forEach(wineOrder -> {
+            HashMap wineOrderData = new HashMap();
+            wineOrderData.put("orderID", selectedOrderId);
+            wineOrderData.put("wineID" , wineOrder.getWine().getWineID());
+            wineOrderData.put("amount", wineOrder.getAmount());
+            wineOrderService.create(wineOrderData);
+        });
 
         addContent(ORDER);
     }
