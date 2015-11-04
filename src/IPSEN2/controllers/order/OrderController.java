@@ -87,9 +87,10 @@ public class OrderController extends ContentLoader implements Initializable{
          TableRow<Order> row = new TableRow<>();
          row.getStyleClass().add("pane");
          row.setOnMouseClicked(event -> {
-            selectedGuestID = row.getTableView().getSelectionModel().getSelectedItem().getGuest().getId();
-            selectedOrderID = row.getTableView().getSelectionModel().getSelectedItem().getId();
-            handleEditButton();
+            if (event.getClickCount() == 2) {
+               selectedOrderID = row.getTableView().getSelectionModel().getSelectedItem().getId();
+               handleEditButton();
+            }
          });
          return row;
       });

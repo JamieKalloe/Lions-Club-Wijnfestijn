@@ -63,7 +63,7 @@ public class AttendeeRepository implements Crudable {
 
     @Override
     public void delete(int id) {
-        databaseInstance.delete("guest" , id);
+        databaseInstance.delete("attendee" , id);
     }
 
     public int exists(HashMap data) {

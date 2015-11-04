@@ -81,7 +81,7 @@ public class WineController extends ContentLoader implements Initializable{
      *
      * @throws IOException the io exception
      */
-    public void openEditWineMenu() throws IOException {
+    public void openEditWineMenu(){
         if (selectedWineID != 0) {
             keepCurrentData = false;
             selected = false;
@@ -108,13 +108,11 @@ public class WineController extends ContentLoader implements Initializable{
             TableRow<Wine> row = new TableRow<>();
             row.getStyleClass().add("pane");
             row.setOnMouseClicked(event -> {
-                selectedWineID = row.getTableView().getSelectionModel().getSelectedItem().getWineID();
-
-                try {
+                if (event.getClickCount() == 2) {
+                    selectedWineID = row.getTableView().getSelectionModel().getSelectedItem().getWineID();
                     openEditWineMenu();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
+
             });
             return row;
         });
