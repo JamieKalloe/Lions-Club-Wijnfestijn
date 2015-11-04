@@ -6,7 +6,9 @@ import IPSEN2.repositories.Crudable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class OrderRepository implements Crudable {
@@ -60,6 +62,8 @@ public class OrderRepository implements Crudable {
                         queryResult.getInt("status_id")
                 );
 
+                order.setDate(queryResult.getDate("order_date"));
+
                 return order;
             }
         }
@@ -74,10 +78,11 @@ public class OrderRepository implements Crudable {
     public int create(HashMap data)
     {
         HashMap databaseData = new HashMap();
-
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         databaseData.put("guest_id", Integer.parseInt(data.get("guestId").toString()));
         databaseData.put("event_id", Integer.parseInt(data.get("eventId").toString()));
         databaseData.put("status_id", Integer.parseInt(data.get("orderStatusId").toString()));
+        databaseData.put("order_date", sdf.format(new Date()));
 
         return databaseInstance.insertInto("order", databaseData);
     }

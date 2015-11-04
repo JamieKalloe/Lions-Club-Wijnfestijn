@@ -19,14 +19,15 @@ import java.util.Date;
 public class InvoiceGenerator {
 
     public void generate(Order order) throws DocumentException, IOException{
-        Date invoiceDate = new Date();
+        Date invoiceDate = order.getDate();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM YYYY");
         Guest guest = order.getGuest();
         guest.setOrder(order);
         System.out.println("invoice generator orderID: " + order.getId());
         Document document = new Document();
         Font defaultFont = new Font(Font.FontFamily.TIMES_ROMAN, 12);
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(System.getProperty("user.dir") + "/src/IPSEN2/invoice/"
-                + new SimpleDateFormat("YYYY-MM-dd").format(invoiceDate) + " - " + order.getId() + ".pdf"));
+                + sdf.format(invoiceDate) + " - " + order.getId() + ".pdf"));
         document.setMargins(30, 30, 30, 65);
         writer.setPageEvent(new InvoiceEventListener());
         document.open();
@@ -41,7 +42,7 @@ public class InvoiceGenerator {
         address.setLeading(15);
         document.add(address);
 
-        Paragraph invoiceDetails = new Paragraph("Factuurdatum: " + new SimpleDateFormat("dd MMMM YYYY").format(invoiceDate) + "\n" +
+        Paragraph invoiceDetails = new Paragraph("Factuurdatum: " + sdf.format(invoiceDate) + "\n" +
                 "FactuurNummer: "+ order.getId()+ " \n" +
                 "Debiteurennummer: "+guest.getId(), defaultFont);
 
@@ -119,6 +120,6 @@ public class InvoiceGenerator {
         document.add(addressTable);
 
         document.close();
-        System.out.println("Succesfully generated IPSEN2.invoice: " + order.getId()+" on Date: "+new SimpleDateFormat("dd MMMM YYYY").format(invoiceDate));
+        System.out.println("Succesfully generated IPSEN2.invoice: " + order.getId()+" on Date: "+ sdf.format(invoiceDate));
     }
 }
