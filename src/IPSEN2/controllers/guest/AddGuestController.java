@@ -103,9 +103,7 @@ public class AddGuestController extends ContentLoader implements Initializable {
 
         int id = service.subscribe(data);
 
-
         if (id != -1) {
-            System.out.print(id);
             Guest guest = service.find(id);
 
             attendeeData.put("guestID", guest.getId());
@@ -118,9 +116,9 @@ public class AddGuestController extends ContentLoader implements Initializable {
             attendeeData.put("referralName", guest.getReferral());
 
             attendeeService.create(attendeeData);
-        }
 
-        addContent(GUESTS);
+            addContent(GUESTS);
+        }
     }
 
     @Override
