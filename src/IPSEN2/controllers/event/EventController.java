@@ -57,8 +57,7 @@ public class EventController extends ContentLoader implements Initializable{
 
     @FXML
     private void handleNextButton() {
-        if (selectedEventID != 0) {
-            eventId = selectedEventID;
+        if (eventId != 0) {
             addContent(MAINMENU);
         }
     }
@@ -92,12 +91,12 @@ public class EventController extends ContentLoader implements Initializable{
                                                          Boolean oldValue, Boolean newValue) -> {
                     cellDataFeatures.getValue().setSelected(newValue.booleanValue());
 
-                    selectedEventID = cellDataFeatures.getValue().getId();
+                    eventId = cellDataFeatures.getValue().getId();
                     if (newValue.booleanValue()) {
-                        selectedRows.add(selectedEventID);
+                        selectedRows.add(eventId);
                         showToolTip();
                     } else if (!newValue.booleanValue()) {
-                        selectedRows.remove(selectedRows.indexOf(selectedEventID));
+                        selectedRows.remove(selectedRows.indexOf(eventId));
                         selectedEventID= 0;
                         eventToolTip.setVisible(false);
                     }
@@ -130,7 +129,7 @@ public class EventController extends ContentLoader implements Initializable{
                 int count = sequentialClickCount.get();
                 if (count == 1) {
                     row.getTableView().getSelectionModel().getSelectedItem().setSelected(!event.getSelected());
-                    selectedEventID = event.getId();
+                    eventId = event.getId();
                     refreshTableView();
                     if (event.getSelected()) showToolTip();
                     else hideToolTip();

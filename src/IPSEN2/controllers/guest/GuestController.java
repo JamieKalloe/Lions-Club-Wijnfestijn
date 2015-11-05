@@ -40,18 +40,20 @@ public class GuestController extends ContentLoader implements Initializable{
     private static ObservableList<Guest> attendeeData;
     private static ArrayList<Integer> selectedRows;
     private CheckBox selectAllCheckBox;
-    private static  boolean selected;
-    private static boolean keepCurrentData = false;
-    private static int currentEventId = 0;
+    private  boolean selected;
     private AttendeeService attendeeService;
 
     @FXML
     private Pane removeButton;
 
 
+    private void refreshTableView() {
+        table_view.getColumns().get(0).setVisible(false);
+        table_view.getColumns().get(0).setVisible(true);
+    }
+
     public void handleAddButton() throws IOException {
         if (eventId != 0) {
-            keepCurrentData = false;
             addContent(new AddGuestController(), EDIT_GUEST_DIALOG);
         }
     }
@@ -94,8 +96,6 @@ public class GuestController extends ContentLoader implements Initializable{
     public void openEditGuestMenu(){
         if (selectedGuestID != 0 ) {
 
-            selected = false;
-            keepCurrentData = false;
             addContent(new EditGuestController(selectedGuestID), EDIT_GUEST_DIALOG);
         }
 
@@ -108,8 +108,7 @@ public class GuestController extends ContentLoader implements Initializable{
         if (eventId != 0) {
             ImportCSV importCSV = new ImportCSV();
             importCSV.importGuests(eventId);
-            keepCurrentData = false;
-        addContent(GUESTS);
+            refreshTableView();
     }}
 
     private void setOnTableRowClickedListener() {
@@ -144,8 +143,7 @@ public class GuestController extends ContentLoader implements Initializable{
                     selectedRows.clear();
                 }
             });
-            keepCurrentData = true;
-            addContent(GUESTS);
+            refreshTableView();
             selectAllCheckBox.setSelected(selected);
         });
 
@@ -209,16 +207,8 @@ public class GuestController extends ContentLoader implements Initializable{
         guestService = new GuestService();
         attendeeService = new AttendeeService();
 
-        if (currentEventId != eventId || currentEventId == 0) {
-            keepCurrentData = false;
-        }
-
-        if (!keepCurrentData) {
-                currentEventId = eventId;
-                attendeeData = FXCollections.observableArrayList(guestService.findAttendeesForEvent(eventId));
-                selectedRows = new ArrayList<>();
-            }
-
+        attendeeData = FXCollections.observableArrayList(guestService.findAttendeesForEvent(eventId));
+        selectedRows = new ArrayList<>();
 
 
         setOnTableRowClickedListener();
