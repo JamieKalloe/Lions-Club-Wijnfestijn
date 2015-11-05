@@ -4,6 +4,9 @@ import IPSEN2.ContentLoader;
 import IPSEN2.models.event.Event;
 import IPSEN2.services.event.EventService;
 import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -47,11 +50,10 @@ public class EventController extends ContentLoader implements Initializable{
 
     @FXML Pane eventToolTip;
 
-   private ObservableList<Event> eventData;
+   private static ObservableList<Event> eventData;
     private static ArrayList<Integer> selectedRows;
     private EventService eventService;
     private int selectedEventID;
-
 
     @FXML
     private void handleNextButton() {
@@ -93,11 +95,7 @@ public class EventController extends ContentLoader implements Initializable{
                     selectedEventID = cellDataFeatures.getValue().getId();
                     if (newValue.booleanValue()) {
                         selectedRows.add(selectedEventID);
-                        eventToolTip.setVisible(true);
-                        FadeTransition animation = new FadeTransition(Duration.millis(200), eventToolTip);
-                        animation.setFromValue(0);
-                        animation.setToValue(1.0);
-                        animation.play();
+                        showToolTip();
                     } else if (!newValue.booleanValue()) {
                         selectedRows.remove(selectedRows.indexOf(selectedEventID));
                         selectedEventID= 0;
@@ -122,27 +120,64 @@ public class EventController extends ContentLoader implements Initializable{
 
             row.getStyleClass().add("pane");
 
-            row.setOnMouseClicked(event -> {
-                if (row.getTableView().getSelectionModel().getSelectedItem() != null) {
-                    if (event.getClickCount() == 2) {
-                        addContent(new EditEventController(row.getTableView().
-                                getSelectionModel().getSelectedItem().getId()), EDIT_EVENT_DIALOG);
-                    }
-                }
+            Duration maxTimeBetweenSequentialClicks = Duration.millis(300);
 
+            PauseTransition clickTimer = new PauseTransition(maxTimeBetweenSequentialClicks);
+            final IntegerProperty sequentialClickCount = new SimpleIntegerProperty(0);
+
+            clickTimer.setOnFinished(event1 -> {
+                Event event = row.getTableView().getSelectionModel().getSelectedItem();
+                int count = sequentialClickCount.get();
+                if (count == 1) {
+                    row.getTableView().getSelectionModel().getSelectedItem().setSelected(!event.getSelected());
+                    selectedEventID = event.getId();
+                    refreshTableView();
+                    if (event.getSelected()) showToolTip();
+                    else hideToolTip();
+                }
+                if (count == 2) {
+                    addContent(new EditEventController(event.getId()), EDIT_EVENT_DIALOG);
+                }
+                sequentialClickCount.set(0);
+            });
+
+            row.setOnMousePressed(event -> {
+                if (row.getTableView().getSelectionModel().getSelectedItem() != null) {
+                    sequentialClickCount.set(sequentialClickCount.get() + 1);
+                    clickTimer.playFromStart();
+                }
 
             });
             return row;
         });
     }
 
+    private void refreshTableView() {
+        table_view.getColumns().get(0).setVisible(false);
+        table_view.getColumns().get(0).setVisible(true);
+    }
+
+    private void showToolTip() {
+        eventToolTip.setVisible(true);
+        FadeTransition animation = new FadeTransition(Duration.millis(200), eventToolTip);
+        animation.setFromValue(0);
+        animation.setToValue(1.0);
+        animation.play();
+    }
+
+    private void hideToolTip(){
+        eventToolTip.setVisible(false);
+    }
+
     @Override
    public void initialize(URL location, ResourceBundle resources) {
       table_view.setPlaceholder(new Label("Voeg een evenement toe"));
-       selectedRows = new ArrayList();
+
        setMainFrameTitle(EVENTS_TITLE);
        eventService = new EventService();
-        eventData = FXCollections.observableArrayList(eventService.all());
+
+            eventData = FXCollections.observableArrayList(eventService.all());
+            selectedRows = new ArrayList();
 
        checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
