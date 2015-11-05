@@ -101,21 +101,25 @@ public class AddGuestController extends ContentLoader implements Initializable {
         data.put("city", city);
         data.put("referralName", referral);
 
-        service.subscribe(data);
-
-        Guest guest = service.all().get(service.all().size() - 1);
-
-        attendeeData.put("guestID", guest.getId());
-        attendeeData.put("eventID", eventId);
-        attendeeData.put("zipCode", guest.getAddress().getZipCode());
-        attendeeData.put("street", guest.getAddress().getStreet());
-        attendeeData.put("houseNumber", guest.getAddress().getHouseNumber());
-        attendeeData.put("country", guest.getAddress().getCountry());
-        attendeeData.put("city", guest.getAddress().getCity());
-        attendeeData.put("referralName", guest.getReferral());
+        int id = service.subscribe(data);
 
 
-        attendeeService.create(attendeeData);
+        if (id != -1) {
+            System.out.print(id);
+            Guest guest = service.find(id);
+
+            attendeeData.put("guestID", guest.getId());
+            attendeeData.put("eventID", eventId);
+            attendeeData.put("zipCode", guest.getAddress().getZipCode());
+            attendeeData.put("street", guest.getAddress().getStreet());
+            attendeeData.put("houseNumber", guest.getAddress().getHouseNumber());
+            attendeeData.put("country", guest.getAddress().getCountry());
+            attendeeData.put("city", guest.getAddress().getCity());
+            attendeeData.put("referralName", guest.getReferral());
+
+            attendeeService.create(attendeeData);
+        }
+
         addContent(GUESTS);
     }
 

@@ -1,5 +1,6 @@
 package IPSEN2.generators.csv;
 
+import IPSEN2.services.attendee.AttendeeService;
 import IPSEN2.services.guest.GuestService;
 import IPSEN2.services.merchant.MerchantService;
 import IPSEN2.services.wine.WineService;
@@ -19,7 +20,7 @@ import java.util.List;
 public class ImportCSV {
 
     //Methods
-    public void importGuests() throws Exception{
+    public void importGuests(int eventID) throws Exception{
         File selectedFile = this.fileDialog("Select a guest CSV file", "*.csv").showOpenDialog(null);
         List<String[]> guestsCSV = this.readCSV(selectedFile);
 
@@ -40,7 +41,12 @@ public class ImportCSV {
                 data.put("city", customerData[13]);
                 data.put("referralName", customerData[2]);
 
-                new GuestService().subscribe(data);
+                int id = new GuestService().subscribe(data);
+                HashMap attendeeData = new HashMap();
+                attendeeData.put("guestID", id);
+                attendeeData.put("eventID", eventID);
+                new AttendeeService().create(attendeeData);
+
             }
             System.out.println("Succesfully imported guests.");
         }

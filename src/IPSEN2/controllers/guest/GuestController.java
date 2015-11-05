@@ -36,8 +36,7 @@ public class GuestController extends ContentLoader implements Initializable{
     @FXML private TableColumn attendedColumn;
 
     public int selectedGuestID;
-    private GuestService service;
-    private static ObservableList<Guest> guestData;
+    private GuestService guestService;
     private static ObservableList<Guest> attendeeData;
     private static ArrayList<Integer> selectedRows;
     private CheckBox selectAllCheckBox;
@@ -66,7 +65,7 @@ public class GuestController extends ContentLoader implements Initializable{
             for (Integer row : selectedRows) {
                 //if (guestData.get(selectedRows.indexOf(row)).getAttended()) {
                 System.out.println("removing " + row);
-                attendeeService.delete(row);
+                guestService.removeAsAttendee(row, eventId);
             }
         } else {
 //            Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -79,7 +78,7 @@ public class GuestController extends ContentLoader implements Initializable{
 
 
 
-        attendeeData = FXCollections.observableArrayList(service.findAttendeesForEvent(eventId));
+        attendeeData = FXCollections.observableArrayList(guestService.findAttendeesForEvent(eventId));
         addContent(GUESTS);
 
     }
@@ -104,29 +103,11 @@ public class GuestController extends ContentLoader implements Initializable{
     }
 
     @FXML
-    private void importCSVFile() {
+    private void importCSVFile() throws Exception {
         //TODO: delete test code, debug only.
         if (eventId != 0) {
-        try {
             ImportCSV importCSV = new ImportCSV();
-            importCSV.importGuests();
-            guestData.forEach(guest -> {
-                HashMap attendeeData = new HashMap();
-
-                attendeeData.put("guestID", guest.getId());
-                attendeeData.put("eventID", eventId);
-                attendeeData.put("zipCode", guest.getAddress().getZipCode());
-                attendeeData.put("street", guest.getAddress().getStreet());
-                attendeeData.put("houseNumber", guest.getAddress().getHouseNumber());
-                attendeeData.put("country", guest.getAddress().getCountry());
-                attendeeData.put("city", guest.getAddress().getCity());
-                attendeeData.put("referralName", guest.getReferral());
-                attendeeService.create(attendeeData);
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+            importCSV.importGuests(eventId);
             keepCurrentData = false;
         addContent(GUESTS);
     }}
@@ -225,7 +206,7 @@ public class GuestController extends ContentLoader implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ContentLoader.setMainFrameTitle(ContentLoader.GUESTS_TITLE);
-        service = new GuestService();
+        guestService = new GuestService();
         attendeeService = new AttendeeService();
 
         if (currentEventId != eventId || currentEventId == 0) {
@@ -234,8 +215,7 @@ public class GuestController extends ContentLoader implements Initializable{
 
         if (!keepCurrentData) {
                 currentEventId = eventId;
-                guestData = FXCollections.observableArrayList(service.all());
-                attendeeData = FXCollections.observableArrayList(service.findAttendeesForEvent(eventId));
+                attendeeData = FXCollections.observableArrayList(guestService.findAttendeesForEvent(eventId));
                 selectedRows = new ArrayList<>();
             }
 
