@@ -3,6 +3,7 @@ package IPSEN2.controllers.guest;
 import IPSEN2.ContentLoader;
 import IPSEN2.controllers.mail.MailController;
 import IPSEN2.generators.csv.ImportCSV;
+import IPSEN2.models.attendee.Attendee;
 import IPSEN2.models.guest.Guest;
 import IPSEN2.services.attendee.AttendeeService;
 import IPSEN2.services.guest.GuestService;
@@ -200,11 +201,20 @@ public class GuestController extends ContentLoader implements Initializable{
             @Override
             public ObservableValue<CheckBox> call(TableColumn.CellDataFeatures<Guest, CheckBox> cellDataFeatures) {
                 CheckBox checkBox = new CheckBox();
-                checkBox.setSelected(cellDataFeatures.getValue().getAttended());
+                Attendee attendee = attendeeService.find(cellDataFeatures.getValue().getId());
+                checkBox.setSelected(attendee.isAttended());
                 checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue,
                                                          Boolean oldValue, Boolean newValue) -> {
                     cellDataFeatures.getValue().setAttended(newValue.booleanValue());
-
+                    HashMap data = new HashMap();
+                    data.put("guest_id",  attendee.getGuestID());
+                    data.put("event_id", attendee.getEventID());
+                    if (newValue) {
+                        data.put("attended", "1");
+                    } else {
+                        data.put("attended", "0");
+                    }
+                    attendeeService.update(data);
                 });
                 return new SimpleObjectProperty(checkBox);
             }

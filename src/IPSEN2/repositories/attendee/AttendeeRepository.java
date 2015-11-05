@@ -43,6 +43,11 @@ public class AttendeeRepository implements Crudable {
             while (queryResult.next()) {
                 Attendee attendee = new Attendee(queryResult.getInt("event_id"));
                 attendee.setGuestID(queryResult.getInt("guest_id"));
+                if (queryResult.getInt("attended") == 1){
+                    attendee.setAttended(true);
+                } else {
+                attendee.setAttended(false);}
+
                 return attendee;
             }
         } catch (SQLException e) {
@@ -57,7 +62,7 @@ public class AttendeeRepository implements Crudable {
         HashMap databaseData = new HashMap();
         databaseData.put("guest_id", data.get("guestID").toString());
         databaseData.put("event_id", data.get("eventID").toString());
-
+        databaseData.put("attended", "0");
         return databaseInstance.insertInto("attendee", databaseData);
     }
 
@@ -65,6 +70,7 @@ public class AttendeeRepository implements Crudable {
     public void delete(int id) {
         databaseInstance.delete("attendee" , "guest_id=" + id);
     }
+
 
     public int exists(HashMap data) {
         String where = "";
@@ -90,11 +96,15 @@ public class AttendeeRepository implements Crudable {
 
 
 /*
->>>>>>> c40696eeac4db4f7988df4906bbfa1e30053aba5
     public void delete(int guestID, int eventID) {
         databaseInstance.delete("attendee", guestID, eventID);
     }
 */
+
+    public void update(HashMap data) {
+        databaseInstance.update("attendee", "guest_id=" + data.get("guest_id") , data);
+    }
+
     @Override
     public void update(int id, HashMap data) {
 

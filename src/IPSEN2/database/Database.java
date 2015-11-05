@@ -114,6 +114,27 @@ public class Database {
         return result;
     }
 
+    public int update(String table, String where, HashMap data) {
+        String query = "UPDATE `" + table + "` SET ";
+        Set keySet = data.keySet();
+        Object[] keyArray = keySet.toArray();
+        for(int index = 0; index < keyArray.length; index++) {
+            query += keyArray[index].toString()+"=";
+            if(data.get(keyArray[index]) instanceof String ) {
+                query += "'"+data.get(keyArray[index])+"'";
+            }
+            else {
+                query += data.get(keyArray[index]).toString();
+            }
+            if(index != keyArray.length - 1) {
+                query += ", ";
+            }
+        }
+        query += " WHERE " + where;
+        int result = updateDatabase(query);
+        return result;
+    }
+
     public int delete(String from, int id) {
         String query = "DELETE FROM `" + from + "` WHERE id=" + id;
         int result = updateDatabase(query);
