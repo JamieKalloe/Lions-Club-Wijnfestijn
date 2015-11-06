@@ -129,10 +129,10 @@ public class GuestController extends ContentLoader implements Initializable{
                     row.getTableView().getSelectionModel().getSelectedItem().setSelected(!guest.getSelected());
                     refreshTableView();
                     selectedGuestID = guest.getId();
-                    selectedRows.add(guest.getId());
+
                     if (!guest.getSelected()){
                         selectedRows.remove(selectedRows.indexOf(guest.getId()));
-                    }
+                    }else  selectedRows.add(guest.getId());
                 }
                 if (count == 2) {
                     addContent(new EditGuestController(guest.getId()), EDIT_GUEST_DIALOG);
