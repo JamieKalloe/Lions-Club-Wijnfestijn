@@ -3,6 +3,7 @@ package IPSEN2.controllers.wine;
 import IPSEN2.ContentLoader;
 import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.wine.Wine;
+import IPSEN2.services.message.Messaging;
 import IPSEN2.services.wine.WineService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -66,9 +67,15 @@ public class WineController extends ContentLoader implements Initializable{
             selected = false;
 
             selectedRows.forEach(row -> {
-                    System.out.println("removing row: " + row);
-                    wineService.remove(row);
-         });
+                System.out.println("removing row: " + row);
+                wineService.remove(row);
+            });
+        } else {
+            Messaging.getInstance().show(
+                    "Foutmelding",
+                    "Verwijderfout",
+                    "Er is geen wijn geselecteerd"
+            );
         }
 
         wineData = FXCollections.observableArrayList(wineService.all());

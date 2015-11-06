@@ -6,6 +6,7 @@ import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.guest.Guest;
 import IPSEN2.services.attendee.AttendeeService;
 import IPSEN2.services.guest.GuestService;
+import IPSEN2.services.message.Messaging;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -68,12 +69,12 @@ public class GuestController extends ContentLoader implements Initializable{
                 attendeeService.delete(row);
             }
         } else {
-//            Alert alert = new Alert(Alert.AlertType.WARNING);
-//            alert.setTitle("Information Dialog");
-//            alert.setHeaderText("Opgelet!");
-//            alert.setContentText("U heeft geen items geselecteerd om te verwijderen!");
-//
-//            alert.showAndWait();
+
+            Messaging.getInstance().show(
+                    "Foutmelding",
+                    "Verwijderfout",
+                    "Er is geen gast geselecteerd"
+            );
         }
 
 

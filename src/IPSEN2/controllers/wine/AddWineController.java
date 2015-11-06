@@ -51,13 +51,13 @@ public class AddWineController extends ContentLoader implements Initializable {
 
     }
 
-
-    @FXML
     public void handleCancelButton() {
         addContent(WINE);
     }
 
+
     public void handleSubmitButton() {
+
         name = wineNameTextField.getText();
         country = countryNameTextField.getText();
         region = regionNameTextField.getText();

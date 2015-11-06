@@ -110,7 +110,7 @@ public class GuestService {
                         "Een van de gast velden zijn incorrect ingevuld"
                 );
 
-                return false;
+                return true;
             }
 
             this.repository.update(id, data);

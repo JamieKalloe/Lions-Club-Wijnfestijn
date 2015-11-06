@@ -4,6 +4,8 @@ import IPSEN2.ContentLoader;
 import IPSEN2.models.guest.Guest;
 import IPSEN2.services.attendee.AttendeeService;
 import IPSEN2.services.guest.GuestService;
+import IPSEN2.validators.guest.GuestValidator;
+import IPSEN2.validators.wine.WineValidator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.RadioButton;
@@ -21,6 +23,7 @@ public class AddGuestController extends ContentLoader implements Initializable {
 
     private GuestService service;
     private AttendeeService attendeeService;
+    private GuestValidator validator;
 
     @FXML private RadioButton genderRadioM;
     @FXML private RadioButton genderRadioF;
@@ -60,6 +63,7 @@ public class AddGuestController extends ContentLoader implements Initializable {
     }
 
     public void handleSubmitButton() {
+
         // Check if Male of Female radiobutton is selected
         if (genderRadioM.isSelected()) {
             gender = "M";
@@ -116,10 +120,18 @@ public class AddGuestController extends ContentLoader implements Initializable {
         attendeeData.put("city", guest.getAddress().getCity());
         attendeeData.put("referralName", guest.getReferral());
 
-
         attendeeService.create(attendeeData);
-        addContent(GUESTS);
+
+        boolean isValid = this.validator.validate(attendeeData);
+        if (!isValid) {
+            addContent(GUESTS);
+
+        } else {
+
+        }
+
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
