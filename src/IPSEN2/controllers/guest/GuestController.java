@@ -99,8 +99,6 @@ public class GuestController extends ContentLoader implements Initializable{
 
             addContent(new EditGuestController(selectedGuestID), EDIT_GUEST_DIALOG);
         }
-
-
     }
 
     @FXML
