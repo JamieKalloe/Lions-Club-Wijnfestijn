@@ -51,9 +51,11 @@ public class EditMerchantController extends ContentLoader implements Initializab
         data.put("houseNumber", houseNumberTextField.getText());
         data.put("country", "Nederland");
         data.put("city", cityTextField.getText());
-        merchantService.edit(selectedMerchantId, data);
 
-        addContent(MERCHANT);
+
+        if (merchantService.edit(selectedMerchantId, data)) {
+            addContent(MERCHANT);
+        }
     }
 
     @Override

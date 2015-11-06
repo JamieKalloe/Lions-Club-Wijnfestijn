@@ -107,8 +107,10 @@ public class EditGuestController extends ContentLoader implements Initializable{
         data.put("country", "Nederland");
         data.put("city", city);
         data.put("referralID", referral);
-            service.edit(selectedGuestID, data);
+
+        if (service.edit(selectedGuestID, data)) {
             addContent(GUESTS);
+        }
     }
 
     @Override
@@ -116,8 +118,6 @@ public class EditGuestController extends ContentLoader implements Initializable{
         service = new GuestService();
 
             Guest guest = service.find(selectedGuestID);
-
-            System.out.println("Ref ID: " + guest.getReferral().getReferralID());
 
             firstNameTextField.setText(guest.getFirstName());
             prefixTextField.setText(guest.getPrefix());
@@ -138,7 +138,7 @@ public class EditGuestController extends ContentLoader implements Initializable{
             } else if (guest.getReferral().getReferralID() == 3) {
                 referralAdRadio.setSelected(true);
             }
-            //telephoneTextField.setText(guest.);
+
             emailTextField.setText(guest.getEmail());
             addressTextField.setText(guest.getAddress().getStreet());
             houseNumberTextField.setText(guest.getAddress().getHouseNumber());
