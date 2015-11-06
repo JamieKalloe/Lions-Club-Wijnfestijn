@@ -7,6 +7,9 @@ import IPSEN2.models.attendee.Attendee;
 import IPSEN2.models.guest.Guest;
 import IPSEN2.services.attendee.AttendeeService;
 import IPSEN2.services.guest.GuestService;
+import javafx.animation.PauseTransition;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -17,6 +20,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,8 +52,8 @@ public class GuestController extends ContentLoader implements Initializable{
 
 
     private void refreshTableView() {
-        table_view.getColumns().get(0).setVisible(false);
-        table_view.getColumns().get(0).setVisible(true);
+        checkBoxColumn.setVisible(false);
+        checkBoxColumn.setVisible(true);
     }
 
     public void handleAddButton() throws IOException {
@@ -78,9 +82,6 @@ public class GuestController extends ContentLoader implements Initializable{
 //            alert.showAndWait();
         }
 
-
-
-        attendeeData = FXCollections.observableArrayList(guestService.findAttendeesForEvent(eventId));
         addContent(GUESTS);
 
     }
@@ -108,18 +109,45 @@ public class GuestController extends ContentLoader implements Initializable{
         if (eventId != 0) {
             ImportCSV importCSV = new ImportCSV();
             importCSV.importGuests(eventId);
-            refreshTableView();
+            attendeeData = FXCollections.observableArrayList(guestService.findAttendeesForEvent(eventId));
+            addContent(GUESTS);
     }}
 
     private void setOnTableRowClickedListener() {
         table_view.setRowFactory(table -> {
             TableRow<Guest> row = new TableRow<>();
+
             row.getStyleClass().add("pane");
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
-                    selectedGuestID = row.getTableView().getSelectionModel().getSelectedItem().getId();
-                    openEditGuestMenu();
+
+            Duration maxTimeBetweenSequentialClicks = Duration.millis(300);
+
+            PauseTransition clickTimer = new PauseTransition(maxTimeBetweenSequentialClicks);
+            final IntegerProperty sequentialClickCount = new SimpleIntegerProperty(0);
+
+            clickTimer.setOnFinished(event1 -> {
+                Guest guest = row.getTableView().getSelectionModel().getSelectedItem();
+                int count = sequentialClickCount.get();
+                if (count == 1) {
+                    row.getTableView().getSelectionModel().getSelectedItem().setSelected(!guest.getSelected());
+                    refreshTableView();
+                    selectedGuestID = guest.getId();
+                    selectedRows.add(guest.getId());
+                    if (!guest.getSelected()){
+                        selectedRows.remove(selectedRows.indexOf(guest.getId()));
+                    }
                 }
+                if (count == 2) {
+                    addContent(new EditGuestController(guest.getId()), EDIT_GUEST_DIALOG);
+                }
+                sequentialClickCount.set(0);
+            });
+
+            row.setOnMousePressed(event -> {
+                if (row.getTableView().getSelectionModel().getSelectedItem() != null) {
+                    sequentialClickCount.set(sequentialClickCount.get() + 1);
+                    clickTimer.playFromStart();
+                }
+
             });
             return row;
         });
