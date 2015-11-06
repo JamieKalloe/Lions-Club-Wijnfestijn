@@ -129,8 +129,8 @@ public class EventController extends ContentLoader implements Initializable{
                 int count = sequentialClickCount.get();
                 if (count == 1) {
                     row.getTableView().getSelectionModel().getSelectedItem().setSelected(!event.getSelected());
-                    eventId = event.getId();
                     refreshTableView();
+                    eventId = event.getId();
                     if (event.getSelected()) showToolTip();
                     else hideToolTip();
                 }
