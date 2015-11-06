@@ -4,6 +4,7 @@ import IPSEN2.ContentLoader;
 import IPSEN2.models.guest.Guest;
 import IPSEN2.services.attendee.AttendeeService;
 import IPSEN2.services.guest.GuestService;
+import IPSEN2.services.message.Messaging;
 import IPSEN2.validators.guest.GuestValidator;
 import IPSEN2.validators.wine.WineValidator;
 import javafx.fxml.FXML;
@@ -47,7 +48,6 @@ public class AddGuestController extends ContentLoader implements Initializable {
     private String firstName;
     private String prefix;
     private String lastName;
-    private String telephone;
     private String email;
     private String address;
     private String houseNumber;
@@ -75,7 +75,6 @@ public class AddGuestController extends ContentLoader implements Initializable {
         firstName = firstNameTextField.getText();
         prefix = prefixTextField.getText();
         lastName = lastNameTextField.getText();
-        telephone = telephoneTextField.getText();
         email = emailTextField.getText();
         address = addressTextField.getText();
         houseNumber = houseNumberTextField.getText();
@@ -107,27 +106,29 @@ public class AddGuestController extends ContentLoader implements Initializable {
         data.put("city", city);
         data.put("referralName", referral);
 
-        service.subscribe(data);
+        int id = service.subscribe(data);
 
-        Guest guest = service.all().get(service.all().size() - 1);
+        if (id != -1) {
+            Guest guest = service.find(id);
 
-        attendeeData.put("guestID", guest.getId());
-        attendeeData.put("eventID", eventId);
-        attendeeData.put("zipCode", guest.getAddress().getZipCode());
-        attendeeData.put("street", guest.getAddress().getStreet());
-        attendeeData.put("houseNumber", guest.getAddress().getHouseNumber());
-        attendeeData.put("country", guest.getAddress().getCountry());
-        attendeeData.put("city", guest.getAddress().getCity());
-        attendeeData.put("referralName", guest.getReferral());
+            attendeeData.put("guestID", guest.getId());
+            attendeeData.put("eventID", eventId);
+            attendeeData.put("zipCode", guest.getAddress().getZipCode());
+            attendeeData.put("street", guest.getAddress().getStreet());
+            attendeeData.put("houseNumber", guest.getAddress().getHouseNumber());
+            attendeeData.put("country", guest.getAddress().getCountry());
+            attendeeData.put("city", guest.getAddress().getCity());
+            attendeeData.put("referralName", guest.getReferral());
 
-        attendeeService.create(attendeeData);
-
-        boolean isValid = this.validator.validate(attendeeData);
-        if (!isValid) {
+            attendeeService.create(attendeeData);
             addContent(GUESTS);
 
         } else {
-
+            Messaging.getInstance().show(
+                    "Foutmelding",
+                    "Gasten invoerfout",
+                    "Een van de gast velden zijn incorrect ingevuld"
+            );
         }
 
     }

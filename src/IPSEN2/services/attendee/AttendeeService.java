@@ -72,4 +72,8 @@ public class AttendeeService {
         return false;
     }
 
+    public void update(HashMap data) {
+        repository.update(data);
+    }
+
 }

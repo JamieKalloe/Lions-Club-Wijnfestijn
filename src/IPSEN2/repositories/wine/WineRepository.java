@@ -117,7 +117,7 @@ public class WineRepository implements Crudable {
         HashMap databaseData = new HashMap();
 
         // Fill the HashMap with data from the WineService
-        databaseData.put("type_id", data.get("type_id"));
+        databaseData.put("type_id", data.get("typeId"));
         databaseData.put("name", data.get("name").toString());
         databaseData.put("country", data.get("country").toString());
         databaseData.put("region", data.get("region"));

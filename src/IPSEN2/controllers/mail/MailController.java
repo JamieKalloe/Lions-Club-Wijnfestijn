@@ -8,6 +8,7 @@ import IPSEN2.models.merchant.Merchant;
 import IPSEN2.services.guest.GuestService;
 import IPSEN2.services.mail.MailService;
 import IPSEN2.services.merchant.MerchantService;
+import IPSEN2.services.order.OrderService;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -38,36 +39,43 @@ public class MailController extends ContentLoader implements Initializable{
     private MerchantService merchantService;
     private Mail mail;
     private int selectedID;
-    private boolean isMerchant = false;
+    private int receiverId;
 
     /**
      * Instantiates a new Mail controller.
      *
-     * @param selectedGuestIDs the selected guest i ds
+     * @param selectedIDs the selected guest i ds
      */
-    public MailController(ArrayList<Integer> selectedGuestIDs) {
-        this.selectedIDs = selectedGuestIDs;
+
+    public MailController(ArrayList<Integer> selectedIDs) {
+        this.selectedIDs = selectedIDs;
     }
 
     /**
      * Instantiates a new Mail controller.
      *
      * @param selectedMerchantIDs the selected merchant i ds
-     * @param isMerchant          the is merchant
+     * @param receiverId          the is the id of the receiver
      */
-    public MailController(ArrayList<Integer> selectedMerchantIDs, boolean isMerchant) {
+    public MailController(ArrayList<Integer> selectedMerchantIDs, int receiverId) {
         this.selectedIDs = selectedMerchantIDs;
-        this.isMerchant = isMerchant;
+        this.receiverId = receiverId;
     }
 
 
     private void handleSubmitButton() throws Exception {
+
         for (Integer id : selectedIDs) {
-            if (isMerchant) {
+            if (receiverId == 1) {
                 Merchant merchant = merchantService.find(id);
                 new MailService().send(new MailFactory(merchant).generate(mailService.getMailType(selectedMailType)));
-            } else {
+            } else if (receiverId == 2) {
                 Guest guest = guestService.find(id);
+                new MailService().send(new MailFactory(guest).generate(mailService.getMailType(selectedMailType)));
+            } else if (receiverId == 3){
+//                Guest guest = guestService.find(id);
+                Guest guest = new OrderService().find(id).getGuest();
+                guest.setOrder(new OrderService().find(id));
                 new MailService().send(new MailFactory(guest).generate(mailService.getMailType(selectedMailType)));
             }
             try {
@@ -82,23 +90,27 @@ public class MailController extends ContentLoader implements Initializable{
     }
 
     private void handleCancelButton() {
-        if (isMerchant) {
+        if (receiverId == 1) {
             addContent(MERCHANT);
-        } else {
+        } else  if (receiverId == 2){
             addContent(GUESTS);
+        } else if (receiverId == 3) {
+            addContent(ORDER);
         }
     }
 
     private void handleListView(Event event) {
         selectedMailType = ((ListView) event.getSource()).getSelectionModel().getSelectedItem().toString();
 
+        System.out.print(selectedIDs.get(0));
         if (selectedMailType != null) {
-            if (isMerchant) {
-                mail = (mailService.getMail(selectedIDs.get(0), mailService.getMailType(selectedMailType), false));
+
+                mail = (mailService.getMail(selectedIDs.get(0), mailService.getMailType(selectedMailType), receiverId));
+            if (mail != null) {
+                mailTextArea.setText(mail.getContent());
             } else {
-                mail = (mailService.getMail(selectedIDs.get(0), mailService.getMailType(selectedMailType), true));
+                mailTextArea.setText("Dit type mail is vanuit dit menu niet mogelijk");
             }
-            mailTextArea.setText(mail.getContent());
         }
     }
 

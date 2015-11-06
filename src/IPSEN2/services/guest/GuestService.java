@@ -98,7 +98,6 @@ public class GuestService {
         if (guest != null)
         {
             data.put("addressID", guest.getAddress().getAddressID());
-            data.put("referralID", guest.getReferral().getReferralID());
 
             boolean isValid = this.validator.validate(data);
 

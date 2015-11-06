@@ -1,14 +1,17 @@
 package IPSEN2.services.mail;
 
+import IPSEN2.models.guest.Guest;
 import IPSEN2.models.mail.Mail;
 import IPSEN2.models.mail.MailFactory;
 import IPSEN2.models.mail.MailMessage;
 import IPSEN2.models.mail.MailType;
 import IPSEN2.services.guest.GuestService;
+import IPSEN2.services.order.OrderService;
 
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import java.io.IOException;
 import java.util.Properties;
 
 public class MailService {
@@ -112,15 +115,29 @@ public class MailService {
         }
         return this.mailType;
     }
-    public Mail getMail(int selectedID, MailType mailType, boolean isGuest) {
 
-        if (isGuest) {
-            guestService = new GuestService();
-System.out.println(selectedID);
-            mail = new MailFactory(guestService.find(selectedID)).generate(mailType);
-        } else{
-            mail = new MailFactory(selectedID).generate(mailType);
+    public Mail getMail(int selectedID, MailType mailType, int receiverId) {
 
+        try {
+
+            if (receiverId == 3) {
+                OrderService orderService = new OrderService();
+                Guest guest = orderService.find(selectedID).getGuest();
+                guest.setOrder(orderService.find(selectedID));
+                mail = new MailFactory(guest).generate(mailType);
+            } else if (receiverId == 2){
+                if (mailType == MailType.INVOICE || mailType == MailType.REMINDER){
+                    return null;
+                }
+                mail = new MailFactory(new GuestService().find(selectedID)).generate(mailType);
+            } else if (receiverId == 1) {
+                if (mailType == MailType.INVOICE || mailType == MailType.REMINDER){
+                    return null;
+                }
+                mail = new MailFactory(selectedID).generate(mailType);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return mail;
     }

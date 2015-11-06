@@ -40,18 +40,27 @@ public class MerchantService {
     }
 
     public int create(HashMap data) {
-            data.put("addressID", addressService.create(data));
-            int i = repository.create(data);
-            return  i;
+
+        int addressId = addressService.create(data);
+
+        if (addressId == -1)
+        {
+            return -1;
+        }
+
+        data.put("addressID", addressService.create(data));
+        return repository.create(data);
     }
 
     public boolean edit(int id, HashMap data) {
         Merchant merchant = repository.find(id);
         if(merchant != null) {
+            if(new AddressService().update(merchant.getAddress().getAddressID(), data)) {
                 data.put("addressID", merchant.getAddress().getAddressID());
                 repository.update(id, data);
 
-            return true;
+                return true;
+            }
         }
         return false;
     }

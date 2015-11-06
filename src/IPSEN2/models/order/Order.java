@@ -4,6 +4,7 @@ import IPSEN2.models.event.Event;
 import IPSEN2.models.guest.Guest;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Order {
 
@@ -14,6 +15,8 @@ public class Order {
     private Event event;
 
     private OrderStatus status;
+
+    private Date date;
 
     private ArrayList<WineOrder> wineOrders;
 
@@ -28,6 +31,7 @@ public class Order {
         this.status = new OrderStatus(orderStatusId);
         this.totalAmount = 0.0;
         this.wineOrders = null;
+        this.date = new Date();
     }
 
     public int getId() {
@@ -58,6 +62,8 @@ public class Order {
         return selected;
     }
 
+    public Date getDate() { return date;}
+
     public void setGuest(Guest guest) {
         this.guest = guest;
     }
@@ -77,6 +83,9 @@ public class Order {
             total += order.getAmount() * order.getWine().getPrice();
         }
         this.totalAmount = total;
+    }
+
+    public void setDate(Date date) { this.date = date;
     }
 
     public void setTotalAmount(double totalAmount) {

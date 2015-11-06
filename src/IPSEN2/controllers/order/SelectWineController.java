@@ -39,24 +39,31 @@ public class SelectWineController extends ContentLoader implements Initializable
     private  ObservableList<Wine> wineData;
     private  ArrayList<Integer> selectedRows;
     private int selectedWineID;
-    private int selectedGuestID;
-
+    private int selectedID;
+    private int selectedOrderID;
+    private boolean isEdit;
     @FXML private Pane cancelButton, submitButton;
 
-    public SelectWineController(int selectedGuestID) {
-        this.selectedGuestID = selectedGuestID;
+    public SelectWineController(int selectedID, boolean isEdit) {
+        this.selectedID = selectedID;
+        this.isEdit = isEdit;
     }
 
-    public void handleSubmitButton(){
+
+    public void handleSubmitButton() {
         if (selectedRows.size() != 0) {
-        addContent(new AddOrderController(selectedGuestID, selectedRows), EDIT_ORDER_DIALOG); }
-        else {
+            if (isEdit) {
+                addContent(new EditOrderController(selectedID, selectedRows), EDIT_ORDER_DIALOG);
+            } else {
+                addContent(new AddOrderController(selectedID, selectedRows), EDIT_ORDER_DIALOG);
+
+            }
+        } else {
             handleCancelButton();
         }
     }
-
     public void handleCancelButton() {
-        addContent(new AddOrderController(selectedGuestID), EDIT_ORDER_DIALOG);
+        addContent(new AddOrderController(selectedID), EDIT_ORDER_DIALOG);
     }
 
     private Callback createCheckBoxCellCallBack() {
@@ -90,8 +97,6 @@ public class SelectWineController extends ContentLoader implements Initializable
         selectedRows = new ArrayList<>();
 
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
-
-
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
 
         checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());

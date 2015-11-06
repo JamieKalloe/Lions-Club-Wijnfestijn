@@ -26,7 +26,6 @@ public class EditGuestController extends ContentLoader implements Initializable{
     @FXML private TextField firstNameTextField;
     @FXML private TextField prefixTextField;
     @FXML private TextField lastNameTextField;
-    @FXML private TextField telephoneTextField;
     @FXML private TextField emailTextField;
     @FXML private TextField addressTextField;
     @FXML private TextField houseNumberTextField;
@@ -74,7 +73,6 @@ public class EditGuestController extends ContentLoader implements Initializable{
         firstName = firstNameTextField.getText();
         prefix = prefixTextField.getText();
         lastName = lastNameTextField.getText();
-        telephone = telephoneTextField.getText();
         email = emailTextField.getText();
         address = addressTextField.getText();
         houseNumber = houseNumberTextField.getText();
@@ -108,27 +106,18 @@ public class EditGuestController extends ContentLoader implements Initializable{
         data.put("houseNumber", houseNumber);
         data.put("country", "Nederland");
         data.put("city", city);
-        data.put("referralName", referral);
-            service.edit(selectedGuestID, data);
+        data.put("referralID", referral);
+
+        if (service.edit(selectedGuestID, data)) {
             addContent(GUESTS);
-
-           /* Stage dialogStage = new Stage();
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.setScene(new Scene(VBoxBuilder.create().
-                    children(new Text("Hi"), new Button("Ok.")).
-                    alignment(Pos.CENTER).padding(new Insets(5)).build()));
-            dialogStage.show();*/
-
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         service = new GuestService();
 
             Guest guest = service.find(selectedGuestID);
-
-            System.out.println("Ref ID: " + guest.getReferral().getReferralID());
 
             firstNameTextField.setText(guest.getFirstName());
             prefixTextField.setText(guest.getPrefix());
@@ -149,7 +138,7 @@ public class EditGuestController extends ContentLoader implements Initializable{
             } else if (guest.getReferral().getReferralID() == 3) {
                 referralAdRadio.setSelected(true);
             }
-            //telephoneTextField.setText(guest.);
+
             emailTextField.setText(guest.getEmail());
             addressTextField.setText(guest.getAddress().getStreet());
             houseNumberTextField.setText(guest.getAddress().getHouseNumber());

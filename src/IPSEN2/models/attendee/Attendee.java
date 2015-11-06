@@ -7,6 +7,7 @@ public class Attendee {
 
     private int guestID;
     private int eventID;
+    private boolean attended;
 
     public Attendee(int eventID) {
         this.eventID = eventID;
@@ -20,7 +21,15 @@ public class Attendee {
 
     public int getEventID() {return eventID;}
 
+    public boolean isAttended() {
+        return attended;
+    }
+
     public void setGuestID(int guestID) {this.guestID = guestID;}
 
     public void setEventID(int eventID) {this.eventID = eventID;}
+
+    public void setAttended(boolean attended) {
+        this.attended = attended;
+    }
 }

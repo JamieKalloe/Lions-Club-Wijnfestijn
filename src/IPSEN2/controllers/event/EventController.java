@@ -3,6 +3,10 @@ package IPSEN2.controllers.event;
 import IPSEN2.ContentLoader;
 import IPSEN2.models.event.Event;
 import IPSEN2.services.event.EventService;
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,7 +15,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.util.Callback;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,12 +48,19 @@ public class EventController extends ContentLoader implements Initializable{
     @FXML
     private TableColumn<Event, String> eventDateColumn;
 
+    @FXML Pane eventToolTip;
 
-   private ObservableList<Event> eventData;
+   private static ObservableList<Event> eventData;
     private static ArrayList<Integer> selectedRows;
     private EventService eventService;
     private int selectedEventID;
 
+    @FXML
+    private void handleNextButton() {
+        if (eventId != 0) {
+            addContent(MAINMENU);
+        }
+    }
 
     /**
      * Handle remove button.
@@ -78,12 +91,14 @@ public class EventController extends ContentLoader implements Initializable{
                                                          Boolean oldValue, Boolean newValue) -> {
                     cellDataFeatures.getValue().setSelected(newValue.booleanValue());
 
-                    selectedEventID = cellDataFeatures.getValue().getId();
+                    eventId = cellDataFeatures.getValue().getId();
                     if (newValue.booleanValue()) {
-                        selectedRows.add(selectedEventID);
+                        selectedRows.add(eventId);
+                        showToolTip();
                     } else if (!newValue.booleanValue()) {
-                        selectedRows.remove(selectedRows.indexOf(selectedEventID));
+                        selectedRows.remove(selectedRows.indexOf(eventId));
                         selectedEventID= 0;
+                        eventToolTip.setVisible(false);
                     }
                 });
                 return new SimpleObjectProperty(checkBox);
@@ -98,13 +113,70 @@ public class EventController extends ContentLoader implements Initializable{
         addContent(new AddEventController(), EDIT_EVENT_DIALOG);
     }
 
-   @Override
+    private void setOnTableRowClickedListener() {
+        table_view.setRowFactory(table -> {
+            TableRow<Event> row = new TableRow<>();
+
+            row.getStyleClass().add("pane");
+
+            Duration maxTimeBetweenSequentialClicks = Duration.millis(300);
+
+            PauseTransition clickTimer = new PauseTransition(maxTimeBetweenSequentialClicks);
+            final IntegerProperty sequentialClickCount = new SimpleIntegerProperty(0);
+
+            clickTimer.setOnFinished(event1 -> {
+                Event event = row.getTableView().getSelectionModel().getSelectedItem();
+                int count = sequentialClickCount.get();
+                if (count == 1) {
+                    row.getTableView().getSelectionModel().getSelectedItem().setSelected(!event.getSelected());
+                    eventId = event.getId();
+                    refreshTableView();
+                    if (event.getSelected()) showToolTip();
+                    else hideToolTip();
+                }
+                if (count == 2) {
+                    addContent(new EditEventController(event.getId()), EDIT_EVENT_DIALOG);
+                }
+                sequentialClickCount.set(0);
+            });
+
+            row.setOnMousePressed(event -> {
+                if (row.getTableView().getSelectionModel().getSelectedItem() != null) {
+                    sequentialClickCount.set(sequentialClickCount.get() + 1);
+                    clickTimer.playFromStart();
+                }
+
+            });
+            return row;
+        });
+    }
+
+    private void refreshTableView() {
+        table_view.getColumns().get(0).setVisible(false);
+        table_view.getColumns().get(0).setVisible(true);
+    }
+
+    private void showToolTip() {
+        eventToolTip.setVisible(true);
+        FadeTransition animation = new FadeTransition(Duration.millis(200), eventToolTip);
+        animation.setFromValue(0);
+        animation.setToValue(1.0);
+        animation.play();
+    }
+
+    private void hideToolTip(){
+        eventToolTip.setVisible(false);
+    }
+
+    @Override
    public void initialize(URL location, ResourceBundle resources) {
       table_view.setPlaceholder(new Label("Voeg een evenement toe"));
-       selectedRows = new ArrayList();
+
        setMainFrameTitle(EVENTS_TITLE);
        eventService = new EventService();
-        eventData = FXCollections.observableArrayList(eventService.all());
+
+            eventData = FXCollections.observableArrayList(eventService.all());
+            selectedRows = new ArrayList();
 
        checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -113,20 +185,9 @@ public class EventController extends ContentLoader implements Initializable{
        eventAddressColumn.setCellValueFactory(new PropertyValueFactory<>("street"));
        eventDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
 
-
       table_view.setItems(FXCollections.observableArrayList(eventData));
-       table_view.setRowFactory(table -> {
-           TableRow<Event> row = new TableRow<>();
 
-               row.getStyleClass().add("pane");
-
-           row.setOnMouseClicked(event -> {
-               if (row.getTableView().getSelectionModel().getSelectedItem() != null) {
-               eventId = row.getTableView().getSelectionModel().getSelectedItem().getId();
-               addContent(MAINMENU);}
-           });
-           return row;
-       });
+        setOnTableRowClickedListener();
 
    }
 

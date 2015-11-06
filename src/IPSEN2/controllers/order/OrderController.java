@@ -55,11 +55,8 @@ public class OrderController extends ContentLoader implements Initializable{
    @FXML
    private void handleMailButton() {
       if (selectedRows.size() != 0) {
-         ArrayList<Integer> guestIDs = new ArrayList<>();
 
-         selectedRows.forEach(row -> guestIDs.add(orderService.find(row).getGuest().getId())
-         );
-         addContent(new MailController(guestIDs), MAIL);
+         addContent(new MailController(selectedRows, 3), MAIL);
       }
    }
 
@@ -70,9 +67,9 @@ public class OrderController extends ContentLoader implements Initializable{
 
    @FXML
    public void handleEditButton() {
-      if (selectedGuestID != 0) {
-         addContent(new EditOrderController(), EDIT_ORDER_DIALOG);
-      }
+
+         addContent(new EditOrderController(selectedOrderID, null), EDIT_ORDER_DIALOG);
+
    }
 
    public void handleRemoveButton() {
@@ -92,9 +89,10 @@ public class OrderController extends ContentLoader implements Initializable{
          TableRow<Order> row = new TableRow<>();
          row.getStyleClass().add("pane");
          row.setOnMouseClicked(event -> {
-            selectedGuestID = row.getTableView().getSelectionModel().getSelectedItem().getId();
-            selectedOrderID = row.getTableView().getSelectionModel().getSelectedItem().getId();
-            addContent(new AddOrderController(selectedGuestID, selectedOrderID), EDIT_ORDER_DIALOG);
+            if (event.getClickCount() == 2) {
+               selectedOrderID = row.getTableView().getSelectionModel().getSelectedItem().getId();
+               handleEditButton();
+            }
          });
          return row;
       });
@@ -140,7 +138,6 @@ public class OrderController extends ContentLoader implements Initializable{
                {
                   Order order = iterator.next();
                   if(order.getId() == orderID) {
-
                      Path directory = Paths.get(System.getProperty("user.dir") + "/src/IPSEN2/invoice");
                      if (!(directory.toString().contains(" " + orderID + ".pdf"))) {
                         try {
