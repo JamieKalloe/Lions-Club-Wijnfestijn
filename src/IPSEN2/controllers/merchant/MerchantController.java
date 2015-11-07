@@ -28,43 +28,27 @@ public class MerchantController extends ContentLoader implements Initializable, 
     @FXML private TableColumn idColumn;
     @FXML private TableColumn nameColumn;
     @FXML private TableColumn emailColumn;
-    @FXML private TableColumn checkBoxColumn;
-
 
     private int selectedMerchantID;
     private MerchantService merchantService;
-    private ObservableList<TableViewItem> merchantData;
+    public ObservableList<TableViewItem> merchantData;
     private ArrayList<Integer> selectedRows;
 
-    @FXML
-    private void handleAddButton() {
+    public void handleAddButton() {
         addContent(new AddMerchantController(), ADD_MERCHANT_DIALOG);
     }
 
-    @FXML
-    private void handleRemoveButton() {
+    public void handleRemoveButton() {
         if (selectedRows.size() != 0)
             selectedRows.forEach(row -> merchantService.remove(row));
             addContent(MERCHANT);
         }
 
 
-    @FXML
-    private void handleMailButton() {
+    public void handleMailButton() {
         if (selectedRows.size() != 0) {
             addContent(new MailController(selectedRows, 1) ,  MAIL);
         }
-    }
-
-    private void showTable() {
-        TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
-        tableViewSelectHandler.createCheckBoxColumn();
-
-        idColumn.setCellValueFactory(new PropertyValueFactory<Merchant, Integer>("id"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<Merchant, String>("name"));
-        emailColumn.setCellValueFactory(new PropertyValueFactory<Merchant, String>("email"));
-
-        tableView.setItems(FXCollections.observableArrayList(merchantService.all()));
     }
 
     @Override
@@ -80,6 +64,17 @@ public class MerchantController extends ContentLoader implements Initializable, 
     @Override
     public void openEditMenu() {
         addContent(new EditMerchantController(this.selectedMerchantID), ADD_MERCHANT_DIALOG);
+    }
+
+    private void showTable() {
+        TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
+        tableViewSelectHandler.createCheckBoxColumn();
+
+        idColumn.setCellValueFactory(new PropertyValueFactory<Merchant, Integer>("id"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Merchant, String>("name"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<Merchant, String>("email"));
+
+        tableView.setItems(FXCollections.observableArrayList(merchantService.all()));
     }
 
     @Override

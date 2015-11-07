@@ -26,12 +26,12 @@ import java.util.ResourceBundle;
 public class EventController extends ContentLoader implements Initializable, TableViewListener {
 
 
-    @FXML private TableView<TableViewItem> tableView;
-    @FXML private TableColumn<Event, String> nameColumn;
-    @FXML private TableColumn<Event, String> idColumn;
-    @FXML private TableColumn<Event, String> eventPlaceNameColumn;
-    @FXML private TableColumn<Event, String> eventAddressColumn;
-    @FXML private TableColumn<Event, String> eventDateColumn;
+    @FXML TableView<TableViewItem> tableView;
+    @FXML TableColumn<Event, String> nameColumn;
+    @FXML TableColumn<Event, String> idColumn;
+    @FXML TableColumn<Event, String> eventPlaceNameColumn;
+    @FXML TableColumn<Event, String> eventAddressColumn;
+    @FXML TableColumn<Event, String> eventDateColumn;
 
     @FXML Pane eventToolTip;
 
@@ -40,8 +40,7 @@ public class EventController extends ContentLoader implements Initializable, Tab
     private EventService eventService;
     private int selectedEventId;
 
-    @FXML
-    private void handleNextButton() {
+    public void handleNextButton() {
         if (eventId != 0) {
             addContent(MAINMENU);
         }
@@ -50,7 +49,6 @@ public class EventController extends ContentLoader implements Initializable, Tab
     /**
      * Handle remove button.
      */
-    @FXML
     public void handleRemoveButton() {
         if(selectedRows.size() != 0) {
             selectedRows.forEach(row -> {
@@ -62,8 +60,7 @@ public class EventController extends ContentLoader implements Initializable, Tab
         addContent(EVENTS);
     }
 
-    @FXML
-    private void openAddEventMenu() throws IOException {
+   public void openAddEventMenu() throws IOException {
         addContent(new AddEventController(), EDIT_EVENT_DIALOG);
     }
 
@@ -98,8 +95,6 @@ public class EventController extends ContentLoader implements Initializable, Tab
 
         eventId = selectedItemId;
     }
-
-
 
     @Override
     public void openEditMenu() {

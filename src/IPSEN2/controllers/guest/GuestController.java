@@ -29,20 +29,18 @@ import java.util.ResourceBundle;
 
 public class GuestController extends ContentLoader implements Initializable, TableViewListener {
 
-    @FXML private  TableView<TableViewItem> tableView;
-    @FXML private TableColumn idColumn;
-    @FXML private TableColumn firstNameColumn;
-    @FXML private TableColumn lastNameColumn;
-    @FXML private TableColumn emailColumn;
-    @FXML private TableColumn attendedColumn;
+    @FXML TableView<TableViewItem> tableView;
+    @FXML TableColumn idColumn;
+    @FXML TableColumn firstNameColumn;
+    @FXML TableColumn lastNameColumn;
+    @FXML TableColumn emailColumn;
+    @FXML TableColumn attendedColumn;
 
     public int selectedGuestID;
     private GuestService guestService;
     private  ObservableList<TableViewItem> attendeeData;
     private  ArrayList<Integer> selectedRows;
     private AttendeeService attendeeService;
-
-
 
     public void handleAddButton() throws IOException {
         if (eventId != 0) {
@@ -64,7 +62,16 @@ public class GuestController extends ContentLoader implements Initializable, Tab
         }
 
         addContent(GUESTS);
+    }
 
+    public void importCSVFile() throws Exception {
+        //TODO: delete test code, debug only.
+        if (eventId != 0) {
+            ImportCSV importCSV = new ImportCSV();
+            importCSV.importGuests(eventId);
+            attendeeData = FXCollections.observableArrayList(guestService.findAttendeesForEvent(eventId));
+            addContent(GUESTS);
+        }
     }
 
     public void handleMailButton() {
@@ -91,18 +98,6 @@ public class GuestController extends ContentLoader implements Initializable, Tab
     public void setSelectedItem(int selectedItemId) {
         this.selectedGuestID = selectedItemId;
     }
-
-
-    @FXML
-    private void importCSVFile() throws Exception {
-        //TODO: delete test code, debug only.
-        if (eventId != 0) {
-            ImportCSV importCSV = new ImportCSV();
-            importCSV.importGuests(eventId);
-            attendeeData = FXCollections.observableArrayList(guestService.findAttendeesForEvent(eventId));
-            addContent(GUESTS);
-    }}
-
 
 
     private Callback createAttendedCellCallBack() {

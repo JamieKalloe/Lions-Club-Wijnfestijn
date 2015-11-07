@@ -36,8 +36,7 @@ public class OrderController extends ContentLoader implements Initializable, Tab
 
    private int selectedOrderID;
 
-   @FXML
-   private TableView<TableViewItem> tableView;
+   @FXML private TableView<TableViewItem> tableView;
    @FXML private TableColumn idColumn;
    @FXML private TableColumn lastNameColumn;
    @FXML private TableColumn totalAmountColumn;

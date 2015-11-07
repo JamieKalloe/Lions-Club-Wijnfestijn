@@ -40,8 +40,8 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
     private static ObservableList<WineOrder> wineOrderData;
 
-    @FXML private Label customerNameLabel;
-    @FXML private ComboBox orderStatusComboBox;
+    @FXML Label customerNameLabel;
+    @FXML ComboBox orderStatusComboBox;
 
     private ArrayList<Integer> selectedWineIDs;
     private GuestService guestService;
