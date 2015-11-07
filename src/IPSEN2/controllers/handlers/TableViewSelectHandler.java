@@ -133,6 +133,8 @@ public class TableViewSelectHandler extends ContentLoader{
                 } else {
                     selectedRows.clear();
                 }
+
+                listener.setSelectedRows(this.selectedRows);
                 tableView.refresh();
             });
         });

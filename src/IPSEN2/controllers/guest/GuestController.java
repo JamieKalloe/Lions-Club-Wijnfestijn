@@ -54,8 +54,6 @@ public class GuestController extends ContentLoader implements Initializable, Tab
     }
 
     public void handleRemoveButton() {
-
-
         if (selectedRows.size() != 0) {
             selectedRows.forEach(row -> guestService.removeAsAttendee(row, eventId));
         } else
