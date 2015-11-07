@@ -14,7 +14,7 @@
             <Image url="@../../images/GastenAchtergrond.png" />
          </image>
       </ImageView>
-      <TableView fx:id="table_view" editable="true" fixedCellSize="0.0" layoutX="190.0" layoutY="161.0" prefHeight="426.0" prefWidth="741.0" styleClass="table-view" stylesheets="@../../styles/style.css">
+      <TableView fx:id="tableView" editable="true" fixedCellSize="0.0" layoutX="190.0" layoutY="161.0" prefHeight="426.0" prefWidth="741.0" styleClass="table-view" stylesheets="@../../styles/style.css">
         <columns>
           <TableColumn fx:id="idColumn" editable="false" prefWidth="99.0" sortable="false" text="ID" />
           <TableColumn fx:id="firstNameColumn" editable="false" prefWidth="124.95126342773438" text="Naam" />

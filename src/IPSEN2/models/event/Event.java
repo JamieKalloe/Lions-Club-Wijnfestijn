@@ -1,5 +1,6 @@
 package IPSEN2.models.event;
 
+import IPSEN2.models.TableViewItem;
 import IPSEN2.models.address.Address;
 
 import java.util.Date;
@@ -7,8 +8,7 @@ import java.util.Date;
 /**
  * Created by mdbaz on 08-10-2015.
  */
-public class Event {
-    private int id;
+public class Event extends TableViewItem {
     private String name;
     private Address address;
     private String street;
@@ -46,9 +46,6 @@ public class Event {
     }
 
     //GETTERS
-    public int getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -76,10 +73,6 @@ public class Event {
 
 
     //SETTERS
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }

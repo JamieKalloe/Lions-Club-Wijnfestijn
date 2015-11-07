@@ -40,7 +40,7 @@ public class WineRepository implements Crudable {
                 Wine wine = new Wine();
 
                 // Fill the wine object with data from the query
-                wine.setWineID(queryResult.getInt("id"));
+                wine.setId(queryResult.getInt("id"));
                 wine.setType(new WineType(queryResult.getInt("type_id")));
                 wine.setMerchant(new WineMerchant(queryResult.getInt("merchant_id")));
                 wine.setName(queryResult.getString("name"));
@@ -70,7 +70,7 @@ public class WineRepository implements Crudable {
                 Wine wine = new Wine();
 
                 // Fill this object with data from the query
-                wine.setWineID(queryResult.getInt("id"));
+                wine.setId(queryResult.getInt("id"));
                 wine.setType(new WineType(queryResult.getInt("type_id")));
                 wine.setName(queryResult.getString("name"));
                 wine.setCountry(queryResult.getString("country"));

@@ -1,14 +1,13 @@
 package IPSEN2.models.order;
 
+import IPSEN2.models.TableViewItem;
 import IPSEN2.models.event.Event;
 import IPSEN2.models.guest.Guest;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Order {
-
-    private int id;
+public class Order extends TableViewItem{
 
     private Guest guest;
 
@@ -21,7 +20,6 @@ public class Order {
     private ArrayList<WineOrder> wineOrders;
 
     private double totalAmount;
-    private boolean selected;
 
     public Order (int id, int guestId, int eventId, int orderStatusId)
     {
@@ -34,9 +32,6 @@ public class Order {
         this.date = new Date();
     }
 
-    public int getId() {
-        return id;
-    }
 
     public Guest getGuest() {
         return guest;
@@ -92,7 +87,4 @@ public class Order {
         this.totalAmount = totalAmount;
     }
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
 }

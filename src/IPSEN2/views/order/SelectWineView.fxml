@@ -6,14 +6,15 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="757.0" prefWidth="1087.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="757.0" prefWidth="1087.0"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <ImageView fitHeight="678.0" fitWidth="948.0" layoutX="87.0" layoutY="53.0" pickOnBounds="true">
          <image>
             <Image url="@../../images/GastenAchtergrond.png" />
          </image>
       </ImageView>
-      <TableView fx:id="table_view" layoutX="151.0" layoutY="120.0" prefHeight="460.0" prefWidth="712.0" styleClass="table-view" stylesheets="@../../styles/style.css">
+      <TableView fx:id="tableView" layoutX="151.0" layoutY="120.0" prefHeight="460.0" prefWidth="712.0" styleClass="table-view" stylesheets="@../../styles/style.css">
          <columns>
             <TableColumn fx:id="checkBoxColumn" prefWidth="51.0" />
             <TableColumn fx:id="wineIdColumn" prefWidth="45.82844543457031" styleClass="table-view" text="id" />
