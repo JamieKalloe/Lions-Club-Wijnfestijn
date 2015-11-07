@@ -85,17 +85,6 @@ public class GuestController extends ContentLoader implements Initializable, Tab
     }
 
     @Override
-    public void showToolTip() {
-
-    }
-
-    @Override
-    public void hideToolTip() {
-
-    }
-
-
-    @Override
     public void setSelectedRows(ArrayList selectedRows) {
         this.selectedRows = selectedRows;
     }

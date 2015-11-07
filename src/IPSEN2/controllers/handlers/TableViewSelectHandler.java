@@ -44,7 +44,6 @@ public class TableViewSelectHandler extends ContentLoader{
 
             PauseTransition clickTimer = new PauseTransition(maxTimeBetweenSequentialClicks);
             final IntegerProperty sequentialClickCount = new SimpleIntegerProperty(0);
-//            selectedRows = listener.getSelectedRows();
 
             clickTimer.setOnFinished(event -> {
                 item = tableView.getSelectionModel().getSelectedItem();
@@ -56,9 +55,7 @@ public class TableViewSelectHandler extends ContentLoader{
                         listener.setSelectedItem(0);
                         selectedRows.remove(selectedRows.indexOf(item.getId()));
                         listener.setSelectedRows(selectedRows);
-                        listener.hideToolTip();
                     }else {
-                        listener.showToolTip();
                         selectedRows.add(item.getId());
                         listener.setSelectedItem(item.getId());
                     }
@@ -85,8 +82,6 @@ public class TableViewSelectHandler extends ContentLoader{
         });
     }
 
-
-
     private Callback createCheckBoxCellCallBack() {
         Callback checkBoxCellCallBack = new Callback<TableColumn.CellDataFeatures<TableViewItem, CheckBox>, ObservableValue<CheckBox>>() {
 
@@ -102,11 +97,9 @@ public class TableViewSelectHandler extends ContentLoader{
                     if (newValue.booleanValue()) {
                         selectedRows.add(selectedItemId);
                         listener.setSelectedItem(selectedItemId);
-                        listener.showToolTip();
                     } else if (!newValue.booleanValue()) {
                         selectedRows.remove(selectedRows.indexOf(selectedItemId));
                         listener.setSelectedItem(0);
-                        listener.hideToolTip();
                     }
                     listener.setSelectedRows(selectedRows);
                 });

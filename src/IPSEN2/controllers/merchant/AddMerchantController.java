@@ -44,7 +44,6 @@ public class AddMerchantController extends ContentLoader implements Initializabl
         data.put("country", "Nederland");
         data.put("city", cityTextField.getText());
 
-
         int id = merchantService.create(data);
         if (id != -1) {
             addContent(MERCHANT);

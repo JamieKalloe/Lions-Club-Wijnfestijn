@@ -102,7 +102,6 @@ public class MailController extends ContentLoader implements Initializable{
     private void handleListView(Event event) {
         selectedMailType = ((ListView) event.getSource()).getSelectionModel().getSelectedItem().toString();
 
-        System.out.print(selectedIDs.get(0));
         if (selectedMailType != null) {
 
                 mail = (mailService.getMail(selectedIDs.get(0), mailService.getMailType(selectedMailType), receiverId));

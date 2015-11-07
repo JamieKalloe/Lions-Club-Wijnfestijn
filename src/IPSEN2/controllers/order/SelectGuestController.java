@@ -50,16 +50,6 @@ public class SelectGuestController extends ContentLoader implements Initializabl
     }
 
     @Override
-    public void showToolTip() {
-        //nothing to do
-    }
-
-    @Override
-    public void hideToolTip() {
-        //nothing to do
-    }
-
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
         idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("id"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("firstName"));

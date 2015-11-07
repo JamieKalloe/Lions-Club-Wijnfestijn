@@ -67,12 +67,8 @@ public class OrderController extends ContentLoader implements Initializable, Tab
 
    public void handleRemoveButton() {
       if (selectedRows.size() != 0) {
-
-
-         for (Integer row : selectedRows) {
-            System.out.println(orderService.remove(row));
+        selectedRows.forEach(row -> orderService.remove(row));
          }
-      }
 
       orderData = FXCollections.observableArrayList(orderService.all());
       addContent(ORDER);
@@ -179,15 +175,5 @@ public class OrderController extends ContentLoader implements Initializable, Tab
    @Override
    public void openEditMenu() {
       addContent(new EditOrderController(selectedOrderID, null), EDIT_ORDER_DIALOG);
-   }
-
-   @Override
-   public void showToolTip() {
-
-   }
-
-   @Override
-   public void hideToolTip() {
-
    }
 }

@@ -9,6 +9,4 @@ public interface TableViewListener {
     void setSelectedRows(ArrayList selectedRows);
     void setSelectedItem(int selectedItemId);
     void openEditMenu();
-    void showToolTip();
-    void hideToolTip();
 }

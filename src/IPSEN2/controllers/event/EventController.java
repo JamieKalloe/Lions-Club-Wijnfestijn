@@ -67,7 +67,6 @@ public class EventController extends ContentLoader implements Initializable, Tab
         addContent(new AddEventController(), EDIT_EVENT_DIALOG);
     }
 
-    @Override
     public void showToolTip() {
         eventToolTip.setVisible(true);
         FadeTransition animation = new FadeTransition(Duration.millis(200), eventToolTip);
@@ -76,7 +75,6 @@ public class EventController extends ContentLoader implements Initializable, Tab
         animation.play();
     }
 
-    @Override
     public void hideToolTip(){
         eventToolTip.setVisible(false);
     }
@@ -101,11 +99,29 @@ public class EventController extends ContentLoader implements Initializable, Tab
         eventId = selectedItemId;
     }
 
+
+
     @Override
     public void openEditMenu() {
         addContent(new EditEventController(this.selectedEventId), EDIT_EVENT_DIALOG);
     }
 
+    private void showTable() {
+        selectedRows = new ArrayList();
+        eventService = new EventService();
+        eventData = FXCollections.observableArrayList(eventService.all());
+
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        eventPlaceNameColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
+        eventAddressColumn.setCellValueFactory(new PropertyValueFactory<>("street"));
+        eventDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+
+        new TableViewSelectHandler(tableView, this).createCheckBoxColumn();
+
+        tableView.setItems(FXCollections.observableArrayList(eventData));
+        tableView.setPlaceholder(new Label("Voeg een evenement toe"));
+    }
 
 
 
@@ -113,20 +129,6 @@ public class EventController extends ContentLoader implements Initializable, Tab
    public void initialize(URL location, ResourceBundle resources) {
         setMainFrameTitle(EVENTS_TITLE);
 
-        selectedRows = new ArrayList();
-        eventService = new EventService();
-        eventData = FXCollections.observableArrayList(eventService.all());
-
-        TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
-        tableViewSelectHandler.createCheckBoxColumn();
-
-       idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-       eventPlaceNameColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
-       eventAddressColumn.setCellValueFactory(new PropertyValueFactory<>("street"));
-       eventDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-
-      tableView.setItems(FXCollections.observableArrayList(eventData));
-        tableView.setPlaceholder(new Label("Voeg een evenement toe"));
+        showTable();
     }
 }
