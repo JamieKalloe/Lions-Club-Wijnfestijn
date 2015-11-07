@@ -16,8 +16,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.*;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
@@ -48,8 +49,9 @@ public class OrderController extends ContentLoader implements Initializable, Tab
    private OrderService orderService;
    private  ArrayList<Integer> selectedRows;
 
-   public OrderController() {
-
+   @FXML
+   private void handleAddButton(){
+      addContent(SELECT_GUEST_DIALOG);
    }
 
    @FXML
@@ -58,12 +60,6 @@ public class OrderController extends ContentLoader implements Initializable, Tab
          addContent(new MailController(selectedRows, 3), MAIL);
       }
    }
-
-   @FXML
-   private void handleAddButton(){
-      addContent(SELECT_GUEST_DIALOG);
-   }
-
 
    public void handleRemoveButton() {
       if (selectedRows.size() != 0) {
@@ -74,7 +70,22 @@ public class OrderController extends ContentLoader implements Initializable, Tab
       addContent(ORDER);
    }
 
+   @Override
+   public void setSelectedRows(ArrayList selectedRows) {
+      this.selectedRows = selectedRows;
+   }
 
+
+   @Override
+   public void setSelectedItem(int selectedItemId) {
+      this.selectedOrderID = selectedItemId;
+   }
+
+
+   @Override
+   public void openEditMenu() {
+      addContent(new EditOrderController(selectedOrderID, null), EDIT_ORDER_DIALOG);
+   }
    private Callback createInvoiceButtonCellCallBack() {
       Callback deleteButtonCellCallBack = new Callback<TableColumn.CellDataFeatures<Order, Button>, ObservableValue<Button>>() {
 
@@ -125,18 +136,12 @@ public class OrderController extends ContentLoader implements Initializable, Tab
       return  deleteButtonCellCallBack;
    }
 
-   @Override
-   public void initialize(URL location, ResourceBundle resources) {
-      ContentLoader.setMainFrameTitle(ContentLoader.ORDERS_TITLE);
-      selectedRows = new ArrayList<>();
-      tableView.setPlaceholder(new Label("Er is geen content om te weergeven"));
-      orderService = new OrderService();
-      orderData = FXCollections.observableArrayList(orderService.all());
+
+   private void showTable() {
       TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
       tableViewSelectHandler.createCheckBoxColumn();
 
       tableView.setItems(orderData);
-
 
       idColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("id"));
       lastNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order, String>, ObservableValue<String>>() {
@@ -147,6 +152,7 @@ public class OrderController extends ContentLoader implements Initializable, Tab
             return new SimpleStringProperty("");
          }
       });
+
       totalAmountColumn.setCellValueFactory(new PropertyValueFactory<Order, Double>("totalAmount"));
       statusColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order, String>, ObservableValue<String>>() {
          public ObservableValue<String> call(TableColumn.CellDataFeatures<Order, String> param) {
@@ -156,24 +162,21 @@ public class OrderController extends ContentLoader implements Initializable, Tab
             return new SimpleStringProperty("");
          }
       });
+
       invoiceColumn.setCellValueFactory(createInvoiceButtonCellCallBack());
-
-   }
-
-
-   @Override
-   public void setSelectedRows(ArrayList selectedRows) {
-      this.selectedRows = selectedRows;
-   }
-
-
-   @Override
-   public void setSelectedItem(int selectedItemId) {
-      this.selectedOrderID = selectedItemId;
    }
 
    @Override
-   public void openEditMenu() {
-      addContent(new EditOrderController(selectedOrderID, null), EDIT_ORDER_DIALOG);
+   public void initialize(URL location, ResourceBundle resources) {
+      ContentLoader.setMainFrameTitle(ContentLoader.ORDERS_TITLE);
+      selectedRows = new ArrayList<>();
+      tableView.setPlaceholder(new Label("Er is geen content om te weergeven"));
+      orderService = new OrderService();
+      orderData = FXCollections.observableArrayList(orderService.all());
+
+      showTable();
+
+
    }
+
 }

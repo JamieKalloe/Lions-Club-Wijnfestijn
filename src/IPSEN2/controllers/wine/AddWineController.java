@@ -42,14 +42,8 @@ public class AddWineController extends ContentLoader implements Initializable {
     private int year;
     private double price;
     private int type;
-    ArrayList<WineType> types;
-
+    private ArrayList<WineType> types;
     private HashMap data;
-
-
-    public AddWineController() {
-
-    }
 
 
     @FXML
@@ -93,11 +87,11 @@ public class AddWineController extends ContentLoader implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         service = new WineService();
 
+        WineTypeRepository wineTypeRepository = new WineTypeRepository();
+        types = wineTypeRepository.all();
+
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
-
-        WineTypeRepository wineTypeRepository = new WineTypeRepository();
-       types = wineTypeRepository.all();
 
     }
 }

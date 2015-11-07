@@ -49,7 +49,6 @@ public class AddOrderController extends ContentLoader implements Initializable {
     private OrderService orderService;
     private OrderStatusService orderStatusService;
     private WineService wineService;
-    private static boolean isForEdit;
     private static int orderStatusID;
     private  int selectedGuestID;
 
@@ -183,25 +182,29 @@ public class AddOrderController extends ContentLoader implements Initializable {
         orderStatusComboBox.setOnAction(event -> handleOrderStatusComboBox());
     }
 
+    private void showTables() {
+        wineNameColumn.setCellValueFactory(new PropertyValueFactory<WineOrder, String>("name"));
+        quantityColumn.setCellValueFactory(createTextFieldCellCallBack());
+        deleteButtonColumn.setCellValueFactory(createDeleteButtonCellCallBack());
+        tableView.setItems(wineOrderData);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        guestService = new GuestService();
-        wineOrderService = new WineOrderService();
-        orderService = new OrderService();
-        orderStatusService = new OrderStatusService();
-        wineService = new WineService();
-        guest = guestService.find(selectedGuestID);
+        this.guestService = new GuestService();
+        this.wineOrderService = new WineOrderService();
+        this.orderService = new OrderService();
+        this.orderStatusService = new OrderStatusService();
+        this. wineService = new WineService();
+        this.guest = guestService.find(selectedGuestID);
         initializeComboBox();
+
+        this.customerNameLabel.setText(guest.getFirstName() + " " + guest.getLastName());
+
+        showTables();
 
         addWineButton.setOnMouseClicked(event -> handleAddWineButton());
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
-
-        wineNameColumn.setCellValueFactory(new PropertyValueFactory<WineOrder, String>("name"));
-        quantityColumn.setCellValueFactory(createTextFieldCellCallBack());
-        deleteButtonColumn.setCellValueFactory(createDeleteButtonCellCallBack());
-
-        customerNameLabel.setText(guest.getFirstName() + " " + guest.getLastName());
-        tableView.setItems(wineOrderData);
     }
 }

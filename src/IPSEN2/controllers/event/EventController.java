@@ -128,7 +128,6 @@ public class EventController extends ContentLoader implements Initializable, Tab
     @Override
    public void initialize(URL location, ResourceBundle resources) {
         setMainFrameTitle(EVENTS_TITLE);
-
         showTable();
     }
 }

@@ -49,19 +49,24 @@ public class SelectGuestController extends ContentLoader implements Initializabl
         // nothing to do
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+
+    private void showTable() {
+        new TableViewSelectHandler(tableView, this);
+
         idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("id"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("lastName"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("email"));
 
-        new TableViewSelectHandler(tableView, this);
+        tableView.setItems(attendeeData);
+    }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         GuestService service = new GuestService();
         attendeeData = FXCollections.observableArrayList(service.findAttendeesForEvent(eventId));
-        tableView.setItems(attendeeData);
 
+        showTable();
     }
 
 

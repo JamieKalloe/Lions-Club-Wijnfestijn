@@ -157,8 +157,6 @@ public class EditOrderController extends ContentLoader implements Initializable 
     }
 
     private void initializeWineData() {
-
-
         if(selectedWineIDs != null) {
             selectedWineIDs.forEach(selectedWineID -> {
                 WineOrder wineOrder = new WineOrder(selectedWineID, 1);
@@ -184,6 +182,13 @@ public class EditOrderController extends ContentLoader implements Initializable 
         orderStatusComboBox.setOnAction(event -> handleOrderStatusComboBox());
     }
 
+    private void showTable() {
+        wineNameColumn.setCellValueFactory(new PropertyValueFactory<WineOrder, String>("name"));
+        quantityColumn.setCellValueFactory(createTextFieldCellCallBack());
+        deleteButtonColumn.setCellValueFactory(createDeleteButtonCellCallBack());
+
+        tableView.setItems(wineOrderData);
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         orderService = new OrderService();
@@ -192,12 +197,7 @@ public class EditOrderController extends ContentLoader implements Initializable 
         wineService = new WineService();
         initializeComboBox();
 
-
-        wineNameColumn.setCellValueFactory(new PropertyValueFactory<WineOrder, String>("name"));
-        quantityColumn.setCellValueFactory(createTextFieldCellCallBack());
-        deleteButtonColumn.setCellValueFactory(createDeleteButtonCellCallBack());
-
-        tableView.setItems(wineOrderData);
+        showTable();
 
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
