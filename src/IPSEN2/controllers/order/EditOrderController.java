@@ -32,7 +32,7 @@ public class EditOrderController extends ContentLoader implements Initializable 
     @FXML
     private Pane cancelButton, submitButton, addWineButton;
     @FXML
-    private TableView<WineOrder> table_view;
+    private TableView<WineOrder> tableView;
     @FXML
     private TableColumn wineNameColumn;
     @FXML
@@ -82,11 +82,11 @@ public class EditOrderController extends ContentLoader implements Initializable 
 
         orderService.edit(selectedOrderId, newOrderData);
 
-        wineOrderData.forEach(wineOrder -> wineOrderService.delete(selectedOrderId, wineOrder.getWine().getWineID()));
+        wineOrderData.forEach(wineOrder -> wineOrderService.delete(selectedOrderId, wineOrder.getWine().getId()));
         wineOrderData.forEach(wineOrder -> {
             HashMap wineOrderData = new HashMap();
             wineOrderData.put("orderID", selectedOrderId);
-            wineOrderData.put("wineID" , wineOrder.getWine().getWineID());
+            wineOrderData.put("wineID" , wineOrder.getWine().getId());
             wineOrderData.put("amount", wineOrder.getAmount());
             wineOrderService.create(wineOrderData);
         });
@@ -137,17 +137,17 @@ public class EditOrderController extends ContentLoader implements Initializable 
                 deleteButton.getStyleClass().addAll("deleteButton", "buttonWithoutHover");
                 deleteButton.setGraphic(new ImageView("/IPSEN2/images/deleteIcon.png"));
 
-                int wineID = cellDataFeatures.getValue().getWine().getWineID();
+                int wineID = cellDataFeatures.getValue().getWine().getId();
 
                 deleteButton.setOnAction(event -> {
                     for (Iterator<WineOrder> iterator = wineOrderData.iterator(); iterator.hasNext(); ) {
                         WineOrder wineOrder = iterator.next();
-                        if (wineOrder.getWine().getWineID() == wineID) {
+                        if (wineOrder.getWine().getId() == wineID) {
                             iterator.remove();
                             wineOrderService.delete(selectedOrderId, wineID);
                         }
                     }
-                    table_view.setItems(wineOrderData);
+                    tableView.setItems(wineOrderData);
                 });
 
                 return new SimpleObjectProperty(deleteButton);
@@ -158,14 +158,15 @@ public class EditOrderController extends ContentLoader implements Initializable 
 
     private void initializeWineData() {
 
-        wineOrderData = FXCollections.observableArrayList(wineOrderService.allForOrder(selectedOrderId));
 
         if(selectedWineIDs != null) {
             selectedWineIDs.forEach(selectedWineID -> {
                 WineOrder wineOrder = new WineOrder(selectedWineID, 1);
                 wineOrder.setWine(wineService.find(selectedWineID));
                 wineOrderData.add(wineOrder);
-            });}
+            });} else {
+            wineOrderData = FXCollections.observableArrayList(orderService.find(selectedOrderId).getWineOrders());
+        }
     }
 
     private void initializeComboBox() {
@@ -196,7 +197,7 @@ public class EditOrderController extends ContentLoader implements Initializable 
         quantityColumn.setCellValueFactory(createTextFieldCellCallBack());
         deleteButtonColumn.setCellValueFactory(createDeleteButtonCellCallBack());
 
-        table_view.setItems(wineOrderData);
+        tableView.setItems(wineOrderData);
 
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());

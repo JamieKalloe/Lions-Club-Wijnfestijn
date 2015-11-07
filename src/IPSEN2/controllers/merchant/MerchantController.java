@@ -1,20 +1,19 @@
 package IPSEN2.controllers.merchant;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.controllers.handlers.TableViewSelectHandler;
+import IPSEN2.controllers.listeners.TableViewListener;
 import IPSEN2.controllers.mail.MailController;
+import IPSEN2.models.TableViewItem;
 import IPSEN2.models.merchant.Merchant;
 import IPSEN2.services.merchant.MerchantService;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,19 +22,19 @@ import java.util.ResourceBundle;
 /**
  * Created by Philip on 01-11-15.
  */
-public class MerchantController extends ContentLoader implements Initializable {
+public class MerchantController extends ContentLoader implements Initializable, TableViewListener {
 
-    @FXML private TableView<Merchant> table_view;
+    @FXML private TableView<TableViewItem> tableView;
     @FXML private TableColumn idColumn;
     @FXML private TableColumn nameColumn;
     @FXML private TableColumn emailColumn;
     @FXML private TableColumn checkBoxColumn;
 
 
-    private static ArrayList<Integer> selectedRows;
     private int selectedMerchantID;
     private MerchantService merchantService;
-    private ArrayList<Merchant> merchantData;
+    private ObservableList<TableViewItem> merchantData;
+    private ArrayList<Integer> selectedRows;
 
     @FXML private void handleAddButton() {
         addContent(new AddMerchantController(), ADD_MERCHANT_DIALOG);
@@ -57,66 +56,48 @@ public class MerchantController extends ContentLoader implements Initializable {
         }
     }
 
-    @FXML private void openEditMerchantMenu() {
-        addContent(new EditMerchantController(selectedMerchantID), ADD_MERCHANT_DIALOG);
-    }
-
-    private void setOnTableRowClickedListener() {
-        table_view.setRowFactory(table -> {
-            TableRow<Merchant> row = new TableRow<>();
-            row.getStyleClass().add("pane");
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
-                    selectedMerchantID = row.getTableView().getSelectionModel().getSelectedItem().getId();
-                    openEditMerchantMenu();
-                }
-            });
-            return row;
-        });
-    }
-
-
-    private Callback createCheckBoxCellCallBack() {
-        Callback checkBoxCellCallBack = new Callback<TableColumn.CellDataFeatures<Merchant, CheckBox>, ObservableValue<CheckBox>>() {
-
-            @Override
-            public ObservableValue<CheckBox> call(TableColumn.CellDataFeatures<Merchant, CheckBox> cellDataFeatures) {
-                CheckBox checkBox = new CheckBox();
-                checkBox.setSelected(cellDataFeatures.getValue().getSelected());
-                checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue,
-                                                         Boolean oldValue, Boolean newValue) -> {
-                    cellDataFeatures.getValue().setSelected(newValue.booleanValue());
-
-                    selectedMerchantID = cellDataFeatures.getValue().getId();
-                    if (newValue.booleanValue()) {
-                        selectedRows.add(selectedMerchantID);
-                    } else if (!newValue.booleanValue()) {
-                        selectedRows.remove(selectedRows.indexOf(selectedMerchantID));
-                        selectedMerchantID = 0;
-                    }
-                });
-                return new SimpleObjectProperty(checkBox);
-            }
-        };
-        return  checkBoxCellCallBack;
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setMainFrameTitle(MERCHANT_TITLE);
         selectedRows = new ArrayList<>();
-
         merchantService = new MerchantService();
 
-        checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
+        merchantData = FXCollections.observableArrayList(merchantService.all());
+
+        TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
+        tableViewSelectHandler.createCheckBoxColumn();
+
         idColumn.setCellValueFactory(new PropertyValueFactory<Merchant, Integer>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Merchant, String>("name"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<Merchant, String>("email"));
 
-        setOnTableRowClickedListener();
 
-        table_view.setItems(FXCollections.observableArrayList(merchantService.all()));
+        tableView.setItems(FXCollections.observableArrayList(merchantService.all()));
+    }
 
+    @Override
+    public void setSelectedRows(ArrayList selectedRows) {
+        this.selectedRows = selectedRows;
+    }
+
+    @Override
+    public void setSelectedItem(int selectedItemId) {
+        this.selectedMerchantID = selectedItemId;
+    }
+
+    @Override
+    public void openEditMenu() {
+        addContent(new EditMerchantController(this.selectedMerchantID), ADD_MERCHANT_DIALOG);
+    }
+
+    @Override
+    public void showToolTip() {
+
+    }
+
+    @Override
+    public void hideToolTip() {
 
     }
 }

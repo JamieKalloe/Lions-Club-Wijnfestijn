@@ -1,26 +1,27 @@
 package IPSEN2.controllers.guest;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.controllers.listeners.TableViewListener;
+import IPSEN2.controllers.handlers.TableViewSelectHandler;
 import IPSEN2.controllers.mail.MailController;
 import IPSEN2.generators.csv.ImportCSV;
+import IPSEN2.models.TableViewItem;
 import IPSEN2.models.attendee.Attendee;
 import IPSEN2.models.guest.Guest;
 import IPSEN2.services.attendee.AttendeeService;
 import IPSEN2.services.guest.GuestService;
-import javafx.animation.PauseTransition;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
 import javafx.util.Callback;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,32 +30,22 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 
-public class GuestController extends ContentLoader implements Initializable{
+public class GuestController extends ContentLoader implements Initializable, TableViewListener {
 
-    @FXML private  TableView<Guest> table_view;
+    @FXML private  TableView<TableViewItem> tableView;
     @FXML private TableColumn idColumn;
     @FXML private TableColumn firstNameColumn;
     @FXML private TableColumn lastNameColumn;
     @FXML private TableColumn emailColumn;
-    @FXML private TableColumn checkBoxColumn;
     @FXML private TableColumn attendedColumn;
 
     public int selectedGuestID;
     private GuestService guestService;
-    private static ObservableList<Guest> attendeeData;
-    private static ArrayList<Integer> selectedRows;
-    private CheckBox selectAllCheckBox;
-    private  boolean selected;
+    private  ObservableList<TableViewItem> attendeeData;
+    private  ArrayList<Integer> selectedRows;
     private AttendeeService attendeeService;
 
-    @FXML
-    private Pane removeButton;
 
-
-    private void refreshTableView() {
-        checkBoxColumn.setVisible(false);
-        checkBoxColumn.setVisible(true);
-    }
 
     public void handleAddButton() throws IOException {
         if (eventId != 0) {
@@ -66,14 +57,9 @@ public class GuestController extends ContentLoader implements Initializable{
 
 
         if (selectedRows.size() != 0) {
-            selected = false;
-
-            for (Integer row : selectedRows) {
-                //if (guestData.get(selectedRows.indexOf(row)).getAttended()) {
-                System.out.println("removing " + row);
-                guestService.removeAsAttendee(row, eventId);
-            }
-        } else {
+            selectedRows.forEach(row -> guestService.removeAsAttendee(row, eventId));
+        } else
+        {
 //            Alert alert = new Alert(Alert.AlertType.WARNING);
 //            alert.setTitle("Information Dialog");
 //            alert.setHeaderText("Opgelet!");
@@ -88,18 +74,40 @@ public class GuestController extends ContentLoader implements Initializable{
 
     public void handleMailButton() {
         if (selectedRows.size() != 0) {
-            selected = false;
             lastWindow = "GuestMenu";
             addContent(new MailController(selectedRows, 2), MAIL);
         }
     }
 
-    public void openEditGuestMenu(){
+    @Override
+    public void openEditMenu(){
         if (selectedGuestID != 0 ) {
-
             addContent(new EditGuestController(selectedGuestID), EDIT_GUEST_DIALOG);
         }
     }
+
+    @Override
+    public void showToolTip() {
+
+    }
+
+    @Override
+    public void hideToolTip() {
+
+    }
+
+
+    @Override
+    public void setSelectedRows(ArrayList selectedRows) {
+        this.selectedRows = selectedRows;
+    }
+
+
+    @Override
+    public void setSelectedItem(int selectedItemId) {
+        this.selectedGuestID = selectedItemId;
+    }
+
 
     @FXML
     private void importCSVFile() throws Exception {
@@ -111,94 +119,7 @@ public class GuestController extends ContentLoader implements Initializable{
             addContent(GUESTS);
     }}
 
-    private void setOnTableRowClickedListener() {
-        table_view.setRowFactory(table -> {
-            TableRow<Guest> row = new TableRow<>();
 
-            row.getStyleClass().add("pane");
-
-            Duration maxTimeBetweenSequentialClicks = Duration.millis(300);
-
-            PauseTransition clickTimer = new PauseTransition(maxTimeBetweenSequentialClicks);
-            final IntegerProperty sequentialClickCount = new SimpleIntegerProperty(0);
-
-            clickTimer.setOnFinished(event1 -> {
-                Guest guest = row.getTableView().getSelectionModel().getSelectedItem();
-                int count = sequentialClickCount.get();
-                if (count == 1) {
-                    row.getTableView().getSelectionModel().getSelectedItem().setSelected(!guest.getSelected());
-                    refreshTableView();
-                    selectedGuestID = guest.getId();
-
-                    if (!guest.getSelected()){
-                        selectedRows.remove(selectedRows.indexOf(guest.getId()));
-                    }else  selectedRows.add(guest.getId());
-                }
-                if (count == 2) {
-                    addContent(new EditGuestController(guest.getId()), EDIT_GUEST_DIALOG);
-                }
-                sequentialClickCount.set(0);
-            });
-
-            row.setOnMousePressed(event -> {
-                if (row.getTableView().getSelectionModel().getSelectedItem() != null) {
-                    sequentialClickCount.set(sequentialClickCount.get() + 1);
-                    clickTimer.playFromStart();
-                }
-
-            });
-            return row;
-        });
-    }
-
-    private void createSelectAllCheckBox() {
-        selectAllCheckBox = new CheckBox();
-        selectAllCheckBox.setSelected(selected);
-        checkBoxColumn.setGraphic(selectAllCheckBox);
-        selectAllCheckBox.setOnAction(event -> {
-            selected = selectAllCheckBox.isSelected();
-            if (selected) {
-                selectedRows.clear();
-            }
-
-            attendeeData.forEach(guest -> {
-                guest.setSelected(selected);
-                if (selected) {
-                    selectedRows.add(guest.getId());
-                } else {
-                    selectedRows.clear();
-                }
-            });
-            refreshTableView();
-            selectAllCheckBox.setSelected(selected);
-        });
-
-    }
-
-    private Callback createCheckBoxCellCallBack() {
-        Callback checkBoxCellCallBack = new Callback<TableColumn.CellDataFeatures<Guest, CheckBox>, ObservableValue<CheckBox>>() {
-
-            @Override
-            public ObservableValue<CheckBox> call(TableColumn.CellDataFeatures<Guest, CheckBox> cellDataFeatures) {
-                CheckBox checkBox = new CheckBox();
-                checkBox.setSelected(cellDataFeatures.getValue().getSelected());
-                checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue,
-                                                         Boolean oldValue, Boolean newValue) -> {
-                    cellDataFeatures.getValue().setSelected(newValue.booleanValue());
-
-                    selectedGuestID = cellDataFeatures.getValue().getId();
-                    if (newValue.booleanValue()) {
-                        selectedRows.add(selectedGuestID);
-                    } else if (!newValue.booleanValue()) {
-                        selectedRows.remove(selectedRows.indexOf(selectedGuestID));
-                        selectedGuestID = 0;
-                    }
-                });
-                return new SimpleObjectProperty(checkBox);
-            }
-        };
-        return  checkBoxCellCallBack;
-    }
 
     private Callback createAttendedCellCallBack() {
         Callback attendedCellCallBack = new Callback<TableColumn.CellDataFeatures<Guest, CheckBox>, ObservableValue<CheckBox>>() {
@@ -227,36 +148,32 @@ public class GuestController extends ContentLoader implements Initializable{
         return  attendedCellCallBack;
     }
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ContentLoader.setMainFrameTitle(ContentLoader.GUESTS_TITLE);
+        selectedRows = new ArrayList<>();
         guestService = new GuestService();
         attendeeService = new AttendeeService();
-
         attendeeData = FXCollections.observableArrayList(guestService.findAttendeesForEvent(eventId));
-        selectedRows = new ArrayList<>();
+
+        TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
+        tableViewSelectHandler.createCheckBoxColumn();
 
 
-        setOnTableRowClickedListener();
-
-        checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
         idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("id"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("lastName"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("email"));
         attendedColumn.setCellValueFactory(createAttendedCellCallBack());
 
-
-        table_view.setItems(attendeeData);
-
-
-        createSelectAllCheckBox();
+        tableView.setItems(attendeeData);
 
         if (eventId == 0) {
-            table_view.setPlaceholder(new Label("Er is nog geen event geselecteerd"));
+            tableView.setPlaceholder(new Label("Er is nog geen event geselecteerd"));
 
         } else {
-            table_view.setPlaceholder(new Label("Er is geen content om te weergeven"));
+            tableView.setPlaceholder(new Label("Er is geen content om te weergeven"));
         }
     }
 }

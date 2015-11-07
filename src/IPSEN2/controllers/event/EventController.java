@@ -1,22 +1,21 @@
 package IPSEN2.controllers.event;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.controllers.handlers.TableViewSelectHandler;
+import IPSEN2.controllers.listeners.TableViewListener;
+import IPSEN2.models.TableViewItem;
 import IPSEN2.models.event.Event;
 import IPSEN2.services.event.EventService;
 import javafx.animation.FadeTransition;
-import javafx.animation.PauseTransition;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import javafx.util.Callback;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -24,36 +23,22 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class EventController extends ContentLoader implements Initializable{
+public class EventController extends ContentLoader implements Initializable, TableViewListener {
 
 
-  @FXML
-  private TableView<Event> table_view;
-
-    @FXML
-    private TableColumn<Event, String> checkBoxColumn;
-
-   @FXML
-   private TableColumn<Event, String> nameColumn;
-
-    @FXML
-    private TableColumn<Event, String> idColumn;
-
-    @FXML
-    private TableColumn<Event, String> eventPlaceNameColumn;
-
-    @FXML
-    private TableColumn<Event, String> eventAddressColumn;
-
-    @FXML
-    private TableColumn<Event, String> eventDateColumn;
+    @FXML private TableView<TableViewItem> tableView;
+    @FXML private TableColumn<Event, String> nameColumn;
+    @FXML private TableColumn<Event, String> idColumn;
+    @FXML private TableColumn<Event, String> eventPlaceNameColumn;
+    @FXML private TableColumn<Event, String> eventAddressColumn;
+    @FXML private TableColumn<Event, String> eventDateColumn;
 
     @FXML Pane eventToolTip;
 
-   private static ObservableList<Event> eventData;
-    private static ArrayList<Integer> selectedRows;
+    private  ObservableList<Event> eventData;
+    private  ArrayList<Integer> selectedRows;
     private EventService eventService;
-    private int selectedEventID;
+    private int selectedEventId;
 
     @FXML
     private void handleNextButton() {
@@ -68,10 +53,7 @@ public class EventController extends ContentLoader implements Initializable{
     @FXML
     public void handleRemoveButton() {
         if(selectedRows.size() != 0) {
-
-
             selectedRows.forEach(row -> {
-                System.out.println("removing row: " + row);
                 eventService.remove(row);
             });
         }
@@ -80,83 +62,13 @@ public class EventController extends ContentLoader implements Initializable{
         addContent(EVENTS);
     }
 
-    private Callback createCheckBoxCellCallBack() {
-        Callback checkBoxCellCallBack = new Callback<TableColumn.CellDataFeatures<Event, CheckBox>, ObservableValue<CheckBox>>() {
-
-            @Override
-            public ObservableValue<CheckBox> call(TableColumn.CellDataFeatures<Event, CheckBox> cellDataFeatures) {
-                CheckBox checkBox = new CheckBox();
-                checkBox.setSelected(cellDataFeatures.getValue().getSelected());
-                checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue,
-                                                         Boolean oldValue, Boolean newValue) -> {
-                    cellDataFeatures.getValue().setSelected(newValue.booleanValue());
-
-                    eventId = cellDataFeatures.getValue().getId();
-                    if (newValue.booleanValue()) {
-                        selectedRows.add(eventId);
-                        showToolTip();
-                    } else if (!newValue.booleanValue()) {
-                        selectedRows.remove(selectedRows.indexOf(eventId));
-                        selectedEventID= 0;
-                        eventToolTip.setVisible(false);
-                    }
-                });
-                return new SimpleObjectProperty(checkBox);
-            }
-        };
-        return  checkBoxCellCallBack;
-
-    }
-
     @FXML
     private void openAddEventMenu() throws IOException {
         addContent(new AddEventController(), EDIT_EVENT_DIALOG);
     }
 
-    private void setOnTableRowClickedListener() {
-        table_view.setRowFactory(table -> {
-            TableRow<Event> row = new TableRow<>();
-
-            row.getStyleClass().add("pane");
-
-            Duration maxTimeBetweenSequentialClicks = Duration.millis(300);
-
-            PauseTransition clickTimer = new PauseTransition(maxTimeBetweenSequentialClicks);
-            final IntegerProperty sequentialClickCount = new SimpleIntegerProperty(0);
-
-            clickTimer.setOnFinished(event1 -> {
-                Event event = row.getTableView().getSelectionModel().getSelectedItem();
-                int count = sequentialClickCount.get();
-                if (count == 1) {
-                    row.getTableView().getSelectionModel().getSelectedItem().setSelected(!event.getSelected());
-                    refreshTableView();
-                    eventId = event.getId();
-                    if (event.getSelected()) showToolTip();
-                    else hideToolTip();
-                }
-                if (count == 2) {
-                    addContent(new EditEventController(event.getId()), EDIT_EVENT_DIALOG);
-                }
-                sequentialClickCount.set(0);
-            });
-
-            row.setOnMousePressed(event -> {
-                if (row.getTableView().getSelectionModel().getSelectedItem() != null) {
-                    sequentialClickCount.set(sequentialClickCount.get() + 1);
-                    clickTimer.playFromStart();
-                }
-
-            });
-            return row;
-        });
-    }
-
-    private void refreshTableView() {
-        table_view.getColumns().get(0).setVisible(false);
-        table_view.getColumns().get(0).setVisible(true);
-    }
-
-    private void showToolTip() {
+    @Override
+    public void showToolTip() {
         eventToolTip.setVisible(true);
         FadeTransition animation = new FadeTransition(Duration.millis(200), eventToolTip);
         animation.setFromValue(0);
@@ -164,31 +76,57 @@ public class EventController extends ContentLoader implements Initializable{
         animation.play();
     }
 
-    private void hideToolTip(){
+    @Override
+    public void hideToolTip(){
         eventToolTip.setVisible(false);
     }
 
+
+    @Override
+    public void setSelectedRows(ArrayList selectedRows) {
+        this.selectedRows = selectedRows;
+    }
+
+    @Override
+    public void setSelectedItem(int selectedItemId) {
+
+        if (selectedItemId != 0){
+            this.selectedEventId = selectedItemId;
+            showToolTip();
+        } else {
+            this.selectedEventId = eventId;
+            hideToolTip();
+        }
+
+        eventId = selectedItemId;
+    }
+
+    @Override
+    public void openEditMenu() {
+        addContent(new EditEventController(this.selectedEventId), EDIT_EVENT_DIALOG);
+    }
+
+
+
+
     @Override
    public void initialize(URL location, ResourceBundle resources) {
-      table_view.setPlaceholder(new Label("Voeg een evenement toe"));
+        setMainFrameTitle(EVENTS_TITLE);
 
-       setMainFrameTitle(EVENTS_TITLE);
-       eventService = new EventService();
+        selectedRows = new ArrayList();
+        eventService = new EventService();
+        eventData = FXCollections.observableArrayList(eventService.all());
 
-            eventData = FXCollections.observableArrayList(eventService.all());
-            selectedRows = new ArrayList();
+        TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
+        tableViewSelectHandler.createCheckBoxColumn();
 
-       checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-      nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
        eventPlaceNameColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
        eventAddressColumn.setCellValueFactory(new PropertyValueFactory<>("street"));
        eventDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
 
-      table_view.setItems(FXCollections.observableArrayList(eventData));
-
-        setOnTableRowClickedListener();
-
-   }
-
+      tableView.setItems(FXCollections.observableArrayList(eventData));
+        tableView.setPlaceholder(new Label("Voeg een evenement toe"));
+    }
 }

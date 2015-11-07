@@ -1,19 +1,22 @@
 package IPSEN2.controllers.wine;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.controllers.handlers.TableViewSelectHandler;
+import IPSEN2.controllers.listeners.TableViewListener;
 import IPSEN2.generators.csv.ImportCSV;
+import IPSEN2.models.TableViewItem;
 import IPSEN2.models.wine.Wine;
 import IPSEN2.services.wine.WineService;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,9 +26,9 @@ import java.util.ResourceBundle;
 /**
  * The type Wine controller.
  */
-public class WineController extends ContentLoader implements Initializable{
+public class WineController extends ContentLoader implements Initializable, TableViewListener {
 
-    @FXML private TableView<Wine> table_view;
+    @FXML private TableView<TableViewItem> tableView;
     @FXML private TableColumn wineIdColumn;
     @FXML private TableColumn wineNameColumn;
     @FXML private TableColumn countryColumn;
@@ -38,11 +41,9 @@ public class WineController extends ContentLoader implements Initializable{
 
     private int selectedWineID;
     private WineService wineService;
-    private static ObservableList<Wine> wineData;
-    private static ArrayList<Integer> selectedRows;
+    private  ObservableList<TableViewItem> wineData;
+    private  ArrayList<Integer> selectedRows;
     private CheckBox selectAllCheckBox;
-    private static boolean selected;
-    private static boolean keepCurrentData = false;
 
     @FXML private Pane removeButton;
 
@@ -53,8 +54,6 @@ public class WineController extends ContentLoader implements Initializable{
      * @throws IOException the io exception
      */
     public void handleAddButton() throws IOException{
-        keepCurrentData = false;
-
         addContent(new AddWineController(), EDIT_WINE_DIALOG);
     }
 
@@ -62,32 +61,14 @@ public class WineController extends ContentLoader implements Initializable{
      * Handle remove button.
      */
     public void handleRemoveButton() {
-        if(selectedRows.size() != 0) {
-            selected = false;
-
-            selectedRows.forEach(row -> {
-                    System.out.println("removing row: " + row);
-                    wineService.remove(row);
-         });
+        if (selectedRows.size() != 0) {
+            selectedRows.forEach(row -> wineService.remove(row));
         }
 
         wineData = FXCollections.observableArrayList(wineService.all());
         addContent(WINE);
     }
 
-
-    /**
-     * Open edit wine menu.
-     *
-     * @throws IOException the io exception
-     */
-    public void openEditWineMenu(){
-        if (selectedWineID != 0) {
-            keepCurrentData = false;
-            selected = false;
-            addContent(new EditWineController(selectedWineID), EDIT_WINE_DIALOG);
-        }
-    }
 
     @FXML
     private void importCSVFile() {
@@ -99,90 +80,70 @@ public class WineController extends ContentLoader implements Initializable{
             e.printStackTrace();
         }
 
-        keepCurrentData = false;
         addContent(WINE);
-    }
-
-    private void setOnTableRowClickedListener() {
-        table_view.setRowFactory(table -> {
-            TableRow<Wine> row = new TableRow<>();
-            row.getStyleClass().add("pane");
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
-                    selectedWineID = row.getTableView().getSelectionModel().getSelectedItem().getWineID();
-                    openEditWineMenu();
-                }
-
-            });
-            return row;
-        });
     }
 
     private void createSelectAllCheckBox() {
         selectAllCheckBox = new CheckBox();
-        selectAllCheckBox.setSelected(selected);
-        checkBoxColumn.setGraphic(selectAllCheckBox);
-        selectAllCheckBox.setOnAction(event -> {
-            selected = selectAllCheckBox.isSelected();
+        boolean selected = selectAllCheckBox.isSelected();
+        if (selected) {
+            selectedRows.clear();
+        }
+
+        wineData.forEach(wine -> {
+            wine.setSelected(selected);
             if (selected) {
+                selectedRows.add(wine.getId());
+            } else {
                 selectedRows.clear();
             }
-            wineData.forEach(wine -> {
-                wine.setSelected(selected);
-                if (selected) {
-                    selectedRows.add(wine.getWineID());
-                } else {
-                    selectedRows.clear();
-                }
-            });
-
-            addContent(WINE);
-            selectAllCheckBox.setSelected(selected);
         });
+        tableView.refresh();
     }
 
-    private Callback createCheckBoxCellCallBack() {
-        Callback checkBoxCellCallBack = new Callback<TableColumn.CellDataFeatures<Wine, CheckBox>, ObservableValue<CheckBox>>() {
 
-            @Override
-            public ObservableValue<CheckBox> call(TableColumn.CellDataFeatures<Wine, CheckBox> cellDataFeatures) {
-                CheckBox checkBox = new CheckBox();
-                checkBox.setSelected(cellDataFeatures.getValue().getSelected());
-                checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue,
-                                                         Boolean oldValue, Boolean newValue) -> {
-                    cellDataFeatures.getValue().setSelected(newValue.booleanValue());
+    @Override
+    public void setSelectedRows(ArrayList selectedRows) {
+        this.selectedRows = selectedRows;
+    }
 
-                    selectedWineID = cellDataFeatures.getValue().getWineID();
-                    if (newValue.booleanValue()) {
-                        selectedRows.add(selectedWineID);
-                    } else if (!newValue.booleanValue()) {
-                        selectedRows.remove(selectedRows.indexOf(selectedWineID));
-                        selectedWineID = 0;
-                    }
-                });
-                return new SimpleObjectProperty(checkBox);
-            }
-        };
-        return  checkBoxCellCallBack;
+
+    @Override
+    public void setSelectedItem(int selectedItemId) {
+        this.selectedWineID = selectedItemId;
+    }
+
+    @Override
+    public void openEditMenu() {
+        if (this.selectedWineID != 0) {
+            addContent(new EditWineController(selectedWineID), EDIT_WINE_DIALOG);
+        }
+    }
+
+    @Override
+    public void showToolTip() {
 
     }
+
+    @Override
+    public void hideToolTip() {
+
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ContentLoader.setMainFrameTitle(ContentLoader.WINES_TITLE);
         wineService = new WineService();
+        selectedRows = new ArrayList<>();
+        wineData = FXCollections.observableArrayList(wineService.all());
 
-        if (!keepCurrentData) {
-            wineData = FXCollections.observableArrayList(wineService.all());
-            selectedRows = new ArrayList<>();
-            keepCurrentData = true;
-        }
+        TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
+        tableViewSelectHandler.createCheckBoxColumn();
 
-        table_view.setItems(wineData);
-        setOnTableRowClickedListener();
+        createSelectAllCheckBox();
 
-        checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
-        wineIdColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("wineID"));
+        wineIdColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("id"));
         wineNameColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("name"));
         countryColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("country"));
         regionColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("region"));
@@ -190,15 +151,9 @@ public class WineController extends ContentLoader implements Initializable{
         yearColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("year"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<Wine, Double>("price"));
 
+        tableView.setItems(wineData);
 
-        createSelectAllCheckBox();
-        table_view.setPlaceholder(new Label("Er is geen content om te weergeven"));
-
-        setOnTableRowClickedListener();
-
+        tableView.setPlaceholder(new Label("Er is geen content om te weergeven"));
     }
-
-
-
 
 }

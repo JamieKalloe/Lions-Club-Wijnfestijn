@@ -1,8 +1,11 @@
 package IPSEN2.controllers.order;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.controllers.handlers.TableViewSelectHandler;
+import IPSEN2.controllers.listeners.TableViewListener;
 import IPSEN2.controllers.mail.MailController;
 import IPSEN2.generators.pdf.InvoiceGenerator;
+import IPSEN2.models.TableViewItem;
 import IPSEN2.models.order.Order;
 import IPSEN2.services.order.OrderService;
 import javafx.beans.property.SimpleObjectProperty;
@@ -28,24 +31,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
-public class OrderController extends ContentLoader implements Initializable{
+public class OrderController extends ContentLoader implements Initializable, TableViewListener {
 
-   private int selectedGuestID;
    private int selectedOrderID;
 
    @FXML
-   private TableView table_view;
-   @FXML private TableColumn checkBoxColumn;
+   private TableView<TableViewItem> tableView;
    @FXML private TableColumn idColumn;
    @FXML private TableColumn lastNameColumn;
    @FXML private TableColumn totalAmountColumn;
    @FXML private TableColumn statusColumn;
    @FXML private TableColumn invoiceColumn;
 
-   private ObservableList<Order> orderData;
+   private ObservableList<TableViewItem> orderData;
 
    private OrderService orderService;
-   private static ArrayList<Integer> selectedRows;
+   private  ArrayList<Integer> selectedRows;
 
    public OrderController() {
 
@@ -63,12 +64,6 @@ public class OrderController extends ContentLoader implements Initializable{
       addContent(SELECT_GUEST_DIALOG);
    }
 
-   @FXML
-   public void handleEditButton() {
-
-         addContent(new EditOrderController(selectedOrderID, null), EDIT_ORDER_DIALOG);
-
-   }
 
    public void handleRemoveButton() {
       if (selectedRows.size() != 0) {
@@ -82,44 +77,7 @@ public class OrderController extends ContentLoader implements Initializable{
       orderData = FXCollections.observableArrayList(orderService.all());
       addContent(ORDER);
    }
-   private void setOnTableRowClickedListener() {
-      table_view.setRowFactory(table -> {
-         TableRow<Order> row = new TableRow<>();
-         row.getStyleClass().add("pane");
-         row.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-               selectedOrderID = row.getTableView().getSelectionModel().getSelectedItem().getId();
-               handleEditButton();
-            }
-         });
-         return row;
-      });
-   }
 
-   private Callback createCheckBoxCellCallBack() {
-      Callback checkBoxCellCallBack = new Callback<TableColumn.CellDataFeatures<Order, CheckBox>, ObservableValue<CheckBox>>() {
-
-         @Override
-         public ObservableValue<CheckBox> call(TableColumn.CellDataFeatures<Order, CheckBox> cellDataFeatures) {
-            CheckBox checkBox = new CheckBox();
-            checkBox.setSelected(cellDataFeatures.getValue().getSelected());
-            checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue,
-                                                     Boolean oldValue, Boolean newValue) -> {
-               cellDataFeatures.getValue().setSelected(newValue.booleanValue());
-
-               selectedOrderID = cellDataFeatures.getValue().getId();
-               if (newValue.booleanValue()) {
-                  selectedRows.add(selectedOrderID);
-               } else if (!newValue.booleanValue()) {
-                  selectedRows.remove(selectedRows.indexOf(selectedOrderID));
-                  selectedGuestID = 0;
-               }
-            });
-            return new SimpleObjectProperty(checkBox);
-         }
-      };
-      return  checkBoxCellCallBack;
-   }
 
    private Callback createInvoiceButtonCellCallBack() {
       Callback deleteButtonCellCallBack = new Callback<TableColumn.CellDataFeatures<Order, Button>, ObservableValue<Button>>() {
@@ -175,14 +133,15 @@ public class OrderController extends ContentLoader implements Initializable{
    public void initialize(URL location, ResourceBundle resources) {
       ContentLoader.setMainFrameTitle(ContentLoader.ORDERS_TITLE);
       selectedRows = new ArrayList<>();
-      table_view.setPlaceholder(new Label("Er is geen content om te weergeven"));
+      tableView.setPlaceholder(new Label("Er is geen content om te weergeven"));
       orderService = new OrderService();
       orderData = FXCollections.observableArrayList(orderService.all());
-      table_view.setItems(orderData);
+      TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
+      tableViewSelectHandler.createCheckBoxColumn();
 
-      setOnTableRowClickedListener();
+      tableView.setItems(orderData);
 
-      checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
+
       idColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("id"));
       lastNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order, String>, ObservableValue<String>>() {
          public ObservableValue<String> call(TableColumn.CellDataFeatures<Order, String> param) {
@@ -206,5 +165,29 @@ public class OrderController extends ContentLoader implements Initializable{
    }
 
 
+   @Override
+   public void setSelectedRows(ArrayList selectedRows) {
+      this.selectedRows = selectedRows;
+   }
 
+
+   @Override
+   public void setSelectedItem(int selectedItemId) {
+      this.selectedOrderID = selectedItemId;
+   }
+
+   @Override
+   public void openEditMenu() {
+      addContent(new EditOrderController(selectedOrderID, null), EDIT_ORDER_DIALOG);
+   }
+
+   @Override
+   public void showToolTip() {
+
+   }
+
+   @Override
+   public void hideToolTip() {
+
+   }
 }

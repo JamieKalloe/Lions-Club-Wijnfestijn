@@ -1,9 +1,7 @@
 package IPSEN2.generators.csv;
 
-import IPSEN2.database.Database;
 import IPSEN2.models.guest.Guest;
 import IPSEN2.models.wine.Wine;
-import IPSEN2.repositories.Crudable;
 import IPSEN2.services.guest.GuestService;
 import IPSEN2.services.wine.WineService;
 import com.opencsv.CSVWriter;
@@ -11,7 +9,6 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -72,7 +69,7 @@ public class ExportCSV {
         for(Wine wine : new WineService().all()) {
             array = new ArrayList<>();
 
-            array.add(String.valueOf(wine.getWineID()));
+            array.add(String.valueOf(wine.getId()));
             array.add(String.valueOf(wine.getType().getId()));
             array.add(String.valueOf(wine.getMerchant().getMerchantID()));
             array.add(String.valueOf(wine.getName()));

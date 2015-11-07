@@ -1,6 +1,9 @@
 package IPSEN2.controllers.order;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.controllers.handlers.TableViewSelectHandler;
+import IPSEN2.controllers.listeners.TableViewListener;
+import IPSEN2.models.TableViewItem;
 import IPSEN2.models.wine.Wine;
 import IPSEN2.services.wine.WineService;
 import javafx.beans.property.SimpleObjectProperty;
@@ -23,9 +26,9 @@ import java.util.ResourceBundle;
 /**
  * Created by Philip on 28-10-15.
  */
-public class SelectWineController extends ContentLoader implements Initializable{
+public class SelectWineController extends ContentLoader implements Initializable, TableViewListener {
 
-    @FXML private TableView<Wine> table_view;
+    @FXML private TableView<TableViewItem> tableView;
     @FXML private TableColumn wineIdColumn;
     @FXML private TableColumn wineNameColumn;
     @FXML private TableColumn countryColumn;
@@ -36,11 +39,10 @@ public class SelectWineController extends ContentLoader implements Initializable
     @FXML private TableColumn checkBoxColumn;
 
     private WineService wineService;
-    private  ObservableList<Wine> wineData;
+    private  ObservableList<TableViewItem> wineData;
     private  ArrayList<Integer> selectedRows;
     private int selectedWineID;
     private int selectedID;
-    private int selectedOrderID;
     private boolean isEdit;
     @FXML private Pane cancelButton, submitButton;
 
@@ -49,19 +51,6 @@ public class SelectWineController extends ContentLoader implements Initializable
         this.isEdit = isEdit;
     }
 
-
-    public void handleSubmitButton() {
-        if (selectedRows.size() != 0) {
-            if (isEdit) {
-                addContent(new EditOrderController(selectedID, selectedRows), EDIT_ORDER_DIALOG);
-            } else {
-                addContent(new AddOrderController(selectedID, selectedRows), EDIT_ORDER_DIALOG);
-
-            }
-        } else {
-            handleCancelButton();
-        }
-    }
     public void handleCancelButton() {
         addContent(new AddOrderController(selectedID), EDIT_ORDER_DIALOG);
     }
@@ -77,7 +66,7 @@ public class SelectWineController extends ContentLoader implements Initializable
                                                          Boolean oldValue, Boolean newValue) -> {
                     cellDataFeatures.getValue().setSelected(newValue.booleanValue());
 
-                    selectedWineID = cellDataFeatures.getValue().getWineID();
+                    selectedWineID = cellDataFeatures.getValue().getId();
                     if (newValue.booleanValue()) {
                         selectedRows.add(selectedWineID);
                     } else if (!newValue.booleanValue()) {
@@ -89,14 +78,13 @@ public class SelectWineController extends ContentLoader implements Initializable
             }
         };
         return  checkBoxCellCallBack;
-
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         wineService = new WineService();
         selectedRows = new ArrayList<>();
 
-        submitButton.setOnMouseClicked(event -> handleSubmitButton());
+        submitButton.setOnMouseClicked(event -> openEditMenu());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
 
         checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
@@ -108,10 +96,46 @@ public class SelectWineController extends ContentLoader implements Initializable
         yearColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("year"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<Wine, Double>("price"));
 
-
+        TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
+        tableViewSelectHandler.createCheckBoxColumn();
 
         wineData = FXCollections.observableArrayList(wineService.all());
         wineData.forEach(wine -> wine.setSelected(false));
-        table_view.setItems(wineData);
+        tableView.setItems(wineData);
+    }
+
+
+    @Override
+    public void setSelectedRows(ArrayList selectedRows) {
+        this.selectedRows = selectedRows;
+    }
+
+    @Override
+    public void setSelectedItem(int selectedItemId) {
+        this.selectedWineID = selectedItemId;
+    }
+
+    @Override
+    public void openEditMenu() {
+        if (selectedRows.size() != 0) {
+            if (isEdit) {
+                addContent(new EditOrderController(selectedID, selectedRows), EDIT_ORDER_DIALOG);
+            } else {
+                addContent(new AddOrderController(selectedID, selectedRows), EDIT_ORDER_DIALOG);
+
+            }
+        } else {
+            handleCancelButton();
+        }
+    }
+
+    @Override
+    public void showToolTip() {
+
+    }
+
+    @Override
+    public void hideToolTip() {
+
     }
 }

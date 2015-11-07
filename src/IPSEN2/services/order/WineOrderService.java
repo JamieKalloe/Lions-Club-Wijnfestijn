@@ -23,7 +23,7 @@ public class WineOrderService {
         ArrayList<WineOrder> wineOrders = repository.all();
         for(WineOrder wineOrder : wineOrders) {
             if(wineOrder.getWine().checkIfOnlyID()) {
-                wineOrder.setWine(wineService.find(wineOrder.getWine().getWineID()));
+                wineOrder.setWine(wineService.find(wineOrder.getWine().getId()));
             }
         }
         return wineOrders;
@@ -32,7 +32,7 @@ public class WineOrderService {
     public ArrayList<WineOrder> allForOrder(int orderID) {
         ArrayList<WineOrder> wineOrders = repository.find(orderID);
         for(WineOrder wineOrder : wineOrders) {
-            wineOrder.setWine(wineService.find(wineOrder.getWine().getWineID()));
+            wineOrder.setWine(wineService.find(wineOrder.getWine().getId()));
         }
         return wineOrders;
     }

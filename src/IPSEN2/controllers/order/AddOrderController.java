@@ -33,7 +33,7 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
 
     @FXML private Pane cancelButton, submitButton, addWineButton;
-    @FXML private TableView<WineOrder> table_view;
+    @FXML private TableView<WineOrder> tableView;
     @FXML private TableColumn wineNameColumn;
     @FXML private TableColumn quantityColumn;
     @FXML private TableColumn deleteButtonColumn;
@@ -138,19 +138,19 @@ public class AddOrderController extends ContentLoader implements Initializable {
                 deleteButton.getStyleClass().addAll( "deleteButton", "buttonWithoutHover");
                 deleteButton.setGraphic(new ImageView("/IPSEN2/images/deleteIcon.png"));
 
-                int wineID = cellDataFeatures.getValue().getWine().getWineID();
+                int wineID = cellDataFeatures.getValue().getWine().getId();
 
                 deleteButton.setOnAction(event -> {
                     for( Iterator<WineOrder> iterator = wineOrderData.iterator(); iterator.hasNext() ; )
                     {
                         WineOrder wineOrder = iterator.next();
-                        if(wineOrder.getWine().getWineID() == wineID)
+                        if(wineOrder.getWine().getId() == wineID)
                         {
                             iterator.remove();
                             selectedWineIDs.remove(selectedWineIDs.indexOf(wineID));
                         }
                     }
-                    table_view.setItems(wineOrderData);
+                    tableView.setItems(wineOrderData);
                 });
 
                 return new SimpleObjectProperty(deleteButton);
@@ -160,8 +160,6 @@ public class AddOrderController extends ContentLoader implements Initializable {
     }
 
     private void initializeWineData() {
-
-
         if(selectedWineIDs != null) {
         selectedWineIDs.forEach(selectedWineID -> {
             WineOrder wineOrder = new WineOrder(selectedWineID, 1);
@@ -207,6 +205,6 @@ public class AddOrderController extends ContentLoader implements Initializable {
         deleteButtonColumn.setCellValueFactory(createDeleteButtonCellCallBack());
 
         customerNameLabel.setText(guest.getFirstName() + " " + guest.getLastName());
-        table_view.setItems(wineOrderData);
+        tableView.setItems(wineOrderData);
     }
 }

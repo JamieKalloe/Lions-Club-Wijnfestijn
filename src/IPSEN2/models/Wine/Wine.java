@@ -1,7 +1,8 @@
 package IPSEN2.models.wine;
 
-public class Wine {
-    private int wineID;
+import IPSEN2.models.TableViewItem;
+
+public class Wine extends TableViewItem {
     private WineType type;
     private String name;
     private String country;
@@ -18,7 +19,7 @@ public class Wine {
     }
 
     public Wine(int wineID) {
-        this.wineID = wineID;
+        this.id = wineID;
         this.type = null;
         this.name = null;
         this.country = null;
@@ -30,8 +31,8 @@ public class Wine {
         this.typeName = null;
     }
 
-    public Wine (int wineID, int typeID, String country, String name, String region, int year, double purchasePrice, double price) {
-        this.wineID = wineID;
+    public Wine(int wineID, int typeID, String country, String name, String region, int year, double purchasePrice, double price) {
+        this.id = wineID;
         this.type = new WineType(typeID);
         this.name = name;
         this.country = country;
@@ -41,27 +42,11 @@ public class Wine {
         this.price = price;
     }
 
-    public void addWine() {
-
-    }
-
-    public void deleteWine() {
-
-    }
-
-    public void editWine() {
-
-    }
-
     public boolean checkIfOnlyID() {
         return this.type == null && this.name == null && this.country == null && this.region == null && this.year == 0 && this.purchasePrice == 0 && this.price == 0 && this.merchant == null && this.typeName == null;
     }
 
     //GETTERS
-    public int getWineID() {
-        return wineID;
-    }
-
     public WineType getType() {
         return type;
     }
@@ -98,15 +83,7 @@ public class Wine {
         return this.type.getName();
     }
 
-    public boolean getSelected() {
-        return selected;
-    }
-
     //SETTERS
-    public void setWineID(int wineID) {
-        this.wineID = wineID;
-    }
-
     public void setType(WineType type) {
         this.type = type;
     }
@@ -146,7 +123,4 @@ public class Wine {
         this.typeName = typeName;
     }
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
 }

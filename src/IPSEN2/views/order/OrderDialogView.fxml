@@ -30,7 +30,7 @@
                   <Font name="Roboto Regular" size="18.0" />
               </font>
           </Label>
-      <TableView fx:id="table_view" layoutX="88.0" layoutY="198.0" prefHeight="283.0" prefWidth="443.0">
+      <TableView fx:id="tableView" layoutX="88.0" layoutY="198.0" prefHeight="283.0" prefWidth="443.0">
         <columns>
           <TableColumn fx:id="wineNameColumn" prefWidth="241.0" text="Wijn" />
           <TableColumn fx:id="quantityColumn" prefWidth="113.0" text="Aantal" />
