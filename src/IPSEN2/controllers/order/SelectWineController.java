@@ -6,18 +6,14 @@ import IPSEN2.controllers.listeners.TableViewListener;
 import IPSEN2.models.TableViewItem;
 import IPSEN2.models.wine.Wine;
 import IPSEN2.services.wine.WineService;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -55,55 +51,6 @@ public class SelectWineController extends ContentLoader implements Initializable
         addContent(new AddOrderController(selectedID), EDIT_ORDER_DIALOG);
     }
 
-    private Callback createCheckBoxCellCallBack() {
-        Callback checkBoxCellCallBack = new Callback<TableColumn.CellDataFeatures<Wine, CheckBox>, ObservableValue<CheckBox>>() {
-
-            @Override
-            public ObservableValue<CheckBox> call(TableColumn.CellDataFeatures<Wine, CheckBox> cellDataFeatures) {
-                CheckBox checkBox = new CheckBox();
-                checkBox.setSelected(cellDataFeatures.getValue().getSelected());
-                checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue,
-                                                         Boolean oldValue, Boolean newValue) -> {
-                    cellDataFeatures.getValue().setSelected(newValue.booleanValue());
-
-                    selectedWineID = cellDataFeatures.getValue().getId();
-                    if (newValue.booleanValue()) {
-                        selectedRows.add(selectedWineID);
-                    } else if (!newValue.booleanValue()) {
-                        selectedRows.remove(selectedRows.indexOf(selectedWineID + ""));
-                        selectedWineID = 0;
-                    }
-                });
-                return new SimpleObjectProperty(checkBox);
-            }
-        };
-        return  checkBoxCellCallBack;
-    }
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        wineService = new WineService();
-        selectedRows = new ArrayList<>();
-
-        submitButton.setOnMouseClicked(event -> openEditMenu());
-        cancelButton.setOnMouseClicked(event -> handleCancelButton());
-
-        checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
-        wineIdColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("wineID"));
-        wineNameColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("name"));
-        countryColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("country"));
-        regionColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("region"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("typeName"));
-        yearColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("year"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<Wine, Double>("price"));
-
-        TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
-        tableViewSelectHandler.createCheckBoxColumn();
-
-        wineData = FXCollections.observableArrayList(wineService.all());
-        wineData.forEach(wine -> wine.setSelected(false));
-        tableView.setItems(wineData);
-    }
-
 
     @Override
     public void setSelectedRows(ArrayList selectedRows) {
@@ -127,5 +74,34 @@ public class SelectWineController extends ContentLoader implements Initializable
         } else {
             handleCancelButton();
         }
+    }
+
+    private void showTable() {
+        TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
+        tableViewSelectHandler.createCheckBoxColumn();
+
+        wineIdColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("wineID"));
+        wineNameColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("name"));
+        countryColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("country"));
+        regionColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("region"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("typeName"));
+        yearColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("year"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<Wine, Double>("price"));
+
+        tableView.setItems(wineData);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.wineService = new WineService();
+        this.selectedRows = new ArrayList<>();
+
+        wineData = FXCollections.observableArrayList(wineService.all());
+        wineData.forEach(wine -> wine.setSelected(false));
+
+        showTable();
+
+        submitButton.setOnMouseClicked(event -> openEditMenu());
+        cancelButton.setOnMouseClicked(event -> handleCancelButton());
     }
 }

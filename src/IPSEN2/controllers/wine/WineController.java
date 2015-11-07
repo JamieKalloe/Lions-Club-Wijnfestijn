@@ -83,24 +83,6 @@ public class WineController extends ContentLoader implements Initializable, Tabl
         addContent(WINE);
     }
 
-    private void createSelectAllCheckBox() {
-        selectAllCheckBox = new CheckBox();
-        boolean selected = selectAllCheckBox.isSelected();
-        if (selected) {
-            selectedRows.clear();
-        }
-
-        wineData.forEach(wine -> {
-            wine.setSelected(selected);
-            if (selected) {
-                selectedRows.add(wine.getId());
-            } else {
-                selectedRows.clear();
-            }
-        });
-        tableView.refresh();
-    }
-
 
     @Override
     public void setSelectedRows(ArrayList selectedRows) {
@@ -120,17 +102,9 @@ public class WineController extends ContentLoader implements Initializable, Tabl
         }
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        ContentLoader.setMainFrameTitle(ContentLoader.WINES_TITLE);
-        wineService = new WineService();
-        selectedRows = new ArrayList<>();
-        wineData = FXCollections.observableArrayList(wineService.all());
-
+    private void showTable() {
         TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
         tableViewSelectHandler.createCheckBoxColumn();
-
-        createSelectAllCheckBox();
 
         wineIdColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("id"));
         wineNameColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("name"));
@@ -141,8 +115,17 @@ public class WineController extends ContentLoader implements Initializable, Tabl
         priceColumn.setCellValueFactory(new PropertyValueFactory<Wine, Double>("price"));
 
         tableView.setItems(wineData);
-
         tableView.setPlaceholder(new Label("Er is geen content om te weergeven"));
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ContentLoader.setMainFrameTitle(ContentLoader.WINES_TITLE);
+        wineService = new WineService();
+        selectedRows = new ArrayList<>();
+        wineData = FXCollections.observableArrayList(wineService.all());
+
+        showTable();
     }
 
 }

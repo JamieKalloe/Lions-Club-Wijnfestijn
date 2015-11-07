@@ -1,8 +1,8 @@
 package IPSEN2.controllers.guest;
 
 import IPSEN2.ContentLoader;
-import IPSEN2.controllers.listeners.TableViewListener;
 import IPSEN2.controllers.handlers.TableViewSelectHandler;
+import IPSEN2.controllers.listeners.TableViewListener;
 import IPSEN2.controllers.mail.MailController;
 import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.TableViewItem;
@@ -16,10 +16,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
@@ -58,12 +55,12 @@ public class GuestController extends ContentLoader implements Initializable, Tab
             selectedRows.forEach(row -> guestService.removeAsAttendee(row, eventId));
         } else
         {
-//            Alert alert = new Alert(Alert.AlertType.WARNING);
-//            alert.setTitle("Information Dialog");
-//            alert.setHeaderText("Opgelet!");
-//            alert.setContentText("U heeft geen items geselecteerd om te verwijderen!");
-//
-//            alert.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Opgelet!");
+            alert.setContentText("U heeft geen items geselecteerd om te verwijderen!");
+
+            alert.showAndWait();
         }
 
         addContent(GUESTS);
@@ -135,18 +132,9 @@ public class GuestController extends ContentLoader implements Initializable, Tab
         return  attendedCellCallBack;
     }
 
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        ContentLoader.setMainFrameTitle(ContentLoader.GUESTS_TITLE);
-        selectedRows = new ArrayList<>();
-        guestService = new GuestService();
-        attendeeService = new AttendeeService();
-        attendeeData = FXCollections.observableArrayList(guestService.findAttendeesForEvent(eventId));
-
+    private void showTable() {
         TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
         tableViewSelectHandler.createCheckBoxColumn();
-
 
         idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("id"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("firstName"));
@@ -162,5 +150,18 @@ public class GuestController extends ContentLoader implements Initializable, Tab
         } else {
             tableView.setPlaceholder(new Label("Er is geen content om te weergeven"));
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ContentLoader.setMainFrameTitle(ContentLoader.GUESTS_TITLE);
+        selectedRows = new ArrayList<>();
+        guestService = new GuestService();
+
+        attendeeService = new AttendeeService();
+        attendeeData = FXCollections.observableArrayList(guestService.findAttendeesForEvent(eventId));
+
+        showTable();
+
     }
 }
