@@ -80,9 +80,6 @@ public class AddOrderController extends ContentLoader implements Initializable {
                     amounts.add(wineOrder.getAmount());
                 });
 
-            System.out.println("amounts.size: " + amounts.size());
-            System.out.println("wineIds: " + selectedWineIDs.size());
-
             orderData.put("guestId", selectedGuestID);
                 orderData.put("eventId", eventId);
                 orderData.put("orderStatusId", orderStatusID + "");

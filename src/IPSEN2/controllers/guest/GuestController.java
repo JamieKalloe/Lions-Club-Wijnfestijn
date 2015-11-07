@@ -54,8 +54,6 @@ public class GuestController extends ContentLoader implements Initializable, Tab
     }
 
     public void handleRemoveButton() {
-
-
         if (selectedRows.size() != 0) {
             selectedRows.forEach(row -> guestService.removeAsAttendee(row, eventId));
         } else
@@ -85,17 +83,6 @@ public class GuestController extends ContentLoader implements Initializable, Tab
             addContent(new EditGuestController(selectedGuestID), EDIT_GUEST_DIALOG);
         }
     }
-
-    @Override
-    public void showToolTip() {
-
-    }
-
-    @Override
-    public void hideToolTip() {
-
-    }
-
 
     @Override
     public void setSelectedRows(ArrayList selectedRows) {

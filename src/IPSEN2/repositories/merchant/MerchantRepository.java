@@ -62,7 +62,6 @@ public class MerchantRepository implements Crudable {
                         queryResult.getString("name"),
                         queryResult.getString("email"),
                         queryResult.getInt("address_id")
-
                 );
 
                 return merchant;

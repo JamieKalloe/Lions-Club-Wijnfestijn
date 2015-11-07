@@ -41,8 +41,6 @@ public class EditMerchantController extends ContentLoader implements Initializab
 
     @FXML
     private void handleSubmitButton() {
-
-
         HashMap data = new HashMap();
         data.put("name", nameTextField.getText());
         data.put("email", emailTextField.getText());
@@ -51,7 +49,6 @@ public class EditMerchantController extends ContentLoader implements Initializab
         data.put("houseNumber", houseNumberTextField.getText());
         data.put("country", "Nederland");
         data.put("city", cityTextField.getText());
-
 
         if (merchantService.edit(selectedMerchantId, data)) {
             addContent(MERCHANT);

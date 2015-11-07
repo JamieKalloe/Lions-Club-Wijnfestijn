@@ -79,10 +79,10 @@ public class AddressService {
 
             repository.update(id, data);
 
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     public boolean delete(int id)

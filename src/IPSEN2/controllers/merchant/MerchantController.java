@@ -91,13 +91,4 @@ public class MerchantController extends ContentLoader implements Initializable, 
         addContent(new EditMerchantController(this.selectedMerchantID), ADD_MERCHANT_DIALOG);
     }
 
-    @Override
-    public void showToolTip() {
-
-    }
-
-    @Override
-    public void hideToolTip() {
-
-    }
 }

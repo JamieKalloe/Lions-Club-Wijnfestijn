@@ -128,14 +128,4 @@ public class SelectWineController extends ContentLoader implements Initializable
             handleCancelButton();
         }
     }
-
-    @Override
-    public void showToolTip() {
-
-    }
-
-    @Override
-    public void hideToolTip() {
-
-    }
 }

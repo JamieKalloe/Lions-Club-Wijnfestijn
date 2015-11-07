@@ -121,17 +121,6 @@ public class WineController extends ContentLoader implements Initializable, Tabl
     }
 
     @Override
-    public void showToolTip() {
-
-    }
-
-    @Override
-    public void hideToolTip() {
-
-    }
-
-
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
         ContentLoader.setMainFrameTitle(ContentLoader.WINES_TITLE);
         wineService = new WineService();
