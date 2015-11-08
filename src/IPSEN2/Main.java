@@ -17,7 +17,6 @@ public class Main extends Application {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(ContentLoader.loadMainFrame());
         primaryStage.setScene(scene);
-
         primaryStage.show();
 
     }

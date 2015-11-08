@@ -39,6 +39,11 @@ public class EditEventController extends ContentLoader implements Initializable 
     @FXML private DatePicker datePicker;
     private ResourceBundle resources;
 
+    /**
+     * Instantiates a new Edit event controller.
+     *
+     * @param selectedEventId the selected event id
+     */
     public EditEventController(int selectedEventId) {
         this.selectedEventId = selectedEventId;
     }

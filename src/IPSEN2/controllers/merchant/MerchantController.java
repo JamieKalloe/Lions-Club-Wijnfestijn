@@ -35,17 +35,25 @@ public class MerchantController extends ContentLoader implements Initializable, 
     private ArrayList<Integer> selectedRows;
     private ResourceBundle resources;
 
+    /**
+     * Handles add button
+     */
     public void handleAddButton() {
         addContent(new AddMerchantController(), resources.getString("ADD_MERCHANT_DIALOG"));
     }
 
+    /**
+     * Handles remove button
+     */
     public void handleRemoveButton() {
         if (selectedRows.size() != 0)
             selectedRows.forEach(row -> merchantService.remove(row));
             addContent(resources.getString("MERCHANT"));
         }
 
-
+     /**
+     * Handles mail button
+     */
     public void handleMailButton() {
         if (selectedRows.size() != 0) {
             addContent(new MailController(selectedRows, 1) , resources.getString("MAIL") );
@@ -67,6 +75,10 @@ public class MerchantController extends ContentLoader implements Initializable, 
         addContent(new EditMerchantController(this.selectedMerchantID), resources.getString("ADD_MERCHANT_DIALOG"));
     }
 
+    /**
+     * Shows all TableView Items <br>
+     * Sets TableViewSelectHandler for TableView Object
+     */
     private void showTable() {
         TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
         tableViewSelectHandler.createCheckBoxColumn();

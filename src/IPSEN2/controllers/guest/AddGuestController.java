@@ -54,10 +54,16 @@ public class AddGuestController extends ContentLoader implements Initializable {
     private HashMap attendeeData;
     private ResourceBundle resources;
 
+    /**
+     * Handles cancel button
+     */
     public void handleCancelButton() {
         addContent(resources.getString("GUESTS"));
     }
 
+    /**
+     * Handles submit button
+     */
     public void handleSubmitButton() {
         // Check if Male of Female radiobutton is selected
         if (genderRadioM.isSelected()) {

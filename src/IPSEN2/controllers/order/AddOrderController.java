@@ -116,6 +116,9 @@ public class AddOrderController extends ContentLoader implements Initializable {
         addContent(resources.getString("ORDER"));
     }
 
+    /**
+     * Handles combo box with order status
+     */
     private void handleOrderStatusComboBox() {
         orderStatusService.all().forEach(orderStatus -> {
             if (orderStatus.getName().equals(orderStatusComboBox.getValue())) {
@@ -133,6 +136,11 @@ public class AddOrderController extends ContentLoader implements Initializable {
           }
 
 
+    /**
+     * Creates table cells with textfield and listeners for all items inside tableView
+     *
+     * @return returns the CallBack of the attached textfield
+     */
     private Callback createTextFieldCellCallBack() {
         Callback textFieldCellCallBack = new Callback<TableColumn.CellDataFeatures<WineOrder, TextField>, ObservableValue<TextField>>() {
 
@@ -153,6 +161,11 @@ public class AddOrderController extends ContentLoader implements Initializable {
         return  textFieldCellCallBack;
     }
 
+    /**
+     * Creates  table cell with delete button and listener for all items in tableView
+     *
+     * @return returns the CallBack of the attached checkbox cell
+     */
     private Callback createDeleteButtonCellCallBack() {
         Callback deleteButtonCellCallBack = new Callback<TableColumn.CellDataFeatures<WineOrder, Button>, ObservableValue<Button>>() {
 
@@ -183,6 +196,9 @@ public class AddOrderController extends ContentLoader implements Initializable {
         return  deleteButtonCellCallBack;
     }
 
+    /**
+     * Initialises wine data
+     */
     private void initializeWineData() {
         if(selectedWineIDs != null) {
         selectedWineIDs.forEach(selectedWineID -> {
@@ -194,6 +210,9 @@ public class AddOrderController extends ContentLoader implements Initializable {
         }
     }
 
+    /**
+     * Initialises order status combo box
+     */
     private void initializeComboBox() {
         orderStatusService.all().forEach(orderStatus ->
                 orderStatusComboBox.getItems().addAll(orderStatusService.
@@ -210,6 +229,10 @@ public class AddOrderController extends ContentLoader implements Initializable {
         orderStatusComboBox.setOnAction(event -> handleOrderStatusComboBox());
     }
 
+    /**
+     * Shows all TableView Items <br>
+     * Sets TableViewSelectHandler for TableView Object
+     */
     private void showTables() {
         wineNameColumn.setCellValueFactory(new PropertyValueFactory<WineOrder, String>("name"));
         quantityColumn.setCellValueFactory(createTextFieldCellCallBack());

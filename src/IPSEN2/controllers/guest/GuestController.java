@@ -44,12 +44,18 @@ public class GuestController extends ContentLoader implements Initializable, Tab
 
     private ResourceBundle resources;
 
+    /**
+     * Handles add button
+     */
     public void handleAddButton() throws IOException {
         if (eventId != 0) {
             addContent(new AddGuestController(), resources.getString("EDIT_GUEST_DIALOG"));
         }
     }
 
+    /**
+     * Handles remove button
+     */
     public void handleRemoveButton() {
         if (selectedRows.size() != 0) {
             selectedRows.forEach(row -> guestService.removeAsAttendee(row, eventId));
@@ -66,6 +72,11 @@ public class GuestController extends ContentLoader implements Initializable, Tab
         addContent(resources.getString("GUESTS"));
     }
 
+    /**
+     * Handles import button
+     *<br>
+     * Imports a CSV file with all required attributes of Object Guest
+     */
     public void importCSVFile() throws Exception {
         //TODO: delete test code, debug only.
         if (eventId != 0) {
@@ -76,6 +87,9 @@ public class GuestController extends ContentLoader implements Initializable, Tab
         }
     }
 
+    /**
+     * Handles mail button
+     */
     public void handleMailButton() {
         if (selectedRows.size() != 0) {
             lastWindow = "GuestMenu";
@@ -101,7 +115,11 @@ public class GuestController extends ContentLoader implements Initializable, Tab
         this.selectedGuestID = selectedItemId;
     }
 
-
+    /**
+     * Creates checkbox cells and listeners for all items in tableView
+     *
+     * @return returns the CallBack of the attached checkbox cell
+     */
     private Callback createAttendedCellCallBack() {
         Callback attendedCellCallBack = new Callback<TableColumn.CellDataFeatures<Guest, CheckBox>, ObservableValue<CheckBox>>() {
 
@@ -129,6 +147,10 @@ public class GuestController extends ContentLoader implements Initializable, Tab
         return  attendedCellCallBack;
     }
 
+    /**
+     * Shows all TableView Items <br>
+     * Sets TableViewSelectHandler for TableView Object
+     */
     private void showTable() {
         TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
         tableViewSelectHandler.createCheckBoxColumn();

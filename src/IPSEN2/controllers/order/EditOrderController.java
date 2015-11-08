@@ -50,16 +50,28 @@ public class EditOrderController extends ContentLoader implements Initializable 
     private ResourceBundle resources;
 
 
+    /**
+     * Instantiates a new Edit order controller.
+     *
+     * @param selectedOrderId the selected order id
+     * @param selectedWineIDs the selected wine i ds
+     */
     public EditOrderController(int selectedOrderId, ArrayList<Integer> selectedWineIDs) {
         this.selectedOrderId = selectedOrderId;
         this.selectedWineIDs =  selectedWineIDs;
     }
 
+    /**
+     * Handle cancel button.
+     */
     public void handleCancelButton() {
         wineOrderData = null;
         addContent(resources.getString("ORDER"));
     }
 
+    /**
+     * Handle submit button.
+     */
     @FXML
     public void handleSubmitButton() {
         HashMap newOrderData = new HashMap();
@@ -82,7 +94,9 @@ public class EditOrderController extends ContentLoader implements Initializable 
         addContent(resources.getString("ORDER"));
     }
 
-
+    /**
+     * Handles order status combo box
+     */
     private void handleOrderStatusComboBox() {
         orderStatusService.all().forEach(orderStatus -> {
             if (orderStatus.getName().equals(orderStatusComboBox.getValue())) {
@@ -91,10 +105,18 @@ public class EditOrderController extends ContentLoader implements Initializable 
         });
     }
 
+    /**
+     * Handle add wine button.
+     */
     public void handleAddWineButton() {
         addContent(new SelectWineController(selectedOrderId, true), resources.getString("SELECT_WINE_DIALOG"));
     }
 
+    /**
+     * Creates  table cell with delete button and listener for all items in tableView
+     *
+     * @return returns the CallBack of the attached checkbox cell
+     */
     private Callback createTextFieldCellCallBack() {
         Callback textFieldCellCallBack = new Callback<TableColumn.CellDataFeatures<WineOrder, TextField>, ObservableValue<TextField>>() {
 
@@ -115,6 +137,7 @@ public class EditOrderController extends ContentLoader implements Initializable 
         };
         return textFieldCellCallBack;
     }
+
 
     private Callback createDeleteButtonCellCallBack() {
         Callback deleteButtonCellCallBack = new Callback<TableColumn.CellDataFeatures<WineOrder, Button>, ObservableValue<Button>>() {
@@ -144,6 +167,9 @@ public class EditOrderController extends ContentLoader implements Initializable 
         return deleteButtonCellCallBack;
     }
 
+    /**
+     * Initialises wine data
+     */
     private void initializeWineData() {
         if(selectedWineIDs != null) {
             selectedWineIDs.forEach(selectedWineID -> {
@@ -155,6 +181,9 @@ public class EditOrderController extends ContentLoader implements Initializable 
         }
     }
 
+    /**
+     * Initialises order status combo box
+     */
     private void initializeComboBox() {
         orderStatusService.all().forEach(orderStatus ->
                 orderStatusComboBox.getItems().addAll(orderStatusService.
@@ -170,6 +199,10 @@ public class EditOrderController extends ContentLoader implements Initializable 
         orderStatusComboBox.setOnAction(event -> handleOrderStatusComboBox());
     }
 
+    /**
+     * Shows all TableView Items <br>
+     * Sets TableViewSelectHandler for TableView Object
+     */
     private void showTable() {
         wineNameColumn.setCellValueFactory(new PropertyValueFactory<WineOrder, String>("name"));
         quantityColumn.setCellValueFactory(createTextFieldCellCallBack());
@@ -177,6 +210,7 @@ public class EditOrderController extends ContentLoader implements Initializable 
 
         tableView.setItems(wineOrderData);
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.resources = resources;

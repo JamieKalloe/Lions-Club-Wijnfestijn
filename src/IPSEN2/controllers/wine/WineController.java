@@ -48,6 +48,7 @@ public class WineController extends ContentLoader implements Initializable, Tabl
     @FXML private Pane removeButton;
 
     private ResourceBundle resources;
+
     /**
      * Handle add button.
      *
@@ -102,6 +103,10 @@ public class WineController extends ContentLoader implements Initializable, Tabl
         }
     }
 
+    /**
+     * Shows all TableView Items <br>
+     * Sets TableViewSelectHandler for TableView Object
+     */
     private void showTable() {
         TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
         tableViewSelectHandler.createCheckBoxColumn();

@@ -43,11 +43,20 @@ public class SelectWineController extends ContentLoader implements Initializable
     private ResourceBundle resources;
     @FXML private Pane cancelButton, submitButton;
 
+    /**
+     * Instantiates a new Select wine controller.
+     *
+     * @param selectedID the selected id
+     * @param isEdit     the is edit
+     */
     public SelectWineController(int selectedID, boolean isEdit) {
         this.selectedID = selectedID;
         this.isEdit = isEdit;
     }
 
+    /**
+     * Handle cancel button.
+     */
     public void handleCancelButton() {
         addContent(new AddOrderController(selectedID), resources.getString("EDIT_ORDER_DIALOG"));
     }
@@ -77,6 +86,10 @@ public class SelectWineController extends ContentLoader implements Initializable
         }
     }
 
+    /**
+     * Shows all TableView Items <br>
+     * Sets TableViewSelectHandler for TableView Object
+     */
     private void showTable() {
         TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
         tableViewSelectHandler.createCheckBoxColumn();

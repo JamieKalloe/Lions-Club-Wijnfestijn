@@ -18,6 +18,13 @@ import java.util.Date;
  */
 public class InvoiceGenerator {
 
+    /**
+     * Generate Invoice pdf file
+     *
+     * @param order the order
+     * @throws DocumentException the document exception
+     * @throws IOException       the io exception
+     */
     public void generate(Order order) throws DocumentException, IOException{
         Date invoiceDate = order.getDate();
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM YYYY");

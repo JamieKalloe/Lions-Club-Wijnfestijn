@@ -50,7 +50,10 @@ public class SelectGuestController extends ContentLoader implements Initializabl
         // nothing to do
     }
 
-
+    /**
+     * Shows all TableView Items <br>
+     * Sets TableViewSelectHandler for TableView Object
+     */
     private void showTable() {
         new TableViewSelectHandler(tableView, this);
 

@@ -32,6 +32,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
+/**
+ * The type Order controller.
+ */
 public class OrderController extends ContentLoader implements Initializable, TableViewListener {
 
    private int selectedOrderID;
@@ -50,11 +53,18 @@ public class OrderController extends ContentLoader implements Initializable, Tab
    private OrderService orderService;
    private  ArrayList<Integer> selectedRows;
 
+
+   /**
+    * Handles add button
+    */
    @FXML
    private void handleAddButton(){
       addContent(resources.getString("SELECT_GUEST_DIALOG"));
    }
 
+   /**
+    * Hanldes mail button
+    */
    @FXML
    private void handleMailButton() {
       if (selectedRows.size() != 0) {
@@ -62,6 +72,9 @@ public class OrderController extends ContentLoader implements Initializable, Tab
       }
    }
 
+   /**
+    * Handle remove button.
+    */
    public void handleRemoveButton() {
       if (selectedRows.size() != 0) {
         selectedRows.forEach(row -> orderService.remove(row));
@@ -87,6 +100,12 @@ public class OrderController extends ContentLoader implements Initializable, Tab
    public void openEditMenu() {
       addContent(new EditOrderController(selectedOrderID, null), resources.getString("EDIT_ORDER_DIALOG"));
    }
+
+   /**
+    * Creates  table cell with open invoice button and listener for all items inside TableView
+    *
+    * @return returns the CallBack of the attached checkbox cell
+    */
    private Callback createInvoiceButtonCellCallBack() {
       Callback deleteButtonCellCallBack = new Callback<TableColumn.CellDataFeatures<Order, Button>, ObservableValue<Button>>() {
 
@@ -137,7 +156,10 @@ public class OrderController extends ContentLoader implements Initializable, Tab
       return  deleteButtonCellCallBack;
    }
 
-
+   /**
+    * Shows all TableView Items <br>
+    * Sets TableViewSelectHandler for TableView Object
+    */
    private void showTable() {
       TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
       tableViewSelectHandler.createCheckBoxColumn();

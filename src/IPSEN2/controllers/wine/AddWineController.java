@@ -46,11 +46,17 @@ public class AddWineController extends ContentLoader implements Initializable {
     private HashMap data;
     private ResourceBundle resources;
 
+    /**
+     * Handle cancel button.
+     */
     @FXML
     public void handleCancelButton() {
         addContent(resources.getString("WINE"));
     }
 
+    /**
+     * Handle submit button.
+     */
     public void handleSubmitButton() {
         name = wineNameTextField.getText();
         country = countryNameTextField.getText();
