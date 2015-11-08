@@ -18,25 +18,27 @@ public class MainMenuController extends ContentLoader implements Initializable {
     @FXML private Pane gastenButton, wijnenButton, bestellingenButton,
             evenementenButton, merchantButton;
 
+    private ResourceBundle resources;
 
     @FXML
     public void handleButton(MouseEvent event) throws Exception{
         Object selectedPane = event.getSource();
             if (selectedPane == gastenButton) {
-                addContent(GUESTS);
+                addContent(resources.getString("GUESTS"));
             } else if (selectedPane == wijnenButton) {
-                addContent(WINE);
+                addContent(resources.getString("WINE"));
             } else if (selectedPane == bestellingenButton) {
-                addContent(ORDER);
+                addContent(resources.getString("ORDER"));
             } else if (selectedPane == evenementenButton) {
-                ContentLoader.addContent(EVENTS);
+                ContentLoader.addContent(resources.getString("EVENTS"));
             } else if (selectedPane == merchantButton) {
-                addContent(MERCHANT);
+                addContent(resources.getString("MERCHANT"));
             }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-         setMainFrameTitle(ContentLoader.HOME_TITLE);
+        this.resources = resources;
+         setMainFrameTitle(resources.getString("HOME_TITLE"));
     }
 }

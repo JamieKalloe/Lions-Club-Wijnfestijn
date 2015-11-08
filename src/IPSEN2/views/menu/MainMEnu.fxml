@@ -21,7 +21,7 @@
                <children>
                <ImageView fitHeight="193.0" fitWidth="193.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@../../images/WijnenShortcut.png" />
+                     <Image url="@../../images/WineShortcut.png" />
                   </image>
                </ImageView>
                </children>
@@ -30,7 +30,7 @@
                <children>
                   <ImageView fitHeight="201.0" fitWidth="193.0" onMouseClicked="#handleButton" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/BestellingenShortcut.png" />
+                        <Image url="@../../images/OrderShortcut.png" />
                      </image>
                   </ImageView>
                </children>
@@ -39,7 +39,7 @@
                <children>
                   <ImageView fitHeight="195.0" fitWidth="193.0" onMouseClicked="#handleButton" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/EvenementenShortcut.png" />
+                        <Image url="@../../images/EventShortcut.png" />
                      </image>
                   </ImageView>
                </children>

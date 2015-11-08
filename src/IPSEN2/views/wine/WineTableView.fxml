@@ -9,7 +9,7 @@
    <children>
       <ImageView fitHeight="678.0" fitWidth="948.0" layoutX="87.0" layoutY="53.0" pickOnBounds="true">
          <image>
-            <Image url="@../../images/GastenAchtergrond.png" />
+            <Image url="@../../images/MenuBackground.png" />
          </image>
       </ImageView>
       <TableView fx:id="tableView" layoutX="151.0" layoutY="120.0" prefHeight="527.0" prefWidth="809.0" styleClass="table-view" stylesheets="@../../styles/style.css">
@@ -30,7 +30,7 @@
                <children>
                   <ImageView fitHeight="61.0" fitWidth="60.0" layoutX="12.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/import-icon.png" />
+                        <Image url="@../../images/ImportIcon.png" />
                      </image>
                   </ImageView>
                </children>

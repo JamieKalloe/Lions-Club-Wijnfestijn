@@ -28,43 +28,28 @@ public class MerchantController extends ContentLoader implements Initializable, 
     @FXML private TableColumn idColumn;
     @FXML private TableColumn nameColumn;
     @FXML private TableColumn emailColumn;
-    @FXML private TableColumn checkBoxColumn;
-
 
     private int selectedMerchantID;
     private MerchantService merchantService;
-    private ObservableList<TableViewItem> merchantData;
+    public ObservableList<TableViewItem> merchantData;
     private ArrayList<Integer> selectedRows;
+    private ResourceBundle resources;
 
-    @FXML
-    private void handleAddButton() {
-        addContent(new AddMerchantController(), ADD_MERCHANT_DIALOG);
+    public void handleAddButton() {
+        addContent(new AddMerchantController(), resources.getString("ADD_MERCHANT_DIALOG"));
     }
 
-    @FXML
-    private void handleRemoveButton() {
+    public void handleRemoveButton() {
         if (selectedRows.size() != 0)
             selectedRows.forEach(row -> merchantService.remove(row));
-            addContent(MERCHANT);
+            addContent(resources.getString("MERCHANT"));
         }
 
 
-    @FXML
-    private void handleMailButton() {
+    public void handleMailButton() {
         if (selectedRows.size() != 0) {
-            addContent(new MailController(selectedRows, 1) ,  MAIL);
+            addContent(new MailController(selectedRows, 1) , resources.getString("MAIL") );
         }
-    }
-
-    private void showTable() {
-        TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
-        tableViewSelectHandler.createCheckBoxColumn();
-
-        idColumn.setCellValueFactory(new PropertyValueFactory<Merchant, Integer>("id"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<Merchant, String>("name"));
-        emailColumn.setCellValueFactory(new PropertyValueFactory<Merchant, String>("email"));
-
-        tableView.setItems(FXCollections.observableArrayList(merchantService.all()));
     }
 
     @Override
@@ -79,12 +64,24 @@ public class MerchantController extends ContentLoader implements Initializable, 
 
     @Override
     public void openEditMenu() {
-        addContent(new EditMerchantController(this.selectedMerchantID), ADD_MERCHANT_DIALOG);
+        addContent(new EditMerchantController(this.selectedMerchantID), resources.getString("ADD_MERCHANT_DIALOG"));
+    }
+
+    private void showTable() {
+        TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
+        tableViewSelectHandler.createCheckBoxColumn();
+
+        idColumn.setCellValueFactory(new PropertyValueFactory<Merchant, Integer>("id"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Merchant, String>("name"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<Merchant, String>("email"));
+
+        tableView.setItems(FXCollections.observableArrayList(merchantService.all()));
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setMainFrameTitle(MERCHANT_TITLE);
+        this.resources = resources;
+        setMainFrameTitle(resources.getString("MERCHANT_TITLE"));
         selectedRows = new ArrayList<>();
         merchantService = new MerchantService();
         merchantData = FXCollections.observableArrayList(merchantService.all());

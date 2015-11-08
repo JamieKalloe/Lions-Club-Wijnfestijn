@@ -32,6 +32,7 @@ public class SelectGuestController extends ContentLoader implements Initializabl
 
     private int selectedGuestID;
     private static ObservableList<Guest> attendeeData;
+    private ResourceBundle resources;
 
     @Override
     public void setSelectedRows(ArrayList selectedRows) {
@@ -41,7 +42,7 @@ public class SelectGuestController extends ContentLoader implements Initializabl
     @Override
     public void setSelectedItem(int selectedItemId) {
         this.selectedGuestID = selectedItemId;
-        addContent(new AddOrderController(selectedGuestID), EDIT_ORDER_DIALOG);
+        addContent(new AddOrderController(selectedGuestID), resources.getString("EDIT_ORDER_DIALOG"));
     }
 
     @Override
@@ -63,6 +64,7 @@ public class SelectGuestController extends ContentLoader implements Initializabl
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
         GuestService service = new GuestService();
         attendeeData = FXCollections.observableArrayList(service.findAttendeesForEvent(eventId));
 

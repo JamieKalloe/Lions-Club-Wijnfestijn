@@ -1,6 +1,7 @@
 package IPSEN2.controllers.order;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.models.guest.Guest;
 import IPSEN2.models.order.WineOrder;
 import IPSEN2.services.order.OrderService;
 import IPSEN2.services.order.OrderStatusService;
@@ -29,22 +30,13 @@ import java.util.ResourceBundle;
  */
 public class EditOrderController extends ContentLoader implements Initializable {
 
-    @FXML
-    private Pane cancelButton, submitButton, addWineButton;
-    @FXML
-    private TableView<WineOrder> tableView;
-    @FXML
-    private TableColumn wineNameColumn;
-    @FXML
-    private TableColumn quantityColumn;
-    @FXML
-    private TableColumn deleteButtonColumn;
-
-    @FXML
-    private Label customerNameLabel;
-
-    @FXML
-    private ComboBox orderStatusComboBox;
+    @FXML private Pane cancelButton, submitButton, addWineButton;
+    @FXML private TableView<WineOrder> tableView;
+    @FXML private TableColumn wineNameColumn;
+    @FXML private TableColumn quantityColumn;
+    @FXML private TableColumn deleteButtonColumn;
+    @FXML private Label customerNameLabel;
+    @FXML private ComboBox orderStatusComboBox;
 
     private static ObservableList<WineOrder> wineOrderData;
     private ArrayList<Integer> selectedWineIDs;
@@ -55,6 +47,7 @@ public class EditOrderController extends ContentLoader implements Initializable 
     private WineService wineService;
     private WineOrderService wineOrderService;
     private static int orderStatusId;
+    private ResourceBundle resources;
 
 
     public EditOrderController(int selectedOrderId, ArrayList<Integer> selectedWineIDs) {
@@ -62,14 +55,9 @@ public class EditOrderController extends ContentLoader implements Initializable 
         this.selectedWineIDs =  selectedWineIDs;
     }
 
-//    public EditOrderController(int selectedGuestID, ArrayList<Integer> selectedWineIDs) {
-//        this.selectedOrderId = selectedGuestID;
-//        this.selectedWineIDs = selectedWineIDs;
-//    }
-
     public void handleCancelButton() {
         wineOrderData = null;
-        addContent(ORDER);
+        addContent(resources.getString("ORDER"));
     }
 
     @FXML
@@ -91,7 +79,7 @@ public class EditOrderController extends ContentLoader implements Initializable 
             wineOrderService.create(wineOrderData);
         });
 
-        addContent(ORDER);
+        addContent(resources.getString("ORDER"));
     }
 
 
@@ -104,7 +92,7 @@ public class EditOrderController extends ContentLoader implements Initializable 
     }
 
     public void handleAddWineButton() {
-        addContent(new SelectWineController(selectedOrderId, true), SELECT_WINE_DIALOG);
+        addContent(new SelectWineController(selectedOrderId, true), resources.getString("SELECT_WINE_DIALOG"));
     }
 
     private Callback createTextFieldCellCallBack() {
@@ -191,10 +179,13 @@ public class EditOrderController extends ContentLoader implements Initializable 
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
         orderService = new OrderService();
         orderStatusService = new OrderStatusService();
         wineOrderService = new WineOrderService();
         wineService = new WineService();
+        Guest guest  = orderService.find(selectedOrderId).getGuest();
+        customerNameLabel.setText(guest.getFirstName() + " " + guest.getLastName());
         initializeComboBox();
 
         showTable();

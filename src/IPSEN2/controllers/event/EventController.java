@@ -26,12 +26,12 @@ import java.util.ResourceBundle;
 public class EventController extends ContentLoader implements Initializable, TableViewListener {
 
 
-    @FXML private TableView<TableViewItem> tableView;
-    @FXML private TableColumn<Event, String> nameColumn;
-    @FXML private TableColumn<Event, String> idColumn;
-    @FXML private TableColumn<Event, String> eventPlaceNameColumn;
-    @FXML private TableColumn<Event, String> eventAddressColumn;
-    @FXML private TableColumn<Event, String> eventDateColumn;
+    @FXML TableView<TableViewItem> tableView;
+    @FXML TableColumn<Event, String> nameColumn;
+    @FXML TableColumn<Event, String> idColumn;
+    @FXML TableColumn<Event, String> eventPlaceNameColumn;
+    @FXML TableColumn<Event, String> eventAddressColumn;
+    @FXML TableColumn<Event, String> eventDateColumn;
 
     @FXML Pane eventToolTip;
 
@@ -39,18 +39,17 @@ public class EventController extends ContentLoader implements Initializable, Tab
     private  ArrayList<Integer> selectedRows;
     private EventService eventService;
     private int selectedEventId;
+    private ResourceBundle resources;
 
-    @FXML
-    private void handleNextButton() {
+    public void handleNextButton() {
         if (eventId != 0) {
-            addContent(MAINMENU);
+            addContent(resources.getString("MAINMENU"));
         }
     }
 
     /**
      * Handle remove button.
      */
-    @FXML
     public void handleRemoveButton() {
         if(selectedRows.size() != 0) {
             selectedRows.forEach(row -> {
@@ -59,12 +58,11 @@ public class EventController extends ContentLoader implements Initializable, Tab
         }
 
         eventData = FXCollections.observableArrayList(eventService.all());
-        addContent(EVENTS);
+        addContent(resources.getString("EVENTS"));
     }
 
-    @FXML
-    private void openAddEventMenu() throws IOException {
-        addContent(new AddEventController(), EDIT_EVENT_DIALOG);
+   public void openAddEventMenu() throws IOException {
+        addContent(new AddEventController(), resources.getString("EDIT_EVENT_DIALOG"));
     }
 
     public void showToolTip() {
@@ -99,11 +97,9 @@ public class EventController extends ContentLoader implements Initializable, Tab
         eventId = selectedItemId;
     }
 
-
-
     @Override
     public void openEditMenu() {
-        addContent(new EditEventController(this.selectedEventId), EDIT_EVENT_DIALOG);
+        addContent(new EditEventController(this.selectedEventId),resources.getString("EDIT_EVENT_DIALOG"));
     }
 
     private void showTable() {
@@ -127,7 +123,8 @@ public class EventController extends ContentLoader implements Initializable, Tab
 
     @Override
    public void initialize(URL location, ResourceBundle resources) {
-        setMainFrameTitle(EVENTS_TITLE);
+        this.resources = resources;
+        setMainFrameTitle(resources.getString("EVENTS_TITLE"));
         showTable();
     }
 }

@@ -14,7 +14,7 @@
    <children>
       <ImageView fitHeight="678.0" fitWidth="948.0" layoutX="87.0" layoutY="53.0" pickOnBounds="true">
          <image>
-            <Image url="@../../images/GastenAchtergrond.png" />
+            <Image url="@../../images/MenuBackground.png" />
          </image>
       </ImageView>
       <Label layoutX="177.0" layoutY="100.0" text="Selecteer een evenement">
@@ -67,7 +67,7 @@
          <children>
             <ImageView fitHeight="60.0" fitWidth="54.0" layoutX="5.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/nextButton.png" />
+                  <Image url="@../../images/NextButton.png" />
                </image>
             </ImageView>
          </children>

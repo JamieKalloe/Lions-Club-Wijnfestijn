@@ -37,16 +37,23 @@ public class EditEventController extends ContentLoader implements Initializable 
             addressTextField, houseNumberTextField, zipCodeTextField;
 
     @FXML private DatePicker datePicker;
+    private ResourceBundle resources;
 
     public EditEventController(int selectedEventId) {
         this.selectedEventId = selectedEventId;
     }
 
+    /**
+     * Handles cancel button
+     */
     @FXML
     private void handleCancelButton() {
-        addContent(EVENTS);
+        addContent(resources.getString("EVENTS"));
     }
 
+    /**
+     * Handles submit button
+     */
     @FXML
     private void handleSubmitButton() {
         name = eventNameTextField.getText();
@@ -74,12 +81,13 @@ public class EditEventController extends ContentLoader implements Initializable 
 
         eventService.edit(selectedEventId, event.getAddress().getAddressID(), data);
 
-        addContent(EVENTS);
+        addContent(resources.getString("EVENTS"));
 
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
         event = new EventService().find(selectedEventId);
         eventNameTextField.setText(event.getName());
         cityTextField.setText(event.getAddress().getCity());

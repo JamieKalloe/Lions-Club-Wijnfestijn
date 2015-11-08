@@ -40,6 +40,7 @@ public class SelectWineController extends ContentLoader implements Initializable
     private int selectedWineID;
     private int selectedID;
     private boolean isEdit;
+    private ResourceBundle resources;
     @FXML private Pane cancelButton, submitButton;
 
     public SelectWineController(int selectedID, boolean isEdit) {
@@ -48,7 +49,7 @@ public class SelectWineController extends ContentLoader implements Initializable
     }
 
     public void handleCancelButton() {
-        addContent(new AddOrderController(selectedID), EDIT_ORDER_DIALOG);
+        addContent(new AddOrderController(selectedID), resources.getString("EDIT_ORDER_DIALOG"));
     }
 
 
@@ -66,9 +67,9 @@ public class SelectWineController extends ContentLoader implements Initializable
     public void openEditMenu() {
         if (selectedRows.size() != 0) {
             if (isEdit) {
-                addContent(new EditOrderController(selectedID, selectedRows), EDIT_ORDER_DIALOG);
+                addContent(new EditOrderController(selectedID, selectedRows), resources.getString("EDIT_ORDER_DIALOG"));
             } else {
-                addContent(new AddOrderController(selectedID, selectedRows), EDIT_ORDER_DIALOG);
+                addContent(new AddOrderController(selectedID, selectedRows), resources.getString("EDIT_ORDER_DIALOG"));
 
             }
         } else {
@@ -93,6 +94,7 @@ public class SelectWineController extends ContentLoader implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
         this.wineService = new WineService();
         this.selectedRows = new ArrayList<>();
 
