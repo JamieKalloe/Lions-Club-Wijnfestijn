@@ -33,21 +33,22 @@ public class MerchantController extends ContentLoader implements Initializable, 
     private MerchantService merchantService;
     public ObservableList<TableViewItem> merchantData;
     private ArrayList<Integer> selectedRows;
+    private ResourceBundle resources;
 
     public void handleAddButton() {
-        addContent(new AddMerchantController(), ADD_MERCHANT_DIALOG);
+        addContent(new AddMerchantController(), resources.getString("ADD_MERCHANT_DIALOG"));
     }
 
     public void handleRemoveButton() {
         if (selectedRows.size() != 0)
             selectedRows.forEach(row -> merchantService.remove(row));
-            addContent(MERCHANT);
+            addContent(resources.getString("MERCHANT"));
         }
 
 
     public void handleMailButton() {
         if (selectedRows.size() != 0) {
-            addContent(new MailController(selectedRows, 1) ,  MAIL);
+            addContent(new MailController(selectedRows, 1) , resources.getString("MAIL") );
         }
     }
 
@@ -63,7 +64,7 @@ public class MerchantController extends ContentLoader implements Initializable, 
 
     @Override
     public void openEditMenu() {
-        addContent(new EditMerchantController(this.selectedMerchantID), ADD_MERCHANT_DIALOG);
+        addContent(new EditMerchantController(this.selectedMerchantID), resources.getString("ADD_MERCHANT_DIALOG"));
     }
 
     private void showTable() {
@@ -79,7 +80,8 @@ public class MerchantController extends ContentLoader implements Initializable, 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setMainFrameTitle(MERCHANT_TITLE);
+        this.resources = resources;
+        setMainFrameTitle(resources.getString("MERCHANT_TITLE"));
         selectedRows = new ArrayList<>();
         merchantService = new MerchantService();
         merchantData = FXCollections.observableArrayList(merchantService.all());

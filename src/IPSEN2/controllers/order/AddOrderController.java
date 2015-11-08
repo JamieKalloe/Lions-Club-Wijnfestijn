@@ -40,9 +40,16 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
     private static ObservableList<WineOrder> wineOrderData;
 
+    /**
+     * The Customer name label.
+     */
     @FXML Label customerNameLabel;
+    /**
+     * The Order status combo box.
+     */
     @FXML ComboBox orderStatusComboBox;
 
+    private ResourceBundle resources;
     private ArrayList<Integer> selectedWineIDs;
     private GuestService guestService;
     private WineOrderService wineOrderService;
@@ -55,10 +62,21 @@ public class AddOrderController extends ContentLoader implements Initializable {
     private Guest guest;
 
 
+    /**
+     * Instantiates a new Add order controller.
+     *
+     * @param selectedID the selected id
+     */
     public AddOrderController(int selectedID) {
            this.selectedGuestID = selectedID;
     }
 
+    /**
+     * Instantiates a new Add order controller.
+     *
+     * @param selectedGuestID the selected guest id
+     * @param selectedWineIDs the selected wine i ds
+     */
     public AddOrderController(int selectedGuestID, ArrayList<Integer> selectedWineIDs) {
         this.selectedGuestID = selectedGuestID;
         this.selectedWineIDs = selectedWineIDs;
@@ -66,11 +84,17 @@ public class AddOrderController extends ContentLoader implements Initializable {
     }
 
 
+    /**
+     * Handle cancel button.
+     */
     public void handleCancelButton() {
         wineOrderData = null;
-        addContent(ORDER);
+        addContent(resources.getString("ORDERS"));
     }
 
+    /**
+     * Handle submit button.
+     */
     public void handleSubmitButton() {
         if (wineOrderData.size() != 0) {
             HashMap orderData = new HashMap();
@@ -89,7 +113,7 @@ public class AddOrderController extends ContentLoader implements Initializable {
         }
         orderStatusID = 0;
         wineOrderData = null;
-        addContent(ORDER);
+        addContent(resources.getString("ORDER"));
     }
 
     private void handleOrderStatusComboBox() {
@@ -100,8 +124,12 @@ public class AddOrderController extends ContentLoader implements Initializable {
         });
     }
 
+    /**
+     * Handle add wine button.
+     */
     public void handleAddWineButton(){
-              addContent( new SelectWineController(selectedGuestID, false), SELECT_WINE_DIALOG);
+              addContent( new SelectWineController(selectedGuestID, false),
+                      resources.getString("SELECT_WINE_DIALOG"));
           }
 
 
@@ -191,6 +219,7 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
         this.guestService = new GuestService();
         this.wineOrderService = new WineOrderService();
         this.orderService = new OrderService();

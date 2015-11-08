@@ -52,10 +52,11 @@ public class AddGuestController extends ContentLoader implements Initializable {
     //private String referralMemberTextField;
     private HashMap data;
     private HashMap attendeeData;
+    private ResourceBundle resources;
 
     @FXML
     public void handleCancelButton() {
-        addContent(GUESTS);
+        addContent(resources.getString("GUESTS"));
     }
 
     public void handleSubmitButton() {
@@ -117,12 +118,13 @@ public class AddGuestController extends ContentLoader implements Initializable {
 
             attendeeService.create(attendeeData);
 
-            addContent(GUESTS);
+            addContent(resources.getString("GUESTS"));
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
         service = new GuestService();
         attendeeService = new AttendeeService();
 

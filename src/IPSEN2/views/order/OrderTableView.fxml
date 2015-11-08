@@ -11,7 +11,7 @@
    <children>
       <ImageView fitHeight="595.0" fitWidth="829.0" layoutX="37.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/GastenAchtergrond.png" />
+            <Image url="@../../images/MenuBackground.png" />
          </image>
       </ImageView>
       <TableView fx:id="tableView" layoutX="130.0" layoutY="73.0" prefHeight="434.0" prefWidth="666.0" styleClass="table-view" stylesheets="@../../styles/style.css">

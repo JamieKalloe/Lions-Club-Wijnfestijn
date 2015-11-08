@@ -24,7 +24,7 @@ public class MainFrameController extends ContentLoader implements Initializable{
 
     private static double xOffset = 0;
     private static double yOffset = 0;
-
+    private ResourceBundle resources;
 
 
     @FXML private ImageView menuButton;
@@ -90,17 +90,17 @@ public class MainFrameController extends ContentLoader implements Initializable{
     public void handleNavButton(MouseEvent event) throws Exception{
         Object selectedPane = event.getSource();
            if (selectedPane == homeNav || selectedPane == logoButton ){
-               addContent(MAINMENU);
+               addContent(resources.getString("MAINMENU"));
            } else if (selectedPane == gastenNav){
-              addContent(GUESTS);
+              addContent(resources.getString("GUESTS"));
            } else if (selectedPane == wijnenNav) {
-               addContent(WINE);
+               addContent(resources.getString("WINE"));
            } else if (selectedPane == bestellingenNav) {
-               addContent(ORDER);
+               addContent(resources.getString("ORDER"));
            } else if (selectedPane == evenementenNav) {
-               addContent(EVENTS);
+               addContent(resources.getString("EVENTS"));
            } else if (selectedPane == wijnHandelNav) {
-               addContent(MERCHANT);
+               addContent(resources.getString("MERCHANT"));
            }
 
         closeNavMenu();
@@ -171,6 +171,7 @@ public class MainFrameController extends ContentLoader implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
         prepareSlideMenuAnimation();
     }
 }

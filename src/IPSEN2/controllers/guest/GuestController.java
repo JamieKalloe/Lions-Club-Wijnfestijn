@@ -42,9 +42,11 @@ public class GuestController extends ContentLoader implements Initializable, Tab
     private  ArrayList<Integer> selectedRows;
     private AttendeeService attendeeService;
 
+    private ResourceBundle resources;
+
     public void handleAddButton() throws IOException {
         if (eventId != 0) {
-            addContent(new AddGuestController(), EDIT_GUEST_DIALOG);
+            addContent(new AddGuestController(), resources.getString("EDIT_GUEST_DIALOG"));
         }
     }
 
@@ -61,7 +63,7 @@ public class GuestController extends ContentLoader implements Initializable, Tab
             alert.showAndWait();
         }
 
-        addContent(GUESTS);
+        addContent(resources.getString("GUESTS"));
     }
 
     public void importCSVFile() throws Exception {
@@ -70,21 +72,21 @@ public class GuestController extends ContentLoader implements Initializable, Tab
             ImportCSV importCSV = new ImportCSV();
             importCSV.importGuests(eventId);
             attendeeData = FXCollections.observableArrayList(guestService.findAttendeesForEvent(eventId));
-            addContent(GUESTS);
+            addContent(resources.getString("GUESTS"));
         }
     }
 
     public void handleMailButton() {
         if (selectedRows.size() != 0) {
             lastWindow = "GuestMenu";
-            addContent(new MailController(selectedRows, 2), MAIL);
+            addContent(new MailController(selectedRows, 2), resources.getString("MAIL"));
         }
     }
 
     @Override
     public void openEditMenu(){
         if (selectedGuestID != 0 ) {
-            addContent(new EditGuestController(selectedGuestID), EDIT_GUEST_DIALOG);
+            addContent(new EditGuestController(selectedGuestID), resources.getString("EDIT_GUEST_DIALOG"));
         }
     }
 
@@ -149,7 +151,8 @@ public class GuestController extends ContentLoader implements Initializable, Tab
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ContentLoader.setMainFrameTitle(ContentLoader.GUESTS_TITLE);
+        this.resources = resources;
+        ContentLoader.setMainFrameTitle(resources.getString("GUESTS_TITLE"));
         selectedRows = new ArrayList<>();
         guestService = new GuestService();
 

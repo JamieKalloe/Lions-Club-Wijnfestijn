@@ -11,7 +11,7 @@
    <children>
       <ImageView fitHeight="678.0" fitWidth="948.0" layoutX="87.0" layoutY="53.0" pickOnBounds="true">
          <image>
-            <Image url="@../../images/GastenAchtergrond.png" />
+            <Image url="@../../images/MenuBackground.png" />
          </image>
       </ImageView>
       <TableView fx:id="tableView" layoutX="151.0" layoutY="120.0" prefHeight="460.0" prefWidth="712.0" styleClass="table-view" stylesheets="@../../styles/style.css">
@@ -30,7 +30,7 @@
          <children>
             <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/AnnulerenButton.png" />
+                  <Image url="@../../images/CancelButton.png" />
                </image>
             </ImageView>
          </children>
@@ -39,7 +39,7 @@
          <children>
             <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/GereedButton.png" />
+                  <Image url="@../../images/SubmitButton.png" />
                </image>
             </ImageView>
          </children>

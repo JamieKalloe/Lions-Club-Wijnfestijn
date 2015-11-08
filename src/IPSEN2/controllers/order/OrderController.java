@@ -43,6 +43,8 @@ public class OrderController extends ContentLoader implements Initializable, Tab
    @FXML private TableColumn statusColumn;
    @FXML private TableColumn invoiceColumn;
 
+   private ResourceBundle resources;
+
    private ObservableList<TableViewItem> orderData;
 
    private OrderService orderService;
@@ -50,13 +52,13 @@ public class OrderController extends ContentLoader implements Initializable, Tab
 
    @FXML
    private void handleAddButton(){
-      addContent(SELECT_GUEST_DIALOG);
+      addContent(resources.getString("SELECT_GUEST_DIALOG"));
    }
 
    @FXML
    private void handleMailButton() {
       if (selectedRows.size() != 0) {
-         addContent(new MailController(selectedRows, 3), MAIL);
+         addContent(new MailController(selectedRows, 3), resources.getString("MAIL"));
       }
    }
 
@@ -66,7 +68,7 @@ public class OrderController extends ContentLoader implements Initializable, Tab
          }
 
       orderData = FXCollections.observableArrayList(orderService.all());
-      addContent(ORDER);
+      addContent(resources.getString("ORDER"));
    }
 
    @Override
@@ -83,7 +85,7 @@ public class OrderController extends ContentLoader implements Initializable, Tab
 
    @Override
    public void openEditMenu() {
-      addContent(new EditOrderController(selectedOrderID, null), EDIT_ORDER_DIALOG);
+      addContent(new EditOrderController(selectedOrderID, null), resources.getString("EDIT_ORDER_DIALOG"));
    }
    private Callback createInvoiceButtonCellCallBack() {
       Callback deleteButtonCellCallBack = new Callback<TableColumn.CellDataFeatures<Order, Button>, ObservableValue<Button>>() {
@@ -167,7 +169,8 @@ public class OrderController extends ContentLoader implements Initializable, Tab
 
    @Override
    public void initialize(URL location, ResourceBundle resources) {
-      ContentLoader.setMainFrameTitle(ContentLoader.ORDERS_TITLE);
+      this.resources = resources;
+      ContentLoader.setMainFrameTitle(resources.getString("ORDERS_TITLE"));
       selectedRows = new ArrayList<>();
       tableView.setPlaceholder(new Label("Er is geen content om te weergeven"));
       orderService = new OrderService();

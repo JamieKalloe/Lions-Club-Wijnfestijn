@@ -39,10 +39,11 @@ public class EventController extends ContentLoader implements Initializable, Tab
     private  ArrayList<Integer> selectedRows;
     private EventService eventService;
     private int selectedEventId;
+    private ResourceBundle resources;
 
     public void handleNextButton() {
         if (eventId != 0) {
-            addContent(MAINMENU);
+            addContent(resources.getString("MAINMENU"));
         }
     }
 
@@ -57,11 +58,11 @@ public class EventController extends ContentLoader implements Initializable, Tab
         }
 
         eventData = FXCollections.observableArrayList(eventService.all());
-        addContent(EVENTS);
+        addContent(resources.getString("EVENTS"));
     }
 
    public void openAddEventMenu() throws IOException {
-        addContent(new AddEventController(), EDIT_EVENT_DIALOG);
+        addContent(new AddEventController(), resources.getString("EDIT_EVENT_DIALOG"));
     }
 
     public void showToolTip() {
@@ -98,7 +99,7 @@ public class EventController extends ContentLoader implements Initializable, Tab
 
     @Override
     public void openEditMenu() {
-        addContent(new EditEventController(this.selectedEventId), EDIT_EVENT_DIALOG);
+        addContent(new EditEventController(this.selectedEventId),resources.getString("EDIT_EVENT_DIALOG"));
     }
 
     private void showTable() {
@@ -122,7 +123,8 @@ public class EventController extends ContentLoader implements Initializable, Tab
 
     @Override
    public void initialize(URL location, ResourceBundle resources) {
-        setMainFrameTitle(EVENTS_TITLE);
+        this.resources = resources;
+        setMainFrameTitle(resources.getString("EVENTS_TITLE"));
         showTable();
     }
 }

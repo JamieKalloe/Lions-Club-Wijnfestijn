@@ -47,14 +47,14 @@ public class WineController extends ContentLoader implements Initializable, Tabl
 
     @FXML private Pane removeButton;
 
-
+    private ResourceBundle resources;
     /**
      * Handle add button.
      *
      * @throws IOException the io exception
      */
     public void handleAddButton() throws IOException{
-        addContent(new AddWineController(), EDIT_WINE_DIALOG);
+        addContent(new AddWineController(), resources.getString("EDIT_WINE_DIALOG"));
     }
 
     /**
@@ -66,7 +66,7 @@ public class WineController extends ContentLoader implements Initializable, Tabl
         }
 
         wineData = FXCollections.observableArrayList(wineService.all());
-        addContent(WINE);
+        addContent(resources.getString("WINE"));
     }
 
 
@@ -80,7 +80,7 @@ public class WineController extends ContentLoader implements Initializable, Tabl
             e.printStackTrace();
         }
 
-        addContent(WINE);
+        addContent(resources.getString("WINE"));
     }
 
 
@@ -98,7 +98,7 @@ public class WineController extends ContentLoader implements Initializable, Tabl
     @Override
     public void openEditMenu() {
         if (this.selectedWineID != 0) {
-            addContent(new EditWineController(selectedWineID), EDIT_WINE_DIALOG);
+            addContent(new EditWineController(selectedWineID), resources.getString("EDIT_WINE_DIALOG"));
         }
     }
 
@@ -120,7 +120,8 @@ public class WineController extends ContentLoader implements Initializable, Tabl
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ContentLoader.setMainFrameTitle(ContentLoader.WINES_TITLE);
+        this.resources = resources;
+        ContentLoader.setMainFrameTitle(resources.getString("WINES_TITLE"));
         wineService = new WineService();
         selectedRows = new ArrayList<>();
         wineData = FXCollections.observableArrayList(wineService.all());

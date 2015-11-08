@@ -25,12 +25,12 @@ public class AddMerchantController extends ContentLoader implements Initializabl
     @FXML private TextField zipCodeTextField;
     @FXML private TextField emailTextField;
 
-
+    private ResourceBundle resources;
     private MerchantService merchantService;
 
     @FXML
     private void handleCancelButton() {
-        addContent(MERCHANT);
+        addContent(resources.getString("MERCHANT"));
     }
 
     @FXML
@@ -46,12 +46,13 @@ public class AddMerchantController extends ContentLoader implements Initializabl
 
         int id = merchantService.create(data);
         if (id != -1) {
-            addContent(MERCHANT);
+            addContent(resources.getString("MERCHANT"));
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
         this.merchantService = new MerchantService();
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
         submitButton.setOnMouseClicked(event -> handleSubmitButton());

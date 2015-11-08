@@ -44,11 +44,11 @@ public class AddWineController extends ContentLoader implements Initializable {
     private int type;
     private ArrayList<WineType> types;
     private HashMap data;
-
+    private ResourceBundle resources;
 
     @FXML
     public void handleCancelButton() {
-        addContent(WINE);
+        addContent(resources.getString("WINE"));
     }
 
     public void handleSubmitButton() {
@@ -80,11 +80,12 @@ public class AddWineController extends ContentLoader implements Initializable {
 
         service.subscribe(data);
 
-        addContent(WINE);
+        addContent(resources.getString("WINE"));
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
         service = new WineService();
 
         WineTypeRepository wineTypeRepository = new WineTypeRepository();

@@ -47,6 +47,7 @@ public class EditOrderController extends ContentLoader implements Initializable 
     private WineService wineService;
     private WineOrderService wineOrderService;
     private static int orderStatusId;
+    private ResourceBundle resources;
 
 
     public EditOrderController(int selectedOrderId, ArrayList<Integer> selectedWineIDs) {
@@ -56,7 +57,7 @@ public class EditOrderController extends ContentLoader implements Initializable 
 
     public void handleCancelButton() {
         wineOrderData = null;
-        addContent(ORDER);
+        addContent(resources.getString("ORDER"));
     }
 
     @FXML
@@ -78,7 +79,7 @@ public class EditOrderController extends ContentLoader implements Initializable 
             wineOrderService.create(wineOrderData);
         });
 
-        addContent(ORDER);
+        addContent(resources.getString("ORDER"));
     }
 
 
@@ -91,7 +92,7 @@ public class EditOrderController extends ContentLoader implements Initializable 
     }
 
     public void handleAddWineButton() {
-        addContent(new SelectWineController(selectedOrderId, true), SELECT_WINE_DIALOG);
+        addContent(new SelectWineController(selectedOrderId, true), resources.getString("SELECT_WINE_DIALOG"));
     }
 
     private Callback createTextFieldCellCallBack() {
@@ -178,6 +179,7 @@ public class EditOrderController extends ContentLoader implements Initializable 
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
         orderService = new OrderService();
         orderStatusService = new OrderStatusService();
         wineOrderService = new WineOrderService();
