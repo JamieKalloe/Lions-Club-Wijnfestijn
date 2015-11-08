@@ -6,10 +6,19 @@ import IPSEN2.validators.Validator;
 import java.util.HashMap;
 
 /**
- * Created by Thomas on 12-10-15.
+ * The Address validator.
+ * Date of creation: 12-10-15.
+ *
+ * @author Thomas Neuteboom
  */
 public class AddressValidator extends Validator implements Validatable {
 
+    /**
+     * Validate the input data.
+     *
+     * @param data the data
+     * @return the boolean
+     */
     public boolean validate(HashMap data)
     {
         return validateHouseNumber(data.get("houseNumber").toString())
@@ -19,4 +28,5 @@ public class AddressValidator extends Validator implements Validatable {
                 && !data.get("city").toString().isEmpty()
                 && validateZipcode(NETHERLANDS, data.get("zipCode").toString());
     }
+
 }

@@ -13,15 +13,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Thomas on 07-10-15.
+ * The Order service.
+ * Date of creation: 07-10-15.
+ *
+ * @author Thomas Neuteboom
  */
 public class OrderService {
 
     private GuestService guestService;
 
     private EventService eventService;
-
-    private WineService wineService;
 
     private OrderRepository orderRepository;
 
@@ -31,19 +32,26 @@ public class OrderService {
 
     private OrderStatusService orderStatusService;
 
+    /**
+     * Instantiates a new Order service.
+     */
     public OrderService()
     {
         this.orderRepository = new OrderRepository();
 
         this.guestService = new GuestService();
         this.eventService = new EventService();
-        this.wineService = new WineService();
         this.wineOrderService = new WineOrderService();
         this.orderStatusService = new OrderStatusService();
 
         this.validator = new OrderValidator();
     }
 
+    /**
+     * All orders.
+     *
+     * @return the orders
+     */
     public ArrayList<Order> all()
     {
         ArrayList<Order> orderList = this.orderRepository.all();
@@ -59,6 +67,12 @@ public class OrderService {
         return orderList;
     }
 
+    /**
+     * Find order.
+     *
+     * @param id the id
+     * @return the order
+     */
     public Order find(int id)
     {
         Order order = this.orderRepository.find(id);
@@ -71,6 +85,12 @@ public class OrderService {
         return order;
     }
 
+    /**
+     * Add order.
+     *
+     * @param data the data
+     * @return the order id
+     */
     public int add(HashMap data)
     {
         boolean isValid = this.validator.validate(data);
@@ -79,8 +99,9 @@ public class OrderService {
         {
             int id = this.orderRepository.create(data);
             ArrayList<Integer> wineIDs = (ArrayList<Integer>) data.get("wineIDs");
-            ArrayList<Integer> amounts = (ArrayList<Integer>)data.get("amounts");
-            for(int i = 0; i < wineIDs.size(); i++) {
+            ArrayList<Integer> amounts = (ArrayList<Integer>) data.get("amounts");
+            for (int i = 0; i < wineIDs.size(); i++)
+            {
                 HashMap orderData = new HashMap();
                 orderData.put("orderID", id);
                 orderData.put("wineID", Integer.parseInt(wineIDs.get(i).toString()));
@@ -89,9 +110,12 @@ public class OrderService {
             }
             // Add status
             // Add guest
-            try {
+            try
+            {
                 new InvoiceGenerator().generate(this.find(id));
-            } catch(Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
             }
 
@@ -129,6 +153,13 @@ public class OrderService {
         return id;
     }
 
+    /**
+     * Edit order.
+     *
+     * @param id   the id
+     * @param data the data
+     * @return boolean that determines if it was succeeded
+     */
     public boolean edit(int id, HashMap data)
     {
         Order order = this.orderRepository.find(id);
@@ -156,6 +187,12 @@ public class OrderService {
         return false;
     }
 
+    /**
+     * Remove order.
+     *
+     * @param id the id
+     * @return boolean that determines if it was succeeded
+     */
     public boolean remove(int id)
     {
         Order order = this.orderRepository.find(id);

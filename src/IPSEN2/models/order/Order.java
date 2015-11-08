@@ -7,7 +7,13 @@ import IPSEN2.models.guest.Guest;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Order extends TableViewItem{
+/**
+ * The Order.
+ * Date of creation: 12-09-15.
+ *
+ * @author Thomas Neuteboom
+ */
+public class Order extends TableViewItem {
 
     private Guest guest;
 
@@ -21,7 +27,15 @@ public class Order extends TableViewItem{
 
     private double totalAmount;
 
-    public Order (int id, int guestId, int eventId, int orderStatusId)
+    /**
+     * Instantiates a new Order.
+     *
+     * @param id            the id
+     * @param guestId       the guest id
+     * @param eventId       the event id
+     * @param orderStatusId the order status id
+     */
+    public Order(int id, int guestId, int eventId, int orderStatusId)
     {
         this.id = id;
         this.guest = new Guest(guestId);
@@ -32,58 +46,134 @@ public class Order extends TableViewItem{
         this.date = new Date();
     }
 
-
-    public Guest getGuest() {
+    /**
+     * Gets guest.
+     *
+     * @return the guest
+     */
+    public Guest getGuest()
+    {
         return guest;
     }
 
-    public Event getEvent() {
+    /**
+     * Gets event.
+     *
+     * @return the event
+     */
+    public Event getEvent()
+    {
         return event;
     }
 
-    public OrderStatus getStatus() {
+    /**
+     * Gets status.
+     *
+     * @return the status
+     */
+    public OrderStatus getStatus()
+    {
         return status;
     }
 
-    public ArrayList<WineOrder> getWineOrders() {
+    /**
+     * Gets wine orders.
+     *
+     * @return the wine orders
+     */
+    public ArrayList<WineOrder> getWineOrders()
+    {
         return wineOrders;
     }
 
-    public double getTotalAmount() {
+    /**
+     * Gets total amount.
+     *
+     * @return the total amount
+     */
+    public double getTotalAmount()
+    {
         return totalAmount;
     }
 
-    public boolean getSelected() {
+    public boolean getSelected()
+    {
         return selected;
     }
 
-    public Date getDate() { return date;}
+    /**
+     * Gets date.
+     *
+     * @return the date
+     */
+    public Date getDate()
+    {
+        return date;
+    }
 
-    public void setGuest(Guest guest) {
+    /**
+     * Sets guest.
+     *
+     * @param guest the guest
+     */
+    public void setGuest(Guest guest)
+    {
         this.guest = guest;
     }
 
-    public void setEvent(Event event) {
+    /**
+     * Sets event.
+     *
+     * @param event the event
+     */
+    public void setEvent(Event event)
+    {
         this.event = event;
     }
 
-    public void setStatus(OrderStatus status) {
+    /**
+     * Sets status.
+     *
+     * @param status the status
+     */
+    public void setStatus(OrderStatus status)
+    {
         this.status = status;
     }
 
-    public void setWineOrders(ArrayList<WineOrder> wineOrders) {
+    /**
+     * Sets wine orders.
+     *
+     * @param wineOrders the wine orders
+     */
+    public void setWineOrders(ArrayList<WineOrder> wineOrders)
+    {
         this.wineOrders = wineOrders;
         double total = 0.0;
-        for(WineOrder order: wineOrders) {
+        for (WineOrder order : wineOrders)
+        {
             total += order.getAmount() * order.getWine().getPrice();
         }
         this.totalAmount = total;
     }
 
-    public void setDate(Date date) { this.date = date;
+    /**
+     * Sets date.
+     *
+     * @param date the date
+     */
+    public void setDate(Date date)
+    {
+        this.date = date;
     }
 
-    public void setTotalAmount(double totalAmount) {
+    /**
+     * Sets total amount.
+     *
+     * @param totalAmount the total amount
+     */
+    public void setTotalAmount(double totalAmount)
+    {
         this.totalAmount = totalAmount;
     }
 
