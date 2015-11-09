@@ -2,6 +2,9 @@ package IPSEN2.models.wine;
 
 import IPSEN2.models.TableViewItem;
 
+/**
+ * The class Wine contains all the data for the wine objects.
+ */
 public class Wine extends TableViewItem {
     private WineType type;
     private String name;
@@ -12,12 +15,16 @@ public class Wine extends TableViewItem {
     private double price;
     public WineMerchant merchant;
     private String typeName;
-    private boolean selected;
 
     public Wine() {
 
     }
 
+    /**
+     * Instantiates a new Wine.
+     *
+     * @param wineID the wine id
+     */
     public Wine(int wineID) {
         this.id = wineID;
         this.type = null;
@@ -31,6 +38,18 @@ public class Wine extends TableViewItem {
         this.typeName = null;
     }
 
+    /**
+     * Instantiates a new Wine.
+     *
+     * @param wineID        the wine id
+     * @param typeID        the type id
+     * @param country       the country
+     * @param name          the name
+     * @param region        the region
+     * @param year          the year
+     * @param purchasePrice the purchase price
+     * @param price         the price
+     */
     public Wine(int wineID, int typeID, String country, String name, String region, int year, double purchasePrice, double price) {
         this.id = wineID;
         this.type = new WineType(typeID);
@@ -42,6 +61,11 @@ public class Wine extends TableViewItem {
         this.price = price;
     }
 
+    /**
+     * Check if only id boolean.
+     *
+     * @return the boolean
+     */
     public boolean checkIfOnlyID() {
         return this.type == null && this.name == null && this.country == null && this.region == null && this.year == 0 && this.purchasePrice == 0 && this.price == 0 && this.merchant == null && this.typeName == null;
     }

@@ -115,6 +115,7 @@ public class MailService {
         }
         return this.mailType;
     }
+
     public Mail getMail(int selectedID, MailType mailType, int receiverId) {
 
         try {

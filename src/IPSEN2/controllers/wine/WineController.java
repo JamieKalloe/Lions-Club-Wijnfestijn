@@ -6,6 +6,7 @@ import IPSEN2.controllers.listeners.TableViewListener;
 import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.TableViewItem;
 import IPSEN2.models.wine.Wine;
+import IPSEN2.services.message.Messaging;
 import IPSEN2.services.wine.WineService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -69,8 +70,13 @@ public class WineController extends ContentLoader implements Initializable, Tabl
     public void handleRemoveButton() {
         if (selectedRows.size() != 0) {
             selectedRows.forEach(row -> wineService.remove(row));
+        } else {
+            Messaging.getInstance().show(
+                    "Foutmelding",
+                    "Verwijderfout",
+                    "Er is geen wijn geselecteerd"
+            );
         }
-
         wineData = FXCollections.observableArrayList(wineService.all());
         addContent(resources.getString("WINE"));
     }

@@ -48,6 +48,12 @@ public class AddWineController extends ContentLoader implements Initializable {
     private HashMap data;
     private ResourceBundle resources;
 
+
+
+    public AddWineController() {
+
+    }
+
     /**
      * Handle cancel button.
      */
@@ -56,10 +62,12 @@ public class AddWineController extends ContentLoader implements Initializable {
         addContent(resources.getString("WINE"));
     }
 
+
     /**
      * Handle submit button.
      */
     public void handleSubmitButton() {
+
         name = wineNameTextField.getText();
         country = countryNameTextField.getText();
         region = regionNameTextField.getText();
@@ -87,7 +95,7 @@ public class AddWineController extends ContentLoader implements Initializable {
         data.put("merchantId", new MerchantService().all().get(0).getId());
         data.put("price", numberFormat.format(price).replace("0 €", ""));
 
-        service.subscribe(data);
+        service.create(data);
 
         addContent(resources.getString("WINE"));
     }

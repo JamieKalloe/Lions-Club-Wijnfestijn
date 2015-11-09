@@ -4,6 +4,10 @@ import IPSEN2.models.address.Address;
 
 /**
  * Created by Bernd on 22-9-2015.
+ *
+ * The winemerchant is not hardcoded in the program so that
+ * in the future an other winemerchant can be added.
+ *
  */
 public class WineMerchant {
     private int merchantID;
@@ -15,6 +19,12 @@ public class WineMerchant {
 
     }
 
+
+    /**
+     * Instantiates a new Wine merchant.
+     *
+     * @param id the id
+     */
     public WineMerchant(int id) {
         this.merchantID = id;
         this.address = null;

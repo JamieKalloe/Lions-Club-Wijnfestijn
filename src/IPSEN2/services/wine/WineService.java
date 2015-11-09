@@ -16,22 +16,24 @@ import java.util.HashMap;
  */
 public class WineService {
     private WineRepository repository;
-    private ReferralService referralService;
     private WineTypeRepository wineTypeRepository;
     private WineValidator validator;
 
+    /**
+     * Instantiates a new Wine service.
+     */
     public WineService()
     {
         this.validator = new WineValidator();
         this.repository = new WineRepository();
-        this.referralService = new ReferralService();
         this.wineTypeRepository = new WineTypeRepository();
     }
 
+
     /**
-     * Ophalen van de wijnlijst
+     * Wine array list.
      *
-     * @return
+     * @return the array list
      */
     public ArrayList<Wine> all()
     {
@@ -46,10 +48,10 @@ public class WineService {
     }
 
     /**
-     * Zoeken van een specifieke wijn, aan de hand van de wijnID
+     * Find wine.
      *
-     * @param id
-     * @return
+     * @param id the id
+     * @return the wine
      */
     public Wine find(int id)
     {
@@ -57,7 +59,7 @@ public class WineService {
         return wine;
     }
 
-    public int subscribe(HashMap data)
+    public int create(HashMap data)
     {
         boolean isValid = this.validator.validate(data);
 
@@ -66,7 +68,7 @@ public class WineService {
             Messaging.getInstance().show(
                     "Foutmelding",
                     "Wijn invoerfout",
-                    "Een van de wijn velden zijn niet of incorrect ingevuld"
+                    "Controleer of alle velden correct zijn ingevuld"
             );
 
             return -1;
@@ -75,12 +77,13 @@ public class WineService {
         return repository.create(data);
     }
 
+
     /**
-     * Aanpassen van een bestaande wijn, aan de hand van de wijnID
+     * Edit a wine.
      *
-     * @param id
-     * @param data
-     * @return
+     * @param id   the id
+     * @param data the data
+     * @return the boolean
      */
     public boolean edit(int id, HashMap data)
     {
@@ -95,7 +98,7 @@ public class WineService {
                 Messaging.getInstance().show(
                         "Foutmelding",
                         "Wijn invoerfout",
-                        "Een van de wijn velden zijn niet of incorrect ingevuld"
+                        "Controleer of alle velden correct zijn ingevuld"
                 );
 
                 return false;
@@ -110,13 +113,12 @@ public class WineService {
     }
 
     /**
-     * Verwijderen van een bestaande wijn, aan de hand van de wijnID
+     * Remove object.
      *
-     * @param id
-     * @return
+     * @param id the id
+     * @return the object
      */
-    public Object remove(int id)
-    {
+    public Object remove(int id) {
         Wine wine = repository.find(id);
 
         if (wine != null)

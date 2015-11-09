@@ -79,7 +79,7 @@ public class ImportCSV {
                 data.put("price", wineData[6]);
                 data.put("merchantId", new MerchantService().all().get(0).getId());
 
-                new WineService().subscribe(data);
+                new WineService().create(data);
             }
             System.out.println("Succesfully imported wine.");
         }
