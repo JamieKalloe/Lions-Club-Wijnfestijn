@@ -7,11 +7,22 @@ public class Referral {
     private int referralID;
     private String name;
 
+    /**
+     * Instantiates a new Referral.
+     *
+     * @param referralID the referral id
+     */
     public Referral(int referralID) {
         this.referralID = referralID;
         this.name = null;
     }
 
+    /**
+     * Instantiates a new Referral.
+     *
+     * @param referralID the referral id
+     * @param name       the name
+     */
     public Referral(int referralID, String name) {
         this.referralID = referralID;
         this.name = name;

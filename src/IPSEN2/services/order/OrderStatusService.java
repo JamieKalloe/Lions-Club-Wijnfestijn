@@ -6,20 +6,41 @@ import IPSEN2.repositories.order.OrderStatusRepository;
 import java.util.ArrayList;
 
 /**
- * Created by mdbaz on 15-10-2015.
+ * The Order service.
+ * Date of creation: 15-10-15.
+ *
+ * @author Mike Bazuin
  */
 public class OrderStatusService {
+
     private OrderStatusRepository repository;
 
-    public OrderStatusService() {
+    /**
+     * Instantiates a new Order status service.
+     */
+    public OrderStatusService()
+    {
         this.repository = new OrderStatusRepository();
     }
 
-    public ArrayList<OrderStatus> all() {
+    /**
+     * Get all order statuses.
+     *
+     * @return the array list
+     */
+    public ArrayList<OrderStatus> all()
+    {
         return repository.all();
     }
 
-    public OrderStatus find(int id) {
+    /**
+     * Find order status.
+     *
+     * @param id the id
+     * @return the order status
+     */
+    public OrderStatus find(int id)
+    {
         return repository.find(id);
     }
 

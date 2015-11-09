@@ -10,10 +10,10 @@
    <children>
        <ImageView fitHeight="678.0" fitWidth="948.0" layoutX="87.0" layoutY="53.0" pickOnBounds="true">
          <image>
-            <Image url="@../../images/GastenAchtergrond.png" />
+            <Image url="@../../images/MenuBackground.png" />
          </image>
       </ImageView>
-      <TableView fx:id="table_view" editable="true" fixedCellSize="0.0" layoutX="149.0" layoutY="113.0" prefHeight="498.0" prefWidth="809.0" styleClass="table-view" stylesheets="@../../styles/style.css">
+      <TableView fx:id="tableView" editable="true" fixedCellSize="0.0" layoutX="149.0" layoutY="113.0" prefHeight="498.0" prefWidth="809.0" styleClass="table-view" stylesheets="@../../styles/style.css">
         <columns>
             <TableColumn fx:id="checkBoxColumn" prefWidth="36.0" />
           <TableColumn fx:id="idColumn" editable="false" prefWidth="99.0" sortable="false" text="ID" />
@@ -56,7 +56,7 @@
                  <children>
                      <ImageView fitHeight="80.0" fitWidth="61.0" layoutX="15.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                          <image>
-                             <Image url="@../../images/import-icon.png" />
+                             <Image url="@../../images/ImportIcon.png" />
                          </image>
                      </ImageView>
                  </children>

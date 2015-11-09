@@ -1,15 +1,16 @@
 package IPSEN2.controllers.guest;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.controllers.handlers.TableViewSelectHandler;
+import IPSEN2.controllers.listeners.TableViewListener;
 import IPSEN2.controllers.mail.MailController;
 import IPSEN2.generators.csv.ImportCSV;
+import IPSEN2.models.TableViewItem;
 import IPSEN2.models.attendee.Attendee;
 import IPSEN2.models.guest.Guest;
 import IPSEN2.services.attendee.AttendeeService;
 import IPSEN2.services.guest.GuestService;
-import javafx.animation.PauseTransition;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import IPSEN2.services.message.Messaging;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -18,9 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
 import javafx.util.Callback;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,179 +28,98 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 
-public class GuestController extends ContentLoader implements Initializable{
+public class GuestController extends ContentLoader implements Initializable, TableViewListener {
 
-    @FXML private  TableView<Guest> table_view;
-    @FXML private TableColumn idColumn;
-    @FXML private TableColumn firstNameColumn;
-    @FXML private TableColumn lastNameColumn;
-    @FXML private TableColumn emailColumn;
-    @FXML private TableColumn checkBoxColumn;
-    @FXML private TableColumn attendedColumn;
+    @FXML TableView<TableViewItem> tableView;
+    @FXML TableColumn idColumn;
+    @FXML TableColumn firstNameColumn;
+    @FXML TableColumn lastNameColumn;
+    @FXML TableColumn emailColumn;
+    @FXML TableColumn attendedColumn;
 
     public int selectedGuestID;
     private GuestService guestService;
-    private static ObservableList<Guest> attendeeData;
-    private static ArrayList<Integer> selectedRows;
-    private CheckBox selectAllCheckBox;
-    private  boolean selected;
+    private  ObservableList<TableViewItem> attendeeData;
+    private  ArrayList<Integer> selectedRows;
     private AttendeeService attendeeService;
 
-    @FXML
-    private Pane removeButton;
+    private ResourceBundle resources;
 
-
-    private void refreshTableView() {
-        checkBoxColumn.setVisible(false);
-        checkBoxColumn.setVisible(true);
-    }
-
+    /**
+     * Handles add button
+     */
     public void handleAddButton() throws IOException {
         if (eventId != 0) {
-            addContent(new AddGuestController(), EDIT_GUEST_DIALOG);
+            addContent(new AddGuestController(), resources.getString("EDIT_GUEST_DIALOG"));
         }
     }
 
+    /**
+     * Handles remove button
+     */
     public void handleRemoveButton() {
-
-
         if (selectedRows.size() != 0) {
-            selected = false;
-
-            for (Integer row : selectedRows) {
-                //if (guestData.get(selectedRows.indexOf(row)).getAttended()) {
-                System.out.println("removing " + row);
-                guestService.removeAsAttendee(row, eventId);
-            }
-        } else {
-//            Alert alert = new Alert(Alert.AlertType.WARNING);
-//            alert.setTitle("Information Dialog");
-//            alert.setHeaderText("Opgelet!");
-//            alert.setContentText("U heeft geen items geselecteerd om te verwijderen!");
-//
-//            alert.showAndWait();
+            selectedRows.forEach(row -> guestService.removeAsAttendee(row, eventId));
+            } else {
+            Messaging.getInstance().show(
+                    "Foutmelding",
+                    "Verwijderfout",
+                    "Er is geen gast geselecteerd"
+            );
         }
 
-        addContent(GUESTS);
-
+        addContent(resources.getString("GUESTS"));
     }
 
-    public void handleMailButton() {
-        if (selectedRows.size() != 0) {
-            selected = false;
-            lastWindow = "GuestMenu";
-            addContent(new MailController(selectedRows, 2), MAIL);
-        }
-    }
 
-    public void openEditGuestMenu(){
-        if (selectedGuestID != 0 ) {
-
-            addContent(new EditGuestController(selectedGuestID), EDIT_GUEST_DIALOG);
-        }
-
-
-    }
-
-    @FXML
-    private void importCSVFile() throws Exception {
+    /**
+     * Handles import button
+     *<br>
+     * Imports a CSV file with all required attributes of Object Guest
+     */
+    public void importCSVFile() throws Exception {
         //TODO: delete test code, debug only.
         if (eventId != 0) {
             ImportCSV importCSV = new ImportCSV();
             importCSV.importGuests(eventId);
             attendeeData = FXCollections.observableArrayList(guestService.findAttendeesForEvent(eventId));
-            addContent(GUESTS);
-    }}
-
-    private void setOnTableRowClickedListener() {
-        table_view.setRowFactory(table -> {
-            TableRow<Guest> row = new TableRow<>();
-
-            row.getStyleClass().add("pane");
-
-            Duration maxTimeBetweenSequentialClicks = Duration.millis(300);
-
-            PauseTransition clickTimer = new PauseTransition(maxTimeBetweenSequentialClicks);
-            final IntegerProperty sequentialClickCount = new SimpleIntegerProperty(0);
-
-            clickTimer.setOnFinished(event1 -> {
-                Guest guest = row.getTableView().getSelectionModel().getSelectedItem();
-                int count = sequentialClickCount.get();
-                if (count == 1) {
-                    row.getTableView().getSelectionModel().getSelectedItem().setSelected(!guest.getSelected());
-                    refreshTableView();
-                    selectedGuestID = guest.getId();
-                    selectedRows.add(guest.getId());
-                    if (!guest.getSelected()){
-                        selectedRows.remove(selectedRows.indexOf(guest.getId()));
-                    }
-                }
-                if (count == 2) {
-                    addContent(new EditGuestController(guest.getId()), EDIT_GUEST_DIALOG);
-                }
-                sequentialClickCount.set(0);
-            });
-
-            row.setOnMousePressed(event -> {
-                if (row.getTableView().getSelectionModel().getSelectedItem() != null) {
-                    sequentialClickCount.set(sequentialClickCount.get() + 1);
-                    clickTimer.playFromStart();
-                }
-
-            });
-            return row;
-        });
+            addContent(resources.getString("GUESTS"));
+        }
     }
 
-    private void createSelectAllCheckBox() {
-        selectAllCheckBox = new CheckBox();
-        selectAllCheckBox.setSelected(selected);
-        checkBoxColumn.setGraphic(selectAllCheckBox);
-        selectAllCheckBox.setOnAction(event -> {
-            selected = selectAllCheckBox.isSelected();
-            if (selected) {
-                selectedRows.clear();
-            }
-
-            attendeeData.forEach(guest -> {
-                guest.setSelected(selected);
-                if (selected) {
-                    selectedRows.add(guest.getId());
-                } else {
-                    selectedRows.clear();
-                }
-            });
-            refreshTableView();
-            selectAllCheckBox.setSelected(selected);
-        });
-
+    /**
+     * Handles mail button
+     */
+    public void handleMailButton() {
+        if (selectedRows.size() != 0) {
+            lastWindow = "GuestMenu";
+            addContent(new MailController(selectedRows, 2), resources.getString("MAIL"));
+        }
     }
 
-    private Callback createCheckBoxCellCallBack() {
-        Callback checkBoxCellCallBack = new Callback<TableColumn.CellDataFeatures<Guest, CheckBox>, ObservableValue<CheckBox>>() {
-
-            @Override
-            public ObservableValue<CheckBox> call(TableColumn.CellDataFeatures<Guest, CheckBox> cellDataFeatures) {
-                CheckBox checkBox = new CheckBox();
-                checkBox.setSelected(cellDataFeatures.getValue().getSelected());
-                checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observableValue,
-                                                         Boolean oldValue, Boolean newValue) -> {
-                    cellDataFeatures.getValue().setSelected(newValue.booleanValue());
-
-                    selectedGuestID = cellDataFeatures.getValue().getId();
-                    if (newValue.booleanValue()) {
-                        selectedRows.add(selectedGuestID);
-                    } else if (!newValue.booleanValue()) {
-                        selectedRows.remove(selectedRows.indexOf(selectedGuestID));
-                        selectedGuestID = 0;
-                    }
-                });
-                return new SimpleObjectProperty(checkBox);
-            }
-        };
-        return  checkBoxCellCallBack;
+    @Override
+    public void openEditMenu(){
+        if (selectedGuestID != 0 ) {
+            addContent(new EditGuestController(selectedGuestID), resources.getString("EDIT_GUEST_DIALOG"));
+        }
     }
 
+    @Override
+    public void setSelectedRows(ArrayList selectedRows) {
+        this.selectedRows = selectedRows;
+    }
+
+
+    @Override
+    public void setSelectedItem(int selectedItemId) {
+        this.selectedGuestID = selectedItemId;
+    }
+
+    /**
+     * Creates checkbox cells and listeners for all items in tableView
+     *
+     * @return returns the CallBack of the attached checkbox cell
+     */
     private Callback createAttendedCellCallBack() {
         Callback attendedCellCallBack = new Callback<TableColumn.CellDataFeatures<Guest, CheckBox>, ObservableValue<CheckBox>>() {
 
@@ -229,36 +147,42 @@ public class GuestController extends ContentLoader implements Initializable{
         return  attendedCellCallBack;
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        ContentLoader.setMainFrameTitle(ContentLoader.GUESTS_TITLE);
-        guestService = new GuestService();
-        attendeeService = new AttendeeService();
+    /**
+     * Shows all TableView Items <br>
+     * Sets TableViewSelectHandler for TableView Object
+     */
+    private void showTable() {
+        TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
+        tableViewSelectHandler.createCheckBoxColumn();
+        tableViewSelectHandler.createSelectAllCheckBox();
 
-        attendeeData = FXCollections.observableArrayList(guestService.findAttendeesForEvent(eventId));
-        selectedRows = new ArrayList<>();
-
-
-        setOnTableRowClickedListener();
-
-        checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
         idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("id"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("lastName"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("email"));
         attendedColumn.setCellValueFactory(createAttendedCellCallBack());
 
-
-        table_view.setItems(attendeeData);
-
-
-        createSelectAllCheckBox();
+        tableView.setItems(attendeeData);
 
         if (eventId == 0) {
-            table_view.setPlaceholder(new Label("Er is nog geen event geselecteerd"));
+            tableView.setPlaceholder(new Label("Er is nog geen event geselecteerd"));
 
         } else {
-            table_view.setPlaceholder(new Label("Er is geen content om te weergeven"));
+            tableView.setPlaceholder(new Label("Er is geen content om te weergeven"));
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
+        ContentLoader.setMainFrameTitle(resources.getString("GUESTS_TITLE"));
+        selectedRows = new ArrayList<>();
+        guestService = new GuestService();
+
+        attendeeService = new AttendeeService();
+        attendeeData = FXCollections.observableArrayList(guestService.findAttendeesForEvent(eventId));
+
+        showTable();
+
     }
 }

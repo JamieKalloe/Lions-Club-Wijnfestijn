@@ -40,6 +40,7 @@ public class MailController extends ContentLoader implements Initializable{
     private Mail mail;
     private int selectedID;
     private int receiverId;
+    private ResourceBundle resources;
 
     /**
      * Instantiates a new Mail controller.
@@ -62,7 +63,9 @@ public class MailController extends ContentLoader implements Initializable{
         this.receiverId = receiverId;
     }
 
-
+    /**
+     * Handles submit button
+     */
     private void handleSubmitButton() throws Exception {
 
         for (Integer id : selectedIDs) {
@@ -86,23 +89,28 @@ public class MailController extends ContentLoader implements Initializable{
                 e.printStackTrace();
             }
         }
-        addContent(GUESTS);
+        addContent(resources.getString("GUESTS"));
     }
 
+    /**
+     * Handles cancel button
+     */
     private void handleCancelButton() {
         if (receiverId == 1) {
-            addContent(MERCHANT);
+            addContent(resources.getString("MERCHANT"));
         } else  if (receiverId == 2){
-            addContent(GUESTS);
+            addContent(resources.getString("GUESTS"));
         } else if (receiverId == 3) {
-            addContent(ORDER);
+            addContent(resources.getString("ORDER"));
         }
     }
 
+    /**
+     * Handles MouseClickEvents on items inside the list view
+     */
     private void handleListView(Event event) {
         selectedMailType = ((ListView) event.getSource()).getSelectionModel().getSelectedItem().toString();
 
-        System.out.print(selectedIDs.get(0));
         if (selectedMailType != null) {
 
                 mail = (mailService.getMail(selectedIDs.get(0), mailService.getMailType(selectedMailType), receiverId));
@@ -116,6 +124,7 @@ public class MailController extends ContentLoader implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
         merchantService = new MerchantService();
         guestService = new GuestService();
         mailService = new MailService();

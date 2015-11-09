@@ -11,7 +11,7 @@
     <children>
         <ImageView fitHeight="1083.0" fitWidth="788.0" layoutX="39.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../images/GastenAchtergrond.png" />
+                <Image url="@../../images/MenuBackground.png" />
             </image>
         </ImageView>
         <Label layoutX="97.0" layoutY="60.0" text="Gast toevoegen/aanpassen">
@@ -39,14 +39,14 @@
                         <Font name="Roboto Regular" size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="firstNameTextField" layoutX="159.0" layoutY="40.0" />
-                <TextField fx:id="prefixTextField" layoutX="159.0" layoutY="80.0" />
+                <TextField fx:id="firstNameTextField" layoutX="159.0" layoutY="40.0" promptText="Naam" />
+                <TextField fx:id="prefixTextField" layoutX="159.0" layoutY="80.0" promptText="Tussenvoegsel" />
                 <Label layoutX="15.0" layoutY="124.0" text="Achternaam">
                     <font>
                         <Font name="Roboto Regular" size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="lastNameTextField" layoutX="159.0" layoutY="121.0" />
+                <TextField fx:id="lastNameTextField" layoutX="159.0" layoutY="121.0" promptText="Achternaam" />
                 <Label layoutX="68.0" layoutY="165.0" text="Email">
                     <font>
                         <Font name="Roboto Regular" size="18.0" />
@@ -57,15 +57,15 @@
                         <Font name="Roboto Regular" size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="emailTextField" layoutX="158.0" layoutY="163.0" />
+                <TextField fx:id="emailTextField" layoutX="158.0" layoutY="163.0" promptText="Email" />
                 <Label layoutX="64.0" layoutY="202.0" text="Straat">
                     <font>
                         <Font name="Roboto Regular" size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="addressTextField" layoutX="157.0" layoutY="204.0" />
-                <TextField fx:id="houseNumberTextField" layoutX="157.0" layoutY="245.0" />
-                <TextField fx:id="postalCodeTextField" layoutX="157.0" layoutY="285.0" />
+                <TextField fx:id="addressTextField" layoutX="157.0" layoutY="204.0" promptText="Straat" />
+                <TextField fx:id="houseNumberTextField" layoutX="157.0" layoutY="245.0" promptText="Huisnummer" />
+                <TextField fx:id="postalCodeTextField" layoutX="157.0" layoutY="285.0" promptText="Postcode" />
                 <Label layoutX="8.0" layoutY="243.0" text="Huisnummer">
                     <font>
                         <Font name="Roboto Regular" size="18.0" />
@@ -86,14 +86,14 @@
                         <Font name="Roboto Regular" size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="cityTextField" layoutX="157.0" layoutY="324.0" />
+                <TextField fx:id="cityTextField" layoutX="157.0" layoutY="324.0" promptText="Woonplaats" />
             </children>
         </AnchorPane>
         <Pane fx:id="cancelButton" layoutX="481.0" layoutY="509.0" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">
             <children>
                 <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../images/AnnulerenButton.png" />
+                        <Image url="@../../images/CancelButton.png" />
                     </image>
                 </ImageView>
             </children>
@@ -102,7 +102,7 @@
             <children>
                 <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../images/GereedButton.png" />
+                        <Image url="@../../images/SubmitButton.png" />
                     </image>
                 </ImageView>
             </children>

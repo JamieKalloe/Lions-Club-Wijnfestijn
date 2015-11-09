@@ -19,7 +19,13 @@ import java.util.List;
  */
 public class ImportCSV {
 
-    //Methods
+    /**
+     * Import guests.
+     *
+     * @param eventID the event id
+     * @throws Exception the exception
+     */
+//Methods
     public void importGuests(int eventID) throws Exception{
         File selectedFile = this.fileDialog("Select a guest CSV file", "*.csv").showOpenDialog(null);
         List<String[]> guestsCSV = this.readCSV(selectedFile);
@@ -52,6 +58,11 @@ public class ImportCSV {
         }
     }
 
+    /**
+     * Import wine.
+     *
+     * @throws Exception the exception
+     */
     public void importWine() throws Exception {
         File selectedFile = this.fileDialog("Select a wine CSV file", "*.csv").showOpenDialog(null);
         List<String[]> wineCSV = this.readCSV(selectedFile);
@@ -68,12 +79,16 @@ public class ImportCSV {
                 data.put("price", wineData[6]);
                 data.put("merchantId", new MerchantService().all().get(0).getId());
 
-                new WineService().subscribe(data);
+                new WineService().create(data);
             }
             System.out.println("Succesfully imported wine.");
         }
     }
-
+    /**
+     * Reads CSV file
+     *
+     * @param file file object to read
+     */
     private List<String[]> readCSV(File file) throws IOException{
 
         CSVReader reader;
@@ -91,6 +106,11 @@ public class ImportCSV {
         return allRows;
     }
 
+    /**
+     * Opens file chooser
+     *
+     * @return returns file chooser with selected file
+     */
     private FileChooser fileDialog(String title, String...extensions) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(title);

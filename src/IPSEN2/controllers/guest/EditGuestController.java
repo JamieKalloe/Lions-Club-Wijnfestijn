@@ -48,13 +48,14 @@ public class EditGuestController extends ContentLoader implements Initializable{
     private HashMap data;
     private GuestService service;
     private int selectedGuestID;
+    private ResourceBundle resources;
 
     public EditGuestController(int selectedGuestID) {
         this.selectedGuestID = selectedGuestID;
     }
 
     public void handleCancelButton() {
-        addContent(GUESTS);
+        addContent(resources.getString("GUESTS"));
     }
 
     /**
@@ -109,14 +110,14 @@ public class EditGuestController extends ContentLoader implements Initializable{
         data.put("referralID", referral);
 
         if (service.edit(selectedGuestID, data)) {
-            addContent(GUESTS);
+            addContent(resources.getString("GUESTS"));
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         service = new GuestService();
-
+        this.resources = resources;
             Guest guest = service.find(selectedGuestID);
 
             firstNameTextField.setText(guest.getFirstName());

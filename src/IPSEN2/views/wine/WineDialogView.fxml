@@ -10,7 +10,7 @@
    <children>
       <ImageView fitHeight="1083.0" fitWidth="788.0" layoutX="39.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/GastenAchtergrond.png" />
+            <Image url="@../../images/MenuBackground.png" />
          </image>
       </ImageView>
       <Label layoutX="97.0" layoutY="60.0" text="Wijn toevoegen/aanpassen">
@@ -25,13 +25,13 @@
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="wineNameTextField" layoutX="159.0" />
+            <TextField fx:id="wineNameTextField" layoutX="159.0" promptText="Naam" />
             <Label layoutX="57.0" layoutY="52.0" text="Land">
                <font>
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="countryNameTextField" layoutX="159.0" layoutY="50.0" />
+            <TextField fx:id="countryNameTextField" layoutX="159.0" layoutY="50.0" promptText="Land" />
             <Label layoutX="45.0" layoutY="108.0" text="Streek">
                <font>
                   <Font name="Roboto Regular" size="18.0" />
@@ -42,13 +42,13 @@
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="regionNameTextField" layoutX="158.0" layoutY="106.0" />
+            <TextField fx:id="regionNameTextField" layoutX="158.0" layoutY="106.0" promptText="Streek" />
             <Label layoutX="56.0" layoutY="201.0" text="Type ">
                <font>
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="yearTextField" layoutX="158.0" layoutY="156.0" />
+            <TextField fx:id="yearTextField" layoutX="158.0" layoutY="156.0" promptText="1995" />
             <RadioButton fx:id="typeWit" layoutX="159.0" layoutY="206.0" mnemonicParsing="false" selected="true" text="Wit">
                <toggleGroup>
                   <ToggleGroup fx:id="wineType" />
@@ -57,19 +57,19 @@
             <RadioButton fx:id="typeRood" layoutX="215.0" layoutY="206.0" mnemonicParsing="false" text="Rood" toggleGroup="$wineType" />
             <RadioButton fx:id="typeCava" layoutX="284.0" layoutY="206.0" mnemonicParsing="false" text="Cava" toggleGroup="$wineType" />
             <RadioButton fx:id="typeRose" layoutX="348.0" layoutY="206.0" mnemonicParsing="false" text="Rose" toggleGroup="$wineType" />
-            <Label layoutX="59.0" layoutY="246.0" text="Prijs">
+            <Label layoutX="59.0" layoutY="246.0" prefHeight="23.0" prefWidth="97.0" text="Prijs         €">
                <font>
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="priceTextField" layoutX="158.0" layoutY="244.0" />
+            <TextField fx:id="priceTextField" layoutX="158.0" layoutY="244.0" promptText="0,00" />
          </children>
       </AnchorPane>
       <Pane fx:id="cancelButton" layoutX="481.0" layoutY="509.0" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">
          <children>
             <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/AnnulerenButton.png" />
+                  <Image url="@../../images/CancelButton.png" />
                </image>
             </ImageView>
          </children>
@@ -78,7 +78,7 @@
          <children>
             <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/GereedButton.png" />
+                  <Image url="@../../images/SubmitButton.png" />
                </image>
             </ImageView>
          </children>

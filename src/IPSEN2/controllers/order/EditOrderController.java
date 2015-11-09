@@ -1,6 +1,7 @@
 package IPSEN2.controllers.order;
 
 import IPSEN2.ContentLoader;
+import IPSEN2.models.guest.Guest;
 import IPSEN2.models.order.WineOrder;
 import IPSEN2.services.order.OrderService;
 import IPSEN2.services.order.OrderStatusService;
@@ -19,32 +20,20 @@ import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by Philip on 01-10-15.
  */
 public class EditOrderController extends ContentLoader implements Initializable {
 
-    @FXML
-    private Pane cancelButton, submitButton, addWineButton;
-    @FXML
-    private TableView<WineOrder> table_view;
-    @FXML
-    private TableColumn wineNameColumn;
-    @FXML
-    private TableColumn quantityColumn;
-    @FXML
-    private TableColumn deleteButtonColumn;
-
-    @FXML
-    private Label customerNameLabel;
-
-    @FXML
-    private ComboBox orderStatusComboBox;
+    @FXML private Pane cancelButton, submitButton, addWineButton;
+    @FXML private TableView<WineOrder> tableView;
+    @FXML private TableColumn wineNameColumn;
+    @FXML private TableColumn quantityColumn;
+    @FXML private TableColumn deleteButtonColumn;
+    @FXML private Label customerNameLabel;
+    @FXML private ComboBox orderStatusComboBox;
 
     private static ObservableList<WineOrder> wineOrderData;
     private ArrayList<Integer> selectedWineIDs;
@@ -55,23 +44,31 @@ public class EditOrderController extends ContentLoader implements Initializable 
     private WineService wineService;
     private WineOrderService wineOrderService;
     private static int orderStatusId;
+    private ResourceBundle resources;
 
 
+    /**
+     * Instantiates a new Edit order controller.
+     *
+     * @param selectedOrderId the selected order id
+     * @param selectedWineIDs the selected wine i ds
+     */
     public EditOrderController(int selectedOrderId, ArrayList<Integer> selectedWineIDs) {
         this.selectedOrderId = selectedOrderId;
         this.selectedWineIDs =  selectedWineIDs;
     }
 
-//    public EditOrderController(int selectedGuestID, ArrayList<Integer> selectedWineIDs) {
-//        this.selectedOrderId = selectedGuestID;
-//        this.selectedWineIDs = selectedWineIDs;
-//    }
-
+    /**
+     * Handle cancel button.
+     */
     public void handleCancelButton() {
         wineOrderData = null;
-        addContent(ORDER);
+        addContent(resources.getString("ORDER"));
     }
 
+    /**
+     * Handle submit button.
+     */
     @FXML
     public void handleSubmitButton() {
         HashMap newOrderData = new HashMap();
@@ -82,19 +79,28 @@ public class EditOrderController extends ContentLoader implements Initializable 
 
         orderService.edit(selectedOrderId, newOrderData);
 
-        wineOrderData.forEach(wineOrder -> wineOrderService.delete(selectedOrderId, wineOrder.getWine().getWineID()));
+        wineOrderData.forEach(wineOrder -> wineOrderService.delete(selectedOrderId, wineOrder.getWine().getId()));
+
         wineOrderData.forEach(wineOrder -> {
             HashMap wineOrderData = new HashMap();
-            wineOrderData.put("orderID", selectedOrderId);
-            wineOrderData.put("wineID" , wineOrder.getWine().getWineID());
-            wineOrderData.put("amount", wineOrder.getAmount());
-            wineOrderService.create(wineOrderData);
+            System.out.println(wineOrderService.allForOrder(selectedOrderId).size());
+            if (!wineOrderService.allForOrder(selectedOrderId).contains(wineOrder)) {
+                wineOrderData.put("orderID", selectedOrderId);
+                wineOrderData.put("wineID", wineOrder.getWine().getId());
+                wineOrderData.put("amount", wineOrder.getAmount());
+                wineOrderService.create(wineOrderData);
+            } else {
+                wineOrder.setAmount(wineOrder.getAmount() + 1);
+                tableView.refresh();
+            }
         });
 
-        addContent(ORDER);
+        addContent(resources.getString("ORDER"));
     }
 
-
+    /**
+     * Handles order status combo box
+     */
     private void handleOrderStatusComboBox() {
         orderStatusService.all().forEach(orderStatus -> {
             if (orderStatus.getName().equals(orderStatusComboBox.getValue())) {
@@ -103,10 +109,18 @@ public class EditOrderController extends ContentLoader implements Initializable 
         });
     }
 
+    /**
+     * Handle add wine button.
+     */
     public void handleAddWineButton() {
-        addContent(new SelectWineController(selectedOrderId, true), SELECT_WINE_DIALOG);
+        addContent(new SelectWineController(selectedOrderId, true), resources.getString("SELECT_WINE_DIALOG"));
     }
 
+    /**
+     * Creates  table cell with delete button and listener for all items in tableView
+     *
+     * @return returns the CallBack of the attached checkbox cell
+     */
     private Callback createTextFieldCellCallBack() {
         Callback textFieldCellCallBack = new Callback<TableColumn.CellDataFeatures<WineOrder, TextField>, ObservableValue<TextField>>() {
 
@@ -128,6 +142,7 @@ public class EditOrderController extends ContentLoader implements Initializable 
         return textFieldCellCallBack;
     }
 
+
     private Callback createDeleteButtonCellCallBack() {
         Callback deleteButtonCellCallBack = new Callback<TableColumn.CellDataFeatures<WineOrder, Button>, ObservableValue<Button>>() {
 
@@ -137,17 +152,17 @@ public class EditOrderController extends ContentLoader implements Initializable 
                 deleteButton.getStyleClass().addAll("deleteButton", "buttonWithoutHover");
                 deleteButton.setGraphic(new ImageView("/IPSEN2/images/deleteIcon.png"));
 
-                int wineID = cellDataFeatures.getValue().getWine().getWineID();
+                int wineID = cellDataFeatures.getValue().getWine().getId();
 
                 deleteButton.setOnAction(event -> {
                     for (Iterator<WineOrder> iterator = wineOrderData.iterator(); iterator.hasNext(); ) {
                         WineOrder wineOrder = iterator.next();
-                        if (wineOrder.getWine().getWineID() == wineID) {
+                        if (wineOrder.getWine().getId() == wineID) {
                             iterator.remove();
                             wineOrderService.delete(selectedOrderId, wineID);
                         }
                     }
-                    table_view.setItems(wineOrderData);
+                    tableView.setItems(wineOrderData);
                 });
 
                 return new SimpleObjectProperty(deleteButton);
@@ -156,18 +171,24 @@ public class EditOrderController extends ContentLoader implements Initializable 
         return deleteButtonCellCallBack;
     }
 
+    /**
+     * Initialises wine data
+     */
     private void initializeWineData() {
-
-        wineOrderData = FXCollections.observableArrayList(wineOrderService.allForOrder(selectedOrderId));
-
         if(selectedWineIDs != null) {
             selectedWineIDs.forEach(selectedWineID -> {
                 WineOrder wineOrder = new WineOrder(selectedWineID, 1);
                 wineOrder.setWine(wineService.find(selectedWineID));
                 wineOrderData.add(wineOrder);
-            });}
+            });} else {
+            wineOrderData = FXCollections.observableArrayList(orderService.find(selectedOrderId).getWineOrders());
+        }
     }
 
+
+    /**
+     * Initialises order status combo box
+     */
     private void initializeComboBox() {
         orderStatusService.all().forEach(orderStatus ->
                 orderStatusComboBox.getItems().addAll(orderStatusService.
@@ -183,20 +204,30 @@ public class EditOrderController extends ContentLoader implements Initializable 
         orderStatusComboBox.setOnAction(event -> handleOrderStatusComboBox());
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        orderService = new OrderService();
-        orderStatusService = new OrderStatusService();
-        wineOrderService = new WineOrderService();
-        wineService = new WineService();
-        initializeComboBox();
-
-
+    /**
+     * Shows all TableView Items <br>
+     * Sets TableViewSelectHandler for TableView Object
+     */
+    private void showTable() {
         wineNameColumn.setCellValueFactory(new PropertyValueFactory<WineOrder, String>("name"));
         quantityColumn.setCellValueFactory(createTextFieldCellCallBack());
         deleteButtonColumn.setCellValueFactory(createDeleteButtonCellCallBack());
 
-        table_view.setItems(wineOrderData);
+        tableView.setItems(wineOrderData);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
+        orderService = new OrderService();
+        orderStatusService = new OrderStatusService();
+        wineOrderService = new WineOrderService();
+        wineService = new WineService();
+        Guest guest  = orderService.find(selectedOrderId).getGuest();
+        customerNameLabel.setText(guest.getFirstName() + " " + guest.getLastName());
+        initializeComboBox();
+
+        showTable();
 
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());

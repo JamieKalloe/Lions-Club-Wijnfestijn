@@ -6,7 +6,10 @@ import javafx.scene.control.ButtonType;
 import java.util.Optional;
 
 /**
- * Created by Thomas on 29-10-15.
+ * The Messaging service.
+ * Date of creation: 29-10-15.
+ *
+ * @author Thomas Neuteboom
  */
 public class Messaging {
 
@@ -14,6 +17,11 @@ public class Messaging {
 
     private static Messaging messagingInstance;
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static synchronized Messaging getInstance()
     {
         if(messagingInstance == null)
@@ -24,6 +32,13 @@ public class Messaging {
         return messagingInstance;
     }
 
+    /**
+     * Show message.
+     *
+     * @param title   the title
+     * @param header  the header
+     * @param message the message
+     */
     public void show(String title, String header, String message)
     {
         Alert alert = new Alert(Alert.AlertType.WARNING);

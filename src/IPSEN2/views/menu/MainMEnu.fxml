@@ -17,39 +17,39 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Pane fx:id="wijnenButton" layoutX="427.0" layoutY="111.0" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleButton" prefHeight="192.0" prefWidth="131.0" styleClass="buttonWithoutHover" GridPane.columnIndex="1">
+            <Pane fx:id="wijnenButton" layoutX="427.0" layoutY="111.0" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleShortcutButton" prefHeight="192.0" prefWidth="131.0" styleClass="buttonWithoutHover" GridPane.columnIndex="1">
                <children>
                <ImageView fitHeight="193.0" fitWidth="193.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@../../images/WijnenShortcut.png" />
+                     <Image url="@../../images/WineShortcut.png" />
                   </image>
                </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="bestellingenButton" layoutX="709.0" layoutY="111.0" onMouseClicked="#handleButton" prefHeight="196.0" prefWidth="156.0" styleClass="buttonWithoutHover" GridPane.columnIndex="2">
+            <Pane fx:id="bestellingenButton" layoutX="709.0" layoutY="111.0" onMouseClicked="#handleShortcutButton" prefHeight="196.0" prefWidth="156.0" styleClass="buttonWithoutHover" GridPane.columnIndex="2">
                <children>
-                  <ImageView fitHeight="201.0" fitWidth="193.0" onMouseClicked="#handleButton" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="201.0" fitWidth="193.0" onMouseClicked="#handleShortcutButton" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/BestellingenShortcut.png" />
+                        <Image url="@../../images/OrderShortcut.png" />
                      </image>
                   </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="evenementenButton" layoutX="151.0" layoutY="340.0" onMouseClicked="#handleButton" styleClass="buttonWithoutHover" GridPane.rowIndex="1">
+            <Pane fx:id="evenementenButton" layoutX="151.0" layoutY="340.0" onMouseClicked="#handleShortcutButton" styleClass="buttonWithoutHover" GridPane.rowIndex="1">
                <children>
-                  <ImageView fitHeight="195.0" fitWidth="193.0" onMouseClicked="#handleButton" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="195.0" fitWidth="193.0" onMouseClicked="#handleShortcutButton" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/EvenementenShortcut.png" />
+                        <Image url="@../../images/EventShortcut.png" />
                      </image>
                   </ImageView>
                </children>
             </Pane>
-            <Pane layoutX="427.0" layoutY="337.0" onMouseClicked="#handleButton" styleClass="buttonWithoutHover" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Pane layoutX="427.0" layoutY="337.0" onMouseClicked="#handleShortcutButton" styleClass="buttonWithoutHover" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <ImageView fitHeight="193.0" fitWidth="193.0" pickOnBounds="true" preserveRatio="true" visible="false" />
                </children>
             </Pane>
-            <Pane fx:id="gastenButton" layoutX="148.0" layoutY="115.0" onMouseClicked="#handleButton" styleClass="buttonWithoutHover">
+            <Pane fx:id="gastenButton" layoutX="148.0" layoutY="115.0" onMouseClicked="#handleShortcutButton" styleClass="buttonWithoutHover">
                <children>
                   <ImageView fitHeight="190.0" fitWidth="193.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -58,9 +58,9 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="merchantButton" layoutX="10.0" layoutY="276.0" onMouseClicked="#handleButton" styleClass="buttonWithoutHover" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Pane fx:id="merchantButton" layoutX="10.0" layoutY="276.0" onMouseClicked="#handleShortcutButton" styleClass="buttonWithoutHover" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <ImageView fitHeight="195.0" fitWidth="193.0" onMouseClicked="#handleButton" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="195.0" fitWidth="193.0" onMouseClicked="#handleShortcutButton" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/wineMerchant.png" />
                      </image>

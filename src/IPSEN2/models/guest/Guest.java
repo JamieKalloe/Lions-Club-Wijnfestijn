@@ -1,13 +1,13 @@
 package IPSEN2.models.guest;
 
+import IPSEN2.models.TableViewItem;
 import IPSEN2.models.address.Address;
 import IPSEN2.models.order.Order;
 import IPSEN2.models.referral.Referral;
 import javafx.beans.property.SimpleBooleanProperty;
 
-public class Guest {
+public class Guest extends TableViewItem {
 
-    private int id;
 
     private String gender;
     private String lastName;
@@ -15,13 +15,6 @@ public class Guest {
     private String firstName;
     private Order order;
     private SimpleBooleanProperty attended = new SimpleBooleanProperty(false);
-    private SimpleBooleanProperty selected = new SimpleBooleanProperty(false);
-
-    public boolean getSelected() {
-        return selected.get();
-    }
-
-    //public BooleanProperty attendendProperty() {       return attended;}
 
     private Address address;
 
@@ -75,12 +68,6 @@ public class Guest {
     }
 
     //GETTERS
-    public Boolean getAttended() {return attended.get();}
-
-    public int getId() {
-        return id;
-    }
-
     public Order getOrder() {
         return this.order;
     }
@@ -119,13 +106,6 @@ public class Guest {
 
     //SETTERS
     public void setAttended(boolean attended) { this.attended = new SimpleBooleanProperty(attended);}
-
-    public void setSelected(boolean selected) {this.selected.set(selected);}
-
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public void setGender(String gender) {
         this.gender = gender;

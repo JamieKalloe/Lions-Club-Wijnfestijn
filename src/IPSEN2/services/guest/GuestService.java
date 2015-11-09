@@ -97,7 +97,11 @@ public class GuestService {
 
         if (guest != null)
         {
-            data.put("addressID", guest.getAddress().getAddressID());
+
+            int addressID = guest.getAddress().getAddressID();
+            data.put("addressID", addressID);
+
+            new AddressService().update(addressID, data);
 
             boolean isValid = this.validator.validate(data);
 
@@ -109,7 +113,7 @@ public class GuestService {
                         "Een van de gast velden zijn incorrect ingevuld"
                 );
 
-                return false;
+                return true;
             }
 
             this.repository.update(id, data);

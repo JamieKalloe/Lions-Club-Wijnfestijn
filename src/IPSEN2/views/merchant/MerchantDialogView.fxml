@@ -10,7 +10,7 @@
    <children>
       <ImageView fitHeight="1083.0" fitWidth="788.0" layoutX="39.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/GastenAchtergrond.png" />
+            <Image url="@../../images/MenuBackground.png" />
          </image>
       </ImageView>
       <Label layoutX="97.0" layoutY="60.0" text="Wijnhandel toevoegen/aanpassen">
@@ -30,16 +30,16 @@
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="nameTextField" layoutX="159.0" />
-            <TextField fx:id="cityTextField" layoutX="158.0" layoutY="46.0" />
-            <TextField fx:id="addressTextField" layoutX="158.0" layoutY="91.0" />
+            <TextField fx:id="nameTextField" layoutX="159.0" promptText="Naam" />
+            <TextField fx:id="cityTextField" layoutX="158.0" layoutY="46.0" promptText="Plaats" />
+            <TextField fx:id="addressTextField" layoutX="158.0" layoutY="91.0" promptText="Adres" />
             <Label layoutX="-5.0" layoutY="146.0" text="Huisnummer">
                <font>
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="houseNumberTextField" layoutX="158.0" layoutY="138.0" />
-            <TextField fx:id="zipCodeTextField" layoutX="158.0" layoutY="192.0" />
+            <TextField fx:id="houseNumberTextField" layoutX="158.0" layoutY="138.0" promptText="Huisnummer" />
+            <TextField fx:id="zipCodeTextField" layoutX="158.0" layoutY="192.0" promptText="Postcode" />
             <Label layoutX="50.0" layoutY="51.0" text="Plaats">
                <font>
                   <Font name="Roboto Regular" size="18.0" />
@@ -55,14 +55,14 @@
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="emailTextField" layoutX="158.0" layoutY="248.0" />
+            <TextField fx:id="emailTextField" layoutX="158.0" layoutY="248.0" promptText="Email" />
          </children>
       </AnchorPane>
       <Pane fx:id="cancelButton" layoutX="481.0" layoutY="509.0" prefHeight="38.0" prefWidth="150.0" styleClass="buttonWithoutHover">
          <children>
             <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/AnnulerenButton.png" />
+                  <Image url="@../../images/CancelButton.png" />
                </image>
             </ImageView>
          </children>
@@ -71,7 +71,7 @@
          <children>
             <ImageView fitHeight="75.0" fitWidth="154.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/GereedButton.png" />
+                  <Image url="@../../images/SubmitButton.png" />
                </image>
             </ImageView>
          </children>

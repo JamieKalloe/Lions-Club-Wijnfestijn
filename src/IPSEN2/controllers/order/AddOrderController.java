@@ -33,33 +33,50 @@ public class AddOrderController extends ContentLoader implements Initializable {
 
 
     @FXML private Pane cancelButton, submitButton, addWineButton;
-    @FXML private TableView<WineOrder> table_view;
+    @FXML private TableView<WineOrder> tableView;
     @FXML private TableColumn wineNameColumn;
     @FXML private TableColumn quantityColumn;
     @FXML private TableColumn deleteButtonColumn;
 
     private static ObservableList<WineOrder> wineOrderData;
 
-    @FXML private Label customerNameLabel;
-    @FXML private ComboBox orderStatusComboBox;
+    /**
+     * The Customer name label.
+     */
+    @FXML Label customerNameLabel;
+    /**
+     * The Order status combo box.
+     */
+    @FXML ComboBox orderStatusComboBox;
 
+    private ResourceBundle resources;
     private ArrayList<Integer> selectedWineIDs;
     private GuestService guestService;
     private WineOrderService wineOrderService;
     private OrderService orderService;
     private OrderStatusService orderStatusService;
     private WineService wineService;
-    private static boolean isForEdit;
     private static int orderStatusID;
     private  int selectedGuestID;
 
     private Guest guest;
 
 
+    /**
+     * Instantiates a new Add order controller.
+     *
+     * @param selectedID the selected id
+     */
     public AddOrderController(int selectedID) {
            this.selectedGuestID = selectedID;
     }
 
+    /**
+     * Instantiates a new Add order controller.
+     *
+     * @param selectedGuestID the selected guest id
+     * @param selectedWineIDs the selected wine i ds
+     */
     public AddOrderController(int selectedGuestID, ArrayList<Integer> selectedWineIDs) {
         this.selectedGuestID = selectedGuestID;
         this.selectedWineIDs = selectedWineIDs;
@@ -67,11 +84,17 @@ public class AddOrderController extends ContentLoader implements Initializable {
     }
 
 
+    /**
+     * Handle cancel button.
+     */
     public void handleCancelButton() {
         wineOrderData = null;
-        addContent(ORDER);
+        addContent(resources.getString("ORDER"));
     }
 
+    /**
+     * Handle submit button.
+     */
     public void handleSubmitButton() {
         if (wineOrderData.size() != 0) {
             HashMap orderData = new HashMap();
@@ -79,9 +102,6 @@ public class AddOrderController extends ContentLoader implements Initializable {
                 wineOrderData.forEach(wineOrder -> {
                     amounts.add(wineOrder.getAmount());
                 });
-
-            System.out.println("amounts.size: " + amounts.size());
-            System.out.println("wineIds: " + selectedWineIDs.size());
 
             orderData.put("guestId", selectedGuestID);
                 orderData.put("eventId", eventId);
@@ -93,9 +113,12 @@ public class AddOrderController extends ContentLoader implements Initializable {
         }
         orderStatusID = 0;
         wineOrderData = null;
-        addContent(ORDER);
+        addContent(resources.getString("ORDER"));
     }
 
+    /**
+     * Handles combo box with order status
+     */
     private void handleOrderStatusComboBox() {
         orderStatusService.all().forEach(orderStatus -> {
             if (orderStatus.getName().equals(orderStatusComboBox.getValue())) {
@@ -104,11 +127,20 @@ public class AddOrderController extends ContentLoader implements Initializable {
         });
     }
 
+    /**
+     * Handle add wine button.
+     */
     public void handleAddWineButton(){
-              addContent( new SelectWineController(selectedGuestID, false), SELECT_WINE_DIALOG);
+              addContent( new SelectWineController(selectedGuestID, false),
+                      resources.getString("SELECT_WINE_DIALOG"));
           }
 
 
+    /**
+     * Creates table cells with textfield and listeners for all items inside tableView
+     *
+     * @return returns the CallBack of the attached textfield
+     */
     private Callback createTextFieldCellCallBack() {
         Callback textFieldCellCallBack = new Callback<TableColumn.CellDataFeatures<WineOrder, TextField>, ObservableValue<TextField>>() {
 
@@ -129,6 +161,11 @@ public class AddOrderController extends ContentLoader implements Initializable {
         return  textFieldCellCallBack;
     }
 
+    /**
+     * Creates  table cell with delete button and listener for all items in tableView
+     *
+     * @return returns the CallBack of the attached checkbox cell
+     */
     private Callback createDeleteButtonCellCallBack() {
         Callback deleteButtonCellCallBack = new Callback<TableColumn.CellDataFeatures<WineOrder, Button>, ObservableValue<Button>>() {
 
@@ -138,19 +175,19 @@ public class AddOrderController extends ContentLoader implements Initializable {
                 deleteButton.getStyleClass().addAll( "deleteButton", "buttonWithoutHover");
                 deleteButton.setGraphic(new ImageView("/IPSEN2/images/deleteIcon.png"));
 
-                int wineID = cellDataFeatures.getValue().getWine().getWineID();
+                int wineID = cellDataFeatures.getValue().getWine().getId();
 
                 deleteButton.setOnAction(event -> {
                     for( Iterator<WineOrder> iterator = wineOrderData.iterator(); iterator.hasNext() ; )
                     {
                         WineOrder wineOrder = iterator.next();
-                        if(wineOrder.getWine().getWineID() == wineID)
+                        if(wineOrder.getWine().getId() == wineID)
                         {
                             iterator.remove();
                             selectedWineIDs.remove(selectedWineIDs.indexOf(wineID));
                         }
                     }
-                    table_view.setItems(wineOrderData);
+                    tableView.setItems(wineOrderData);
                 });
 
                 return new SimpleObjectProperty(deleteButton);
@@ -159,9 +196,10 @@ public class AddOrderController extends ContentLoader implements Initializable {
         return  deleteButtonCellCallBack;
     }
 
+    /**
+     * Initialises wine data
+     */
     private void initializeWineData() {
-
-
         if(selectedWineIDs != null) {
         selectedWineIDs.forEach(selectedWineID -> {
             WineOrder wineOrder = new WineOrder(selectedWineID, 1);
@@ -172,6 +210,9 @@ public class AddOrderController extends ContentLoader implements Initializable {
         }
     }
 
+    /**
+     * Initialises order status combo box
+     */
     private void initializeComboBox() {
         orderStatusService.all().forEach(orderStatus ->
                 orderStatusComboBox.getItems().addAll(orderStatusService.
@@ -188,25 +229,34 @@ public class AddOrderController extends ContentLoader implements Initializable {
         orderStatusComboBox.setOnAction(event -> handleOrderStatusComboBox());
     }
 
+    /**
+     * Shows all TableView Items <br>
+     * Sets TableViewSelectHandler for TableView Object
+     */
+    private void showTables() {
+        wineNameColumn.setCellValueFactory(new PropertyValueFactory<WineOrder, String>("name"));
+        quantityColumn.setCellValueFactory(createTextFieldCellCallBack());
+        deleteButtonColumn.setCellValueFactory(createDeleteButtonCellCallBack());
+        tableView.setItems(wineOrderData);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        guestService = new GuestService();
-        wineOrderService = new WineOrderService();
-        orderService = new OrderService();
-        orderStatusService = new OrderStatusService();
-        wineService = new WineService();
-        guest = guestService.find(selectedGuestID);
+        this.resources = resources;
+        this.guestService = new GuestService();
+        this.wineOrderService = new WineOrderService();
+        this.orderService = new OrderService();
+        this.orderStatusService = new OrderStatusService();
+        this. wineService = new WineService();
+        this.guest = guestService.find(selectedGuestID);
         initializeComboBox();
+
+        this.customerNameLabel.setText(guest.getFirstName() + " " + guest.getLastName());
+
+        showTables();
 
         addWineButton.setOnMouseClicked(event -> handleAddWineButton());
         submitButton.setOnMouseClicked(event -> handleSubmitButton());
         cancelButton.setOnMouseClicked(event -> handleCancelButton());
-
-        wineNameColumn.setCellValueFactory(new PropertyValueFactory<WineOrder, String>("name"));
-        quantityColumn.setCellValueFactory(createTextFieldCellCallBack());
-        deleteButtonColumn.setCellValueFactory(createDeleteButtonCellCallBack());
-
-        customerNameLabel.setText(guest.getFirstName() + " " + guest.getLastName());
-        table_view.setItems(wineOrderData);
     }
 }
