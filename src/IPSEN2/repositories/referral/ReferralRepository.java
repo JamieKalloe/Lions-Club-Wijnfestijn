@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 /**
  * Created by mdbaz on 22-09-2015.
@@ -16,6 +15,9 @@ import java.util.Set;
 public class ReferralRepository implements Crudable{
     private Database databaseInstance;
 
+    /**
+     * Instantiates a new Referral repository.
+     */
     public ReferralRepository() {
         this.databaseInstance = Database.getInstance();
     }
@@ -55,6 +57,12 @@ public class ReferralRepository implements Crudable{
         databaseInstance.update("referral", id, databaseData);
     }
 
+    /**
+     * Exists int.
+     *
+     * @param data the data
+     * @return the int
+     */
     public int exists(HashMap data) {
         String where = "name = '" + data.get("referralName")+"'";
         ResultSet resultSet = databaseInstance.select("referral", where);

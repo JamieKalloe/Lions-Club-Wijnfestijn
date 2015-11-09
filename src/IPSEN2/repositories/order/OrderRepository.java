@@ -11,10 +11,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+/**
+ * The type Order repository.
+ */
 public class OrderRepository implements Crudable {
 
     private Database databaseInstance;
 
+    /**
+     * Instantiates a new Order repository.
+     */
     public OrderRepository()
     {
         this.databaseInstance = Database.getInstance();

@@ -1,8 +1,8 @@
 package IPSEN2.repositories.wine;
 
 import IPSEN2.database.Database;
+import IPSEN2.models.merchant.Merchant;
 import IPSEN2.models.wine.Wine;
-import IPSEN2.models.wine.WineMerchant;
 import IPSEN2.models.wine.WineType;
 import IPSEN2.repositories.Crudable;
 
@@ -42,7 +42,7 @@ public class WineRepository implements Crudable {
                 // Fill the wine object with data from the query
                 wine.setId(queryResult.getInt("id"));
                 wine.setType(new WineType(queryResult.getInt("type_id")));
-                wine.setMerchant(new WineMerchant(queryResult.getInt("merchant_id")));
+                wine.setMerchant(new Merchant(queryResult.getInt("merchant_id")));
                 wine.setName(queryResult.getString("name"));
                 wine.setCountry(queryResult.getString("country"));
                 wine.setRegion(queryResult.getString("region"));

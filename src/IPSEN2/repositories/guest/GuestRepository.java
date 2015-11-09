@@ -11,10 +11,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * The type Guest repository.
+ */
 public class GuestRepository implements Crudable {
 
     private Database databaseInstance;
 
+    /**
+     * Instantiates a new Guest repository.
+     */
     public GuestRepository() {
         this.databaseInstance = Database.getInstance();
     }
@@ -100,6 +106,14 @@ public class GuestRepository implements Crudable {
         databaseInstance.delete("guest", id);
     }
 
+    /**
+     * Find all in array list.
+     *
+     * @param inTable      the in table
+     * @param filterColumn the filter column
+     * @param where        the where
+     * @return the array list
+     */
     public ArrayList<Guest> findAllIn(String inTable, String filterColumn, String where) {
         ArrayList<Guest> guestList = new ArrayList<Guest>();
         ResultSet queryResult = databaseInstance.select("guest", inTable, "id", filterColumn, where);
@@ -124,6 +138,12 @@ public class GuestRepository implements Crudable {
         return guestList;
     }
 
+    /**
+     * Delete key from table.
+     *
+     * @param table the table
+     * @param where the where
+     */
     public void deleteKeyFromTable(String table, String where) {
         databaseInstance.delete(table, where);
     }

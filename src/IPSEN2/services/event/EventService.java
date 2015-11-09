@@ -17,6 +17,9 @@ public class EventService {
     private AddressService addressService;
     private EventValidator validator;
 
+    /**
+     * Instantiates a new Event service.
+     */
     public EventService()
     {
         this.validator = new EventValidator();
@@ -24,6 +27,11 @@ public class EventService {
         this.addressService = new AddressService();
     }
 
+    /**
+     * All array list.
+     *
+     * @return the array list
+     */
     public ArrayList<Event> all()
     {
         ArrayList<Event> eventList = eventRepository.all();
@@ -37,6 +45,12 @@ public class EventService {
         return eventList;
     }
 
+    /**
+     * Find event.
+     *
+     * @param id the id
+     * @return the event
+     */
     public Event find(int id)
     {
         Event event = eventRepository.find(id);
@@ -47,6 +61,12 @@ public class EventService {
         return event;
     }
 
+    /**
+     * Add int.
+     *
+     * @param data the data
+     * @return the int
+     */
     public int add(HashMap data)
     {
         Integer addressId = this.addressService.create(data);
@@ -73,6 +93,14 @@ public class EventService {
         return this.eventRepository.create(data);
     }
 
+    /**
+     * Edit boolean.
+     *
+     * @param id        the id
+     * @param addressId the address id
+     * @param data      the data
+     * @return the boolean
+     */
     public boolean edit(int id,int addressId, HashMap data)
     {
         Event event = eventRepository.find(id);
@@ -102,6 +130,12 @@ public class EventService {
         return false;
     }
 
+    /**
+     * Remove boolean.
+     *
+     * @param id the id
+     * @return the boolean
+     */
     public boolean remove(int id)
     {
         Event event = eventRepository.find(id);

@@ -18,6 +18,9 @@ public class EventRepository implements Crudable {
 
     private Database databaseInstance;
 
+    /**
+     * Instantiates a new Event repository.
+     */
     public EventRepository() {
         this.databaseInstance = Database.getInstance();
     }

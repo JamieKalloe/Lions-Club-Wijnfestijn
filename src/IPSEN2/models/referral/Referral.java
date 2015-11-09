@@ -28,24 +28,49 @@ public class Referral {
         this.name = name;
     }
 
+    /**
+     * Check if only id boolean.
+     *
+     * @return the boolean
+     */
     public boolean checkIfOnlyID(){
         return name == null;
     }
 
-    //GETTERS
+    /**
+     * Gets referral id.
+     *
+     * @return the referral id
+     */
+//GETTERS
     public int getReferralID() {
         return referralID;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
-    //SETTERS
+    /**
+     * Sets referral id.
+     *
+     * @param referralID the referral id
+     */
+//SETTERS
     public void setReferralID(int referralID) {
         this.referralID = referralID;
     }
 
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
     public void setName(String name) {
         this.name = name;
     }

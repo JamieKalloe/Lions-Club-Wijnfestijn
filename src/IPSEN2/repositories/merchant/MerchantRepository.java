@@ -16,6 +16,9 @@ public class MerchantRepository implements Crudable {
 
     private Database databaseInstance;
 
+    /**
+     * Instantiates a new Merchant repository.
+     */
     public MerchantRepository()
     {
         this.databaseInstance = Database.getInstance();

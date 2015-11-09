@@ -93,7 +93,7 @@ public class ExportCSV {
 
             array.add(String.valueOf(wine.getId()));
             array.add(String.valueOf(wine.getType().getId()));
-            array.add(String.valueOf(wine.getMerchant().getMerchantID()));
+            array.add(String.valueOf(wine.getMerchant().getId()));
             array.add(String.valueOf(wine.getName()));
             array.add(String.valueOf(wine.getCountry()));
             array.add(String.valueOf(wine.getYear()));

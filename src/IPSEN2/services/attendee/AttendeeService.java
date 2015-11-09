@@ -16,23 +16,43 @@ public class AttendeeService {
     private AttendeeRepository repository;
     private AttendeeValidator validator;
 
+    /**
+     * Instantiates a new Attendee service.
+     */
     public AttendeeService()
     {
         this.validator = new AttendeeValidator();
         this.repository = new AttendeeRepository();
     }
 
+    /**
+     * All array list.
+     *
+     * @return the array list
+     */
     public ArrayList<Attendee> all()
     {
         return repository.all();
     }
 
+    /**
+     * Find attendee.
+     *
+     * @param id the id
+     * @return the attendee
+     */
     public Attendee find(int id)
     {
         Attendee attendee = repository.find(id);
         return attendee;
     }
 
+    /**
+     * Create int.
+     *
+     * @param data the data
+     * @return the int
+     */
     public int create(HashMap data)
     {
         boolean isValid = this.validator.validate(data);
@@ -58,6 +78,12 @@ public class AttendeeService {
         return exists;
     }
 
+    /**
+     * Delete boolean.
+     *
+     * @param id the id
+     * @return the boolean
+     */
     public boolean delete(int id)
     {
         Attendee attendee = repository.find(id);
@@ -72,6 +98,11 @@ public class AttendeeService {
         return false;
     }
 
+    /**
+     * Update.
+     *
+     * @param data the data
+     */
     public void update(HashMap data) {
         repository.update(data);
     }
