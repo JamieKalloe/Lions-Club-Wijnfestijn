@@ -14,7 +14,7 @@
    <children>
       <ImageView fitHeight="678.0" fitWidth="948.0" layoutX="87.0" layoutY="53.0" pickOnBounds="true">
          <image>
-            <Image url="@../../images/GastenAchtergrond.png" />
+            <Image url="@../../images/MenuBackground.png" />
          </image>
       </ImageView>
       <Label layoutX="177.0" layoutY="100.0" text="Selecteer een evenement">
@@ -22,7 +22,7 @@
             <Font name="Roboto Regular" size="24.0" />
          </font>
       </Label>
-      <TableView fx:id="table_view" editable="true" fixedCellSize="0.0" layoutX="184.0" layoutY="153.0" prefHeight="387.0" prefWidth="740.0" styleClass="table-view" stylesheets="@../../styles/style.css">
+      <TableView fx:id="tableView" editable="true" fixedCellSize="0.0" layoutX="184.0" layoutY="153.0" prefHeight="387.0" prefWidth="740.0" styleClass="table-view" stylesheets="@../../styles/style.css">
          <columns>
             <TableColumn fx:id="checkBoxColumn" prefWidth="41.32649230957031" />
             <TableColumn fx:id="idColumn" editable="false" prefWidth="44.85423278808594" text="ID" />
@@ -67,7 +67,7 @@
          <children>
             <ImageView fitHeight="60.0" fitWidth="54.0" layoutX="5.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/nextButton.png" />
+                  <Image url="@../../images/NextButton.png" />
                </image>
             </ImageView>
          </children>

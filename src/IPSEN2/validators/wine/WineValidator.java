@@ -6,10 +6,19 @@ import IPSEN2.validators.Validator;
 import java.util.HashMap;
 
 /**
- * Created by Thomas on 12-10-15.
+ * The Wine validator.
+ * Date of creation: 12-10-15.
+ *
+ * @author Thomas Neuteboom
  */
 public class WineValidator extends Validator implements Validatable {
 
+    /**
+     * Validate the input data.
+     *
+     * @param data the data
+     * @return the boolean
+     */
     public boolean validate(HashMap data)
     {
         return Integer.parseInt(data.get("typeId").toString()) != -1

@@ -41,16 +41,28 @@ public class EditWineController extends ContentLoader implements Initializable{
     private HashMap data;
     private WineService service;
     private int selectedWineID;
+    private ResourceBundle resources;
 
+    /**
+     * Instantiates a new Edit wine controller.
+     *
+     * @param selectedWineID the selected wine id
+     */
     public EditWineController(int selectedWineID) {
         this.selectedWineID = selectedWineID;
     }
 
-    //@FXML
+    /**
+     * Handle cancel button.
+     */
+//@FXML
     public void handleCancelButton() {
-        addContent(WINE);
+        addContent(resources.getString("WINE"));
     }
 
+    /**
+     * Handle submit button.
+     */
     public void handleSubmitButton() {
         this.selectedWineID = selectedWineID;
         name = wineNameTextField.getText();
@@ -82,16 +94,15 @@ public class EditWineController extends ContentLoader implements Initializable{
         data.put("price", price);
         service.edit(selectedWineID,data);
 
-        addContent(WINE);
+        addContent(resources.getString("WINE"));
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        this.resources = resources;
         service = new WineService();
 
-        Object wineType = service.find(selectedWineID).getType();
 
         Wine wine = service.find(selectedWineID);
         wineNameTextField.setText(wine.getName());

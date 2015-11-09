@@ -11,10 +11,10 @@
    <children>
       <ImageView fitHeight="595.0" fitWidth="829.0" layoutX="37.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/GastenAchtergrond.png" />
+            <Image url="@../../images/MenuBackground.png" />
          </image>
       </ImageView>
-      <TableView fx:id="table_view" layoutX="159.0" layoutY="85.0" prefHeight="434.0" prefWidth="574.0" styleClass="table-view" stylesheets="@../../styles/style.css">
+      <TableView fx:id="tableView" layoutX="159.0" layoutY="85.0" prefHeight="434.0" prefWidth="574.0" styleClass="table-view" stylesheets="@../../styles/style.css">
          <columns>
             <TableColumn fx:id="checkBoxColumn" prefWidth="62.0" />
             <TableColumn fx:id="idColumn" prefWidth="66.0" styleClass="table-view" text="id" />

@@ -26,6 +26,7 @@ public class EditMerchantController extends ContentLoader implements Initializab
     @FXML private TextField zipCodeTextField;
     @FXML private TextField emailTextField;
 
+    private ResourceBundle resources;
     private int selectedMerchantId;
     private MerchantService merchantService;
     private Merchant merchant;
@@ -34,15 +35,19 @@ public class EditMerchantController extends ContentLoader implements Initializab
         this.selectedMerchantId = selectedMerchantId;
     }
 
+    /**
+     * Handles cancel button
+     */
     @FXML
     private void handleCancelButton() {
-        addContent(MERCHANT);
+        addContent(resources.getString("MERCHANT"));
     }
 
+    /**
+     * Handles submit button
+     */
     @FXML
     private void handleSubmitButton() {
-
-
         HashMap data = new HashMap();
         data.put("name", nameTextField.getText());
         data.put("email", emailTextField.getText());
@@ -52,14 +57,14 @@ public class EditMerchantController extends ContentLoader implements Initializab
         data.put("country", "Nederland");
         data.put("city", cityTextField.getText());
 
-
         if (merchantService.edit(selectedMerchantId, data)) {
-            addContent(MERCHANT);
+            addContent(resources.getString("MERCHANT"));
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
         this.merchantService = new MerchantService();
         this.merchant = merchantService.find(selectedMerchantId);
         nameTextField.setText(merchant.getName());

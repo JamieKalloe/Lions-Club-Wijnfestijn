@@ -56,12 +56,18 @@ public class AddGuestController extends ContentLoader implements Initializable {
     //private String referralMemberTextField;
     private HashMap data;
     private HashMap attendeeData;
+    private ResourceBundle resources;
 
-    @FXML
+    /**
+     * Handles cancel button
+     */
     public void handleCancelButton() {
-        addContent(GUESTS);
+        addContent(resources.getString("GUESTS"));
     }
 
+    /**
+     * Handles submit button
+     */
     public void handleSubmitButton() {
 
         // Check if Male of Female radiobutton is selected
@@ -121,7 +127,7 @@ public class AddGuestController extends ContentLoader implements Initializable {
             attendeeData.put("referralName", guest.getReferral());
 
             attendeeService.create(attendeeData);
-            addContent(GUESTS);
+            addContent(resources.getString("GUESTS"));
 
         } else {
             Messaging.getInstance().show(
@@ -129,6 +135,7 @@ public class AddGuestController extends ContentLoader implements Initializable {
                     "Gasten invoerfout",
                     "Een van de gast velden zijn incorrect ingevuld"
             );
+
         }
 
     }
@@ -136,6 +143,7 @@ public class AddGuestController extends ContentLoader implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
         service = new GuestService();
         attendeeService = new AttendeeService();
 

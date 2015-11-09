@@ -18,6 +18,13 @@ import java.util.Date;
  */
 public class InvoiceGenerator {
 
+    /**
+     * Generate Invoice pdf file
+     *
+     * @param order the order
+     * @throws DocumentException the document exception
+     * @throws IOException       the io exception
+     */
     public void generate(Order order) throws DocumentException, IOException{
         Date invoiceDate = order.getDate();
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM YYYY");
@@ -73,7 +80,7 @@ public class InvoiceGenerator {
         wineCell.setBorder(Rectangle.NO_BORDER);
 
         for(WineOrder wineOrder : order.getWineOrders() ) {
-            orderTable.addCell(new Paragraph(""+wineOrder.getWine().getWineID(), defaultFont));
+            orderTable.addCell(new Paragraph(""+wineOrder.getWine().getId(), defaultFont));
             orderTable.addCell(new Paragraph(""+wineOrder.getAmount(), defaultFont));
             wineCell.setPhrase(new Phrase(wineOrder.getWine().getName(), defaultFont));
             orderTable.addCell(wineCell);

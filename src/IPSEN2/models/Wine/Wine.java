@@ -1,7 +1,11 @@
 package IPSEN2.models.wine;
 
-public class Wine {
-    private int wineID;
+import IPSEN2.models.TableViewItem;
+
+/**
+ * The class Wine contains all the data for the wine objects.
+ */
+public class Wine extends TableViewItem {
     private WineType type;
     private String name;
     private String country;
@@ -11,14 +15,18 @@ public class Wine {
     private double price;
     public WineMerchant merchant;
     private String typeName;
-    private boolean selected;
 
     public Wine() {
 
     }
 
+    /**
+     * Instantiates a new Wine.
+     *
+     * @param wineID the wine id
+     */
     public Wine(int wineID) {
-        this.wineID = wineID;
+        this.id = wineID;
         this.type = null;
         this.name = null;
         this.country = null;
@@ -30,8 +38,20 @@ public class Wine {
         this.typeName = null;
     }
 
-    public Wine (int wineID, int typeID, String country, String name, String region, int year, double purchasePrice, double price) {
-        this.wineID = wineID;
+    /**
+     * Instantiates a new Wine.
+     *
+     * @param wineID        the wine id
+     * @param typeID        the type id
+     * @param country       the country
+     * @param name          the name
+     * @param region        the region
+     * @param year          the year
+     * @param purchasePrice the purchase price
+     * @param price         the price
+     */
+    public Wine(int wineID, int typeID, String country, String name, String region, int year, double purchasePrice, double price) {
+        this.id = wineID;
         this.type = new WineType(typeID);
         this.name = name;
         this.country = country;
@@ -41,27 +61,16 @@ public class Wine {
         this.price = price;
     }
 
-    public void addWine() {
-
-    }
-
-    public void deleteWine() {
-
-    }
-
-    public void editWine() {
-
-    }
-
+    /**
+     * Check if only id boolean.
+     *
+     * @return the boolean
+     */
     public boolean checkIfOnlyID() {
         return this.type == null && this.name == null && this.country == null && this.region == null && this.year == 0 && this.purchasePrice == 0 && this.price == 0 && this.merchant == null && this.typeName == null;
     }
 
     //GETTERS
-    public int getWineID() {
-        return wineID;
-    }
-
     public WineType getType() {
         return type;
     }
@@ -98,15 +107,7 @@ public class Wine {
         return this.type.getName();
     }
 
-    public boolean getSelected() {
-        return selected;
-    }
-
     //SETTERS
-    public void setWineID(int wineID) {
-        this.wineID = wineID;
-    }
-
     public void setType(WineType type) {
         this.type = type;
     }
@@ -146,7 +147,4 @@ public class Wine {
         this.typeName = typeName;
     }
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
 }
