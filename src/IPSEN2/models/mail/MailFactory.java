@@ -26,28 +26,46 @@ public class MailFactory {
     private int selectedID;
     private MerchantService merchantService;
 
+    /**
+     * Instantiates a new Mail factory.
+     *
+     * @param selectedID the selected id
+     */
     public MailFactory(int selectedID) {
         merchantService = new MerchantService();
         Merchant merchant = merchantService.find(selectedID);
         receiver = new Guest(merchant.getName(), merchant.getEmail());
     }
 
+    /**
+     * Instantiates a new Mail factory.
+     *
+     * @param guest the guest
+     */
     public MailFactory(Guest guest) {
         this.receiver = guest;
     }
 
+    /**
+     * Instantiates a new Mail factory.
+     *
+     * @param merchant the merchant
+     */
     public MailFactory(Merchant merchant) {
         this.mail = merchant.getEmail();
         this.receiver = new Guest(merchant.getName(), merchant.getEmail());
     }
 
 
+    /**
+     * Generates a new mail according to the given type (enum).
+     *
+     * @param mailType the mail type
+     * @return the mail
+     * @throws IOException the io exception
+     * @throws Exception   the exception
+     */
     public Mail generate(MailType mailType) throws IOException, Exception {
-
-        /*
-            TODO: Informatie van het event moet vanuit guest bereikbaar zijn.
-            TODO: Order moet vanuit guest bereikbaar zijn (vanwege de bijlage).
-         */
 
         switch(mailType) {
             case THANK:
@@ -69,12 +87,24 @@ public class MailFactory {
         return new Mail("", "", "", "");
     }
 
+    /**
+     * reads the file (containing the mail template data).
+     * @param path
+     * @param encoding
+     * @return returns the content of the text file as a string.
+     * @throws IOException
+     */
     private String readFile(String path, Charset encoding) throws IOException {
 
         byte[] encoded = Files.readAllBytes(Paths.get(path));
         return new String(encoded, encoding);
     }
 
+    /**
+     * Generates the correct file path for each system.
+     * @param path file path
+     * @return
+     */
     private String getFilePath(String path) {
 
         String optimizedPath = "";
@@ -90,6 +120,12 @@ public class MailFactory {
         return optimizedPath;
     }
 
+    /**
+     * Returns the invoice pdf file for the given order ID
+     * @param orderID id of the order
+     * @return file (pdf) invoice
+     * @throws IOException
+     */
     private File getInvoice(int orderID) throws IOException {
         System.out.println(orderID);
         OrderService orderService = new OrderService();
@@ -116,6 +152,12 @@ public class MailFactory {
         return file;
     }
 
+    /**
+     * Returns the content of each mail for the given type (enum)
+     * @param mailType type of the mail
+     * @param guest guest for which the mail content should be generated
+     * @return
+     */
     private String getMailContent(MailType mailType, Guest guest) {
 
         String content = "";
@@ -175,6 +217,11 @@ public class MailFactory {
         return content;
     }
 
+    /**
+     * returns the proper (string) salutation for each gender
+     * @param gender gener of the guest
+     * @return string salutation
+     */
     private String getSalutation(String gender) {
         String aanhef = "";
         if(gender.toUpperCase().equals("M")) {
