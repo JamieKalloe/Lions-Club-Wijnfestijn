@@ -20,10 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by Philip on 01-10-15.
@@ -83,12 +80,19 @@ public class EditOrderController extends ContentLoader implements Initializable 
         orderService.edit(selectedOrderId, newOrderData);
 
         wineOrderData.forEach(wineOrder -> wineOrderService.delete(selectedOrderId, wineOrder.getWine().getId()));
+
         wineOrderData.forEach(wineOrder -> {
             HashMap wineOrderData = new HashMap();
-            wineOrderData.put("orderID", selectedOrderId);
-            wineOrderData.put("wineID" , wineOrder.getWine().getId());
-            wineOrderData.put("amount", wineOrder.getAmount());
-            wineOrderService.create(wineOrderData);
+            System.out.println(wineOrderService.allForOrder(selectedOrderId).size());
+            if (!wineOrderService.allForOrder(selectedOrderId).contains(wineOrder)) {
+                wineOrderData.put("orderID", selectedOrderId);
+                wineOrderData.put("wineID", wineOrder.getWine().getId());
+                wineOrderData.put("amount", wineOrder.getAmount());
+                wineOrderService.create(wineOrderData);
+            } else {
+                wineOrder.setAmount(wineOrder.getAmount() + 1);
+                tableView.refresh();
+            }
         });
 
         addContent(resources.getString("ORDER"));
@@ -180,6 +184,7 @@ public class EditOrderController extends ContentLoader implements Initializable 
             wineOrderData = FXCollections.observableArrayList(orderService.find(selectedOrderId).getWineOrders());
         }
     }
+
 
     /**
      * Initialises order status combo box

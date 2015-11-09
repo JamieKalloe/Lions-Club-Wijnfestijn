@@ -89,7 +89,7 @@ public class AddOrderController extends ContentLoader implements Initializable {
      */
     public void handleCancelButton() {
         wineOrderData = null;
-        addContent(resources.getString("ORDERS"));
+        addContent(resources.getString("ORDER"));
     }
 
     /**

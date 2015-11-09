@@ -7,6 +7,8 @@ import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.TableViewItem;
 import IPSEN2.models.wine.Wine;
 import IPSEN2.services.wine.WineService;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,10 +19,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -110,6 +115,7 @@ public class WineController extends ContentLoader implements Initializable, Tabl
     private void showTable() {
         TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
         tableViewSelectHandler.createCheckBoxColumn();
+        tableViewSelectHandler.createSelectAllCheckBox();
 
         wineIdColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("id"));
         wineNameColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("name"));
@@ -117,7 +123,15 @@ public class WineController extends ContentLoader implements Initializable, Tabl
         regionColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("region"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("typeName"));
         yearColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("year"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<Wine, Double>("price"));
+        priceColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Wine, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Wine, String> param) {
+                if (param.getValue() != null && param.getValue().getPrice() != 0) {
+                    NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+                    return new SimpleStringProperty("€ " + numberFormat.format(param.getValue().getPrice()).replace(" €", ""));
+                }
+                return new SimpleStringProperty("€ 0,00");
+            }
+        });
 
         tableView.setItems(wineData);
         tableView.setPlaceholder(new Label("Er is geen content om te weergeven"));

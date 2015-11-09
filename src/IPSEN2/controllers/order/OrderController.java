@@ -28,8 +28,10 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -163,6 +165,7 @@ public class OrderController extends ContentLoader implements Initializable, Tab
    private void showTable() {
       TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
       tableViewSelectHandler.createCheckBoxColumn();
+      tableViewSelectHandler.createSelectAllCheckBox();
 
       tableView.setItems(orderData);
 
@@ -176,7 +179,15 @@ public class OrderController extends ContentLoader implements Initializable, Tab
          }
       });
 
-      totalAmountColumn.setCellValueFactory(new PropertyValueFactory<Order, Double>("totalAmount"));
+      totalAmountColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order, String>, ObservableValue<String>>() {
+         public ObservableValue<String> call(TableColumn.CellDataFeatures<Order, String> param) {
+            if (param.getValue() != null && param.getValue().getTotalAmount() != 0) {
+               NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+               return new SimpleStringProperty("€ " + numberFormat.format(param.getValue().getTotalAmount()).replace(" €", ""));
+            }
+            return new SimpleStringProperty("€ 0,00");
+         }
+      });
       statusColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order, String>, ObservableValue<String>>() {
          public ObservableValue<String> call(TableColumn.CellDataFeatures<Order, String> param) {
             if (param.getValue() != null && param.getValue().getStatus().getName() != null) {

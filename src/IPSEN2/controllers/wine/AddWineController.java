@@ -12,8 +12,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -62,6 +64,7 @@ public class AddWineController extends ContentLoader implements Initializable {
         country = countryNameTextField.getText();
         region = regionNameTextField.getText();
         year = Integer.parseInt(yearTextField.getText());
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.GERMANY);
         price = Double.parseDouble(priceTextField.getText());
 
         if (typeWit.isSelected()) {
@@ -82,7 +85,7 @@ public class AddWineController extends ContentLoader implements Initializable {
         data.put("year", year);
         data.put("typeId", type);
         data.put("merchantId", new MerchantService().all().get(0).getId());
-        data.put("price", price);
+        data.put("price", numberFormat.format(price).replace("0 €", ""));
 
         service.subscribe(data);
 

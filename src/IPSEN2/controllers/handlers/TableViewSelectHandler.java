@@ -129,7 +129,7 @@ public class TableViewSelectHandler extends ContentLoader{
     /**
      * Creates a checkbox that is able to select and deselect all items in tableView
      */
-    private void createSelectAllCheckBox() {
+    public void createSelectAllCheckBox() {
         CheckBox selectAllCheckBox = new CheckBox();
         checkBoxColumn.setGraphic(selectAllCheckBox);
         selectAllCheckBox.setOnAction(event -> {
@@ -159,6 +159,5 @@ public class TableViewSelectHandler extends ContentLoader{
     public void createCheckBoxColumn() {
         this.checkBoxColumn = tableView.getColumns().get(0);
         checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
-        createSelectAllCheckBox();
     }
 }

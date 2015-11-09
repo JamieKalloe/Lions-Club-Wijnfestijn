@@ -154,6 +154,7 @@ public class GuestController extends ContentLoader implements Initializable, Tab
     private void showTable() {
         TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
         tableViewSelectHandler.createCheckBoxColumn();
+        tableViewSelectHandler.createSelectAllCheckBox();
 
         idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("id"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("firstName"));
