@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mysql:mysql-connector-java:5.1.36"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/itextpdf-5.5.6"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mail"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/opencsv-3.5"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/material-design-fx-0.7"/>
+	<classpathentry kind="output" path="out/production/IPSEN2"/>
+</classpath>

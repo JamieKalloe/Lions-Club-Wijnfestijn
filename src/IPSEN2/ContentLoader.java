@@ -35,6 +35,7 @@ public abstract class ContentLoader {
             setFXMLFileForLoader(loader, fxml);
             mainController.setContent(loader
                     .load());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
