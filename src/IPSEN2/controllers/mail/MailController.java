@@ -63,7 +63,9 @@ public class MailController extends ContentLoader implements Initializable{
         this.receiverId = receiverId;
     }
 
-
+    /**
+     * Handles submit button
+     */
     private void handleSubmitButton() throws Exception {
 
         for (Integer id : selectedIDs) {
@@ -90,6 +92,9 @@ public class MailController extends ContentLoader implements Initializable{
         addContent(resources.getString("GUESTS"));
     }
 
+    /**
+     * Handles cancel button
+     */
     private void handleCancelButton() {
         if (receiverId == 1) {
             addContent(resources.getString("MERCHANT"));
@@ -100,6 +105,9 @@ public class MailController extends ContentLoader implements Initializable{
         }
     }
 
+    /**
+     * Handles MouseClickEvents on items inside the list view
+     */
     private void handleListView(Event event) {
         selectedMailType = ((ListView) event.getSource()).getSelectionModel().getSelectedItem().toString();
 

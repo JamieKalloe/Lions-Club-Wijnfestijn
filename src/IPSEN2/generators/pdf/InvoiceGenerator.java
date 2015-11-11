@@ -1,8 +1,10 @@
 package IPSEN2.generators.pdf;
 
 import IPSEN2.models.guest.Guest;
+import IPSEN2.models.merchant.Merchant;
 import IPSEN2.models.order.Order;
 import IPSEN2.models.order.WineOrder;
+import IPSEN2.services.merchant.MerchantService;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -10,14 +12,23 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by mdbaz on 24-09-2015.
  */
 public class InvoiceGenerator {
 
+    /**
+     * Generate Invoice pdf file
+     *
+     * @param order the order
+     * @throws DocumentException the document exception
+     * @throws IOException       the io exception
+     */
     public void generate(Order order) throws DocumentException, IOException{
         Date invoiceDate = order.getDate();
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM YYYY");
@@ -27,7 +38,7 @@ public class InvoiceGenerator {
         Document document = new Document();
         Font defaultFont = new Font(Font.FontFamily.TIMES_ROMAN, 12);
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(System.getProperty("user.dir") + "/src/IPSEN2/invoice/"
-                + sdf.format(invoiceDate) + " - " + order.getId() + ".pdf"));
+                + new SimpleDateFormat("dd-MM-yyyy").format(invoiceDate) + " - " + order.getId() + ".pdf"));
         document.setMargins(30, 30, 30, 65);
         writer.setPageEvent(new InvoiceEventListener());
         document.open();
@@ -72,17 +83,25 @@ public class InvoiceGenerator {
         orderTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
         wineCell.setBorder(Rectangle.NO_BORDER);
 
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+
         for(WineOrder wineOrder : order.getWineOrders() ) {
             orderTable.addCell(new Paragraph(""+wineOrder.getWine().getId(), defaultFont));
             orderTable.addCell(new Paragraph(""+wineOrder.getAmount(), defaultFont));
             wineCell.setPhrase(new Phrase(wineOrder.getWine().getName(), defaultFont));
             orderTable.addCell(wineCell);
+            orderTable.addCell(new Paragraph("" + wineOrder.getWine().getYear(), defaultFont));
+            orderTable.addCell(new Paragraph("€ "+ numberFormat.format(wineOrder.getWine().getPrice()).replace(" €", ""), defaultFont));
+            orderTable.addCell(new Paragraph("€ "+ numberFormat.format(wineOrder.getAmount() *
+                    wineOrder.getWine().getPrice()).replace(" €", ""), defaultFont));
+
             orderTable.completeRow();
         }
+
         orderTable.addCell(" ");
         orderTable.completeRow();
         Font totalFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
-        PdfPCell totalAmount = new PdfPCell(new Paragraph(""+order.getTotalAmount(), totalFont));
+        PdfPCell totalAmount = new PdfPCell(new Paragraph("€ "+ numberFormat.format(order.getTotalAmount()).replace(" €", ""), totalFont));
         totalAmount.setBorder(Rectangle.TOP);
         totalAmount.setPaddingTop(10);
         PdfPCell totalCell = new PdfPCell(new Paragraph("Totaal", totalFont));
@@ -106,16 +125,20 @@ public class InvoiceGenerator {
         retrievalDetails.setSpacingAfter(20);
         document.add(retrievalDetails);
 
-        document.add(new Paragraph("U kunt uw wijnen ophalen op " +  new SimpleDateFormat("dd MMMM YYYY").format(invoiceDate) , defaultFont));
+        document.add(new Paragraph("U kunt uw wijnen ophalen op " +  sdf.format(invoiceDate) , defaultFont));
         document.add(new Paragraph("Adres:", defaultFont));
 
         PdfPTable addressTable = new PdfPTable(1);
         addressTable.setSpacingBefore(5);
         addressTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
         addressTable.getDefaultCell().setPaddingLeft(35);
-        addressTable.addCell(new Paragraph("Naam wijnhandelaar", defaultFont));
-        addressTable.addCell(new Paragraph("Straat + huisnummer", defaultFont));
-        addressTable.addCell(new Paragraph("Postcode + Plaats", defaultFont));
+        MerchantService merchantService = new MerchantService();
+        Merchant merchant = merchantService.find(merchantService.all().get(0).getId());
+        addressTable.addCell(new Paragraph(merchant.getName(), defaultFont));
+        addressTable.addCell(new Paragraph(merchant.getAddress().getStreet()
+                + " " + merchant.getAddress().getHouseNumber(), defaultFont));
+        addressTable.addCell(new Paragraph(merchant.getAddress().getZipCode() + " " +
+                merchant.getAddress().getCity(), defaultFont));
         addressTable.setHorizontalAlignment(Element.ALIGN_LEFT);
         document.add(addressTable);
 

@@ -6,6 +6,7 @@ import IPSEN2.controllers.listeners.TableViewListener;
 import IPSEN2.models.TableViewItem;
 import IPSEN2.models.event.Event;
 import IPSEN2.services.event.EventService;
+import IPSEN2.services.message.Messaging;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,10 +56,16 @@ public class EventController extends ContentLoader implements Initializable, Tab
             selectedRows.forEach(row -> {
                 eventService.remove(row);
             });
-        }
-
-        eventData = FXCollections.observableArrayList(eventService.all());
-        addContent(resources.getString("EVENTS"));
+            eventId = 0;
+            eventData = FXCollections.observableArrayList(eventService.all());
+            addContent(resources.getString("EVENTS"));
+        } else {
+                Messaging.getInstance().show(
+                        "Foutmelding",
+                        "Verwijderfout",
+                        "Er is geen wijn geselecteerd"
+                );
+            }
     }
 
    public void openAddEventMenu() throws IOException {
@@ -118,8 +125,6 @@ public class EventController extends ContentLoader implements Initializable, Tab
         tableView.setItems(FXCollections.observableArrayList(eventData));
         tableView.setPlaceholder(new Label("Voeg een evenement toe"));
     }
-
-
 
     @Override
    public void initialize(URL location, ResourceBundle resources) {

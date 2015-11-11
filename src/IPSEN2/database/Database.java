@@ -4,6 +4,9 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Set;
 
+/**
+ * The type Database.
+ */
 public class Database {
 
 
@@ -12,6 +15,11 @@ public class Database {
 
     private static Database databaseInstance ;
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static synchronized Database getInstance() {
         if(databaseInstance == null) {
             databaseInstance = new Database();
@@ -27,7 +35,7 @@ public class Database {
 //        String dbName = "lions_club";
 
         String user = "root";
-        String password = "root";
+        String password = "";
         String dbName = "lions_club";
         String url = "jdbc:mysql://127.0.0.1:3306/";
 
@@ -47,30 +55,67 @@ public class Database {
 
     }
 
+    /**
+     * Select result set.
+     *
+     * @param from the from
+     * @return the result set
+     */
     public ResultSet select(String from) {
         String query = "SELECT * FROM `" + from+"`";
         ResultSet resultSet = queryDatabase(query);
         return resultSet;
     }
 
+    /**
+     * Select result set.
+     *
+     * @param from  the from
+     * @param where the where
+     * @return the result set
+     */
     public ResultSet select(String from, String where) {
         String query = "SELECT * FROM `" + from + "` WHERE " + where;
         ResultSet resultSet = queryDatabase(query);
         return resultSet;
     }
 
+    /**
+     * Select result set.
+     *
+     * @param from the from
+     * @param id   the id
+     * @return the result set
+     */
     public ResultSet select(String from, int id) {
         String query = "SELECT * FROM `" + from + "` WHERE id=" + id;
         ResultSet resultSet = queryDatabase(query);
         return resultSet;
     }
 
+    /**
+     * Select result set.
+     *
+     * @param from         the from
+     * @param foreignTable the foreign table
+     * @param resultColumn the result column
+     * @param filterColumn the filter column
+     * @param where        the where
+     * @return the result set
+     */
     public ResultSet select(String from, String foreignTable, String resultColumn, String filterColumn,String where) {
         String query = "SELECT * FROM `" + from + "` WHERE "+resultColumn+" IN ( SELECT "+filterColumn+" FROM `"+foreignTable+ "` WHERE " + where +" )";
         ResultSet resultSet = queryDatabase(query);
         return resultSet;
     }
 
+    /**
+     * Insert into int.
+     *
+     * @param table the table
+     * @param data  the data
+     * @return the int
+     */
     public int insertInto(String table, HashMap data) {
         String queryTable = "INSERT INTO `" + table + "` (";
         String queryValues = ") VALUES(";
@@ -95,6 +140,14 @@ public class Database {
         return result;
     }
 
+    /**
+     * Update int.
+     *
+     * @param table the table
+     * @param id    the id
+     * @param data  the data
+     * @return the int
+     */
     public int update(String table, int id, HashMap data) {
         String query = "UPDATE `" + table + "` SET ";
         Set keySet = data.keySet();
@@ -116,6 +169,14 @@ public class Database {
         return result;
     }
 
+    /**
+     * Update int.
+     *
+     * @param table the table
+     * @param where the where
+     * @param data  the data
+     * @return the int
+     */
     public int update(String table, String where, HashMap data) {
         String query = "UPDATE `" + table + "` SET ";
         Set keySet = data.keySet();
@@ -137,17 +198,34 @@ public class Database {
         return result;
     }
 
+    /**
+     * Delete int.
+     *
+     * @param from the from
+     * @param id   the id
+     * @return the int
+     */
     public int delete(String from, int id) {
         String query = "DELETE FROM `" + from + "` WHERE id=" + id;
         int result = updateDatabase(query);
         return result;
     }
 
+    /**
+     * Delete int.
+     *
+     * @param from  the from
+     * @param where the where
+     * @return the int
+     */
     public int delete(String from, String where) {
         String query = "DELETE FROM `"+from+"` WHERE "+where;
         return updateDatabase(query);
     }
 
+    /**
+     * @return returns result set of executed query
+     */
     private ResultSet queryDatabase(String query) {
         try {
             statement = databaseInstance.connection.createStatement();

@@ -16,23 +16,43 @@ public class AddressService {
     private AddressRepository repository;
     private AddressValidator validator;
 
+    /**
+     * Instantiates a new Address service.
+     */
     public AddressService()
     {
         repository = new AddressRepository();
         validator = new AddressValidator();
     }
 
+    /**
+     * All array list.
+     *
+     * @return the array list
+     */
     public ArrayList<Address> all()
     {
         return new ArrayList<Address>();
     }
 
+    /**
+     * Find address.
+     *
+     * @param id the id
+     * @return the address
+     */
     public Address find(int id)
     {
         Address address = repository.find(id);
         return address;
     }
 
+    /**
+     * Create int.
+     *
+     * @param data the data
+     * @return the int
+     */
     public int create(HashMap data)
     {
         boolean isValid = this.validator.validate(data);
@@ -58,6 +78,13 @@ public class AddressService {
         return exists;
     }
 
+    /**
+     * Update boolean.
+     *
+     * @param id   the id
+     * @param data the data
+     * @return the boolean
+     */
     public boolean update(int id, HashMap data)
     {
         Address address = repository.find(id);
@@ -85,6 +112,12 @@ public class AddressService {
         return false;
     }
 
+    /**
+     * Delete boolean.
+     *
+     * @param id the id
+     * @return the boolean
+     */
     public boolean delete(int id)
     {
         Address address = repository.find(id);

@@ -6,7 +6,11 @@ import IPSEN2.controllers.listeners.TableViewListener;
 import IPSEN2.generators.csv.ImportCSV;
 import IPSEN2.models.TableViewItem;
 import IPSEN2.models.wine.Wine;
+import IPSEN2.services.merchant.MerchantService;
+import IPSEN2.services.message.Messaging;
 import IPSEN2.services.wine.WineService;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,10 +21,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -48,13 +55,22 @@ public class WineController extends ContentLoader implements Initializable, Tabl
     @FXML private Pane removeButton;
 
     private ResourceBundle resources;
+
     /**
      * Handle add button.
      *
      * @throws IOException the io exception
      */
     public void handleAddButton() throws IOException{
-        addContent(new AddWineController(), resources.getString("EDIT_WINE_DIALOG"));
+        if (new MerchantService().all().size() != 0) {
+            addContent(new AddWineController(), resources.getString("EDIT_WINE_DIALOG"));
+        } else {
+            Messaging.getInstance().show(
+                    "Foutmelding",
+                    "Toevoegfout",
+                    "Er is nog geen wijnhandel toegevoegd."
+            );
+        }
     }
 
     /**
@@ -63,24 +79,36 @@ public class WineController extends ContentLoader implements Initializable, Tabl
     public void handleRemoveButton() {
         if (selectedRows.size() != 0) {
             selectedRows.forEach(row -> wineService.remove(row));
+            wineData = FXCollections.observableArrayList(wineService.all());
+            addContent(resources.getString("WINE"));
+        } else {
+            Messaging.getInstance().show(
+                    "Foutmelding",
+                    "Verwijderfout",
+                    "Er is geen wijn geselecteerd"
+            );
         }
-
-        wineData = FXCollections.observableArrayList(wineService.all());
-        addContent(resources.getString("WINE"));
     }
 
 
     @FXML
     private void importCSVFile() {
         //TODO: delete test code, debug only.
+        if (new MerchantService().all().size() != 0) {
         try {
             ImportCSV importCSV = new ImportCSV();
             importCSV.importWine();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         addContent(resources.getString("WINE"));
+    } else {
+            Messaging.getInstance().show(
+                    "Foutmelding",
+                    "Toevoegfout",
+                    "Er is nog geen wijnhandel toegevoegd."
+            );
+        }
     }
 
 
@@ -102,9 +130,14 @@ public class WineController extends ContentLoader implements Initializable, Tabl
         }
     }
 
+    /**
+     * Shows all TableView Items <br>
+     * Sets TableViewSelectHandler for TableView Object
+     */
     private void showTable() {
         TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
         tableViewSelectHandler.createCheckBoxColumn();
+        tableViewSelectHandler.createSelectAllCheckBox();
 
         wineIdColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("id"));
         wineNameColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("name"));
@@ -112,7 +145,15 @@ public class WineController extends ContentLoader implements Initializable, Tabl
         regionColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("region"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("typeName"));
         yearColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("year"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<Wine, Double>("price"));
+        priceColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Wine, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Wine, String> param) {
+                if (param.getValue() != null && param.getValue().getPrice() != 0) {
+                    NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+                    return new SimpleStringProperty("€ " + numberFormat.format(param.getValue().getPrice()).replace(" €", ""));
+                }
+                return new SimpleStringProperty("€ 0,00");
+            }
+        });
 
         tableView.setItems(wineData);
         tableView.setPlaceholder(new Label("Er is geen content om te weergeven"));

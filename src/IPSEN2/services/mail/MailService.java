@@ -11,12 +11,13 @@ import IPSEN2.services.order.OrderService;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * The type Mail service.
+ */
 public class MailService {
 
-    //Variables
     private final String propertyHost = "mail.smtp.host";
     private final String propertyPort = "mail.smtp.port";
     private final String propertyUser = "mail.smtp.user";
@@ -38,7 +39,9 @@ public class MailService {
     private MailType mailType;
     private GuestService guestService;
 
-    //Constructor
+    /**
+     * Instantiates a new Mail service.
+     */
     public MailService() {
         this.mailProperties = new Properties();
 
@@ -52,7 +55,12 @@ public class MailService {
 
     }
 
-    //Methods
+    /**
+     * Send.
+     *
+     * @param mail the mail
+     * @throws Exception the exception
+     */
     public void send(Mail mail) throws Exception {
 
         this.mail = mail;
@@ -94,6 +102,12 @@ public class MailService {
         transport.close();
     }
 
+    /**
+     * Gets mail type.
+     *
+     * @param mailType the mail type
+     * @return the mail type
+     */
     public MailType getMailType(String mailType) {
         switch (mailType) {
             case "Bedanken":
@@ -115,6 +129,15 @@ public class MailService {
         }
         return this.mailType;
     }
+
+    /**
+     * Gets mail.
+     *
+     * @param selectedID the selected id
+     * @param mailType   the mail type
+     * @param receiverId the receiver id
+     * @return the mail
+     */
     public Mail getMail(int selectedID, MailType mailType, int receiverId) {
 
         try {

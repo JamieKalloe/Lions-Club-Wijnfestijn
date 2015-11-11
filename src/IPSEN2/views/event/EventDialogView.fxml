@@ -35,17 +35,17 @@
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="eventNameTextField" layoutX="159.0" />
-            <TextField fx:id="cityTextField" layoutX="158.0" layoutY="46.0" />
-            <TextField fx:id="addressTextField" layoutX="158.0" layoutY="91.0" />
+            <TextField fx:id="eventNameTextField" layoutX="159.0" promptText="Naam" />
+            <TextField fx:id="cityTextField" layoutX="158.0" layoutY="46.0" promptText="Plaats" />
+            <TextField fx:id="addressTextField" layoutX="158.0" layoutY="91.0" promptText="Adres" />
             <Label layoutX="-5.0" layoutY="146.0" text="Huisnummer">
                <font>
                   <Font name="Roboto Regular" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="houseNumberTextField" layoutX="158.0" layoutY="138.0" />
-            <TextField fx:id="zipCodeTextField" layoutX="158.0" layoutY="192.0" />
-            <DatePicker fx:id="datePicker" layoutX="157.0" layoutY="246.0" prefHeight="27.0" prefWidth="167.0" />
+            <TextField fx:id="houseNumberTextField" layoutX="158.0" layoutY="138.0" promptText="Huisnummer" />
+            <TextField fx:id="zipCodeTextField" layoutX="158.0" layoutY="192.0" promptText="Postcode" />
+            <DatePicker fx:id="datePicker" layoutX="157.0" layoutY="246.0" prefHeight="27.0" prefWidth="167.0" promptText="10-11-2015" />
             <Label layoutX="50.0" layoutY="51.0" text="Plaats">
                <font>
                   <Font name="Roboto Regular" size="18.0" />

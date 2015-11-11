@@ -2,6 +2,7 @@ package IPSEN2;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -15,9 +16,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.getIcons().add(new Image("IPSEN2/images/HomeButton.png"));
         Scene scene = new Scene(ContentLoader.loadMainFrame());
         primaryStage.setScene(scene);
-
         primaryStage.show();
 
     }

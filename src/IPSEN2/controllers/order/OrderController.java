@@ -7,6 +7,7 @@ import IPSEN2.controllers.mail.MailController;
 import IPSEN2.generators.pdf.InvoiceGenerator;
 import IPSEN2.models.TableViewItem;
 import IPSEN2.models.order.Order;
+import IPSEN2.services.message.Messaging;
 import IPSEN2.services.order.OrderService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -28,10 +29,15 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * The type Order controller.
+ */
 public class OrderController extends ContentLoader implements Initializable, TableViewListener {
 
    private int selectedOrderID;
@@ -50,25 +56,41 @@ public class OrderController extends ContentLoader implements Initializable, Tab
    private OrderService orderService;
    private  ArrayList<Integer> selectedRows;
 
+
+   /**
+    * Handles add button
+    */
    @FXML
    private void handleAddButton(){
       addContent(resources.getString("SELECT_GUEST_DIALOG"));
    }
 
+   /**
+    * Hanldes mail button
+    */
    @FXML
    private void handleMailButton() {
       if (selectedRows.size() != 0) {
+
          addContent(new MailController(selectedRows, 3), resources.getString("MAIL"));
       }
    }
 
+   /**
+    * Handle remove button.
+    */
    public void handleRemoveButton() {
       if (selectedRows.size() != 0) {
         selectedRows.forEach(row -> orderService.remove(row));
-         }
-
-      orderData = FXCollections.observableArrayList(orderService.all());
-      addContent(resources.getString("ORDER"));
+         orderData = FXCollections.observableArrayList(orderService.all());
+         addContent(resources.getString("ORDER"));
+         } else {
+         Messaging.getInstance().show(
+                 "Foutmelding",
+                 "Verwijderfout",
+                 "Er is geen bestelling geselecteerd"
+         );
+      }
    }
 
    @Override
@@ -87,6 +109,12 @@ public class OrderController extends ContentLoader implements Initializable, Tab
    public void openEditMenu() {
       addContent(new EditOrderController(selectedOrderID, null), resources.getString("EDIT_ORDER_DIALOG"));
    }
+
+   /**
+    * Creates  table cell with open invoice button and listener for all items inside TableView
+    *
+    * @return returns the CallBack of the attached checkbox cell
+    */
    private Callback createInvoiceButtonCellCallBack() {
       Callback deleteButtonCellCallBack = new Callback<TableColumn.CellDataFeatures<Order, Button>, ObservableValue<Button>>() {
 
@@ -137,10 +165,14 @@ public class OrderController extends ContentLoader implements Initializable, Tab
       return  deleteButtonCellCallBack;
    }
 
-
+   /**
+    * Shows all TableView Items <br>
+    * Sets TableViewSelectHandler for TableView Object
+    */
    private void showTable() {
       TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
       tableViewSelectHandler.createCheckBoxColumn();
+      tableViewSelectHandler.createSelectAllCheckBox();
 
       tableView.setItems(orderData);
 
@@ -154,7 +186,15 @@ public class OrderController extends ContentLoader implements Initializable, Tab
          }
       });
 
-      totalAmountColumn.setCellValueFactory(new PropertyValueFactory<Order, Double>("totalAmount"));
+      totalAmountColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order, String>, ObservableValue<String>>() {
+         public ObservableValue<String> call(TableColumn.CellDataFeatures<Order, String> param) {
+            if (param.getValue() != null && param.getValue().getTotalAmount() != 0) {
+               NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+               return new SimpleStringProperty("€ " + numberFormat.format(param.getValue().getTotalAmount()).replace(" €", ""));
+            }
+            return new SimpleStringProperty("€ 0,00");
+         }
+      });
       statusColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order, String>, ObservableValue<String>>() {
          public ObservableValue<String> call(TableColumn.CellDataFeatures<Order, String> param) {
             if (param.getValue() != null && param.getValue().getStatus().getName() != null) {

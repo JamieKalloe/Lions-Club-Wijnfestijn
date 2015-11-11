@@ -10,13 +10,17 @@ import IPSEN2.models.attendee.Attendee;
 import IPSEN2.models.guest.Guest;
 import IPSEN2.services.attendee.AttendeeService;
 import IPSEN2.services.guest.GuestService;
+import IPSEN2.services.message.Messaging;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
@@ -44,28 +48,44 @@ public class GuestController extends ContentLoader implements Initializable, Tab
 
     private ResourceBundle resources;
 
+    /**
+     * Handles add button
+     */
     public void handleAddButton() throws IOException {
         if (eventId != 0) {
             addContent(new AddGuestController(), resources.getString("EDIT_GUEST_DIALOG"));
+        } else {
+            Messaging.getInstance().show(
+                    "Foutmelding",
+                    "Evenementfout",
+                    "Er is nog geen evenement geselecteerd."
+            );
         }
     }
 
+    /**
+     * Handles remove button
+     */
     public void handleRemoveButton() {
         if (selectedRows.size() != 0) {
             selectedRows.forEach(row -> guestService.removeAsAttendee(row, eventId));
-        } else
-        {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText("Opgelet!");
-            alert.setContentText("U heeft geen items geselecteerd om te verwijderen!");
-
-            alert.showAndWait();
+            addContent(resources.getString("GUESTS"));
+            } else {
+            Messaging.getInstance().show(
+                    "Foutmelding",
+                    "Verwijderfout",
+                    "Er is geen gast geselecteerd"
+            );
         }
 
-        addContent(resources.getString("GUESTS"));
     }
 
+
+    /**
+     * Handles import button
+     *<br>
+     * Imports a CSV file with all required attributes of Object Guest
+     */
     public void importCSVFile() throws Exception {
         //TODO: delete test code, debug only.
         if (eventId != 0) {
@@ -73,13 +93,28 @@ public class GuestController extends ContentLoader implements Initializable, Tab
             importCSV.importGuests(eventId);
             attendeeData = FXCollections.observableArrayList(guestService.findAttendeesForEvent(eventId));
             addContent(resources.getString("GUESTS"));
+        } else {
+            Messaging.getInstance().show(
+                    "Foutmelding",
+                    "Evenementfout",
+                    "Er is nog geen evenement geselecteerd."
+            );
         }
     }
 
+    /**
+     * Handles mail button
+     */
     public void handleMailButton() {
-        if (selectedRows.size() != 0) {
+        if (eventId != 0 && selectedRows.size() != 0) {
             lastWindow = "GuestMenu";
             addContent(new MailController(selectedRows, 2), resources.getString("MAIL"));
+        } else {
+            Messaging.getInstance().show(
+                    "Foutmelding",
+                    "Evenementfout",
+                    "Er is nog geen evenement geselecteerd."
+            );
         }
     }
 
@@ -101,7 +136,11 @@ public class GuestController extends ContentLoader implements Initializable, Tab
         this.selectedGuestID = selectedItemId;
     }
 
-
+    /**
+     * Creates checkbox cells and listeners for all items in tableView
+     *
+     * @return returns the CallBack of the attached checkbox cell
+     */
     private Callback createAttendedCellCallBack() {
         Callback attendedCellCallBack = new Callback<TableColumn.CellDataFeatures<Guest, CheckBox>, ObservableValue<CheckBox>>() {
 
@@ -129,9 +168,14 @@ public class GuestController extends ContentLoader implements Initializable, Tab
         return  attendedCellCallBack;
     }
 
+    /**
+     * Shows all TableView Items <br>
+     * Sets TableViewSelectHandler for TableView Object
+     */
     private void showTable() {
         TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
         tableViewSelectHandler.createCheckBoxColumn();
+        tableViewSelectHandler.createSelectAllCheckBox();
 
         idColumn.setCellValueFactory(new PropertyValueFactory<Guest, Integer>("id"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Guest, String>("firstName"));
@@ -141,13 +185,10 @@ public class GuestController extends ContentLoader implements Initializable, Tab
 
         tableView.setItems(attendeeData);
 
-        if (eventId == 0) {
-            tableView.setPlaceholder(new Label("Er is nog geen event geselecteerd"));
+        tableView.setPlaceholder(new Label("Er is geen content om te weergeven"));
 
-        } else {
-            tableView.setPlaceholder(new Label("Er is geen content om te weergeven"));
-        }
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

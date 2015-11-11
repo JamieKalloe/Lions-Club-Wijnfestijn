@@ -20,8 +20,11 @@ public class MainMenuController extends ContentLoader implements Initializable {
 
     private ResourceBundle resources;
 
+    /**
+     * Handles shortcut button
+     */
     @FXML
-    public void handleButton(MouseEvent event) throws Exception{
+    public void handleShortcutButton(MouseEvent event) throws Exception{
         Object selectedPane = event.getSource();
             if (selectedPane == gastenButton) {
                 addContent(resources.getString("GUESTS"));
@@ -34,6 +37,7 @@ public class MainMenuController extends ContentLoader implements Initializable {
             } else if (selectedPane == merchantButton) {
                 addContent(resources.getString("MERCHANT"));
             }
+
     }
 
     @Override

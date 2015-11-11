@@ -167,7 +167,7 @@ public class MainFrameController extends ContentLoader implements Initializable{
     /**
      * Remove content.
      */
-    public void removeContent() { contentHolder.getChildren().removeAll();}
+    public void removeAllContent() { contentHolder.getChildren().removeAll();}
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

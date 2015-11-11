@@ -15,6 +15,9 @@ import java.util.HashMap;
 public class AttendeeRepository implements Crudable {
     private Database databaseInstance;
 
+    /**
+     * Instantiates a new Attendee repository.
+     */
     public AttendeeRepository() {
         databaseInstance = Database.getInstance();
     }
@@ -72,6 +75,12 @@ public class AttendeeRepository implements Crudable {
     }
 
 
+    /**
+     * Exists int.
+     *
+     * @param data the data
+     * @return the int
+     */
     public int exists(HashMap data) {
         String where = "";
         where += "guest_id = '"+data.get("guestID")+"' AND ";
@@ -101,6 +110,11 @@ public class AttendeeRepository implements Crudable {
     }
 */
 
+    /**
+     * Update.
+     *
+     * @param data the data
+     */
     public void update(HashMap data) {
         databaseInstance.update("attendee", "guest_id=" + data.get("guest_id") , data);
     }

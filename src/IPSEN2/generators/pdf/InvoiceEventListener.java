@@ -23,10 +23,10 @@ public class InvoiceEventListener extends PdfPageEventHelper {
 
             footerTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
             footerTable.addCell(new Paragraph("Betaalrekening", defaultFont));
-            footerTable.addCell(new Paragraph(": wat nummers hierzo", defaultFont));
+            footerTable.addCell(new Paragraph(": ************", defaultFont));
             footerTable.completeRow();
             footerTable.addCell(new Paragraph("Inschrijvnummer KvK Rijnland", defaultFont));
-            footerTable.addCell(new Paragraph(": wat nummers hierzo ", defaultFont));
+            footerTable.addCell(new Paragraph(": ************ ", defaultFont));
             footerTable.completeRow();
             footerTable.writeSelectedRows(0, -1, document.leftMargin(), document.bottom(footerTable.getTotalHeight()) - document.bottomMargin() + 15, writer.getDirectContent());
 

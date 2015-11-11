@@ -28,11 +28,17 @@ public class AddMerchantController extends ContentLoader implements Initializabl
     private ResourceBundle resources;
     private MerchantService merchantService;
 
+    /**
+     * Handles submit button
+     */
     @FXML
     private void handleCancelButton() {
         addContent(resources.getString("MERCHANT"));
     }
 
+    /**
+     * Handles submit button
+     */
     @FXML
     private void handleSubmitButton() {
         HashMap data = new HashMap();

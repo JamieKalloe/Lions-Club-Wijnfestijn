@@ -35,11 +35,17 @@ public class EditMerchantController extends ContentLoader implements Initializab
         this.selectedMerchantId = selectedMerchantId;
     }
 
+    /**
+     * Handles cancel button
+     */
     @FXML
     private void handleCancelButton() {
         addContent(resources.getString("MERCHANT"));
     }
 
+    /**
+     * Handles submit button
+     */
     @FXML
     private void handleSubmitButton() {
         HashMap data = new HashMap();

@@ -6,6 +6,8 @@ import IPSEN2.controllers.listeners.TableViewListener;
 import IPSEN2.models.TableViewItem;
 import IPSEN2.models.wine.Wine;
 import IPSEN2.services.wine.WineService;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,9 +16,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.util.Callback;
 
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -43,11 +48,20 @@ public class SelectWineController extends ContentLoader implements Initializable
     private ResourceBundle resources;
     @FXML private Pane cancelButton, submitButton;
 
+    /**
+     * Instantiates a new Select wine controller.
+     *
+     * @param selectedID the selected id
+     * @param isEdit     the is edit
+     */
     public SelectWineController(int selectedID, boolean isEdit) {
         this.selectedID = selectedID;
         this.isEdit = isEdit;
     }
 
+    /**
+     * Handle cancel button.
+     */
     public void handleCancelButton() {
         addContent(new AddOrderController(selectedID), resources.getString("EDIT_ORDER_DIALOG"));
     }
@@ -67,6 +81,7 @@ public class SelectWineController extends ContentLoader implements Initializable
     public void openEditMenu() {
         if (selectedRows.size() != 0) {
             if (isEdit) {
+
                 addContent(new EditOrderController(selectedID, selectedRows), resources.getString("EDIT_ORDER_DIALOG"));
             } else {
                 addContent(new AddOrderController(selectedID, selectedRows), resources.getString("EDIT_ORDER_DIALOG"));
@@ -77,17 +92,30 @@ public class SelectWineController extends ContentLoader implements Initializable
         }
     }
 
+    /**
+     * Shows all TableView Items <br>
+     * Sets TableViewSelectHandler for TableView Object
+     */
     private void showTable() {
         TableViewSelectHandler tableViewSelectHandler = new TableViewSelectHandler(tableView, this);
         tableViewSelectHandler.createCheckBoxColumn();
+        tableViewSelectHandler.createSelectAllCheckBox();
 
-        wineIdColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("wineID"));
+        wineIdColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("Id"));
         wineNameColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("name"));
         countryColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("country"));
         regionColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("region"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<Wine, String>("typeName"));
         yearColumn.setCellValueFactory(new PropertyValueFactory<Wine, Integer>("year"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<Wine, Double>("price"));
+        priceColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Wine, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Wine, String> param) {
+                if (param.getValue() != null && param.getValue().getPrice() != 0) {
+                    NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+                    return new SimpleStringProperty("€ " + numberFormat.format(param.getValue().getPrice()).replace(" €", ""));
+                }
+                return new SimpleStringProperty("€ 0,00");
+            }
+        });
 
         tableView.setItems(wineData);
     }

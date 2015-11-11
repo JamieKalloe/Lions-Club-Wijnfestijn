@@ -28,6 +28,12 @@ public class TableViewSelectHandler extends ContentLoader{
     private TableColumn checkBoxColumn;
     private ArrayList selectedRows;
 
+    /**
+     * Instantiates a new Table view select handler.
+     *
+     * @param tableView the table view
+     * @param listener  the listener
+     */
     public TableViewSelectHandler(TableView<TableViewItem> tableView, TableViewListener listener) {
         this.tableView = tableView;
         this.listener = listener;
@@ -35,6 +41,12 @@ public class TableViewSelectHandler extends ContentLoader{
         handleTableRows();
     }
 
+    /**
+     * Handles items that are being clicked inside TableView object<br><br>
+     *
+     * 1 mouse click selects or deselects clicked item <br>
+     * 2 mouse clicks opens the edit menu in the TableViewListener
+     */
     private void handleTableRows() {
         tableView.setRowFactory(table -> {
             TableRow row = new TableRow<>();
@@ -82,6 +94,11 @@ public class TableViewSelectHandler extends ContentLoader{
         });
     }
 
+    /**
+     * Creates checkbox cell and listener for all items inside tableView
+     *
+     * @return returns the CallBack of the attached checkbox cell
+     */
     private Callback createCheckBoxCellCallBack() {
         Callback checkBoxCellCallBack = new Callback<TableColumn.CellDataFeatures<TableViewItem, CheckBox>, ObservableValue<CheckBox>>() {
 
@@ -109,7 +126,10 @@ public class TableViewSelectHandler extends ContentLoader{
         return  checkBoxCellCallBack;
     }
 
-    private void createSelectAllCheckBox() {
+    /**
+     * Creates a checkbox that is able to select and deselect all items in tableView
+     */
+    public void createSelectAllCheckBox() {
         CheckBox selectAllCheckBox = new CheckBox();
         checkBoxColumn.setGraphic(selectAllCheckBox);
         selectAllCheckBox.setOnAction(event -> {
@@ -133,9 +153,11 @@ public class TableViewSelectHandler extends ContentLoader{
         });
     }
 
+    /**
+     * Create check box column.
+     */
     public void createCheckBoxColumn() {
         this.checkBoxColumn = tableView.getColumns().get(0);
         checkBoxColumn.setCellValueFactory(createCheckBoxCellCallBack());
-        createSelectAllCheckBox();
     }
 }
